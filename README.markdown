@@ -1,6 +1,4 @@
-Provides a CKEditor integration for your Symfony2 Project.
-
-This bundle adds the form field type ``ckeditor`` to the Form Component.
+Provides a CKEditor integration for your Symfony2 Project. This bundle adds the form field type ``ckeditor`` to the Form Component.
 
 Actually, it allows you to manage:
 
@@ -19,7 +17,10 @@ Contribute
 
 If the bundle doesn't allow you to customize an option, I invite you to make a PR & I will merge it.
 
-To add an option, it pretty easy. You just have to add it to the ``Ivory\CKEditorBundle\Form\Type\CKEditorType`` & update the generated javascript in the ``IvoryCKEditorBundle:Form:ckeditor_widget.html.twig`` template.
+To add an option, it pretty easy. You just have to:
+
+   - add it to the ``Ivory\CKEditorBundle\Form\Type\CKEditorType``.
+   - update the generated javascript in the ``IvoryCKEditorBundle:Form:ckeditor_widget.html.twig`` template.
 
 License
 -------
