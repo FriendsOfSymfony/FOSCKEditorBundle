@@ -81,6 +81,7 @@ Describes the base user interface color to be used by the editor.
 
    - option: max_length
    - type: integer
+   - default: none
 
 This option is used to add a max_length attribute, which is used by some browsers to limit the amount of text in a field.
 
