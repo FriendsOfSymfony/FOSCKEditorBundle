@@ -117,7 +117,7 @@ If this option is true, the field will be rendered with the disabled attribute s
 
 ### Error Bubbling
 
-   - option: error_bubbling¶
+   - option: error_bubbling
    - type: Boolean
    - default: false
 
