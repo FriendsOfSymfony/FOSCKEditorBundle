@@ -11,7 +11,20 @@ $loader->registerNamespaces(array(
     'Symfony' => array(
         __DIR__.'/'.$_SERVER['SYMFONY'], 
         __DIR__.'/'.$_SERVER['SYMFONY'].'/../tests'
-    ),
-    'Ivory'   => __DIR__.'/../../..'
+    )
 ));
 $loader->register();
+
+spl_autoload_register(function($class)
+{
+    if(strpos($class, 'Ivory\\CKEditorBundle\\') === 0) 
+    {
+        $path = __DIR__.'/../'.implode('/', array_slice(explode('\\', $class), 2)).'.php';
+
+        if(!stream_resolve_include_path($path))
+            return false;
+        
+        require_once $path;
+        return true;
+    }
+});
