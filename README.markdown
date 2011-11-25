@@ -5,6 +5,8 @@ Actually, it allows you to manage:
    - toolbar
    - uiColor
 
+[![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
+
 Documentation
 -------------
 

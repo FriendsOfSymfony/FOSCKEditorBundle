@@ -1,0 +1,6 @@
+language: php
+php: 5.3
+script: phpunit
+notifications:
+  email:
+    - geloen.eric@gmail.com
