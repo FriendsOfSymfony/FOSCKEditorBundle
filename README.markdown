@@ -1,11 +1,11 @@
 Provides a CKEditor integration for your Symfony2 Project. This bundle adds the form field type ``ckeditor`` to the Form Component.
 
+[![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
+
 Actually, it allows you to manage:
 
    - toolbar
    - uiColor
-
-[![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
 
 Documentation
 -------------
