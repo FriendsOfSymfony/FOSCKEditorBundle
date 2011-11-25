@@ -1,0 +1,21 @@
+{
+    "name": "egeloen/ckeditor-bundle",
+    "type": "symfony-bundle",
+    "description": "Provides a CKEditor integration for your Symfony2 Project.",
+    "keywords": ["CKEditor"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric GELOEN",
+            "email": "geloen.eric@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/framework-bundle": "2.*"
+    },
+    "autoload": {
+        "psr-0": { "Ivory\\CKEditorBundle": "" }
+    },
+    "target-dir": "Ivory/CKEditorBundle"
+}
