@@ -4,7 +4,7 @@
 {% spaceless %}
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
    
-    <script type="text/javascript" src="/bundles/ivoryckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
     <script type="text/javascript">
         CKEDITOR.replace("{{ id }}",{
             toolbar: {{ toolbar | json_encode | raw }},
