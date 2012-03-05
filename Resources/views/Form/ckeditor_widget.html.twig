@@ -3,15 +3,29 @@
 {% block ckeditor_widget %}
 {% spaceless %}
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
-   
-    <script type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
+
     <script type="text/javascript">
-        CKEDITOR.replace("{{ id }}",{
-            toolbar: {{ toolbar | json_encode | raw }},
-            {% if ui_color is not null %}
-                uiColor: {{ ui_color }},
-            {% endif %}
-        });
+        {% autoescape true js %}
+            var CKEDITOR_BASEPATH = '/bundles/ivoryckeditor/';
+        {% endautoescape %}
+    </script>
+
+    <script type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
+    
+    <script type="text/javascript">
+        {% autoescape true js %}
+            var instance = CKEDITOR.instances['{{ id }}'];
+            if (instance) {
+                instance.destroy(true);
+            }
+
+            CKEDITOR.replace("{{ id }}",{
+                toolbar: {{ toolbar | json_encode | raw }},
+                {% if ui_color is not null %}
+                    uiColor: {{ ui_color }},
+                {% endif %}
+            });
+        {% endautoescape %}
     </script>
 {% endspaceless %}
 {% endblock %}
