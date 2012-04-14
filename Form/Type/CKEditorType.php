@@ -23,7 +23,7 @@ class CKEditorType extends AbstractType
             ->setAttribute('toolbar', $options['toolbar'])
             ->setAttribute('ui_color', $options['ui_color']);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -33,11 +33,11 @@ class CKEditorType extends AbstractType
             ->set('toolbar', $form->getAttribute('toolbar'))
             ->set('ui_color', $form->getAttribute('ui_color'));
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'required' => false,
@@ -92,7 +92,7 @@ class CKEditorType extends AbstractType
             'ui_color' => null
         );
     }
-    
+
     /**
      * Returns the allowed option values for each option (if any).
      *
@@ -100,11 +100,11 @@ class CKEditorType extends AbstractType
      *
      * @return array The allowed option values
      */
-    public function getAllowedOptionValues(array $options)
+    public function getAllowedOptionValues()
     {
         return array('required' => array(false));
     }
-    
+
     /**
      * {@inheritdoc}
      */
