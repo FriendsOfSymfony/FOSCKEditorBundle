@@ -4,7 +4,7 @@ namespace Ivory\CKEditorBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormViewInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -28,11 +28,12 @@ class CKEditorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormViewInterface $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view
-            ->setVar('toolbar', $form->getAttribute('toolbar'))
-            ->setVar('ui_color', $form->getAttribute('ui_color'));
+        $view->vars = array_replace($view->vars, array(
+            'toolbar'      => $form->getAttribute('toolbar'),
+            'ui_color'     => $form->getAttribute('ui_color'),
+        ));
     }
 
     /**
