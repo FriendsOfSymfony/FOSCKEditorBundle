@@ -2,8 +2,7 @@
 
 namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
-use Symfony\Tests\Component\Form\Extension\Core\Type\TypeTestCase;
-
+use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 /**
@@ -19,10 +18,10 @@ class CKEditorTypeTest extends TypeTestCase
     protected function setUp()
     {
         parent::setUp();
-        
+
         $this->factory->addType(new CKEditorType());
     }
-    
+
     /**
      * Checks the default required property
      */
@@ -31,19 +30,20 @@ class CKEditorTypeTest extends TypeTestCase
         $form = $this->factory->create('ckeditor');
         $view = $form->createView();
         $required = $view->get('required');
-        
+
         $this->assertFalse($required);
     }
-    
+
     /**
      * Checks the required property
+     *
+     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testRequired()
     {
-        $this->setExpectedException('Symfony\Component\Form\Exception\CreationException');
-        $form = $this->factory->create('ckeditor', null, array('required' => true));
+        $this->factory->create('ckeditor', null, array('required' => true));
     }
-    
+
     /**
      * Checks the default toolbar property
      */
@@ -52,7 +52,7 @@ class CKEditorTypeTest extends TypeTestCase
         $form = $this->factory->create('ckeditor');
         $view = $form->createView();
         $toolbar = $view->get('toolbar');
-        
+
         $this->assertEquals($toolbar, array(
             array(
                 'name' => 'document',
@@ -102,7 +102,7 @@ class CKEditorTypeTest extends TypeTestCase
             )
         ));
     }
-    
+
     /**
      * Checks the toolbar property
      */
@@ -115,14 +115,14 @@ class CKEditorTypeTest extends TypeTestCase
         ))));
         $view = $form->createView();
         $toolbar = $view->get('toolbar');
-        
+
         $this->assertEquals($toolbar, array(
             array(
                 'name' => 'name',
                 'items' => array('Item1', 'Item2')
         )));
     }
-    
+
     /**
      * Checks default ui color property
      */
@@ -131,10 +131,10 @@ class CKEditorTypeTest extends TypeTestCase
         $form = $this->factory->create('ckeditor');
         $view = $form->createView();
         $uiColor = $view->get('ui_color');
-        
+
         $this->assertNull($uiColor);
     }
-    
+
     /**
      * Checks ui color property
      */
@@ -143,7 +143,7 @@ class CKEditorTypeTest extends TypeTestCase
         $form = $this->factory->create('ckeditor', null, array('ui_color' => '#ffffff'));
         $view = $form->createView();
         $uiColor = $view->get('ui_color');
-        
+
         $this->assertEquals($uiColor, '#ffffff');
     }
 }
