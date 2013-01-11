@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Ivory CKEditor package.
+ *
+ * (c) Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
-use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 /**
@@ -35,8 +43,6 @@ class CKEditorTypeTest extends TypeTestCase
     }
 
     /**
-     * Checks the required property
-     *
      * @expectedException \Symfony\Component\Form\Exception\CreationException
      */
     public function testRequired()
@@ -44,9 +50,6 @@ class CKEditorTypeTest extends TypeTestCase
         $this->factory->create('ckeditor', null, array('required' => true));
     }
 
-    /**
-     * Checks the default toolbar property
-     */
     public function testDefaultToolbar()
     {
         $form = $this->factory->create('ckeditor');
@@ -103,9 +106,6 @@ class CKEditorTypeTest extends TypeTestCase
         ));
     }
 
-    /**
-     * Checks the toolbar property
-     */
     public function testToolbar()
     {
         $form = $this->factory->create('ckeditor', null, array('toolbar' => array(
@@ -123,9 +123,6 @@ class CKEditorTypeTest extends TypeTestCase
         )));
     }
 
-    /**
-     * Checks default ui color property
-     */
     public function testDefaultUiColor()
     {
         $form = $this->factory->create('ckeditor');
@@ -135,9 +132,6 @@ class CKEditorTypeTest extends TypeTestCase
         $this->assertNull($uiColor);
     }
 
-    /**
-     * Checks ui color property
-     */
     public function testUiColor()
     {
         $form = $this->factory->create('ckeditor', null, array('ui_color' => '#ffffff'));

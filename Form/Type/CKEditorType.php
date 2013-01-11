@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the Ivory CKEditor package.
+ *
+ * (c) Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ivory\CKEditorBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\AbstractType,
+    Symfony\Component\Form\FormBuilder,
+    Symfony\Component\Form\FormView,
+    Symfony\Component\Form\FormInterface;
 
 /**
  * CKEditor type
@@ -94,11 +103,7 @@ class CKEditorType extends AbstractType
     }
     
     /**
-     * Returns the allowed option values for each option (if any).
-     *
-     * @param array $options
-     *
-     * @return array The allowed option values
+     * {@inheritdoc}
      */
     public function getAllowedOptionValues(array $options)
     {

@@ -9,13 +9,9 @@
    stopOnFailure="false"
    syntaxCheck="false"
    bootstrap="./Tests/bootstrap.php">
-    <php>
-        <server name="SYMFONY" value="vendor/symfony/src" />
-    </php>
     <testsuites>
         <testsuite name="IvoryCKEditorBundle Test Suite">
             <directory suffix="Test.php">./Tests</directory>
-            <exclude>./Tests/vendor</exclude>
         </testsuite>
     </testsuites>
     <filter>
@@ -24,6 +20,7 @@
             <exclude>
                 <directory>./Resources</directory>
                 <directory>./Tests</directory>
+                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>
