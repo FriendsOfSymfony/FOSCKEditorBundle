@@ -27,12 +27,12 @@ class IvoryCKEditorExtension extends Extension
      * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
-    {        
+    {
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
             array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig')
         ));
-        
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
