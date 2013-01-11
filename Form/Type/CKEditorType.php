@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Ivory CKEditor package.
+ *
+ * (c) Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ivory\CKEditorBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\AbstractType,
+    Symfony\Component\Form\FormBuilderInterface,
+    Symfony\Component\Form\FormView,
+    Symfony\Component\Form\FormInterface,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * CKEditor type
@@ -31,8 +40,8 @@ class CKEditorType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_replace($view->vars, array(
-            'toolbar'      => $form->getAttribute('toolbar'),
-            'ui_color'     => $form->getAttribute('ui_color'),
+            'toolbar'  => $form->getAttribute('toolbar'),
+            'ui_color' => $form->getAttribute('ui_color'),
         ));
     }
 

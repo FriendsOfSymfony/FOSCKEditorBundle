@@ -6,12 +6,12 @@
 
     <script type="text/javascript">
         {% autoescape true js %}
-            var CKEDITOR_BASEPATH = '{{ asset('bundles/ivoryckeditor/ckeditor.js')|replace({'ckeditor.js': ''}) }}';
+            var CKEDITOR_BASEPATH = '{{ asset('bundles/ivoryckeditor/ckeditor.js') | replace({ 'ckeditor.js': '' }) }}';
         {% endautoescape %}
     </script>
 
     <script type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
-    
+
     <script type="text/javascript">
         {% autoescape true js %}
             var instance = CKEDITOR.instances['{{ id }}'];
@@ -19,7 +19,7 @@
                 instance.destroy(true);
             }
 
-            CKEDITOR.replace("{{ id }}",{
+            CKEDITOR.replace("{{ id }}", {
                 toolbar: {{ toolbar | json_encode | raw }},
                 {% if ui_color is not null %}
                     uiColor: {{ ui_color }},

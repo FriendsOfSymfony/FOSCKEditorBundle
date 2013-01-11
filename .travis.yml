@@ -1,6 +1,21 @@
 language: php
-php: 5.3
+
+php:
+    - 5.3.3
+    - 5.3
+    - 5.4
+    - 5.5
+
+env:
+    - SYMFONY_VERSION="2.0.*"
+    - SYMFONY_VERSION="2.1.*"
+    - SYMFONY_VERSION="dev-master"
+
+before_script:
+    - composer require symfony/framework-bundle:${SYMFONY_VERSION}
+    - composer install --dev
+
 script: phpunit
+
 notifications:
-  email:
-    - geloen.eric@gmail.com
+    email: geloen.eric@gmail.com
