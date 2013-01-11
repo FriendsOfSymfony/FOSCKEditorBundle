@@ -9,8 +9,5 @@
  * file that was distributed with this source code.
  */
 
-// Autoloads library.
-$loader = require __DIR__.'/../vendor/autoload.php';
-
-// Autoloads the symfony 2.0 tests
-$loader->add('Symfony\\Tests', __DIR__.'/../vendor/symfony/symfony/tests');
+// Autoloads Ivory CKEditor bundle.
+require __DIR__.'/../vendor/autoload.php';
