@@ -17,7 +17,7 @@ use Symfony\Component\Config\FileLocator,
     Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Ivory CKEditor extension
+ * Ivory CKEditor extension.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
