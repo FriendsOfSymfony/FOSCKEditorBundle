@@ -7,7 +7,7 @@ Require the bundle in your composer.json file:
 ```
 {
     "require": {
-        "egeloen/ckeditor-bundle": "dev-master",
+        "egeloen/ckeditor-bundle": "2.*",
     }
 }
 ```
@@ -40,7 +40,7 @@ Add Ivory CKEditor bundle to your deps file:
 [IvoryCKEditorBundle]
     git=http://github.com/egeloen/IvoryCKEditorBundle.git
     target=bundles/Ivory/CKEditorBundle
-    version=origin/2.0
+    version=1.0.0
 ```
 
 Autoload the Ivory CKEditor bundle namespaces:
