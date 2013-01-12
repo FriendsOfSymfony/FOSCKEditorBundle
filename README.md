@@ -1,30 +1,25 @@
-Provides a CKEditor integration for your Symfony2 Project. This bundle adds the form field type ``ckeditor`` to the Form Component.
+# README
 
-[![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
+2.0: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?branc=2.0)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
+dev-master: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?banch=dev-master)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
 
-Actually, it allows you to manage:
+The bundle provides a [CKEditor](http://ckeditor.com/) integration for your Symfony2 Project. It automatically registers
+a new type `ckeditor` which can be easily configured.
 
-   - toolbar
-   - uiColor
-
-Documentation
--------------
+## Documentation
 
    1. [Installation](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/installation.md)
    2. [Usage](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/usage.md)
-   3. [Test](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/test.md)
 
-Contribute
-----------
+The bundle is compatible with all Symfony2 versions. For BC reasons, you must use the 2.0 branch of the bundle for
+Symfony 2.0 and the master branch for Symfony >= 2.1.
 
-If the bundle doesn't allow you to customize an option, I invite you to make a PR & I will merge it.
+## Contribute
 
-To add an option, it pretty easy. You just have to:
+We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
 
-   - add it to the ``Ivory\CKEditorBundle\Form\Type\CKEditorType``.
-   - update the generated javascript in the ``IvoryCKEditorBundle:Form:ckeditor_widget.html.twig`` template.
+## License
 
-License
--------
-
-This bundle is under the MIT license. See the complete license [here](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/meta/LICENSE).
+The Ivory CKEditor Bundle is under the MIT license. For the full copyright and license information, please read the
+[LICENSE](https://github.com/egeloen/IvoryCKEditorBundle/blob/master/LICENSE) file that was distributed with this
+source code.

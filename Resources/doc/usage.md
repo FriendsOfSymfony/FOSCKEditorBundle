@@ -88,10 +88,10 @@ This option is used to add a max_length attribute, which is used by some browser
 ### Label
 
    - option: label
-   - type: string 
+   - type: string
    - default: The label is "guessed" from the field name
 
-Sets the label that will be used when rendering the field. 
+Sets the label that will be used when rendering the field.
 
 The label can also be directly set inside the template:
 
@@ -105,7 +105,7 @@ The label can also be directly set inside the template:
    - type: Boolean
    - default: true
 
-If true, the whitespace of the submitted string value will be stripped via the trim() function when the data is bound. 
+If true, the whitespace of the submitted string value will be stripped via the trim() function when the data is bound.
 This guarantees that if a value is submitted with extra whitespace, it will be removed before the value is merged back onto the underlying object.
 
 ### Read Only
@@ -122,8 +122,7 @@ If this option is true, the field will be rendered with the disabled attribute s
    - type: Boolean
    - default: false
 
-If true, any errors for this field will be passed to the parent field or form. 
+If true, any errors for this field will be passed to the parent field or form.
 For example, if set to true on a normal field, any errors for that field will be attached to the main form, not to the specific field.
 
-Prevous: [Installation](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/installation.md)
-Next: [Test](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/test.md)
+Previous: [Installation](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/installation.md)
