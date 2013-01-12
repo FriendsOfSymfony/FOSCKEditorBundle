@@ -6,76 +6,33 @@ The IvoryCKEditorBundle adds the form field type ``ckeditor`` to the Form Compon
 
 ## Available options
 
-### Toolbar
+### Config
 
-   - option: toolbar
-   - type: array
-
-It is an array of toolbars (strips), each one being also an array, containing a list of UI items.
-To do a carriage return, you just have to add the char ``/`` between strips.
-
-#### Default toolbar
+The config option is an equivalent of the [CKEditor config option](http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html).
+Then, if you want to customize your toolbar or your ui color for example, you can do:
 
 ``` php
-<?php
-
-$toolbar = array(
-    array(
-        'name' => 'document',
-        'items' => array('Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates')
+$builder->add('field', 'ckeditor', array(
+    'config' => array(
+        'toolbar' => array(
+            array(
+                'name'  => 'document',
+                'items' => array('Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates'),
+            ),
+            '/',
+            array(
+                'name'  => 'basicstyles',
+                'items' => array('Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'),
+            ),
+        ),
+        'ui_color' => '#ffffff',
+        //...
     ),
-    array(
-        'name' => 'clipboard',
-        'items' => array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo')
-    ),
-    array(
-        'name' => 'editing',
-        'items' => array('Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt')
-    ),
-    array(
-        'name' => 'forms',
-        'items' => array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField')
-    ),
-    '/',
-    array(
-        'name' => 'basicstyles',
-        'items' => array('Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat')
-    ),
-    array(
-        'name' => 'paragraph',
-        'items' => array('NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl')
-    ),
-    array(
-        'name' => 'links',
-        'items' => array('Link','Unlink','Anchor')
-    ),
-    array(
-        'name' => 'insert',
-        'items' => array('Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak')
-    ),
-    '/',
-    array(
-        'name' => 'styles',
-        'items' => array('Styles','Format','Font','FontSize')
-    ),
-    array(
-        'name' => 'colors',
-        'items' => array('TextColor','BGColor')
-    ),
-    array(
-        'name' => 'tools',
-        'items' => array('Maximize', 'ShowBlocks','-','About')
-    )
-);
+));
 ```
 
-### UI Color
-
-   - option: ui_color
-   - type: string
-   - default: none
-
-Describes the base user interface color to be used by the editor.
+A toolbar is an array of toolbars (strips), each one being also an array, containing a list of UI items. To do a
+carriage return, you just have to add the char ``/`` between strips.
 
 ### Max length
 
@@ -106,7 +63,8 @@ The label can also be directly set inside the template:
    - default: true
 
 If true, the whitespace of the submitted string value will be stripped via the trim() function when the data is bound.
-This guarantees that if a value is submitted with extra whitespace, it will be removed before the value is merged back onto the underlying object.
+This guarantees that if a value is submitted with extra whitespace, it will be removed before the value is merged back
+onto the underlying object.
 
 ### Read Only
 
@@ -123,6 +81,7 @@ If this option is true, the field will be rendered with the disabled attribute s
    - default: false
 
 If true, any errors for this field will be passed to the parent field or form.
-For example, if set to true on a normal field, any errors for that field will be attached to the main form, not to the specific field.
+For example, if set to true on a normal field, any errors for that field will be attached to the main form, not to the
+specific field.
 
 Previous: [Installation](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/installation.md)
