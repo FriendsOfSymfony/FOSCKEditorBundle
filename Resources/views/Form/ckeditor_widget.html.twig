@@ -5,22 +5,18 @@
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 
     <script type="text/javascript">
-        {% autoescape true js %}
-            var CKEDITOR_BASEPATH = '{{ asset('bundles/ivoryckeditor/') }}';
-        {% endautoescape %}
+        var CKEDITOR_BASEPATH = '{{ asset('bundles/ivoryckeditor/') }}';
     </script>
 
     <script type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
 
     <script type="text/javascript">
-        {% autoescape true js %}
-            var instance = CKEDITOR.instances['{{ id }}'];
-            if (instance) {
-                instance.destroy(true);
-            }
+        var instance = CKEDITOR.instances['{{ id }}'];
+        if (instance) {
+            instance.destroy(true);
+        }
 
-            CKEDITOR.replace("{{ id }}"{% if config is not empty %}, {{ config | json_encode | raw }}{% endif %});
-        {% endautoescape %}
+        CKEDITOR.replace("{{ id }}"{% if config is not empty %}, {{ config | json_encode | raw }}{% endif %});
     </script>
 {% endspaceless %}
 {% endblock %}
