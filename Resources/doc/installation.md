@@ -1,45 +1,20 @@
 # Installation
 
-## Add IvoryCKEditorBundle to your vendor/bundles/ directory
+## Symfony 2.1.*
 
-### Using the vendors script
-
-Add the following lines in your ``deps`` file
+Require the bundle in your composer.json file:
 
 ```
-[IvoryCKEditorBundle]
-    git=http://github.com/egeloen/IvoryCKEditorBundle.git
-    target=/bundles/Ivory/CKEditorBundle
+{
+    "require": {
+        "egeloen/ckeditor-bundle": "dev-master",
+    }
+}
 ```
 
-Run the vendors script
-
-``` bash 
-$ php bin/vendors update
-```
-
-### Using submodules
-
-``` bash
-$ git submodule add http://github.com/egeloen/IvoryCKEditorBundle.git vendor/bundles/Ivory/CKEditorBundle
-```
-
-## Add the Ivory namespace to your autoloader
+Register the bundle:
 
 ``` php
-<?php
-// app/autoload.php
-
-$loader->registerNamespaces(array(
-    'Ivory' => __DIR__.'/../vendor/bundles',
-    // ...
-);
-```
-
-## Add the IvoryCKEditorBundle to your application kernel
-
-``` php
-<?php
 // app/AppKernel.php
 
 public function registerBundles()
@@ -51,12 +26,49 @@ public function registerBundles()
 }
 ```
 
-## Populate the assets
+Install the bundle:
 
-Run the symfony command
-
-``` bash
-$ php app/console assets:install web
+```
+$ composer update
 ```
 
-Next : [Usage](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/usage.md)
+## Symfony 2.0.*
+
+Add Ivory CKEditor bundle to your deps file:
+
+```
+[IvoryCKEditorBundle]
+    git=http://github.com/egeloen/IvoryCKEditorBundle.git
+    target=bundles/Ivory/CKEditorBundle
+```
+
+Autoload the Ivory CKEditor bundle namespaces:
+
+``` php
+// app/autoload.php
+
+$loader->registerNamespaces(array(
+    'Ivory\\CKEditorBundle' => __DIR__.'/../vendor/bundles',
+    // ...
+);
+```
+
+Register the bundle:
+
+``` php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    return array(
+        new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+        // ...
+    );
+}
+```
+
+Run the vendors script:
+
+``` bash
+$ php bin/vendors install
+```
