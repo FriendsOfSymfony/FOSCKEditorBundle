@@ -3,6 +3,7 @@
 ### 1.1.1 - 2.1.1 (????-??-??)
 
  * e787087 - [Widget] Remove autoescape js
+ * 4be2e56 - Add support for assets_version
 
 ### 1.1.0 - 2.1.0 (2013-01-12)
 
