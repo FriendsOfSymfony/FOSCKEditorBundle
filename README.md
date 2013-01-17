@@ -10,6 +10,7 @@ a new type `ckeditor` which can be easily configured.
 
    1. [Installation](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/installation.md)
    2. [Usage](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/usage.md)
+   3. [Configuration](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/configuration.md) (Optional)
 
 The bundle is compatible with all Symfony2 versions. For BC reasons, you must use the 2.0 branch of the bundle for
 Symfony 2.0 (1.* version of the bundle) and the master branch for Symfony >= 2.1 (2.* version of the bundle).
