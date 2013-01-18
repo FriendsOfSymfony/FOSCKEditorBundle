@@ -5,13 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ivory_ck_editor.twig.preg_replace_extension.class">Ivory\CKEditorBundle\Twig\PregReplaceTwigExtension</parameter>
+        <parameter key="ivory_ck_editor.twig.trim_asset_version_extension.class">Ivory\CKEditorBundle\Twig\TrimAssetVersionTwigExtension</parameter>
     </parameters>
 
     <services>
         <service
-            id="ivory_ck_editor.twig.preg_replace_extension"
-            class="%ivory_ck_editor.twig.preg_replace_extension.class%"
+            id="ivory_ck_editor.twig.trim_asset_version_extension"
+            class="%ivory_ck_editor.twig.trim_asset_version_extension.class%"
             public="false"
         >
             <tag name="twig.extension" />
