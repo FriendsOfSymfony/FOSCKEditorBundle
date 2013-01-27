@@ -11,7 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType,
+use Ivory\CKEditorBundle\Model\ConfigManagerInterface,
+    Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\Form\FormView,
     Symfony\Component\Form\FormInterface,
@@ -24,12 +25,31 @@ use Symfony\Component\Form\AbstractType,
  */
 class CKEditorType extends AbstractType
 {
+    /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
+    protected $configManager;
+
+    /**
+     * Creates a CKEditor type.
+     *
+     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface $configManager The CKEditor config manager.
+     */
+    public function __construct(ConfigManagerInterface $configManager)
+    {
+        $this->configManager = $configManager;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAttribute('config', $options['config']);
+        $config = $options['config'];
+
+        if ($options['config_name'] !== null) {
+            $config = array_merge($this->configManager->getConfig($options['config_name']), $config);
+        }
+
+        $builder->setAttribute('config', $config);
     }
 
     /**
@@ -48,8 +68,9 @@ class CKEditorType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'required' => false,
-            'config'   => array(),
+            'required'    => false,
+            'config_name' => null,
+            'config'      => array(),
         ));
 
         $resolver->addAllowedValues(array('required' => array(false)));
