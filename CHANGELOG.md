@@ -2,6 +2,7 @@
 
 ### 1.1.1 - 2.1.1 (????-??-??)
 
+ * e0b086a - Allow to configure ckeditor form type through configuration
  * 038d7c1 - Upgrade CKEditor to 4.0.1
  * b90ea78 - Fix assets_version support
  * 4be2e56 - Add support for assets_version
