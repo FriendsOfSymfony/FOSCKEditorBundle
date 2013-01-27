@@ -1,0 +1,11 @@
+ivory_ck_editor:
+    configs:
+        default:
+            toolbar:  "default"
+            ui_color: "#000000"
+    toolbars:
+        configs:
+            default: [ "@document", "/", [ "Anchor" ], "/", "@tools" ]
+        items:
+            document: [ "Source", "-", "Save" ]
+            tools:    [ "Maximize" ]

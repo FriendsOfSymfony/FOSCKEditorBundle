@@ -16,6 +16,7 @@
     },
     "require-dev": {
         "symfony/form": "2.0.*",
+        "symfony/yaml": "2.0.*",
         "twig/twig": "1.*"
     },
     "autoload": {
