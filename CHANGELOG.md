@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.1 - 2.1.1 (????-??-??)
+### 1.1.1 - 2.1.1 (2013-01-27)
 
  * e0b086a - Allow to configure ckeditor form type through configuration
  * 038d7c1 - Upgrade CKEditor to 4.0.1
