@@ -24,13 +24,19 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
     /** @var \Symfony\Component\DependencyInjection\ContainerBuilder */
     protected $container;
 
+    /** @var \Symfony\Component\Routing\RouterInterface */
+    protected $routerMock;
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
+        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
+
         $this->container = new ContainerBuilder();
         $this->container->setParameter('twig.form.resources', array());
+        $this->container->set('router', $this->routerMock);
         $this->container->registerExtension($extension = new IvoryCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());
     }
@@ -40,6 +46,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
      */
     protected function tearDown()
     {
+        unset($this->routerMock);
         unset($this->container);
     }
 

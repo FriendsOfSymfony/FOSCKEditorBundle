@@ -44,11 +44,16 @@ class CKEditorType extends AbstractType
     {
         $config = $options['config'];
 
-        if ($options['config_name'] !== null) {
-            $config = array_merge($this->configManager->getConfig($options['config_name']), $config);
+        if ($options['config_name'] === null) {
+            $name = uniqid('ivory', true);
+
+            $options['config_name'] = $name;
+            $this->configManager->setConfig($name, $config);
+        } else {
+            $this->configManager->mergeConfig($options['config_name'], $config);
         }
 
-        $builder->setAttribute('config', $config);
+        $builder->setAttribute('config', $this->configManager->getConfig($options['config_name']));
     }
 
     /**
