@@ -64,4 +64,12 @@ interface ConfigManagerInterface
      * @param array  $config The CKEditor config.
      */
     function setConfig($name, array $config);
+
+    /**
+     * Merges a CKEditor config.
+     *
+     * @param string $name   The CKEditor config name.
+     * @param array  $config The CKEditor config.
+     */
+    function mergeConfig($name, array $config);
 }
