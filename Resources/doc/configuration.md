@@ -12,8 +12,9 @@ The bundle allows you to define as many configs you want. The list of all config
 ivory_ck_editor:
     configs:
         my_config:
-            toolbar:  [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ]
-            ui_color: "#000000"
+            toolbar:                [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ]
+            ui_color:               "#000000"
+            filebrowserUploadRoute: "my_route"
             # ...
 ```
 

@@ -11,7 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType,
+    Ivory\CKEditorBundle\Model\ConfigManager;
 
 /**
  * CKEditor type test
@@ -20,8 +21,8 @@ use Ivory\CKEditorBundle\Form\Type\CKEditorType;
  */
 class CKEditorTypeTest extends TypeTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
-    protected $configManagerMock;
+    /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
+    protected $configManager;
 
     /**
      * {@inheritdooc}
@@ -30,8 +31,18 @@ class CKEditorTypeTest extends TypeTestCase
     {
         parent::setUp();
 
-        $this->configManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
-        $this->factory->addType(new CKEditorType($this->configManagerMock));
+        $routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->configManager = new ConfigManager($routerMock);
+
+        $this->factory->addType(new CKEditorType($this->configManager));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        unset($this->configManager);
     }
 
     public function testDefaultRequired()
@@ -85,15 +96,9 @@ class CKEditorTypeTest extends TypeTestCase
             'ui_color' => '#ffffff',
         );
 
-        $options = array('config_name' => 'default');
+        $this->configManager->setConfig('default', $config);
 
-        $this->configManagerMock
-            ->expects($this->once())
-            ->method('getConfig')
-            ->with($this->equalTo('default'))
-            ->will($this->returnValue($config));
-
-        $form = $this->factory->create('ckeditor', null, $options);
+        $form = $this->factory->create('ckeditor', null, array('config_name' => 'default'));
         $view = $form->createView();
 
         $this->assertSame($config, $view->get('config'));
@@ -108,18 +113,13 @@ class CKEditorTypeTest extends TypeTestCase
 
         $explicitConfig = array('ui_color' => '#000000');
 
-        $options = array(
+        $this->configManager->setConfig('default', $configuredConfig);
+
+        $form = $this->factory->create('ckeditor', null, array(
             'config_name' => 'default',
             'config'      => $explicitConfig,
-        );
+        ));
 
-        $this->configManagerMock
-            ->expects($this->once())
-            ->method('getConfig')
-            ->with($this->equalTo('default'))
-            ->will($this->returnValue($configuredConfig));
-
-        $form = $this->factory->create('ckeditor', null, $options);
         $view = $form->createView();
 
         $this->assertSame(array_merge($configuredConfig, $explicitConfig), $view->get('config'));
