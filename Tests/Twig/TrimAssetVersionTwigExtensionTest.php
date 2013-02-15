@@ -12,8 +12,9 @@
 namespace Ivory\CKEditorBundle\Tests\Twig;
 
 use \Twig_Environment,
-    \Twig_Loader_String,
-    Ivory\CKEditorBundle\Twig\TrimAssetVersionTwigExtension;
+    \Twig_Loader_String;
+
+use Ivory\CKEditorBundle\Twig\TrimAssetVersionTwigExtension;
 
 /**
  * Trim asset version twig extension test.
