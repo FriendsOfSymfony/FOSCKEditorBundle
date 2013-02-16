@@ -12,7 +12,8 @@
 namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType,
-    Ivory\CKEditorBundle\Model\ConfigManager;
+    Ivory\CKEditorBundle\Model\ConfigManager,
+    Ivory\CKEditorBundle\Model\PluginManager;
 
 /**
  * CKEditor type test
@@ -24,6 +25,9 @@ class CKEditorTypeTest extends TypeTestCase
     /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
     protected $configManager;
 
+    /** @var \Ivory\CKEditorBundle\Model\PluginManager */
+    protected $pluginManager;
+
     /**
      * {@inheritdooc}
      */
@@ -34,7 +38,9 @@ class CKEditorTypeTest extends TypeTestCase
         $routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
         $this->configManager = new ConfigManager($routerMock);
 
-        $this->factory->addType(new CKEditorType($this->configManager));
+        $this->pluginManager = new PluginManager();
+
+        $this->factory->addType(new CKEditorType($this->configManager, $this->pluginManager));
     }
 
     /**
@@ -43,6 +49,7 @@ class CKEditorTypeTest extends TypeTestCase
     protected function tearDown()
     {
         unset($this->configManager);
+        unset($this->pluginManager);
     }
 
     public function testDefaultRequired()
@@ -123,5 +130,61 @@ class CKEditorTypeTest extends TypeTestCase
         $view = $form->createView();
 
         $this->assertSame(array_merge($configuredConfig, $explicitConfig), $view->get('config'));
+    }
+
+    public function testDefaultPlugins()
+    {
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertEmpty($view->get('plugins'));
+    }
+
+    public function testPluginsWithExplicitPlugins()
+    {
+        $plugins = $plugins = array('wordcount' => array(
+            'path'     => '/my/path',
+            'filename' => 'plugin.js',
+        ));
+
+        $form = $this->factory->create('ckeditor', null, array('plugins' => $plugins));
+        $view = $form->createView();
+
+        $this->assertSame($plugins, $view->get('plugins'));
+    }
+
+    public function testPluginsWithConfiguredPlugins()
+    {
+        $plugins = array('wordcount' => array(
+            'path'     => '/my/path',
+            'filename' => 'plugin.js',
+        ));
+
+        $this->pluginManager->setPlugins($plugins);
+
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertSame($plugins, $view->get('plugins'));
+    }
+
+    public function testPluginsWithConfiguredAndExplicitPlugins()
+    {
+        $configuredPlugins = array('wordcount' => array(
+            'path'     => '/my/path',
+            'filename' => 'plugin.js',
+        ));
+
+        $explicitPlugins = array('autogrow' => array(
+            'path'     => '/my/path',
+            'filename' => 'plugin.js',
+        ));
+
+        $this->pluginManager->setPlugins($configuredPlugins);
+
+        $form = $this->factory->create('ckeditor', null, array('plugins' => $explicitPlugins));
+        $view = $form->createView();
+
+        $this->assertSame(array_merge($configuredPlugins, $explicitPlugins), $view->get('plugins'));
     }
 }

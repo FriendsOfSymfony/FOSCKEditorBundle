@@ -58,12 +58,16 @@ class IvoryCKEditorExtension extends Extension
         if (!empty($config['configs'])) {
             $this->registerConfigs($config, $container);
         }
+
+        if (!empty($config['plugins'])) {
+            $this->registerPlugins($config, $container);
+        }
     }
 
     /**
      * Register the CKEditor configurations.
      *
-     * @param array                                                   $config   The CKEditor configuration.
+     * @param array                                                   $config    The CKEditor configuration.
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
      */
     protected function registerConfigs(array $config, ContainerBuilder $container)
@@ -73,6 +77,21 @@ class IvoryCKEditorExtension extends Extension
         $definition = $container->getDefinition('ivory_ck_editor.config_manager');
         foreach ($config['configs'] as $name => $configuration) {
             $definition->addMethodCall('setConfig', array($name, $configuration));
+        }
+    }
+
+    /**
+     * Registers the CKEditor plugins.
+     *
+     * @param array                                                   $config    The CKEditor configuration.
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     */
+    protected function registerPlugins(array $config, ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('ivory_ck_editor.plugin_manager');
+
+        foreach ($config['plugins'] as $name => $plugin) {
+            $definition->addMethodCall('setPlugin', array($name, $plugin));
         }
     }
 

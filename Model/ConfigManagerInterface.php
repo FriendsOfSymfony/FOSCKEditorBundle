@@ -44,7 +44,7 @@ interface ConfigManagerInterface
      *
      * @param string $name The CKEditor config name.
      *
-     * @return array TRUE if the CKEditor config exists else FALSE.
+     * @return boolean TRUE if the CKEditor config exists else FALSE.
      */
     function hasConfig($name);
 

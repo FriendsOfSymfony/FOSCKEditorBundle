@@ -56,3 +56,55 @@ The concerned options are:
  * filebrowserUploadUrl
  * filebrowserFlashUploadUrl
  * filebrowserImageUploadUrl
+
+## Plugins support
+
+The bundle offers you the ability to manage extra plugins. To understand how it works, you will enable the
+[wordcount](http://ckeditor.com/addon/wordcount) plugin for our CKEditor widget.
+
+### Install
+
+First, you need to download & extract it in the web directory. For that, you have 2 possibilities:
+
+  - Directly put the plugin in the web directory (`/web/ckeditor/plugins/` for example).
+  - Put the plugin in the `/Resources/public/` directory of any of your bundles.
+
+### Register
+
+In order to load it, you need to specify his location to the bundle. For that, you can pass it as option to the widget:
+
+``` php
+$builder->add('field', 'ckeditor', array(
+    'plugins' => array(
+        'wordcount' => array(
+            'path'     => '/bundles/mybundle/wordcount/',
+            'filename' => 'plugin.js',
+        ),
+    ),
+));
+```
+
+The plugin can now be used but if you do that, the plugin will only be usable for this form. If you prefer enable
+plugins for all CKEditor widget, you should register them in your configuration file:
+
+```
+ivory_ck_editor:
+    plugins:
+        wordcount:
+            path:     "/bundles/mybundle/wordcount/"
+            filename: "plugin.js"
+```
+
+### Use it
+
+To use it, simply add it as `extraPlugins` in the ckeditor widget config:
+
+``` php
+$builder->add('field', 'ckeditor', array(
+    'config' => array(
+        'extraPlugins' => 'wordcount',
+    ),
+));
+```
+
+Enjoy!
