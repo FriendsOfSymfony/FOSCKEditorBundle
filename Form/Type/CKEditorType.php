@@ -25,7 +25,7 @@ use Ivory\CKEditorBundle\Model\ConfigManagerInterface,
  */
 class CKEditorType extends AbstractType
 {
-    /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
+    /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
     protected $configManager;
 
     /**

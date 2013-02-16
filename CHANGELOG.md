@@ -2,6 +2,7 @@
 
 ### 1.1.2 - 2.1.2 (????-??-??)
 
+ * c796be2 - Normalize line endings
  * d078d28 - Handle filebrowser URL generation
 
 ### 1.1.1 - 2.1.1 (2013-01-27)
