@@ -40,8 +40,10 @@ Add Ivory CKEditor bundle to your deps file:
 [IvoryCKEditorBundle]
     git=http://github.com/egeloen/IvoryCKEditorBundle.git
     target=bundles/Ivory/CKEditorBundle
-    version=1.0.0
 ```
+
+I recommend you to specify a version in order to easily maintain your project. The versions are available in the
+[CHANGELOG](https://github.com/egeloen/IvoryCKEditorBundle/blob/master/CHANGELOG.md).
 
 Autoload the Ivory CKEditor bundle namespaces:
 
