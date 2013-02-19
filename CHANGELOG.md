@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.2 - 2.1.2 (????-??-??)
+### 1.1.2 - 2.1.2 (2013-02-19)
 
  * a6b1556 - Add plugins support
  * c796be2 - Normalize line endings
