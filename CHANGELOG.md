@@ -2,6 +2,7 @@
 
 ### 1.1.2 - 2.1.2 (????-??-??)
 
+ * a6b1556 - Add plugins support
  * c796be2 - Normalize line endings
  * d078d28 - Handle filebrowser URL generation
 
