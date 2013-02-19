@@ -140,6 +140,21 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertSame($expected, $configManager->getConfigs());
     }
 
+    public function testPlugins()
+    {
+        $this->loadConfiguration($this->container, 'plugins');
+        $this->container->compile();
+
+        $pluginManager = $this->container->get('ivory_ck_editor.plugin_manager');
+
+        $expected = array('wordcount' => array(
+            'path'     => '/my/path',
+            'filename' => 'plugin.js',
+        ));
+
+        $this->assertSame($expected, $pluginManager->getPlugins());
+    }
+
     /**
      * @expectedException \Ivory\CKEditorBundle\Exception\DependencyInjectionException
      * @expectedExceptionMessage The toolbar item "foo" does not exist.

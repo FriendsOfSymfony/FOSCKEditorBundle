@@ -12,13 +12,14 @@
 namespace Ivory\CKEditorBundle\Form\Type;
 
 use Ivory\CKEditorBundle\Model\ConfigManagerInterface,
+    Ivory\CKEditorBundle\Model\PluginManagerInterface,
     Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilder,
     Symfony\Component\Form\FormView,
     Symfony\Component\Form\FormInterface;
 
 /**
- * CKEditor type
+ * CKEditor type.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -27,14 +28,19 @@ class CKEditorType extends AbstractType
     /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
     protected $configManager;
 
+    /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface */
+    protected $pluginManager;
+
     /**
      * Creates a CKEditor type.
      *
      * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface $configManager The CKEditor config manager.
+     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface $pluginManager The CKEditor plugin manager.
      */
-    public function __construct(ConfigManagerInterface $configManager)
+    public function __construct(ConfigManagerInterface $configManager, PluginManagerInterface $pluginManager)
     {
         $this->configManager = $configManager;
+        $this->pluginManager = $pluginManager;
     }
 
     /**
@@ -54,6 +60,7 @@ class CKEditorType extends AbstractType
         }
 
         $builder->setAttribute('config', $this->configManager->getConfig($options['config_name']));
+        $builder->setAttribute('plugins', array_merge($this->pluginManager->getPlugins(), $options['plugins']));
     }
 
     /**
@@ -62,6 +69,7 @@ class CKEditorType extends AbstractType
     public function buildView(FormView $view, FormInterface $form)
     {
         $view->set('config', $form->getAttribute('config'));
+        $view->set('plugins', $form->getAttribute('plugins'));
     }
 
     /**
@@ -73,6 +81,7 @@ class CKEditorType extends AbstractType
             'required'    => false,
             'config_name' => null,
             'config'      => array(),
+            'plugins'     => array(),
         );
     }
 
