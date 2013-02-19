@@ -7,16 +7,20 @@
     <parameters>
         <parameter key="form.type.ckeditor.class">Ivory\CKEditorBundle\Form\Type\CKEditorType</parameter>
         <parameter key="ivory_ck_editor.config_manager.class">Ivory\CKEditorBundle\Model\ConfigManager</parameter>
+        <parameter key="ivory_ck_editor.plugin_manager.class">Ivory\CKEditorBundle\Model\PluginManager</parameter>
     </parameters>
 
     <services>
         <service id="form.type.ckeditor" class="%form.type.ckeditor.class%">
             <argument type="service" id="ivory_ck_editor.config_manager" />
+            <argument type="service" id="ivory_ck_editor.plugin_manager" />
             <tag name="form.type" alias="ckeditor" />
         </service>
 
         <service id="ivory_ck_editor.config_manager" class="%ivory_ck_editor.config_manager.class%">
             <argument type="service" id="router" />
         </service>
+
+        <service id="ivory_ck_editor.plugin_manager" class="%ivory_ck_editor.plugin_manager.class%" />
     </services>
 </container>

@@ -15,6 +15,7 @@ ivory_ck_editor:
             toolbar:                [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ]
             ui_color:               "#000000"
             filebrowserUploadRoute: "my_route"
+            extraPlugins:           "wordcount"
             # ...
 ```
 
