@@ -49,7 +49,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->set('templating.helper.assets', $this->assetsHelperMock);
         $this->container->set('router', $this->routerMock);
 
-        $this->container->setParameter('twig.form.resources', array());
+        $this->container->setParameter('templating.engines', array('php', 'twig'));
 
         $this->container->registerExtension($extension = new IvoryCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());
@@ -97,22 +97,24 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         );
     }
 
-    /**
-     * This test checks if the ckeditor widget is weel add to the available form twig ressources but it does not work
-     * (Anyway, I have checked in a Symfony SE & all works fine).
-     *
-     * With my test bootstrap (see setUp), in a first time, the widget is well added but in a second time, it is
-     * override by the default value. Maybe someone with a better understood of the DI component can solve it :)
-     */
     public function testTwigResources()
     {
-//        // FIXME
-//        $this->container->compile();
-//
-//        $this->assertTrue(in_array(
-//            'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
-//            $this->container->getParameter('twig.form.resources'))
-//        );
+        $this->container->compile();
+
+        $this->assertTrue(in_array(
+            'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
+            $this->container->getParameter('twig.form.resources'))
+        );
+    }
+
+    public function testPhpResources()
+    {
+        $this->container->compile();
+
+        $this->assertTrue(in_array(
+            'IvoryCKEditorBundle:Form',
+            $this->container->getParameter('templating.helper.form.resources'))
+        );
     }
 
     public function testDisable()
