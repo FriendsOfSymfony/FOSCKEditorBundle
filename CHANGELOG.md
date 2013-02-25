@@ -2,6 +2,7 @@
 
 ### 1.1.3 - 2.1.3 (????-??-??)
 
+ * 954282d - Upgrade CKEditor to 4.0.1.1
  * ec29bfb - [Build] Add bash script to sync stable CKEditor release
 
 ### 1.1.2 - 2.1.2 (2013-02-19)
