@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.3 - 2.1.3 (????-??-??)
+
+ * ec29bfb - [Build] Add bash script to sync stable CKEditor release
+
 ### 1.1.2 - 2.1.2 (2013-02-19)
 
  * a6b1556 - Add plugins support
