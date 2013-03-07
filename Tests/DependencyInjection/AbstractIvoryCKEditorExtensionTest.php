@@ -64,7 +64,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
 
         $this->assertInstanceOf(
             'Ivory\CKEditorBundle\Form\Type\CKEditorType',
-            $this->container->get('form.type.ckeditor')
+            $this->container->get('ivory_ck_editor.form.type')
         );
     }
 
@@ -84,6 +84,14 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
 //            'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
 //            $this->container->getParameter('twig.form.resources'))
 //        );
+    }
+
+    public function testDisable()
+    {
+        $this->loadConfiguration($this->container, 'disable');
+        $this->container->compile();
+
+        $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isEnable());
     }
 
     public function testSingleConfiguration()

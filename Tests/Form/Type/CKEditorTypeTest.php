@@ -22,6 +22,9 @@ use Ivory\CKEditorBundle\Form\Type\CKEditorType,
  */
 class CKEditorTypeTest extends TypeTestCase
 {
+    /** @var \Ivory\CKEditorBundle\Form\Type\CKEditorType */
+    protected $ckEditorType;
+
     /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
     protected $configManager;
 
@@ -36,11 +39,12 @@ class CKEditorTypeTest extends TypeTestCase
         parent::setUp();
 
         $routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        $this->configManager = new ConfigManager($routerMock);
 
+        $this->configManager = new ConfigManager($routerMock);
         $this->pluginManager = new PluginManager();
 
-        $this->factory->addType(new CKEditorType($this->configManager, $this->pluginManager));
+        $this->ckEditorType = new CKEditorType(true, $this->configManager, $this->pluginManager);
+        $this->factory->addType($this->ckEditorType);
     }
 
     /**
@@ -50,6 +54,7 @@ class CKEditorTypeTest extends TypeTestCase
     {
         unset($this->configManager);
         unset($this->pluginManager);
+        unset($this->ckEditorType);
     }
 
     public function testDefaultRequired()
@@ -186,5 +191,30 @@ class CKEditorTypeTest extends TypeTestCase
         $view = $form->createView();
 
         $this->assertSame(array_merge($configuredPlugins, $explicitPlugins), $view->get('plugins'));
+    }
+
+    public function testDisable()
+    {
+        $this->ckEditorType->isEnable(false);
+
+        $options = array(
+            'config' => array(
+                'toolbar'  => array('foo' => 'bar'),
+                'ui_color' => '#ffffff',
+            ),
+            'plugins' => array(
+                'wordcount' => array(
+                    'path'     => '/my/path',
+                    'filename' => 'plugin.js',
+                ),
+            ),
+        );
+
+        $form = $this->factory->create('ckeditor', null, $options);
+        $view = $form->createView();
+
+        $this->assertFalse($view->get('enable'));
+        $this->assertFalse($view->has('config'));
+        $this->assertFalse($view->has('plugins'));
     }
 }

@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
 
         $node
             ->children()
+                ->booleanNode('enable')->defaultTrue()->end()
                 ->arrayNode('configs')
                     ->useAttributeAsKey('name')
                     ->prototype('array')
