@@ -19,6 +19,8 @@ Symfony 2.0 (1.* version of the bundle) and the master branch for Symfony >= 2.1
 
 We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
 
+**Bugfixes & new fetures must be addressed on the 2.0 branch except if we have a good reason :)**
+
 ## License
 
 The Ivory CKEditor Bundle is under the MIT license. For the full copyright and license information, please read the
