@@ -55,12 +55,16 @@ class IvoryCKEditorExtension extends Extension
             array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig')
         ));
 
-        if (!empty($config['configs'])) {
-            $this->registerConfigs($config, $container);
-        }
+        $container->setParameter('ivory_ck_editor.form.type.enable', $config['enable']);
 
-        if (!empty($config['plugins'])) {
-            $this->registerPlugins($config, $container);
+        if ($config['enable']) {
+            if (!empty($config['configs'])) {
+                $this->registerConfigs($config, $container);
+            }
+
+            if (!empty($config['plugins'])) {
+                $this->registerPlugins($config, $container);
+            }
         }
     }
 

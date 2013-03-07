@@ -107,4 +107,14 @@ $builder->add('field', 'ckeditor', array(
 ));
 ```
 
-Enjoy!
+## Fallback to textarea for testing purpose
+
+Sometime you don't want to use the CKEditor widget but a simple textarea (e.g testing purpose). As CKEditor uses an
+iframe to render the widget, it can be difficult to automate something on it. To disable CKEditor and fallback on the
+parent widget (textarea), simply disable it in your test environment configuration file:
+
+```
+# app/config/config_test.yml
+ivory_ck_editor:
+    enable: false
+```

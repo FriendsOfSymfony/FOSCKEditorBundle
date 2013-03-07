@@ -5,13 +5,14 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="form.type.ckeditor.class">Ivory\CKEditorBundle\Form\Type\CKEditorType</parameter>
+        <parameter key="ivory_ck_editor.form.type.class">Ivory\CKEditorBundle\Form\Type\CKEditorType</parameter>
         <parameter key="ivory_ck_editor.config_manager.class">Ivory\CKEditorBundle\Model\ConfigManager</parameter>
         <parameter key="ivory_ck_editor.plugin_manager.class">Ivory\CKEditorBundle\Model\PluginManager</parameter>
     </parameters>
 
     <services>
-        <service id="form.type.ckeditor" class="%form.type.ckeditor.class%">
+        <service id="ivory_ck_editor.form.type" class="%ivory_ck_editor.form.type.class%">
+            <argument>%ivory_ck_editor.form.type.enable%</argument>
             <argument type="service" id="ivory_ck_editor.config_manager" />
             <argument type="service" id="ivory_ck_editor.plugin_manager" />
             <tag name="form.type" alias="ckeditor" />
