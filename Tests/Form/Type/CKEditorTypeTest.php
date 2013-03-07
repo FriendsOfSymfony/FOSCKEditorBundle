@@ -13,15 +13,20 @@ namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType,
     Ivory\CKEditorBundle\Model\ConfigManager,
-    Ivory\CKEditorBundle\Model\PluginManager;
+    Ivory\CKEditorBundle\Model\PluginManager,
+    Symfony\Component\Form\FormFactory,
+    Symfony\Component\Form\Extension\Core\CoreExtension;
 
 /**
- * CKEditor type test
+ * CKEditor type test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorTypeTest extends TypeTestCase
+class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var \Symfony\Component\Form\FormFactoryInterface */
+    protected $factory;
+
     /** @var \Ivory\CKEditorBundle\Form\Type\CKEditorType */
     protected $ckEditorType;
 
@@ -36,14 +41,14 @@ class CKEditorTypeTest extends TypeTestCase
      */
     protected function setUp()
     {
-        parent::setUp();
-
         $routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $this->configManager = new ConfigManager($routerMock);
         $this->pluginManager = new PluginManager();
 
         $this->ckEditorType = new CKEditorType(true, $this->configManager, $this->pluginManager);
+
+        $this->factory = new FormFactory(array(new CoreExtension()));
         $this->factory->addType($this->ckEditorType);
     }
 
@@ -55,6 +60,7 @@ class CKEditorTypeTest extends TypeTestCase
         unset($this->configManager);
         unset($this->pluginManager);
         unset($this->ckEditorType);
+        unset($this->factory);
     }
 
     public function testDefaultRequired()
