@@ -1,7 +1,7 @@
 # README
 
-2.0: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?branc=2.0)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
-dev-master: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?banch=dev-master)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
+2.0: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?branch=2.0)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
+master: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?banch=master)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
 
 The bundle provides a [CKEditor](http://ckeditor.com/) integration for your Symfony2 Project. It automatically registers
 a new type `ckeditor` which can be easily configured.
@@ -19,7 +19,7 @@ Symfony 2.0 (1.* version of the bundle) and the master branch for Symfony >= 2.1
 
 We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
 
-**Bugfixes & new fetures must be addressed on the 2.0 branch except if we have a good reason :)**
+**Bugfixes & new features must be addressed on the 2.0 branch except if you have a good reason :)**
 
 ## License
 
