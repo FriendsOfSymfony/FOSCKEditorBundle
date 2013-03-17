@@ -16,7 +16,8 @@ use Ivory\CKEditorBundle\Model\ConfigManagerInterface,
     Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilder,
     Symfony\Component\Form\FormView,
-    Symfony\Component\Form\FormInterface;
+    Symfony\Component\Form\FormInterface,
+    Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * CKEditor type.
@@ -28,25 +29,47 @@ class CKEditorType extends AbstractType
     /** @var boolean */
     protected $enable;
 
+    /** @var string */
+    protected $basePath;
+
+    /** @var string */
+    protected $jsPath;
+
     /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
     protected $configManager;
 
     /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface */
     protected $pluginManager;
 
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    protected $assetsHelper;
+
     /**
      * Creates a CKEditor type.
      *
-     * @param boolean                                            $enable        TRUE if you want to use ckeditor widget,
-     *                                                                          FALSE if you want to use textarea widget.
-     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface $configManager The CKEditor config manager.
-     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface $pluginManager The CKEditor plugin manager.
+     * @param boolean                                               $enable        TRUE if you want to use ckeditor widget,
+     *                                                                             FALSE if you want to use textarea widget.
+     * @param string                                                $basePath      The CKEditor base path.
+     * @param string                                                $jsPath        The CKEditor JS path.
+     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface    $configManager The CKEditor config manager.
+     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface    $pluginManager The CKEditor plugin manager.
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper  The assets helper.
      */
-    public function __construct($enable, ConfigManagerInterface $configManager, PluginManagerInterface $pluginManager)
+    public function __construct(
+        $enable,
+        $basePath,
+        $jsPath,
+        ConfigManagerInterface $configManager,
+        PluginManagerInterface $pluginManager,
+        CoreAssetsHelper $assetsHelper
+    )
     {
         $this->isEnable($enable);
-        $this->configManager = $configManager;
-        $this->pluginManager = $pluginManager;
+        $this->setBasePath($basePath);
+        $this->setJsPath($jsPath);
+        $this->setConfigManager($configManager);
+        $this->setPluginManager($pluginManager);
+        $this->setAssetsHelper($assetsHelper);
     }
 
     /**
@@ -63,6 +86,46 @@ class CKEditorType extends AbstractType
         }
 
         return $this->enable;
+    }
+
+    /**
+     * Gets the CKEditor base path.
+     *
+     * @return string The CKEditor base path.
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
+
+    /**
+     * Sets the CKEditor base path.
+     *
+     * @param string $basePath The CKEditor base path.
+     */
+    public function setBasePath($basePath)
+    {
+        $this->basePath = $basePath;
+    }
+
+    /**
+     * Gets the CKEditor JS path.
+     *
+     * @return string The CKEditor JS path.
+     */
+    public function getJsPath()
+    {
+        return $this->jsPath;
+    }
+
+    /**
+     * Sets the CKEditor JS path.
+     *
+     * @param string $jsPath The CKEditor JS path.
+     */
+    public function setJsPath($jsPath)
+    {
+        $this->jsPath = $jsPath;
     }
 
     /**
@@ -106,6 +169,26 @@ class CKEditorType extends AbstractType
     }
 
     /**
+     * Gets the assets helper.
+     *
+     * @return \Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
+     */
+    public function getAssetsHelper()
+    {
+        return $this->assetsHelper;
+    }
+
+    /**
+     * Sets the assets helper.
+     *
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper The assets helper.
+     */
+    public function setAssetsHelper(CoreAssetsHelper $assetsHelper)
+    {
+        $this->assetsHelper = $assetsHelper;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilder $builder, array $options)
@@ -113,8 +196,10 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('enable', (bool) $options['enable']);
 
         if ($builder->getAttribute('enable')) {
-            $config = $options['config'];
+            $builder->setAttribute('base_path', $this->assetsHelper->getUrl($options['base_path']));
+            $builder->setAttribute('js_path', $this->assetsHelper->getUrl($options['js_path']));
 
+            $config = $options['config'];
             if ($options['config_name'] === null) {
                 $name = uniqid('ivory', true);
 
@@ -139,6 +224,9 @@ class CKEditorType extends AbstractType
         $view->set('enable', $form->getAttribute('enable'));
 
         if ($form->getAttribute('enable')) {
+            $view->set('base_path', $form->getAttribute('base_path'));
+            $view->set('js_path', $form->getAttribute('js_path'));
+
             $view->set('config', $form->getAttribute('config'));
             $view->set('plugins', $form->getAttribute('plugins'));
         }
@@ -152,6 +240,8 @@ class CKEditorType extends AbstractType
         return array(
             'required'    => false,
             'enable'      => $this->enable,
+            'base_path'   => $this->basePath,
+            'js_path'     => $this->jsPath,
             'config_name' => null,
             'config'      => array(),
             'plugins'     => array(),
