@@ -12,9 +12,8 @@
         <script type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
 
         <script type="text/javascript">
-            var instance = CKEDITOR.instances['{{ id }}'];
-            if (instance) {
-                instance.destroy(true);
+            if (CKEDITOR.instances['{{ id }}']) {
+                delete CKEDITOR.instances['{{ id }}'];
             }
 
             {% for pluginName, plugin in plugins %}
