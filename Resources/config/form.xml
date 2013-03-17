@@ -23,6 +23,8 @@
             <argument type="service" id="router" />
         </service>
 
-        <service id="ivory_ck_editor.plugin_manager" class="%ivory_ck_editor.plugin_manager.class%" />
+        <service id="ivory_ck_editor.plugin_manager" class="%ivory_ck_editor.plugin_manager.class%" scope="request">
+            <argument type="service" id="templating.helper.assets" />
+        </service>
     </services>
 </container>

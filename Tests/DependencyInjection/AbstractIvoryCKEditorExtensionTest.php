@@ -186,10 +186,16 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
 
         $this->container->enterScope('request');
 
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('/my/rewritten/path'));
+
         $pluginManager = $this->container->get('ivory_ck_editor.plugin_manager');
 
         $expected = array('wordcount' => array(
-            'path'     => '/my/path',
+            'path'     => '/my/rewritten/path',
             'filename' => 'plugin.js',
         ));
 

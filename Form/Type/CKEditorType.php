@@ -70,8 +70,6 @@ class CKEditorType extends AbstractType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->setAttribute('enable', $this->enable);
-
         if ($this->enable) {
             $config = $options['config'];
 
@@ -84,8 +82,10 @@ class CKEditorType extends AbstractType
                 $this->configManager->mergeConfig($options['config_name'], $config);
             }
 
+            $this->pluginManager->setPlugins($options['plugins']);
+
             $builder->setAttribute('config', $this->configManager->getConfig($options['config_name']));
-            $builder->setAttribute('plugins', array_merge($this->pluginManager->getPlugins(), $options['plugins']));
+            $builder->setAttribute('plugins', $this->pluginManager->getPlugins());
         }
     }
 
@@ -94,7 +94,7 @@ class CKEditorType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form)
     {
-        $view->set('enable', $form->getAttribute('enable'));
+        $view->set('enable', $this->enable);
 
         if ($this->enable) {
             $view->set('config', $form->getAttribute('config'));
