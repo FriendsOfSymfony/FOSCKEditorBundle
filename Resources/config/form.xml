@@ -11,14 +11,15 @@
     </parameters>
 
     <services>
-        <service id="ivory_ck_editor.form.type" class="%ivory_ck_editor.form.type.class%">
+        <service id="ivory_ck_editor.form.type" class="%ivory_ck_editor.form.type.class%" scope="request">
             <argument>%ivory_ck_editor.form.type.enable%</argument>
             <argument type="service" id="ivory_ck_editor.config_manager" />
             <argument type="service" id="ivory_ck_editor.plugin_manager" />
             <tag name="form.type" alias="ckeditor" />
         </service>
 
-        <service id="ivory_ck_editor.config_manager" class="%ivory_ck_editor.config_manager.class%">
+        <service id="ivory_ck_editor.config_manager" class="%ivory_ck_editor.config_manager.class%" scope="request">
+            <argument type="service" id="templating.helper.assets" />
             <argument type="service" id="router" />
         </service>
 
