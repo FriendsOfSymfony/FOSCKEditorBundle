@@ -2,6 +2,7 @@
 
 ### 1.1.3 - 2.1.3 (????-??-??)
 
+ * a2384c7 - Fix CKEditor destruction when it is loaded multiple times by AJAX (Sonata compatibility)
  * de8073f - Upgrade CKEditor to 4.0.2
  * 861d418 - Allow to disable ckeditor widget for testing purpose
  * ec29bfb - [Build] Add bash script to sync stable CKEditor release
