@@ -87,6 +87,16 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->leaveScope('request');
     }
 
+    public function testAssetsVersionTrimer()
+    {
+        $this->container->compile();
+
+        $this->assertInstanceOf(
+            'Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper',
+            $this->container->get('ivory_ck_editor.helper.assets_version_trimer')
+        );
+    }
+
     /**
      * This test checks if the ckeditor widget is weel add to the available form twig ressources but it does not work
      * (Anyway, I have checked in a Symfony SE & all works fine).

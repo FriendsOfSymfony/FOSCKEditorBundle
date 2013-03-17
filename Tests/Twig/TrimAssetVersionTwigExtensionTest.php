@@ -14,7 +14,8 @@ namespace Ivory\CKEditorBundle\Tests\Twig;
 use \Twig_Environment,
     \Twig_Loader_String;
 
-use Ivory\CKEditorBundle\Twig\TrimAssetVersionTwigExtension;
+use Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper,
+    Ivory\CKEditorBundle\Twig\TrimAssetVersionTwigExtension;
 
 /**
  * Trim asset version twig extension test.
@@ -23,39 +24,26 @@ use Ivory\CKEditorBundle\Twig\TrimAssetVersionTwigExtension;
  */
 class TrimAssetVersionTwigExtensionTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\CKEditorBundle\Twig\TrimAssetVersionTwigExtension */
-    protected $trimAssetVersionTwigExtension;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    public function testTrimAssetVersion()
     {
-        $this->trimAssetVersionTwigExtension = new TrimAssetVersionTwigExtension();
-    }
+        $assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
+        $trimAssetVersionTwigExtension = new TrimAssetVersionTwigExtension($assetsVersionTrimerHelperMock);
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->trimAssetVersionTwigExtension);
-    }
+        $assetsVersionTrimerHelperMock
+            ->expects($this->once())
+            ->method('trim')
+            ->with($this->equalTo('foo'))
+            ->will($this->returnValue('bar'));
 
-    public function testTrimAssetVersionWithVersion()
-    {
-        $this->assertSame('/bar', $this->trimAssetVersionTwigExtension->trimAssetVersion('/bar?v2'));
-    }
-
-    public function testTrimAssetVersionWithoutVersion()
-    {
-        $this->assertSame('/bar', $this->trimAssetVersionTwigExtension->trimAssetVersion('/bar'));
+        $this->assertSame('bar', $trimAssetVersionTwigExtension->trimAssetVersion('foo'));
     }
 
     public function testTrimAssetVersionFilter()
     {
+        $trimAssetVersionTwigExtension = new TrimAssetVersionTwigExtension(new AssetsVersionTrimerHelper());
+
         $twig = new Twig_Environment(new Twig_Loader_String());
-        $twig->addExtension($this->trimAssetVersionTwigExtension);
+        $twig->addExtension($trimAssetVersionTwigExtension);
 
         $this->assertSame('/bar', $twig->render('{{ \'/bar?v2\' | trim_asset_version }}'));
     }

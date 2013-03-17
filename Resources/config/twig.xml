@@ -14,6 +14,7 @@
             class="%ivory_ck_editor.twig.trim_asset_version_extension.class%"
             public="false"
         >
+            <argument type="service" id="ivory_ck_editor.helper.assets_version_trimer" />
             <tag name="twig.extension" />
         </service>
     </services>
