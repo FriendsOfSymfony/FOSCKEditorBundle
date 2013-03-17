@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->booleanNode('enable')->defaultTrue()->end()
-                ->scalarNode('base_path')->defaultValue('bundles/ivoryckeditor')->end()
+                ->scalarNode('base_path')->defaultValue('bundles/ivoryckeditor/')->end()
                 ->scalarNode('js_path')->defaultValue('bundles/ivoryckeditor/ckeditor.js')->end()
                 ->arrayNode('configs')
                     ->useAttributeAsKey('name')
