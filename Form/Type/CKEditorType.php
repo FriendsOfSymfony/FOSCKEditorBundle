@@ -59,10 +59,50 @@ class CKEditorType extends AbstractType
     public function isEnable($enable = null)
     {
         if ($enable !== null) {
-            $this->enable = $enable;
+            $this->enable = (bool) $enable;
         }
 
         return $this->enable;
+    }
+
+    /**
+     * Gets the CKEditor config manager.
+     *
+     * @return type The CKEditor config manager.
+     */
+    public function getConfigManager()
+    {
+        return $this->configManager;
+    }
+
+    /**
+     * Sets the CKEditor config manager.
+     *
+     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface $configManager The CKEditor config manager.
+     */
+    public function setConfigManager(ConfigManagerInterface $configManager)
+    {
+        $this->configManager = $configManager;
+    }
+
+    /**
+     * Gets the CKEditor plugin manager.
+     *
+     * @return type The CKEditor plugin manager.
+     */
+    public function getPluginManager()
+    {
+        return $this->pluginManager;
+    }
+
+    /**
+     * Sets the CKEditor plugin manager.
+     *
+     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface $pluginManager The CKEditor plugin manager.
+     */
+    public function setPluginManager(PluginManagerInterface $pluginManager)
+    {
+        $this->pluginManager = $pluginManager;
     }
 
     /**
@@ -70,7 +110,9 @@ class CKEditorType extends AbstractType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        if ($this->enable) {
+        $builder->setAttribute('enable', (bool) $options['enable']);
+
+        if ($builder->getAttribute('enable')) {
             $config = $options['config'];
 
             if ($options['config_name'] === null) {
@@ -94,9 +136,9 @@ class CKEditorType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form)
     {
-        $view->set('enable', $this->enable);
+        $view->set('enable', $form->getAttribute('enable'));
 
-        if ($this->enable) {
+        if ($form->getAttribute('enable')) {
             $view->set('config', $form->getAttribute('config'));
             $view->set('plugins', $form->getAttribute('plugins'));
         }
@@ -109,6 +151,7 @@ class CKEditorType extends AbstractType
     {
         return array(
             'required'    => false,
+            'enable'      => $this->enable,
             'config_name' => null,
             'config'      => array(),
             'plugins'     => array(),
