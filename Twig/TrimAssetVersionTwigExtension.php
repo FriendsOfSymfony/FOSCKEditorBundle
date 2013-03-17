@@ -11,7 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Twig;
 
-use \Twig_Extension;
+use Twig_Extension,
+    Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper;
 
 /**
  * Trim asset version twig extension.
@@ -20,6 +21,19 @@ use \Twig_Extension;
  */
 class TrimAssetVersionTwigExtension extends Twig_Extension
 {
+    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
+    protected $assetsVersionTrimerHelper;
+
+    /**
+     * Creates a trim asset version twig extension.
+     *
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     */
+    public function __construct(AssetsVersionTrimerHelper $assetsVersionTrimerHelper)
+    {
+        $this->assetsVersionTrimerHelper = $assetsVersionTrimerHelper;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -39,11 +53,7 @@ class TrimAssetVersionTwigExtension extends Twig_Extension
      */
     public function trimAssetVersion($asset)
     {
-        if (($position = strpos($asset, '?')) !== false) {
-            return substr($asset, 0, $position);
-        }
-
-        return $asset;
+        return $this->assetsVersionTrimerHelper->trim($asset);
     }
 
     /**
