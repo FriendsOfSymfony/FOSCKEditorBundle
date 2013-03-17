@@ -11,7 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Model;
 
-use Ivory\CKEditorBundle\Exception\PluginManagerException;
+use Ivory\CKEditorBundle\Exception\PluginManagerException,
+    Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * {@inheritdoc}
@@ -20,15 +21,42 @@ use Ivory\CKEditorBundle\Exception\PluginManagerException;
  */
 class PluginManager implements PluginManagerInterface
 {
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    protected $assetsHelper;
+
     /** @var array */
     protected $plugins;
 
     /**
      * Creates a plugin manager.
+     *
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper The assets helper.
+     * @param array                                                 $plugins      The CKEditor plugins.
      */
-    public function __construct()
+    public function __construct(CoreAssetsHelper $assetsHelper, array $plugins = array())
     {
-        $this->plugins = array();
+        $this->assetsHelper = $assetsHelper;
+        $this->setPlugins($plugins);
+    }
+
+    /**
+     * Gets the assets helper.
+     *
+     * @return \Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
+     */
+    public function getAssetsHelper()
+    {
+        return $this->assetsHelper;
+    }
+
+    /**
+     * Sets the assets helper.
+     *
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper The assets helper.
+     */
+    public function setAssetsHelper(CoreAssetsHelper $assetsHelper)
+    {
+        $this->assetsHelper = $assetsHelper;
     }
 
     /**
@@ -82,6 +110,8 @@ class PluginManager implements PluginManagerInterface
      */
     public function setPlugin($name, array $plugin)
     {
+        $plugin['path'] = $this->assetsHelper->getUrl($plugin['path']);
+
         $this->plugins[$name] = $plugin;
     }
 }

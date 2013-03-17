@@ -17,7 +17,7 @@
             }
 
             {% for pluginName, plugin in plugins %}
-                CKEDITOR.plugins.addExternal('{{ pluginName }}', '{{ asset(plugin.path) | trim_asset_version }}', '{{ plugin.filename }}');
+                CKEDITOR.plugins.addExternal('{{ pluginName }}', '{{ plugin.path | trim_asset_version }}', '{{ plugin.filename }}');
             {% endfor %}
 
             CKEDITOR.replace("{{ id }}"{% if config is not empty %}, {{ config | json_encode | raw }}{% endif %});

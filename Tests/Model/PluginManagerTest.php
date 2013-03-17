@@ -23,12 +23,19 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Model\PluginManager */
     protected $pluginManager;
 
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    protected $assetsHelperMock;
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->pluginManager = new PluginManager();
+        $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->pluginManager = new PluginManager($this->assetsHelperMock);
     }
 
     /**
@@ -37,25 +44,72 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         unset($this->pluginManager);
+        unset($this->assetsHelperMock);
     }
 
     public function testDefaultState()
     {
+        $this->assertSame($this->assetsHelperMock, $this->pluginManager->getAssetsHelper());
         $this->assertFalse($this->pluginManager->hasPlugins());
+    }
+
+    public function testInitialState()
+    {
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('/my/rewritten/path'));
+
+        $this->pluginManager = new PluginManager($this->assetsHelperMock, array(
+            'wordcount' => array(
+                'path'     => '/my/path',
+                'filename' => 'plugin.js'
+            ),
+        ));
+
+        $this->assertTrue($this->pluginManager->hasPlugins());
+        $this->assertTrue($this->pluginManager->hasPlugin('wordcount'));
+
+        $this->assertSame(
+            array('path' => '/my/rewritten/path', 'filename' => 'plugin.js'),
+            $this->pluginManager->getPlugin('wordcount')
+        );
+    }
+
+    public function testAssetsHelper()
+    {
+        $assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->pluginManager->setAssetsHelper($assetsHelperMock);
+
+        $this->assertSame($assetsHelperMock, $this->pluginManager->getAssetsHelper());
     }
 
     public function testPlugins()
     {
-        $plugins = array('wordcount' => array(
-            'path'     => '/my/path',
-            'filename' => 'plugin.js'
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('/my/rewritten/path'));
+
+        $this->pluginManager->setPlugins(array(
+            'wordcount' => array(
+                'path'     => '/my/path',
+                'filename' => 'plugin.js'
+            ),
         ));
 
-        $this->pluginManager->setPlugins($plugins);
-
         $this->assertTrue($this->pluginManager->hasPlugins());
-        $this->assertSame($plugins, $this->pluginManager->getPlugins());
-        $this->assertSame($plugins['wordcount'], $this->pluginManager->getPlugin('wordcount'));
+        $this->assertTrue($this->pluginManager->hasPlugin('wordcount'));
+
+        $this->assertSame(
+            array('path' => '/my/rewritten/path', 'filename' => 'plugin.js'),
+            $this->pluginManager->getPlugin('wordcount')
+        );
     }
 
     /**

@@ -35,19 +35,25 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Model\PluginManager */
     protected $pluginManager;
 
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    protected $assetsHelperMock;
+
+    /** @var \Symfony\Component\Routing\RouterInterface */
+    protected $routerMock;
+
     /**
      * {@inheritdooc}
      */
     protected function setUp()
     {
-        $assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+        $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
-        $this->configManager = new ConfigManager($assetsHelperMock, $routerMock);
-        $this->pluginManager = new PluginManager();
+        $this->configManager = new ConfigManager($this->assetsHelperMock, $this->routerMock);
+        $this->pluginManager = new PluginManager($this->assetsHelperMock);
 
         $this->ckEditorType = new CKEditorType(true, $this->configManager, $this->pluginManager);
 
@@ -61,6 +67,8 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->routerMock);
+        unset($this->assetsHelperMock);
         unset($this->configManager);
         unset($this->pluginManager);
         unset($this->ckEditorType);
@@ -162,53 +170,91 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testPluginsWithExplicitPlugins()
     {
-        $plugins = $plugins = array('wordcount' => array(
-            'path'     => '/my/path',
-            'filename' => 'plugin.js',
-        ));
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('/my/rewritten/path'));
 
-        $form = $this->factory->create('ckeditor', null, array('plugins' => $plugins));
+        $form = $this->factory->create('ckeditor', null, array(
+            'plugins' => array(
+                'wordcount' => array(
+                    'path'     => '/my/path',
+                    'filename' => 'plugin.js',
+                )),
+            )
+        );
+
         $view = $form->createView();
 
         $this->assertArrayHasKey('plugins', $view->vars);
-        $this->assertSame($plugins, $view->vars['plugins']);
+        $this->assertSame(
+            array('wordcount' => array('path' => '/my/rewritten/path', 'filename' => 'plugin.js')),
+            $view->vars['plugins']
+        );
     }
 
     public function testPluginsWithConfiguredPlugins()
     {
-        $plugins = array('wordcount' => array(
-            'path'     => '/my/path',
-            'filename' => 'plugin.js',
-        ));
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('/my/rewritten/path'));
 
-        $this->pluginManager->setPlugins($plugins);
+        $this->pluginManager->setPlugins(array(
+            'wordcount' => array(
+                'path'     => '/my/path',
+                'filename' => 'plugin.js',
+            ),
+        ));
 
         $form = $this->factory->create('ckeditor');
         $view = $form->createView();
 
         $this->assertArrayHasKey('plugins', $view->vars);
-        $this->assertSame($plugins, $view->vars['plugins']);
+        $this->assertSame(
+            array('wordcount' => array('path' => '/my/rewritten/path', 'filename' => 'plugin.js')),
+            $view->vars['plugins']
+        );
     }
 
     public function testPluginsWithConfiguredAndExplicitPlugins()
     {
-        $configuredPlugins = array('wordcount' => array(
-            'path'     => '/my/path',
-            'filename' => 'plugin.js',
-        ));
+        $this->assetsHelperMock
+            ->expects($this->any())
+            ->method('getUrl')
+            ->will($this->returnValueMap(array(
+                array('/my/configured/path', null, '/my/rewritten/configured/path'),
+                array('/my/explicit/path', null, '/my/rewritten/explicit/path'),
+            )));
 
-        $explicitPlugins = array('autogrow' => array(
-            'path'     => '/my/path',
-            'filename' => 'plugin.js',
-        ));
+        $this->pluginManager->setPlugins(array(
+            'wordcount' => array(
+                'path'     => '/my/explicit/path',
+                'filename' => 'plugin.js',
+            ))
+        );
 
-        $this->pluginManager->setPlugins($configuredPlugins);
+        $form = $this->factory->create('ckeditor', null, array(
+            'plugins' => array(
+                'autogrow' => array(
+                    'path'     => '/my/configured/path',
+                    'filename' => 'plugin.js',
+                ),
+            ))
+        );
 
-        $form = $this->factory->create('ckeditor', null, array('plugins' => $explicitPlugins));
         $view = $form->createView();
 
         $this->assertArrayHasKey('plugins', $view->vars);
-        $this->assertSame(array_merge($configuredPlugins, $explicitPlugins), $view->vars['plugins']);
+        $this->assertSame(
+            array(
+                'wordcount' => array('path' => '/my/rewritten/explicit/path', 'filename' => 'plugin.js'),
+                'autogrow' => array('path' => '/my/rewritten/configured/path', 'filename' => 'plugin.js'),
+            ),
+            $view->vars['plugins']
+        );
     }
 
     public function testDisable()
