@@ -6,10 +6,10 @@
 
     {% if enable %}
         <script type="text/javascript">
-            var CKEDITOR_BASEPATH = '{{ asset('bundles/ivoryckeditor/') | trim_asset_version }}';
+            var CKEDITOR_BASEPATH = '{{ base_path | trim_asset_version }}';
         </script>
 
-        <script type="text/javascript" src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
+        <script type="text/javascript" src="{{ js_path }}"></script>
 
         <script type="text/javascript">
             if (CKEDITOR.instances['{{ id }}']) {
@@ -20,7 +20,7 @@
                 CKEDITOR.plugins.addExternal('{{ pluginName }}', '{{ plugin.path | trim_asset_version }}', '{{ plugin.filename }}');
             {% endfor %}
 
-            CKEDITOR.replace("{{ id }}"{% if config is not empty %}, {{ config | json_encode | raw }}{% endif %});
+            CKEDITOR.replace('{{ id }}'{% if config is not empty %}, {{ config | json_encode | raw }}{% endif %});
         </script>
     {% endif %}
 {% endspaceless %}

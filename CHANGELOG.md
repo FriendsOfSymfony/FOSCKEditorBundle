@@ -2,6 +2,7 @@
 
 ### 1.1.3 - 2.1.3 (????-??-??)
 
+ * 3634c65 - Allow to use custom CKEditor versions
  * cca336a - Extract assets version trim logic in a dedicated service
  * 2093bcb - [Type] Allow to disable CKEditor at the widget level
  * c1a89c3 - [PluginManager] Refactor to handle assets support

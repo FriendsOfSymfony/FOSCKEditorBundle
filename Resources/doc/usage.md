@@ -122,3 +122,31 @@ ivory_ck_editor:
 ``` php
 $builder->add('field', 'ckeditor', array('enable' => false));
 ```
+
+## Use your own CKEditor version
+
+The bundle is shipped with the latest CKEditor 4 full release. If you don't want to use it, the bundle allows you to
+use your own by defining it in your configuration file or in your widget.
+
+First of all, you need to download & extract your version in the web directory. For that, you have 2 possibilities:
+
+  - Directly put it in the web directory (`/web/ckeditor/` for example).
+  - Put it in the `/Resources/public/` directory of any of your bundles.
+
+Then, register it:
+
+```
+# app/config/config.yml
+ivory_ck_editor:
+    base_path: "ckeditor"
+    js_path:   "ckeditor/ckeditor.js"
+```
+
+``` php
+$builder->add('field', 'ckeditor', array(
+    'base_path' => 'ckeditor',
+    'js_path'   => 'ckeditor/ckeditor.js',
+));
+```
+
+**Each path is relative to the web directory**
