@@ -75,6 +75,36 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         unset($this->factory);
     }
 
+    public function testInitialState()
+    {
+        $this->assertTrue($this->ckEditorType->isEnable());
+        $this->assertSame($this->configManager, $this->ckEditorType->getConfigManager());
+        $this->assertSame($this->pluginManager, $this->ckEditorType->getPluginManager());
+    }
+
+    public function testEnable()
+    {
+        $this->ckEditorType->isEnable(false);
+
+        $this->assertFalse($this->ckEditorType->isEnable());
+    }
+
+    public function testConfigManager()
+    {
+        $configManager = $this->getMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
+        $this->ckEditorType->setConfigManager($configManager);
+
+        $this->assertSame($configManager, $this->ckEditorType->getConfigManager());
+    }
+
+    public function testPluginManager()
+    {
+        $pluginManager = $this->getMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
+        $this->ckEditorType->setPluginManager($pluginManager);
+
+        $this->assertSame($pluginManager, $this->ckEditorType->getPluginManager());
+    }
+
     public function testDefaultRequired()
     {
         $form = $this->factory->create('ckeditor');
@@ -257,11 +287,37 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testDisable()
+    public function testConfiguredDisable()
     {
         $this->ckEditorType->isEnable(false);
 
         $options = array(
+            'config' => array(
+                'toolbar'  => array('foo' => 'bar'),
+                'ui_color' => '#ffffff',
+            ),
+            'plugins' => array(
+                'wordcount' => array(
+                    'path'     => '/my/path',
+                    'filename' => 'plugin.js',
+                ),
+            ),
+        );
+
+        $form = $this->factory->create('ckeditor', null, $options);
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('enable', $view->vars);
+        $this->assertFalse($view->vars['enable']);
+
+        $this->assertArrayNotHasKey('config', $view->vars);
+        $this->assertArrayNotHasKey('plugins', $view->vars);
+    }
+
+    public function testExplicitDisable()
+    {
+        $options = array(
+            'enable' => false,
             'config' => array(
                 'toolbar'  => array('foo' => 'bar'),
                 'ui_color' => '#ffffff',

@@ -2,6 +2,7 @@
 
 ### 1.1.3 - 2.1.3 (????-??-??)
 
+ * 2093bcb - [Type] Allow to disable CKEditor at the widget level
  * c1a89c3 - [PluginManager] Refactor to handle assets support
  * 4250a92 - [ConfigManager] Fix contentsCss if the application does not live at the root of the host
  * a2384c7 - Fix CKEditor destruction when it is loaded multiple times by AJAX (Sonata compatibility)
