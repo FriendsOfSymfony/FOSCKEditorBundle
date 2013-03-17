@@ -11,7 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Form\Type;
 
-use Ivory\CKEditorBundle\Model\ConfigManagerInterface,
+use Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper,
+    Ivory\CKEditorBundle\Model\ConfigManagerInterface,
     Ivory\CKEditorBundle\Model\PluginManagerInterface,
     Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilder,
@@ -44,16 +45,19 @@ class CKEditorType extends AbstractType
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
     protected $assetsHelper;
 
+    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
+    protected $assetsVersionTrimerHelper;
+
     /**
      * Creates a CKEditor type.
      *
-     * @param boolean                                               $enable        TRUE if you want to use ckeditor widget,
-     *                                                                             FALSE if you want to use textarea widget.
-     * @param string                                                $basePath      The CKEditor base path.
-     * @param string                                                $jsPath        The CKEditor JS path.
-     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface    $configManager The CKEditor config manager.
-     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface    $pluginManager The CKEditor plugin manager.
-     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper  The assets helper.
+     * @param boolean                                                $enable                    TRUE if you want to use ckeditor widget, FALSE if you want to use textarea widget.
+     * @param string                                                 $basePath                  The CKEditor base path.
+     * @param string                                                 $jsPath                    The CKEditor JS path.
+     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface     $configManager             The CKEditor config manager.
+     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface     $pluginManager             The CKEditor plugin manager.
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper  $assetsHelper              The assets helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
      */
     public function __construct(
         $enable,
@@ -61,7 +65,8 @@ class CKEditorType extends AbstractType
         $jsPath,
         ConfigManagerInterface $configManager,
         PluginManagerInterface $pluginManager,
-        CoreAssetsHelper $assetsHelper
+        CoreAssetsHelper $assetsHelper,
+        AssetsVersionTrimerHelper $assetsVersionTrimerHelper
     )
     {
         $this->isEnable($enable);
@@ -70,6 +75,8 @@ class CKEditorType extends AbstractType
         $this->setConfigManager($configManager);
         $this->setPluginManager($pluginManager);
         $this->setAssetsHelper($assetsHelper);
+        $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
+
     }
 
     /**
@@ -189,6 +196,26 @@ class CKEditorType extends AbstractType
     }
 
     /**
+     * Gets the assets version trimer helper.
+     *
+     * @return \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper The assets version trimer helper.
+     */
+    public function getAssetsVersionTrimerHelper()
+    {
+        return $this->assetsVersionTrimerHelper;
+    }
+
+    /**
+     * Sets the assets version trimer helper.
+     *
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     */
+    public function setAssetsVersionTrimerHelper(AssetsVersionTrimerHelper $assetsVersionTrimerHelper)
+    {
+        $this->assetsVersionTrimerHelper = $assetsVersionTrimerHelper;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilder $builder, array $options)
@@ -196,8 +223,8 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('enable', (bool) $options['enable']);
 
         if ($builder->getAttribute('enable')) {
-            $builder->setAttribute('base_path', $this->assetsHelper->getUrl($options['base_path']));
-            $builder->setAttribute('js_path', $this->assetsHelper->getUrl($options['js_path']));
+            $builder->setAttribute('base_path', $options['base_path']);
+            $builder->setAttribute('js_path', $options['js_path']);
 
             $config = $options['config'];
             if ($options['config_name'] === null) {
@@ -224,10 +251,13 @@ class CKEditorType extends AbstractType
         $view->set('enable', $form->getAttribute('enable'));
 
         if ($form->getAttribute('enable')) {
-            $view->set('base_path', $form->getAttribute('base_path'));
-            $view->set('js_path', $form->getAttribute('js_path'));
+            $view->set(
+                'base_path',
+                $this->assetsVersionTrimerHelper->trim($this->assetsHelper->getUrl($form->getAttribute('base_path')))
+            );
 
-            $view->set('config', $form->getAttribute('config'));
+            $view->set('js_path', $this->assetsHelper->getUrl($form->getAttribute('js_path')));
+            $view->set('config', json_encode($form->getAttribute('config'), JSON_FORCE_OBJECT));
             $view->set('plugins', $form->getAttribute('plugins'));
         }
     }

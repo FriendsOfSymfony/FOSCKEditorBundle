@@ -37,6 +37,8 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
     protected $assetsHelperMock;
 
+    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
+    protected $assetsVersionTrimerHelperMock;
 
     /**
      * {@inheritdooc}
@@ -50,13 +52,16 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
+
         $this->ckEditorType = new CKEditorType(
             true,
-            'ckeditor',
-            'ckeditor/ckeditor.js',
+            'bundles/ckeditor/',
+            'bundles/ckeditor/ckeditor.js',
             $this->configManagerMock,
             $this->pluginManagerMock,
-            $this->assetsHelperMock
+            $this->assetsHelperMock,
+            $this->assetsVersionTrimerHelperMock
         );
 
         $this->factory = new FormFactory(array(new CoreExtension()));
@@ -68,6 +73,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->assetsVersionTrimerHelperMock);
         unset($this->assetsHelperMock);
         unset($this->configManagerMock);
         unset($this->pluginManagerMock);
@@ -78,11 +84,12 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->assertTrue($this->ckEditorType->isEnable());
-        $this->assertSame('ckeditor', $this->ckEditorType->getBasePath());
-        $this->assertSame('ckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
+        $this->assertSame('bundles/ckeditor/', $this->ckEditorType->getBasePath());
+        $this->assertSame('bundles/ckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
         $this->assertSame($this->configManagerMock, $this->ckEditorType->getConfigManager());
         $this->assertSame($this->pluginManagerMock, $this->ckEditorType->getPluginManager());
         $this->assertSame($this->assetsHelperMock, $this->ckEditorType->getAssetsHelper());
+        $this->assertSame($this->assetsVersionTrimerHelperMock, $this->ckEditorType->getAssetsVersionTrimerHelper());
     }
 
     public function testDefaultRequired()
@@ -112,15 +119,21 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getUrl')
             ->will($this->returnValueMap(array(
-                array('ckeditor', null, 'ckeditor?v=1'),
-                array('ckeditor/ckeditor.js', null, 'ckeditor/ckeditor.js?v=1')
+                array('bundles/ckeditor/', null, '/bundles/ckeditor/?v=1'),
+                array('bundles/ckeditor/ckeditor.js', null, '/bundles/ckeditor/ckeditor.js?v=1')
             )));
+
+        $this->assetsVersionTrimerHelperMock
+            ->expects($this->once())
+            ->method('trim')
+            ->with($this->equalTo('/bundles/ckeditor/?v=1'))
+            ->will($this->returnValue('/bundles/ckeditor/'));
 
         $form = $this->factory->create('ckeditor');
         $view = $form->createView();
 
-        $this->assertSame('ckeditor?v=1', $view->get('base_path'));
-        $this->assertSame('ckeditor/ckeditor.js?v=1', $view->get('js_path'));
+        $this->assertSame('/bundles/ckeditor/', $view->get('base_path'));
+        $this->assertSame('/bundles/ckeditor/ckeditor.js?v=1', $view->get('js_path'));
     }
 
     public function testBaseAndJsPathWithConfiguredAndExplicitValues()
@@ -129,19 +142,25 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getUrl')
             ->will($this->returnValueMap(array(
-                array('foo', null, 'foo?v=1'),
-                array('foo/ckeditor.js', null, 'foo/ckeditor.js?v=1')
+                array('foo/', null, '/foo/?v=1'),
+                array('foo/ckeditor.js', null, '/foo/ckeditor.js?v=1')
             )));
 
+        $this->assetsVersionTrimerHelperMock
+            ->expects($this->once())
+            ->method('trim')
+            ->with($this->equalTo('/foo/?v=1'))
+            ->will($this->returnValue('/foo/'));
+
         $form = $this->factory->create('ckeditor', null, array(
-            'base_path' => 'foo',
+            'base_path' => 'foo/',
             'js_path'   => 'foo/ckeditor.js',
         ));
 
         $view = $form->createView();
 
-        $this->assertSame('foo?v=1', $view->get('base_path'));
-        $this->assertSame('foo/ckeditor.js?v=1', $view->get('js_path'));
+        $this->assertSame('/foo/', $view->get('base_path'));
+        $this->assertSame('/foo/ckeditor.js?v=1', $view->get('js_path'));
     }
 
     public function testDefaultConfig()
@@ -149,7 +168,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $form = $this->factory->create('ckeditor');
         $view = $form->createView();
 
-        $this->assertEmpty($view->get('config'));
+        $this->assertEmpty(json_decode($view->get('config'), true));
     }
 
     public function testConfigWithExplicitConfig()
@@ -175,7 +194,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $form = $this->factory->create('ckeditor', null, $options);
         $view = $form->createView();
 
-        $this->assertSame($options['config'], $view->get('config'));
+        $this->assertSame($options['config'], json_decode($view->get('config'), true));
     }
 
     public function testConfigWithConfiguredConfig()
@@ -199,7 +218,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $form = $this->factory->create('ckeditor', null, array('config_name' => 'default'));
         $view = $form->createView();
 
-        $this->assertSame($config, $view->get('config'));
+        $this->assertSame($config, json_decode($view->get('config'), true));
     }
 
     public function testConfigWithExplicitAndConfiguredConfig()
@@ -229,7 +248,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
         $view = $form->createView();
 
-        $this->assertSame(array_merge($configuredConfig, $explicitConfig), $view->get('config'));
+        $this->assertSame(array_merge($configuredConfig, $explicitConfig), json_decode($view->get('config'), true));
     }
 
     public function testDefaultPlugins()

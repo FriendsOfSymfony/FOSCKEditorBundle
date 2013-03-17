@@ -26,6 +26,9 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
     protected $assetsHelperMock;
 
+    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
+    protected $assetsVersionTrimerHelperMock;
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +38,9 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->pluginManager = new PluginManager($this->assetsHelperMock);
+        $this->assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
+
+        $this->pluginManager = new PluginManager($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock);
     }
 
     /**
@@ -45,11 +50,13 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
     {
         unset($this->pluginManager);
         unset($this->assetsHelperMock);
+        unset($this->assetsVersionTrimerHelperMock);
     }
 
     public function testDefaultState()
     {
         $this->assertSame($this->assetsHelperMock, $this->pluginManager->getAssetsHelper());
+        $this->assertSame($this->assetsVersionTrimerHelperMock, $this->pluginManager->getAssetsVersionTrimerHelper());
         $this->assertFalse($this->pluginManager->hasPlugins());
     }
 
@@ -59,9 +66,15 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('foo'));
+
+        $this->assetsVersionTrimerHelperMock
+            ->expects($this->once())
+            ->method('trim')
+            ->with($this->equalTo('foo'))
             ->will($this->returnValue('/my/rewritten/path'));
 
-        $this->pluginManager = new PluginManager($this->assetsHelperMock, array(
+        $this->pluginManager = new PluginManager($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock, array(
             'wordcount' => array(
                 'path'     => '/my/path',
                 'filename' => 'plugin.js'
@@ -77,23 +90,18 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testAssetsHelper()
-    {
-        $assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->pluginManager->setAssetsHelper($assetsHelperMock);
-
-        $this->assertSame($assetsHelperMock, $this->pluginManager->getAssetsHelper());
-    }
-
     public function testPlugins()
     {
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('foo'));
+
+        $this->assetsVersionTrimerHelperMock
+            ->expects($this->once())
+            ->method('trim')
+            ->with($this->equalTo('foo'))
             ->will($this->returnValue('/my/rewritten/path'));
 
         $this->pluginManager->setPlugins(array(
