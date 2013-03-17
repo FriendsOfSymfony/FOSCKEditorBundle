@@ -12,10 +12,10 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "symfony/framework-bundle": ">=2.1"
+        "symfony/framework-bundle": ">=2.1",
+        "symfony/form": ">=2.1"
     },
     "require-dev": {
-        "symfony/form": ">=2.1",
         "symfony/yaml": ">=2.1",
         "twig/twig": "1.*"
     },
