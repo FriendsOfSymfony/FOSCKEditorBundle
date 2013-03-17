@@ -6,7 +6,7 @@
 
     {% if enable %}
         <script type="text/javascript">
-            var CKEDITOR_BASEPATH = '{{ base_path | trim_asset_version }}';
+            var CKEDITOR_BASEPATH = '{{ base_path }}';
         </script>
 
         <script type="text/javascript" src="{{ js_path }}"></script>
@@ -16,11 +16,11 @@
                 delete CKEDITOR.instances['{{ id }}'];
             }
 
-            {% for pluginName, plugin in plugins %}
-                CKEDITOR.plugins.addExternal('{{ pluginName }}', '{{ plugin.path | trim_asset_version }}', '{{ plugin.filename }}');
+            {% for plugin_name, plugin in plugins %}
+                CKEDITOR.plugins.addExternal('{{ plugin_name }}', '{{ plugin.path }}', '{{ plugin.filename }}');
             {% endfor %}
 
-            CKEDITOR.replace('{{ id }}'{% if config is not empty %}, {{ config | json_encode | raw }}{% endif %});
+            CKEDITOR.replace('{{ id }}', {{ config | raw }});
         </script>
     {% endif %}
 {% endspaceless %}

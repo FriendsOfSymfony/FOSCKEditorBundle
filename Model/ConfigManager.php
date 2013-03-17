@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Model;
 
 use Ivory\CKEditorBundle\Exception\ConfigManagerException,
+    Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper,
     Symfony\Component\Routing\RouterInterface,
     Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
@@ -25,6 +26,9 @@ class ConfigManager implements ConfigManagerInterface
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
     protected $assetsHelper;
 
+    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
+    protected $assetsVersionTrimerHelper;
+
     /** @var \Symfony\Component\Routing\RouterInterface */
     protected $router;
 
@@ -34,14 +38,21 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * Creates a CKEditor config manager.
      *
-     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper The assets helper.
-     * @param \Symfony\Component\Routing\RouterInterface            $router       The router.
-     * @param array                                                 $configs      The CKEditor configs.
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper  $assetsHelper              The assets helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     * @param \Symfony\Component\Routing\RouterInterface             $router                    The router.
+     * @param array                                                  $configs                   The CKEditor configs.
      */
-    public function __construct(CoreAssetsHelper $assetsHelper, RouterInterface $router, array $configs = array())
+    public function __construct(
+        CoreAssetsHelper $assetsHelper,
+        AssetsVersionTrimerHelper $assetsVersionTrimerHelper,
+        RouterInterface $router,
+        array $configs = array()
+    )
     {
-        $this->assetsHelper = $assetsHelper;
-        $this->router = $router;
+        $this->setAssetsHelper($assetsHelper);
+        $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
+        $this->setRouter($router);
         $this->setConfigs($configs);
     }
 
@@ -63,6 +74,26 @@ class ConfigManager implements ConfigManagerInterface
     public function setAssetsHelper(CoreAssetsHelper $assetsHelper)
     {
         $this->assetsHelper = $assetsHelper;
+    }
+
+    /**
+     * Gets the assets version trimer helper.
+     *
+     * @return \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper The assets version trimer helper.
+     */
+    public function getAssetsVersionTrimerHelper()
+    {
+        return $this->assetsVersionTrimerHelper;
+    }
+
+    /**
+     * Sets the assets version trimer helper.
+     *
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     */
+    public function setAssetsVersionTrimerHelper(AssetsVersionTrimerHelper $assetsVersionTrimerHelper)
+    {
+        $this->assetsVersionTrimerHelper = $assetsVersionTrimerHelper;
     }
 
     /**
@@ -164,7 +195,9 @@ class ConfigManager implements ConfigManagerInterface
 
             $config['contentsCss'] = array();
             foreach ($cssContents as $cssContent) {
-                $config['contentsCss'][] = $this->assetsHelper->getUrl($cssContent);
+                $config['contentsCss'][] = $this->assetsVersionTrimerHelper->trim(
+                    $this->assetsHelper->getUrl($cssContent)
+                );
             }
         }
 

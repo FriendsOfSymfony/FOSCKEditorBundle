@@ -46,7 +46,7 @@ class IvoryCKEditorExtension extends Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        foreach (array('helper', 'twig', 'form') as $service) {
+        foreach (array('helper', 'form') as $service) {
             $loader->load($service.'.xml');
         }
 
