@@ -23,6 +23,9 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
     protected $configManager;
 
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    protected $assetsHelperMock;
+
     /** @var \Symfony\Component\Routing\RouterInterface */
     protected $routerMock;
 
@@ -31,8 +34,13 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        $this->configManager = new ConfigManager($this->routerMock);
+
+        $this->configManager = new ConfigManager($this->assetsHelperMock, $this->routerMock);
     }
 
     /**
@@ -40,6 +48,7 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+        unset($this->assetsHelperMock);
         unset($this->routerMock);
         unset($this->configManager);
     }
@@ -64,6 +73,7 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
+        $this->assertSame($this->assetsHelperMock, $this->configManager->getAssetsHelper());
         $this->assertSame($this->routerMock, $this->configManager->getRouter());
         $this->assertFalse($this->configManager->hasConfigs());
         $this->assertEmpty($this->configManager->getConfigs());
@@ -76,10 +86,21 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
             'bar' => array('bar'),
         );
 
-        $this->configManager = new ConfigManager($this->routerMock, $configs);
+        $this->configManager = new ConfigManager($this->assetsHelperMock, $this->routerMock, $configs);
 
         $this->assertTrue($this->configManager->hasConfigs());
         $this->assertSame($configs, $this->configManager->getConfigs());
+    }
+
+    public function testAssetsHelper()
+    {
+        $assetsHelper = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->configManager->setAssetsHelper($assetsHelper);
+
+        $this->assertSame($assetsHelper, $this->configManager->getAssetsHelper());
     }
 
     public function testRouter()
@@ -106,10 +127,38 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array_merge($config1, $config2), $this->configManager->getConfig('foo'));
     }
 
+    public function testConfigContentsCssWithString()
+    {
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo('foo'), $this->equalTo(null))
+            ->will($this->returnValue('bar'));
+
+        $this->configManager->setConfig('foo', array('contentsCss' => 'foo'));
+
+        $this->assertSame(array('contentsCss' => array('bar')), $this->configManager->getConfig('foo'));
+    }
+
+    public function testConfigContentsCssWithArray()
+    {
+        $this->assetsHelperMock
+            ->expects($this->any())
+            ->method('getUrl')
+            ->will($this->returnValueMap(array(
+                array('foo', null, 'foo1'),
+                array('bar', null, 'bar1'),
+            )));
+
+        $this->configManager->setConfig('foo', array('contentsCss' => array('foo', 'bar')));
+
+        $this->assertSame(array('contentsCss' => array('foo1', 'bar1')), $this->configManager->getConfig('foo'));
+    }
+
     /**
      * @dataProvider filebrowserProvider
      */
-    public function testConfigUrls($filebrowser)
+    public function testConfigFileBrowser($filebrowser)
     {
         $this->routerMock
             ->expects($this->once())

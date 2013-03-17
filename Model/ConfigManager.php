@@ -12,7 +12,8 @@
 namespace Ivory\CKEditorBundle\Model;
 
 use Ivory\CKEditorBundle\Exception\ConfigManagerException,
-    Symfony\Component\Routing\RouterInterface;
+    Symfony\Component\Routing\RouterInterface,
+    Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * {@inheritdoc}
@@ -21,6 +22,9 @@ use Ivory\CKEditorBundle\Exception\ConfigManagerException,
  */
 class ConfigManager implements ConfigManagerInterface
 {
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    protected $assetsHelper;
+
     /** @var \Symfony\Component\Routing\RouterInterface */
     protected $router;
 
@@ -30,13 +34,35 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * Creates a CKEditor config manager.
      *
-     * @param \Symfony\Component\Routing\RouterInterface $router  The router.
-     * @param array                                      $configs The CKEditor configs.
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper The assets helper.
+     * @param \Symfony\Component\Routing\RouterInterface            $router       The router.
+     * @param array                                                 $configs      The CKEditor configs.
      */
-    public function __construct(RouterInterface $router, array $configs = array())
+    public function __construct(CoreAssetsHelper $assetsHelper, RouterInterface $router, array $configs = array())
     {
+        $this->assetsHelper = $assetsHelper;
         $this->router = $router;
         $this->setConfigs($configs);
+    }
+
+    /**
+     * Gets the assets helper.
+     *
+     * @return \Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
+     */
+    public function getAssetsHelper()
+    {
+        return $this->assetsHelper;
+    }
+
+    /**
+     * Sets the assets helper.
+     *
+     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper The assets helper.
+     */
+    public function setAssetsHelper(CoreAssetsHelper $assetsHelper)
+    {
+        $this->assetsHelper = $assetsHelper;
     }
 
     /**
@@ -110,12 +136,57 @@ class ConfigManager implements ConfigManagerInterface
      */
     public function setConfig($name, array $config)
     {
+        $config = $this->handleContentsCss($config);
+        $config = $this->handleFileBrowser($config);
+
+        $this->configs[$name] = $config;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function mergeConfig($name, array $config)
+    {
+        $this->setConfig($name, array_merge($this->getConfig($name), $config));
+    }
+
+    /**
+     * Handles contens css config.
+     *
+     * @param array $config The config.
+     *
+     * @return array The handled config.
+     */
+    protected function handleContentsCss(array $config)
+    {
+        if (isset($config['contentsCss'])) {
+            $cssContents = (array) $config['contentsCss'];
+
+            $config['contentsCss'] = array();
+            foreach ($cssContents as $cssContent) {
+                $config['contentsCss'][] = $this->assetsHelper->getUrl($cssContent);
+            }
+        }
+
+        return $config;
+    }
+
+    /**
+     * Handles the file browser config.
+     *
+     * @param array $config The condig.
+     *
+     * @return array The handled config.
+     */
+    protected function handleFileBrowser(array $config)
+    {
         $filebrowser = function ($key, array &$config, RouterInterface $router) {
             $filebrowserRoute = 'filebrowser'.$key.'Route';
-            $filebrowserRouteParameters = 'filebrowser'.$key.'RouteParameters';
-            $filebrowserRouteAbsolute = 'filebrowser'.$key.'RouteAbsolute';
 
             if (isset($config[$filebrowserRoute])) {
+                $filebrowserRouteParameters = 'filebrowser'.$key.'RouteParameters';
+                $filebrowserRouteAbsolute = 'filebrowser'.$key.'RouteAbsolute';
+
                 $config['filebrowser'.$key.'Url'] = $router->generate(
                     $config[$filebrowserRoute],
                     isset($config[$filebrowserRouteParameters]) ? $config[$filebrowserRouteParameters] : array(),
@@ -137,14 +208,6 @@ class ConfigManager implements ConfigManagerInterface
         $filebrowser('FlashUpload', $config, $this->router);
         $filebrowser('ImageUpload', $config, $this->router);
 
-        $this->configs[$name] = $config;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function mergeConfig($name, array $config)
-    {
-        $this->setConfig($name, array_merge($this->getConfig($name), $config));
+        return $config;
     }
 }

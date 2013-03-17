@@ -41,9 +41,13 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
-        $this->configManager = new ConfigManager($routerMock);
+        $this->configManager = new ConfigManager($assetsHelperMock, $routerMock);
         $this->pluginManager = new PluginManager();
 
         $this->ckEditorType = new CKEditorType(true, $this->configManager, $this->pluginManager);
