@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.3 - 2.1.3 (????-??-??)
+### 1.1.3 - 2.1.3 (2013-03-18)
 
  * 464fd64 - Add PHP templating engine support
  * eb7c407 - Remove trim asset version twig extension & use the service instead
