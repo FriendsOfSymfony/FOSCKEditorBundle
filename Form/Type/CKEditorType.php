@@ -257,7 +257,7 @@ class CKEditorType extends AbstractType
             );
 
             $view->set('js_path', $this->assetsHelper->getUrl($form->getAttribute('js_path')));
-            $view->set('config', json_encode($form->getAttribute('config'), JSON_FORCE_OBJECT));
+            $view->set('config', json_encode($form->getAttribute('config')));
             $view->set('plugins', $form->getAttribute('plugins'));
         }
     }
