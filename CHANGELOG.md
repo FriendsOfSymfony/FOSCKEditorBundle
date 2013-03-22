@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.4 - 2.1.4 (????-??-??)
+
+ * 16ba800 - Upgrade CKEditor to 4.1
+
 ### 1.1.3 - 2.1.3 (2013-03-18)
 
  * 464fd64 - Add PHP templating engine support
