@@ -11,9 +11,9 @@
 
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
-use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension,
-    Symfony\Component\DependencyInjection\ContainerBuilder,
-    Symfony\Component\DependencyInjection\Scope;
+use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Scope;
 
 /**
  * Abstract Ivory CKEditor extension test.
@@ -101,9 +101,11 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
     {
         $this->container->compile();
 
-        $this->assertTrue(in_array(
-            'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
-            $this->container->getParameter('twig.form.resources'))
+        $this->assertTrue(
+            in_array(
+                'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
+                $this->container->getParameter('twig.form.resources')
+            )
         );
     }
 
@@ -111,9 +113,8 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
     {
         $this->container->compile();
 
-        $this->assertTrue(in_array(
-            'IvoryCKEditorBundle:Form',
-            $this->container->getParameter('templating.helper.form.resources'))
+        $this->assertTrue(
+            in_array('IvoryCKEditorBundle:Form', $this->container->getParameter('templating.helper.form.resources'))
         );
     }
 

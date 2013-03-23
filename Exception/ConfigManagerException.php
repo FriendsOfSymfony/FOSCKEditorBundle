@@ -25,7 +25,7 @@ class ConfigManagerException extends Exception
      *
      * @return \Ivory\CKEditorBundle\Exception\ConfigManagerException The "CONFIG DOES NOT EXIST" exception.
      */
-    static public function configDoesNotExist($name)
+    public static function configDoesNotExist($name)
     {
         return new static(sprintf('The CKEditor config "%s" does not exist.', $name));
     }

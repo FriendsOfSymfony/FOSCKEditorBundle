@@ -11,8 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
-use Twig_Environment,
-    Twig_Loader_Filesystem;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 /**
  * Twig template test.

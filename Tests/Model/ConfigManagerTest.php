@@ -67,7 +67,7 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @return array The valid filebrowsers keys.
      */
-    static public function filebrowserProvider()
+    public static function filebrowserProvider()
     {
         return array(
             array('Browse'),
@@ -147,18 +147,12 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->any())
             ->method('getUrl')
-            ->will($this->returnValueMap(array(
-                array('foo', null, 'foo1'),
-                array('bar', null, 'bar1'),
-            )));
+            ->will($this->returnValueMap(array(array('foo', null, 'foo1'), array('bar', null, 'bar1'))));
 
         $this->assetsVersionTrimerHelperMock
             ->expects($this->any())
             ->method('trim')
-            ->will($this->returnValueMap(array(
-                array('foo1', 'baz1'),
-                array('bar1', 'baz2'),
-            )));
+            ->will($this->returnValueMap(array(array('foo1', 'baz1'), array('bar1', 'baz2'))));
 
         $this->configManager->setConfig('foo', array('contentsCss' => array('foo', 'bar')));
 
@@ -180,11 +174,14 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnValue('browse_url'));
 
-        $this->configManager->setConfig('foo', array(
-            'filebrowser'.$filebrowser.'Route'           => 'browse_route',
-            'filebrowser'.$filebrowser.'RouteParameters' => array('foo' => 'bar'),
-            'filebrowser'.$filebrowser.'RouteAbsolute'   => true
-        ));
+        $this->configManager->setConfig(
+            'foo',
+            array(
+                'filebrowser'.$filebrowser.'Route'           => 'browse_route',
+                'filebrowser'.$filebrowser.'RouteParameters' => array('foo' => 'bar'),
+                'filebrowser'.$filebrowser.'RouteAbsolute'   => true,
+            )
+        );
 
         $this->assertSame(
             array('filebrowser'.$filebrowser.'Url' => 'browse_url'),

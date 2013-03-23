@@ -11,9 +11,9 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
-use Symfony\Component\Templating\Loader\FilesystemLoader,
-    Symfony\Component\Templating\PhpEngine,
-    Symfony\Component\Templating\TemplateNameParser;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
+use Symfony\Component\Templating\PhpEngine;
+use Symfony\Component\Templating\TemplateNameParser;
 
 /**
  * PHP template test.

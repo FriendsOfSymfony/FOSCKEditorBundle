@@ -11,14 +11,14 @@
 
 namespace Ivory\CKEditorBundle\Form\Type;
 
-use Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper,
-    Ivory\CKEditorBundle\Model\ConfigManagerInterface,
-    Ivory\CKEditorBundle\Model\PluginManagerInterface,
-    Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilder,
-    Symfony\Component\Form\FormView,
-    Symfony\Component\Form\FormInterface,
-    Symfony\Component\Templating\Helper\CoreAssetsHelper;
+use Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper;
+use Ivory\CKEditorBundle\Model\ConfigManagerInterface;
+use Ivory\CKEditorBundle\Model\PluginManagerInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * CKEditor type.
@@ -51,13 +51,14 @@ class CKEditorType extends AbstractType
     /**
      * Creates a CKEditor type.
      *
-     * @param boolean                                                $enable                    TRUE if you want to use ckeditor widget, FALSE if you want to use textarea widget.
+     * @param boolean                                                $enable                    TRUE => ckeditor,
+     *                                                                                           FALSE => textarea.
      * @param string                                                 $basePath                  The CKEditor base path.
      * @param string                                                 $jsPath                    The CKEditor JS path.
-     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface     $configManager             The CKEditor config manager.
-     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface     $pluginManager             The CKEditor plugin manager.
+     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface     $configManager             The config manager.
+     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface     $pluginManager             The plugin manager.
      * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper  $assetsHelper              The assets helper.
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
      */
     public function __construct(
         $enable,
@@ -67,8 +68,7 @@ class CKEditorType extends AbstractType
         PluginManagerInterface $pluginManager,
         CoreAssetsHelper $assetsHelper,
         AssetsVersionTrimerHelper $assetsVersionTrimerHelper
-    )
-    {
+    ) {
         $this->isEnable($enable);
         $this->setBasePath($basePath);
         $this->setJsPath($jsPath);
@@ -76,7 +76,6 @@ class CKEditorType extends AbstractType
         $this->setPluginManager($pluginManager);
         $this->setAssetsHelper($assetsHelper);
         $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
-
     }
 
     /**
@@ -208,7 +207,7 @@ class CKEditorType extends AbstractType
     /**
      * Sets the assets version trimer helper.
      *
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
      */
     public function setAssetsVersionTrimerHelper(AssetsVersionTrimerHelper $assetsVersionTrimerHelper)
     {

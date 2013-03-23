@@ -11,9 +11,9 @@
 
 namespace Ivory\CKEditorBundle\Model;
 
-use Ivory\CKEditorBundle\Exception\PluginManagerException,
-    Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper,
-    Symfony\Component\Templating\Helper\CoreAssetsHelper;
+use Ivory\CKEditorBundle\Exception\PluginManagerException;
+use Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper;
+use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * {@inheritdoc}
@@ -35,15 +35,14 @@ class PluginManager implements PluginManagerInterface
      * Creates a plugin manager.
      *
      * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper  $assetsHelper              The assets helper.
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
      * @param array                                                  $plugins                   The CKEditor plugins.
      */
     public function __construct(
         CoreAssetsHelper $assetsHelper,
         AssetsVersionTrimerHelper $assetsVersionTrimerHelper,
         array $plugins = array()
-    )
-    {
+    ) {
         $this->setAssetsHelper($assetsHelper);
         $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
         $this->setPlugins($plugins);
@@ -82,7 +81,7 @@ class PluginManager implements PluginManagerInterface
     /**
      * Sets the assets version trimer helper.
      *
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
      */
     public function setAssetsVersionTrimerHelper(AssetsVersionTrimerHelper $assetsVersionTrimerHelper)
     {

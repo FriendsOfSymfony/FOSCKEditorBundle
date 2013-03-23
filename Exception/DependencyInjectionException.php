@@ -25,7 +25,7 @@ class DependencyInjectionException extends Exception
      *
      * @return \Ivory\CKEditorBundle\Exception\DependencyInjectionException The "INVALID TOOLBAR ITEM" exception.
      */
-    static public function invalidToolbarItem($item)
+    public static function invalidToolbarItem($item)
     {
         return new static(sprintf('The toolbar item "%s" does not exist.', $item));
     }
@@ -37,7 +37,7 @@ class DependencyInjectionException extends Exception
      *
      * @return \Ivory\CKEditorBundle\Exception\DependencyInjectionException The "INVALID TOOLBAR" exception.
      */
-    static public function invalidToolbar($toolbar)
+    public static function invalidToolbar($toolbar)
     {
         return new static(sprintf('The toolbar "%s" does not exist.', $toolbar));
     }

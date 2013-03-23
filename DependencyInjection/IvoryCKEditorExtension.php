@@ -11,12 +11,12 @@
 
 namespace Ivory\CKEditorBundle\DependencyInjection;
 
-use Ivory\CKEditorBundle\Exception\DependencyInjectionException,
-    Symfony\Component\Config\Definition\Processor,
-    Symfony\Component\Config\FileLocator,
-    Symfony\Component\DependencyInjection\ContainerBuilder,
-    Symfony\Component\DependencyInjection\Loader\XmlFileLoader,
-    Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Ivory\CKEditorBundle\Exception\DependencyInjectionException;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * Ivory CKEditor extension.
@@ -76,21 +76,25 @@ class IvoryCKEditorExtension extends Extension
         $templatingEngines = $container->getParameter('templating.engines');
 
         if (in_array('php', $templatingEngines)) {
-            $container->setParameter('templating.helper.form.resources', array_merge(
-                $container->hasParameter('templating.helper.form.resources')
-                    ? $container->getParameter('templating.helper.form.resources')
-                    : array(),
-                array('IvoryCKEditorBundle:Form')
-            ));
+            $phpFormResources = $container->hasParameter('templating.helper.form.resources')
+                ? $container->getParameter('templating.helper.form.resources')
+                : array();
+
+            $container->setParameter(
+                'templating.helper.form.resources',
+                array_merge($phpFormResources, array('IvoryCKEditorBundle:Form'))
+            );
         }
 
         if (in_array('twig', $templatingEngines)) {
-            $container->setParameter('twig.form.resources', array_merge(
-                $container->hasParameter('twig.form.resources')
-                    ? $container->getParameter('twig.form.resources')
-                    : array(),
-                array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig')
-            ));
+            $twigFormResources = $container->hasParameter('twig.form.resources')
+                ? $container->getParameter('twig.form.resources')
+                : array();
+
+            $container->setParameter(
+                'twig.form.resources',
+                array_merge($twigFormResources, array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig'))
+            );
         }
     }
 
