@@ -41,16 +41,18 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderWithSimpleWidget()
     {
-        $output = $this->renderTemplate(array(
-            'form'      => $this->getMock('Symfony\Component\Form\FormView'),
-            'id'        => 'id',
-            'value'     => 'value',
-            'enable'    => true,
-            'base_path' => 'base_path',
-            'js_path'   => 'js_path',
-            'config'    => json_encode(array(), JSON_FORCE_OBJECT),
-            'plugins'   => array(),
-        ));
+        $output = $this->renderTemplate(
+            array(
+                'form'      => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'        => 'id',
+                'value'     => 'value',
+                'enable'    => true,
+                'base_path' => 'base_path',
+                'js_path'   => 'js_path',
+                'config'    => json_encode(array()),
+                'plugins'   => array(),
+            )
+        );
 
         $expected = <<<EOF
 <textarea >value</textarea>
@@ -62,7 +64,7 @@ var CKEDITOR_BASEPATH = 'base_path';
 if (CKEDITOR.instances['id']) {
 delete CKEDITOR.instances['id'];
 }
-CKEDITOR.replace('id', {});
+CKEDITOR.replace('id', []);
 </script>
 
 EOF;
@@ -72,16 +74,18 @@ EOF;
 
     public function testRenderWithFullWidget()
     {
-        $output = $this->renderTemplate(array(
-            'form'      => $this->getMock('Symfony\Component\Form\FormView'),
-            'id'        => 'id',
-            'value'     => 'value',
-            'enable'    => true,
-            'base_path' => 'base_path',
-            'js_path'   => 'js_path',
-            'config'    => json_encode(array('foo' => 'bar'), JSON_FORCE_OBJECT),
-            'plugins'   => array('foo' => array('path' => 'path', 'filename' => 'filename')),
-        ));
+        $output = $this->renderTemplate(
+            array(
+                'form'      => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'        => 'id',
+                'value'     => 'value',
+                'enable'    => true,
+                'base_path' => 'base_path',
+                'js_path'   => 'js_path',
+                'config'    => json_encode(array('foo' => 'bar')),
+                'plugins'   => array('foo' => array('path' => 'path', 'filename' => 'filename')),
+            )
+        );
 
         $expected = <<<EOF
 <textarea >value</textarea>
@@ -104,12 +108,14 @@ EOF;
 
     public function testRenderWithDisableWidget()
     {
-        $output = $this->renderTemplate(array(
-            'form'   => $this->getMock('Symfony\Component\Form\FormView'),
-            'id'     => 'id',
-            'value'  => 'value',
-            'enable' => false,
-        ));
+        $output = $this->renderTemplate(
+            array(
+                'form'   => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'     => 'id',
+                'value'  => 'value',
+                'enable' => false,
+            )
+        );
 
         $expected = <<<EOF
 <textarea >value</textarea>

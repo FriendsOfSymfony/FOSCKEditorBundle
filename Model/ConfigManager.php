@@ -11,10 +11,10 @@
 
 namespace Ivory\CKEditorBundle\Model;
 
-use Ivory\CKEditorBundle\Exception\ConfigManagerException,
-    Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper,
-    Symfony\Component\Routing\RouterInterface,
-    Symfony\Component\Templating\Helper\CoreAssetsHelper;
+use Ivory\CKEditorBundle\Exception\ConfigManagerException;
+use Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * {@inheritdoc}
@@ -39,7 +39,7 @@ class ConfigManager implements ConfigManagerInterface
      * Creates a CKEditor config manager.
      *
      * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper  $assetsHelper              The assets helper.
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
      * @param \Symfony\Component\Routing\RouterInterface             $router                    The router.
      * @param array                                                  $configs                   The CKEditor configs.
      */
@@ -48,8 +48,7 @@ class ConfigManager implements ConfigManagerInterface
         AssetsVersionTrimerHelper $assetsVersionTrimerHelper,
         RouterInterface $router,
         array $configs = array()
-    )
-    {
+    ) {
         $this->setAssetsHelper($assetsHelper);
         $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
         $this->setRouter($router);
@@ -89,7 +88,7 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * Sets the assets version trimer helper.
      *
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The assets version trimer helper.
+     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
      */
     public function setAssetsVersionTrimerHelper(AssetsVersionTrimerHelper $assetsVersionTrimerHelper)
     {

@@ -25,7 +25,7 @@ class PluginManagerException extends Exception
      *
      * @return \Ivory\CKEditorBundle\Exception\PluginManagerException The "PLUGIN DOES NOT EXIST" exception.
      */
-    static public function pluginDoesNotExist($name)
+    public static function pluginDoesNotExist($name)
     {
         return new static(sprintf('The CKEditor plugin "%s" does not exist.', $name));
     }

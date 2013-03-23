@@ -74,12 +74,16 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('foo'))
             ->will($this->returnValue('/my/rewritten/path'));
 
-        $this->pluginManager = new PluginManager($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock, array(
-            'wordcount' => array(
-                'path'     => '/my/path',
-                'filename' => 'plugin.js'
-            ),
-        ));
+        $this->pluginManager = new PluginManager(
+            $this->assetsHelperMock,
+            $this->assetsVersionTrimerHelperMock,
+            array(
+                'wordcount' => array(
+                    'path'     => '/my/path',
+                    'filename' => 'plugin.js'
+                ),
+            )
+        );
 
         $this->assertTrue($this->pluginManager->hasPlugins());
         $this->assertTrue($this->pluginManager->hasPlugin('wordcount'));
@@ -104,12 +108,14 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('foo'))
             ->will($this->returnValue('/my/rewritten/path'));
 
-        $this->pluginManager->setPlugins(array(
-            'wordcount' => array(
-                'path'     => '/my/path',
-                'filename' => 'plugin.js'
-            ),
-        ));
+        $this->pluginManager->setPlugins(
+            array(
+                'wordcount' => array(
+                    'path'     => '/my/path',
+                    'filename' => 'plugin.js'
+                ),
+            )
+        );
 
         $this->assertTrue($this->pluginManager->hasPlugins());
         $this->assertTrue($this->pluginManager->hasPlugin('wordcount'));

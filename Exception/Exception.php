@@ -11,7 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Exception;
 
-use \Exception as BaseException;
+use Exception as BaseException;
 
 /**
  * Ivory CKEditor exception.
@@ -22,5 +22,4 @@ use \Exception as BaseException;
  */
 class Exception extends BaseException
 {
-
 }

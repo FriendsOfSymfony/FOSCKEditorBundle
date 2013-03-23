@@ -23,21 +23,21 @@ interface PluginManagerInterface
      *
      * @return boolean TRUE if the CKEditor plugins exists else FALSE.
      */
-    function hasPlugins();
+    public function hasPlugins();
 
     /**
      * Gets the CKEditor plugins.
      *
      * @return array The CKEditor plugins.
      */
-    function getPlugins();
+    public function getPlugins();
 
     /**
      * Sets the CKEditor plugins.
      *
      * @param array $plugins The CKEditor plugins.
      */
-    function setPlugins(array $plugins);
+    public function setPlugins(array $plugins);
 
     /**
      * Checks if a specific CKEditor plugin exists.
@@ -46,7 +46,7 @@ interface PluginManagerInterface
      *
      * @return boolean TRUE if the CKEditor plugin exists else FALSE.
      */
-    function hasPlugin($name);
+    public function hasPlugin($name);
 
     /**
      * Gets a specific CKEditor plugin.
@@ -55,7 +55,7 @@ interface PluginManagerInterface
      *
      * @return array The CKEditor plugin.
      */
-    function getPlugin($name);
+    public function getPlugin($name);
 
     /**
      * Sets a CKEditor plugin.
@@ -63,5 +63,5 @@ interface PluginManagerInterface
      * @param string $name   The CKEditor plugin name.
      * @param array  $plugin The CKEditor plugin.
      */
-    function setPlugin($name, array $plugin);
+    public function setPlugin($name, array $plugin);
 }

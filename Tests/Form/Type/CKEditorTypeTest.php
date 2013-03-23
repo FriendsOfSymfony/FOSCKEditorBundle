@@ -11,8 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
-use Ivory\CKEditorBundle\Form\Type\CKEditorType,
-    Symfony\Component\Form\Forms;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Forms;
 
 /**
  * CKEditor type test.
@@ -118,10 +118,14 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->any())
             ->method('getUrl')
-            ->will($this->returnValueMap(array(
-                array('bundles/ckeditor/', null, '/bundles/ckeditor/?v=1'),
-                array('bundles/ckeditor/ckeditor.js', null, '/bundles/ckeditor/ckeditor.js?v=1')
-            )));
+            ->will(
+                $this->returnValueMap(
+                    array(
+                        array('bundles/ckeditor/', null, '/bundles/ckeditor/?v=1'),
+                        array('bundles/ckeditor/ckeditor.js', null, '/bundles/ckeditor/ckeditor.js?v=1')
+                    )
+                )
+            );
 
         $this->assetsVersionTrimerHelperMock
             ->expects($this->once())
@@ -144,10 +148,14 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->any())
             ->method('getUrl')
-            ->will($this->returnValueMap(array(
-                array('foo/', null, '/foo/?v=1'),
-                array('foo/ckeditor.js', null, '/foo/ckeditor.js?v=1')
-            )));
+            ->will(
+                $this->returnValueMap(
+                    array(
+                        array('foo/', null, '/foo/?v=1'),
+                        array('foo/ckeditor.js', null, '/foo/ckeditor.js?v=1')
+                    )
+                )
+            );
 
         $this->assetsVersionTrimerHelperMock
             ->expects($this->once())
@@ -155,10 +163,11 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('/foo/?v=1'))
             ->will($this->returnValue('/foo/'));
 
-        $form = $this->factory->create('ckeditor', null, array(
-            'base_path' => 'foo/',
-            'js_path'   => 'foo/ckeditor.js',
-        ));
+        $form = $this->factory->create(
+            'ckeditor',
+            null,
+            array('base_path' => 'foo/', 'js_path' => 'foo/ckeditor.js')
+        );
 
         $view = $form->createView();
 
@@ -250,10 +259,11 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             ->with('default')
             ->will($this->returnValue(array_merge($configuredConfig, $explicitConfig)));
 
-        $form = $this->factory->create('ckeditor', null, array(
-            'config_name' => 'default',
-            'config'      => $explicitConfig,
-        ));
+        $form = $this->factory->create(
+            'ckeditor',
+            null,
+            array('config_name' => 'default', 'config' => $explicitConfig)
+        );
 
         $view = $form->createView();
 
