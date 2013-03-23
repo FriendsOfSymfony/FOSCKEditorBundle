@@ -8,7 +8,7 @@ php:
 
 before_script: composer install --dev
 
-script: phpunit
+script: bin/phpunit
 
 notifications:
     email: geloen.eric@gmail.com
