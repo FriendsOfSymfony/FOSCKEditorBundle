@@ -8,6 +8,3 @@
 # PHPUnit
 /phpunit.xml
 /report
-
-# ApiGen
-/api
