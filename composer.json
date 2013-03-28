@@ -19,6 +19,9 @@
         "phpunit/phpunit": "3.7.*",
         "twig/twig": "1.*"
     },
+    "suggest": {
+        "twig/twig": "Allows to use Ivory CKEditor twig templates"
+    },
     "autoload": {
         "psr-0": { "Ivory\\CKEditorBundle": "" }
     },
