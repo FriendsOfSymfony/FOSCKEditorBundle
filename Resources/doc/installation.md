@@ -75,3 +75,10 @@ Run the vendors script:
 ``` bash
 $ php bin/vendors install
 ```
+
+Warning, if you don't register the bundle in the kernel before installing it, the assets will not be populated in
+your `web` directory. To fix it, simply run:
+
+``` bash
+$ php app/console assets:install --symlink
+```
