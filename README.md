@@ -19,8 +19,7 @@ Symfony 2.0 (1.* version of the bundle) and the master branch for Symfony >= 2.1
 
 We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
 
-Since the Symfony 2.0 branch is not maintained anymore & only recieves bugfixes, we have decided to follow the same
-logic. So, the 2.0 branch can only receive bugfixes & new features must be addressed on the master branch.
+All contributions must be done on the 2.0 branch unless you have a good reason.
 
 ## License
 
