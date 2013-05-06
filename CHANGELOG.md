@@ -2,10 +2,10 @@
 
 ### 1.1.4 - 2.1.4 (????-??-??)
 
+ * e9e9bfe - Upgrade CKEditor to 4.1.1
  * cb9598b - [Travis] Use --prefer-source to avoid random build fail
  * 4da8e71 - PSR2 compatibility
  * 133ef7b - [Composer] Add PHPUnit in require-dev & use it in travis
- * 16ba800 - Upgrade CKEditor to 4.1
 
 ### 1.1.3 - 2.1.3 (2013-03-18)
 
