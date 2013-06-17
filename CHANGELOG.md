@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.4 - 2.1.4 (????-??-??)
+### 1.1.4 - 2.1.4 (2013-06-17)
 
  * 43d2675 - Upgrade CKEditor to 4.1.1
  * cb9598b - [Travis] Use --prefer-source to avoid random build fail
