@@ -265,7 +265,8 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $form = $this->factory->create('ckeditor');
         $view = $form->createView();
 
-        $this->assertSame($options, json_decode($view->get('config'), true));
+        $this->assertArrayHasKey('config', $view->vars);
+        $this->assertSame($options, json_decode($view->vars['config'], true));
     }
 
     public function testConfigWithExplicitAndConfiguredConfig()
