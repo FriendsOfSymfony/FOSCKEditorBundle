@@ -36,6 +36,16 @@ $builder->add('field', 'ckeditor', array(
 ));
 ```
 
+If you want to define globally your configuration, you can use the `default_config` node:
+
+``` yaml
+ivory_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+            # ...
+```
+
 ## Advanced configuration
 
 Build a toolbar in the configuration or on the form builder is really a pain... Each time, you cant a custom one, you

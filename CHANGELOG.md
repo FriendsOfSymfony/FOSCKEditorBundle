@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.2.0 - 2.2.0 (????-??-??)
+
+ * ecef869 - Add default configuration support
+
 ### 1.1.4 - 2.1.4 (2013-06-17)
 
  * 43d2675 - Upgrade CKEditor to 4.1.1

@@ -19,6 +19,18 @@ namespace Ivory\CKEditorBundle\Exception;
 class DependencyInjectionException extends Exception
 {
     /**
+     * Gets the "INVALID DEFAULT CONFIG" exception.
+     *
+     * @param string $name The default config name.
+     *
+     * @return \Ivory\CKEditorBundle\Exception\DependencyInjectionException The "INVALID DEFAULT CONFIG" exception.
+     */
+    public static function invalidDefaultConfig($name)
+    {
+        return new static(sprintf('The default config "%s" does not exist.', $name));
+    }
+
+    /**
      * Gets the "INVALID TOOLBAR" exception.
      *
      * @param string $toolbar The invalid toolbar.

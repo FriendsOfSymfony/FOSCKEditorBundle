@@ -85,6 +85,7 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->assetsHelperMock, $this->configManager->getAssetsHelper());
         $this->assertSame($this->assetsVersionTrimerHelperMock, $this->configManager->getAssetsVersionTrimerHelper());
         $this->assertSame($this->routerMock, $this->configManager->getRouter());
+        $this->assertNull($this->configManager->getDefaultConfig());
         $this->assertFalse($this->configManager->hasConfigs());
         $this->assertEmpty($this->configManager->getConfigs());
     }
@@ -100,9 +101,11 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
             $this->assetsHelperMock,
             $this->assetsVersionTrimerHelperMock,
             $this->routerMock,
-            $configs
+            $configs,
+            'foo'
         );
 
+        $this->assertSame('foo', $this->configManager->getDefaultConfig());
         $this->assertTrue($this->configManager->hasConfigs());
         $this->assertSame($configs, $this->configManager->getConfigs());
     }
@@ -121,6 +124,21 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
         $this->configManager->mergeConfig('foo', $config2 = array('foo' => 'baz'));
 
         $this->assertSame(array_merge($config1, $config2), $this->configManager->getConfig('foo'));
+    }
+
+    public function testDefaultCOnfig()
+    {
+        $this->configManager->setConfig('foo', array('foo' => 'bar'));
+        $this->configManager->setDefaultConfig('foo');
+    }
+
+    /**
+     * @expectedException \Ivory\CKEditorBundle\Exception\ConfigManagerException
+     * @expectedExceptionMessage The CKEditor config "foo" does not exist.
+     */
+    public function testDefaultConfigWithInvalidValue()
+    {
+        $this->configManager->setDefaultConfig('foo');
     }
 
     public function testConfigContentsCssWithString()
