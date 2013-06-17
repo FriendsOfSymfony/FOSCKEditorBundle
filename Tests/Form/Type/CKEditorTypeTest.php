@@ -230,6 +230,35 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($config, json_decode($view->get('config'), true));
     }
 
+    public function testConfigWithDefaultConfiguredConfig()
+    {
+        $options = array(
+            'toolbar'  => array('foo' => 'bar'),
+            'ui_color' => '#ffffff',
+        );
+
+        $this->configManagerMock
+            ->expects($this->once())
+            ->method('getDefaultConfig')
+            ->will($this->returnValue('config'));
+
+        $this->configManagerMock
+            ->expects($this->once())
+            ->method('mergeConfig')
+            ->with($this->equalTo('config'), $this->equalTo(array()));
+
+        $this->configManagerMock
+            ->expects($this->once())
+            ->method('getConfig')
+            ->with('config')
+            ->will($this->returnValue($options));
+
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertSame($options, json_decode($view->get('config'), true));
+    }
+
     public function testConfigWithExplicitAndConfiguredConfig()
     {
         $configuredConfig = array(

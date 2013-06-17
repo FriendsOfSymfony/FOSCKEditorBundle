@@ -32,6 +32,9 @@ class ConfigManager implements ConfigManagerInterface
     /** @var \Symfony\Component\Routing\RouterInterface */
     protected $router;
 
+    /** @var string */
+    protected $defaultConfig;
+
     /** @var array */
     protected $configs;
 
@@ -42,17 +45,23 @@ class ConfigManager implements ConfigManagerInterface
      * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
      * @param \Symfony\Component\Routing\RouterInterface             $router                    The router.
      * @param array                                                  $configs                   The CKEditor configs.
+     * @param string                                                 $defaultConfig             The default config name.
      */
     public function __construct(
         CoreAssetsHelper $assetsHelper,
         AssetsVersionTrimerHelper $assetsVersionTrimerHelper,
         RouterInterface $router,
-        array $configs = array()
+        array $configs = array(),
+        $defaultConfig = null
     ) {
         $this->setAssetsHelper($assetsHelper);
         $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
         $this->setRouter($router);
         $this->setConfigs($configs);
+
+        if ($defaultConfig !== null) {
+            $this->setDefaultConfig($defaultConfig);
+        }
     }
 
     /**
@@ -113,6 +122,26 @@ class ConfigManager implements ConfigManagerInterface
     public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultConfig()
+    {
+        return $this->defaultConfig;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultConfig($defaultConfig)
+    {
+        if (!$this->hasConfig($defaultConfig)) {
+            throw ConfigManagerException::configDoesNotExist($defaultConfig);
+        }
+
+        $this->defaultConfig = $defaultConfig;
     }
 
     /**

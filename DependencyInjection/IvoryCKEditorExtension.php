@@ -112,6 +112,14 @@ class IvoryCKEditorExtension extends Extension
         foreach ($config['configs'] as $name => $configuration) {
             $definition->addMethodCall('setConfig', array($name, $configuration));
         }
+
+        if (isset($config['default_config'])) {
+            if (!isset($config['configs'][$config['default_config']])) {
+                throw DependencyInjectionException::invalidDefaultConfig($config['default_config']);
+            }
+
+            $definition->addMethodCall('setDefaultConfig', array($config['default_config']));
+        }
     }
 
     /**

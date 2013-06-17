@@ -19,6 +19,20 @@ namespace Ivory\CKEditorBundle\Model;
 interface ConfigManagerInterface
 {
     /**
+     * Gets the default configuration name.
+     *
+     * @return string The default configuration name.
+     */
+    public function getDefaultConfig();
+
+    /**
+     * Sets the default configuration name.
+     *
+     * @param string $defaultConfig The default configuration name.
+     */
+    public function setDefaultConfig($defaultConfig);
+
+    /**
      * Checks if the CKEditor configs exists.
      *
      * @return boolean TRUE if the CKEditor configs exists else FALSE.

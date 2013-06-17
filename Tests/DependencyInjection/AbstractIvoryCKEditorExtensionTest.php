@@ -152,6 +152,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
             ),
         );
 
+        $this->assertSame('default', $configManager->getDefaultConfig());
         $this->assertSame($expected, $configManager->getConfigs());
 
         $this->container->leaveScope('request');
@@ -187,6 +188,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
             ),
         );
 
+        $this->assertSame('default', $configManager->getDefaultConfig());
         $this->assertSame($expected, $configManager->getConfigs());
 
         $this->container->leaveScope('request');
@@ -230,6 +232,16 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertSame('foo/ckeditor.js', $ckEditorType->getJsPath());
 
         $this->container->leaveScope('request');
+    }
+
+    /**
+     * @expectedException \Ivory\CKEditorBundle\Exception\DependencyInjectionException
+     * @expectedExceptionMessage The default config "bar" does not exist.
+     */
+    public function testInvalidDefaultConfig()
+    {
+        $this->loadConfiguration($this->container, 'invalid_default_config');
+        $this->container->compile();
     }
 
     /**
