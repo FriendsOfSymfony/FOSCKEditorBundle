@@ -191,7 +191,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     {
         $options = array(
             'config' => array(
-                'toolbar'  => array('foo' => 'bar'),
+                'toolbar' => array('foo' => 'bar'),
                 'uiColor' => '#ffffff',
             ),
         );
@@ -217,7 +217,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     public function testConfigWithConfiguredConfig()
     {
         $config = array(
-            'toolbar'  => 'default',
+            'toolbar' => 'default',
             'uiColor' => '#ffffff',
         );
 
@@ -242,7 +242,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     public function testConfigWithDefaultConfiguredConfig()
     {
         $options = array(
-            'toolbar'  => array('foo' => 'bar'),
+            'toolbar' => array('foo' => 'bar'),
             'uiColor' => '#ffffff',
         );
 
@@ -272,7 +272,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     public function testConfigWithExplicitAndConfiguredConfig()
     {
         $configuredConfig = array(
-            'toolbar'  => 'default',
+            'toolbar' => 'default',
             'uiColor' => '#ffffff',
         );
 
@@ -397,7 +397,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
         $options = array(
             'config' => array(
-                'toolbar'  => array('foo' => 'bar'),
+                'toolbar' => array('foo' => 'bar'),
                 'uiColor' => '#ffffff',
             ),
             'plugins' => array(
@@ -423,7 +423,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $options = array(
             'enable' => false,
             'config' => array(
-                'toolbar'  => array('foo' => 'bar'),
+                'toolbar' => array('foo' => 'bar'),
                 'uiColor' => '#ffffff',
             ),
             'plugins' => array(

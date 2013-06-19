@@ -13,7 +13,7 @@ ivory_ck_editor:
     configs:
         my_config:
             toolbar:                [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ]
-            uiColor:               "#000000"
+            uiColor:                "#000000"
             filebrowserUploadRoute: "my_route"
             extraPlugins:           "wordcount"
             # ...
@@ -56,15 +56,15 @@ separate node & reuse them:
 ivory_ck_editor:
     configs:
         my_config_1:
-            toolbar:  "my_toolbar_1"
+            toolbar: "my_toolbar_1"
             uiColor: "#000000"
             # ...
         my_config_2:
-            toolbar:  "my_toolbar_2"
+            toolbar: "my_toolbar_2"
             uiColor: "#ffffff"
             # ...
         my_config_2:
-            toolbar:  "my_toolbar_1"
+            toolbar: "my_toolbar_1"
             uiColor: "#cccccc"
     toolbars:
         configs:
@@ -79,11 +79,11 @@ define a group of items in a separate node & then, inject them in your toolbar b
 ivory_ck_editor:
     configs:
         my_config_1:
-            toolbar:  "my_toolbar_1"
+            toolbar: "my_toolbar_1"
             uiColor: "#000000"
             # ...
         my_config_2:
-            toolbar:  "my_toolbar_2"
+            toolbar: "my_toolbar_2"
             uiColor: "#ffffff"
             # ...
     toolbars:
