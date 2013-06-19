@@ -25,7 +25,7 @@ $builder->add('field', 'ckeditor', array(
                 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'),
             ),
         ),
-        'ui_color' => '#ffffff',
+        'uiColor' => '#ffffff',
         //...
     ),
 ));
