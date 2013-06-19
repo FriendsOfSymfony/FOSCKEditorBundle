@@ -185,7 +185,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $options = array(
             'config' => array(
                 'toolbar'  => array('foo' => 'bar'),
-                'ui_color' => '#ffffff',
+                'uiColor' => '#ffffff',
             ),
         );
 
@@ -210,7 +210,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     {
         $config = array(
             'toolbar'  => 'default',
-            'ui_color' => '#ffffff',
+            'uiColor' => '#ffffff',
         );
 
         $this->configManagerMock
@@ -234,7 +234,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     {
         $options = array(
             'toolbar'  => array('foo' => 'bar'),
-            'ui_color' => '#ffffff',
+            'uiColor' => '#ffffff',
         );
 
         $this->configManagerMock
@@ -263,10 +263,10 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     {
         $configuredConfig = array(
             'toolbar'  => 'default',
-            'ui_color' => '#ffffff',
+            'uiColor' => '#ffffff',
         );
 
-        $explicitConfig = array('ui_color' => '#000000');
+        $explicitConfig = array('uiColor' => '#000000');
 
         $this->configManagerMock
             ->expects($this->once())
@@ -383,7 +383,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $options = array(
             'config' => array(
                 'toolbar'  => array('foo' => 'bar'),
-                'ui_color' => '#ffffff',
+                'uiColor' => '#ffffff',
             ),
             'plugins' => array(
                 'wordcount' => array(
@@ -407,7 +407,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             'enable' => false,
             'config' => array(
                 'toolbar'  => array('foo' => 'bar'),
-                'ui_color' => '#ffffff',
+                'uiColor' => '#ffffff',
             ),
             'plugins' => array(
                 'wordcount' => array(

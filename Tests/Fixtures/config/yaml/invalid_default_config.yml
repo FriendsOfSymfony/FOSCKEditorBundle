@@ -2,4 +2,4 @@ ivory_ck_editor:
     default_config: bar
     configs:
         foo:
-            ui_color: "#000000"
+            uiColor: "#000000"

@@ -148,7 +148,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
                     '/',
                     array('Maximize'),
                 ),
-                'ui_color' => '#000000',
+                'uiColor' => '#000000',
             ),
         );
 
@@ -176,7 +176,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
                     '/',
                     array('Maximize'),
                 ),
-                'ui_color' => '#000000',
+                'uiColor' => '#000000',
             ),
             'custom' => array(
                 'toolbar' => array(
@@ -184,7 +184,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
                     '/',
                     array('Anchor'),
                 ),
-                'ui_color' => '#ffffff',
+                'uiColor' => '#ffffff',
             ),
         );
 
