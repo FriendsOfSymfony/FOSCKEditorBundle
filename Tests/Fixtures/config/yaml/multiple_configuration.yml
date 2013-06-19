@@ -3,10 +3,10 @@ ivory_ck_editor:
     configs:
         default:
             toolbar:  "default"
-            ui_color: "#000000"
+            uiColor: "#000000"
         custom:
             toolbar:  "custom"
-            ui_color: "#ffffff"
+            uiColor: "#ffffff"
     toolbars:
         configs:
             default: [ "@document", "/", [ "Anchor" ], "/", "@tools" ]
