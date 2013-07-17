@@ -2,6 +2,7 @@
 
 ### 1.2.0 - 2.2.0 (????-??-??)
 
+ * c04e2ed - [Twig] Don't escape textarea value
  * ecef869 - Add default configuration support
 
 ### 1.1.4 - 2.1.4 (2013-06-17)
