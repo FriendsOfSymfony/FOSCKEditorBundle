@@ -28,5 +28,10 @@
     "config": {
         "bin-dir": "bin/"
     },
-    "target-dir": "Ivory/CKEditorBundle"
+    "target-dir": "Ivory/CKEditorBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1-dev"
+        }
+    }
 }
