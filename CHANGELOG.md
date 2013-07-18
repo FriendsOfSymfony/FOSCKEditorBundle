@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.2.0 - 2.2.0 (????-??-??)
+### 1.1.5 - 2.1.5 (2013-07-18)
 
  * 3bfbc01 - Upgrade CKEditor to 4.2
  * 099bf82 - [Composer] Add branch alias
