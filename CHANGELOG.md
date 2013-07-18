@@ -2,6 +2,7 @@
 
 ### 1.2.0 - 2.2.0 (????-??-??)
 
+ * 3bfbc01 - Upgrade CKEditor to 4.2
  * 099bf82 - [Composer] Add branch alias
  * c04e2ed - [Twig] Don't escape textarea value
  * ecef869 - Add default configuration support
