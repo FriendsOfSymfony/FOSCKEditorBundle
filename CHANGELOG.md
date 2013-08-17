@@ -2,6 +2,7 @@
 
 ### 1.1.6 - 2.1.6 (????-??-??)
 
+ * 8c085cc - [Doc] Add FMElfinderBundle documentation
  * a8a9a7e - [Form] Allow required html attribute
 
 ### 1.1.5 - 2.1.5 (2013-07-18)

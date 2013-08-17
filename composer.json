@@ -20,7 +20,8 @@
         "twig/twig": "1.*"
     },
     "suggest": {
-        "twig/twig": "Allows to use Ivory CKEditor twig templates"
+        "twig/twig": "Allows to use Ivory CKEditor twig templates",
+        "helios-ag/fm-elfinder-bundle": "Allows to use the elfinder as CKEditor file manager"
     },
     "autoload": {
         "psr-0": { "Ivory\\CKEditorBundle": "" }
