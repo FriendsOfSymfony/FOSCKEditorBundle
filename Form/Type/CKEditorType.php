@@ -271,7 +271,6 @@ class CKEditorType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'required'    => false,
             'enable'      => $this->enable,
             'base_path'   => $this->basePath,
             'js_path'     => $this->jsPath,
@@ -279,14 +278,6 @@ class CKEditorType extends AbstractType
             'config'      => array(),
             'plugins'     => array(),
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAllowedOptionValues(array $options)
-    {
-        return array('required' => array(false));
     }
 
     /**
