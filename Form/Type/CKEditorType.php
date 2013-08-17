@@ -271,7 +271,6 @@ class CKEditorType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'required'    => false,
             'enable'      => $this->enable,
             'base_path'   => $this->basePath,
             'js_path'     => $this->jsPath,
@@ -288,8 +287,6 @@ class CKEditorType extends AbstractType
             'config'      => 'array',
             'plugins'     => 'array',
         ));
-
-        $resolver->addAllowedValues(array('required' => array(false)));
     }
 
     /**

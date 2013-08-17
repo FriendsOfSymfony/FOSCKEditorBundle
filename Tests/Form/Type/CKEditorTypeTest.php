@@ -92,27 +92,6 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->assetsVersionTrimerHelperMock, $this->ckEditorType->getAssetsVersionTrimerHelper());
     }
 
-    public function testDefaultRequired()
-    {
-        $form = $this->factory->create('ckeditor');
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('required', $view->vars);
-        $this->assertFalse($view->vars['required']);
-    }
-
-    /**
-     * There is a know bug in CKEditor which makes it unusable with the required HTML5 placeholder.
-     *
-     * @link http://dev.ckeditor.com/ticket/8031.
-     *
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
-     */
-    public function testRequired()
-    {
-        $this->factory->create('ckeditor', null, array('required' => true));
-    }
-
     public function testBaseAndJsPathWithConfiguredValues()
     {
         $this->assetsHelperMock
