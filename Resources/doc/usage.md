@@ -34,29 +34,6 @@ $builder->add('field', 'ckeditor', array(
 A toolbar is an array of toolbars (strips), each one being also an array, containing a list of UI items. To do a
 carriage return, you just have to add the char ``/`` between strips.
 
-## Filebrowser
-
-To ease the CKEditor file handling, the bundle adds options which are not in CKEditor by default. These options are
-related to URLs which allows to manage file browse/upload. As explain
-[here](http://symfony.com/doc/current/book/routing.html), Symfony provides a powerfull routing component allowing you
-to generate URLs. These concepts are directly managed by the bundle by adding three new options for each "*Url" option:
-
-For example, the filebrowserBrowseUrl options can be generated with these three new options:
-
-  * filebrowserBrowseRoute
-  * filebrowserBrowseRouteParameters
-  * filebrowserBrowseRouteAbsolute
-
-The concerned options are:
-
- * filebrowserBrowseUrl
- * filebrowserFlashBrowseUrl
- * filebrowserImageBrowseUrl
- * filebrowserImageBrowseLinkUrl
- * filebrowserUploadUrl
- * filebrowserFlashUploadUrl
- * filebrowserImageUploadUrl
-
 ## Plugins support
 
 The bundle offers you the ability to manage extra plugins. To understand how it works, you will enable the
