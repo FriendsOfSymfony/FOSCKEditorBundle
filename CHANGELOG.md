@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.6 - 2.1.6 (????-??-??)
+
+ * a8a9a7e - [Form] Allow required html attribute
+
 ### 1.1.5 - 2.1.5 (2013-07-18)
 
  * 3bfbc01 - Upgrade CKEditor to 4.2
