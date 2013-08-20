@@ -81,7 +81,7 @@ Configure the bundles:
 ``` yaml
 # app/config/config.yml
 
-ivory_ckeditor:
+ivory_ck_editor:
     default_config: default
     configs:
         default:
