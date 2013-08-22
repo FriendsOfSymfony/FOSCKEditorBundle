@@ -225,10 +225,6 @@ class CKEditorType extends AbstractType
             $builder->setAttribute('base_path', $options['base_path']);
             $builder->setAttribute('js_path', $options['js_path']);
 
-            if ($options['config_name'] === null) {
-                $options['config_name'] = $this->configManager->getDefaultConfig();
-            }
-
             $config = $options['config'];
             if ($options['config_name'] === null) {
                 $name = uniqid('ivory', true);
@@ -274,7 +270,7 @@ class CKEditorType extends AbstractType
             'enable'      => $this->enable,
             'base_path'   => $this->basePath,
             'js_path'     => $this->jsPath,
-            'config_name' => null,
+            'config_name' => $this->configManager->getDefaultConfig(),
             'config'      => array(),
             'plugins'     => array(),
         );
