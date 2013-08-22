@@ -2,6 +2,7 @@
 
 ### 1.1.6 - 2.1.6 (????-??-??)
 
+ * 992c7df - [Form] Simplify default configuration handling
  * 8c085cc - [Doc] Add FMElfinderBundle documentation
  * a8a9a7e - [Form] Allow required html attribute
 
