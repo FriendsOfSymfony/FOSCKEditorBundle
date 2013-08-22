@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.6 - 2.1.6 (????-??-??)
+### 1.1.6 - 2.1.6 (2013-08-22)
 
  * 992c7df - [Form] Simplify default configuration handling
  * 8c085cc - [Doc] Add FMElfinderBundle documentation
