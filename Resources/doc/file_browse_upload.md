@@ -85,7 +85,7 @@ ivory_ck_editor:
     default_config: default
     configs:
         default:
-            filebrowserUploadRoute: elfinder
+            filebrowserBrowseRoute: elfinder
 
 fm_elfinder:
     editor: ckeditor
