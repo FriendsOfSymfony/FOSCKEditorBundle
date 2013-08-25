@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.7 - 2.1.7 (????-??-??)
+
+ * bcae378 - [Doc] Fix FMElfinderBundle integration example
+
 ### 1.1.6 - 2.1.6 (2013-08-22)
 
  * 992c7df - [Form] Simplify default configuration handling
