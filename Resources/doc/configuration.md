@@ -46,9 +46,27 @@ ivory_ck_editor:
             # ...
 ```
 
-## Advanced configuration
+## Toolbar configuration
 
-Build a toolbar in the configuration or on the form builder is really a pain... Each time, you cant a custom one, you
+### Built-in
+
+CKEditor provides 3 different packages with their own configurations (full, standard & basic). The bundle is shipped
+with the full edition but you can easily switch the toolbar configuration by using the `full`, `standard` or `basic`
+keywork as toolbar.
+
+``` yaml
+ivory_ck_editor:
+    configs:
+        my_config:
+            toolbar: standard
+```
+
+Here, the toolbar will be rendered as it is defined in the standard edition. If you want to define your own toolbar,
+you should use the custom way :)
+
+### Custom
+
+Build a toolbar in the configuration or on the form builder is really a pain... Each time, you want a custom one, you
 need to redefine all the structure... To avoid this duplication, the bundle allows you to define your toolbars in a
 separate node & reuse them:
 

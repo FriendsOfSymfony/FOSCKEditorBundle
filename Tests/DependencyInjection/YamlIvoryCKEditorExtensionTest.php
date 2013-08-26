@@ -27,7 +27,7 @@ class YamlIvoryCKEditorExtensionTest extends AbstractIvoryCKEditorExtensionTest
      */
     protected function loadConfiguration(ContainerBuilder $container, $configuration)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Fixtures/config/yaml/'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/Fixtures/config/Yaml/'));
         $loader->load($configuration.'.yml');
     }
 }
