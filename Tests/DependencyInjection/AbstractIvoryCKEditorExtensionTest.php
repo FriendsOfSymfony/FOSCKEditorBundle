@@ -194,6 +194,51 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->leaveScope('request');
     }
 
+    public function testBasicToolbar()
+    {
+        $this->loadConfiguration($this->container, 'basic_toolbar');
+        $this->container->compile();
+
+        $this->container->enterScope('request');
+
+        $configManager = $this->container->get('ivory_ck_editor.config_manager');
+        $config = $configManager->getConfig('default');
+
+        $this->assertCount(4, $config['toolbar']);
+
+        $this->container->leaveScope('request');
+    }
+
+    public function testStandardToolbar()
+    {
+        $this->loadConfiguration($this->container, 'standard_toolbar');
+        $this->container->compile();
+
+        $this->container->enterScope('request');
+
+        $configManager = $this->container->get('ivory_ck_editor.config_manager');
+        $config = $configManager->getConfig('default');
+
+        $this->assertCount(10, $config['toolbar']);
+
+        $this->container->leaveScope('request');
+    }
+
+    public function testFullToolbar()
+    {
+        $this->loadConfiguration($this->container, 'full_toolbar');
+        $this->container->compile();
+
+        $this->container->enterScope('request');
+
+        $configManager = $this->container->get('ivory_ck_editor.config_manager');
+        $config = $configManager->getConfig('default');
+
+        $this->assertCount(13, $config['toolbar']);
+
+        $this->container->leaveScope('request');
+    }
+
     public function testPlugins()
     {
         $this->loadConfiguration($this->container, 'plugins');

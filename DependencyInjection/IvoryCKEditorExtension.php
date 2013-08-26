@@ -147,7 +147,9 @@ class IvoryCKEditorExtension extends Extension
     protected function mergeToolbars(array $config)
     {
         $toolbars = array();
-        foreach ($config['toolbars']['configs'] as $name => $toolbar) {
+        $toolbarConfigs = array_merge($this->getDefaultToolbars(), $config['toolbars']['configs']);
+
+        foreach ($toolbarConfigs as $name => $toolbar) {
             $toolbars[$name] = array();
 
             foreach ($toolbar as $item) {
@@ -178,5 +180,49 @@ class IvoryCKEditorExtension extends Extension
         unset($config['toolbars']);
 
         return $config;
+    }
+
+    /**
+     * Gets the default toolbars.
+     *
+     * @return array The default toolbars.
+     */
+    protected function getDefaultToolbars()
+    {
+        return array(
+            'full' => array(
+                array('Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'),
+                array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
+                array('Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'),
+                array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'),
+                '/',
+                array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'),
+                array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'),
+                array('Link', 'Unlink', 'Anchor'),
+                array('Image', 'FLash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'),
+                '/',
+                array('Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'),
+                array('Maximize', 'ShowBlocks'),
+                array('About'),
+            ),
+            'standard' => array(
+                array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
+                array('Scayt'),
+                array('Link', 'Unlink', 'Anchor'),
+                array('Image', 'Table', 'HorizontalRule', 'SpecialChar'),
+                array('Maximize'),
+                array('Source'),
+                '/',
+                array('Bold', 'Italic', 'Strike', '-', 'RemoveFormat'),
+                array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'),
+                array('Styles', 'Format', 'About'),
+            ),
+            'basic' => array(
+                array('Bold', 'Italic'),
+                array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'),
+                array('Link', 'Unlink'),
+                array('About'),
+            ),
+        );
     }
 }
