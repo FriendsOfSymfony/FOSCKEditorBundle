@@ -2,6 +2,7 @@
 
 ### 1.1.7 - 2.1.7 (????-??-??)
 
+ * 4a37ad8 - [Doc] SonataMedia integration
  * a94df4f - [DependencyInjection] Introduce built-in toolbars (basic, standard, full)
  * bcae378 - [Doc] Fix FMElfinderBundle integration example
 
