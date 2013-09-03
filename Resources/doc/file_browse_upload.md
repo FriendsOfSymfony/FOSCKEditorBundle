@@ -96,3 +96,68 @@ fm_elfinder:
 ```
 
 Then, all should work as expected :)
+
+### [CoopTilleulsCKEditorSonataMediaBundle](https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle/)
+
+The CoopTilleulsCKEditorSonataMediaBundle provides [SonataMedia](http://sonata-project.org/bundles/media) integration with CKEditor and IvoryCKEditorBundle.
+
+Read [installation instructions](https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle/blob/master/Resources/doc/install.md).
+
+The working example:
+
+Install and configure [SonataMediaBundle](http://sonata-project.org/bundles/media/master/doc/index.html).
+
+Add CoopTilleulsCKEditorSonataMediaBundle in your `composer.json` file:
+
+``` json
+{
+    "require": {
+        "tilleuls/ckeditor-sonata-mediabundle": "~1.0",
+    }
+}
+```
+
+Register the bundle in your AppKernel:
+
+``` php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    return array(
+        // ...
+        new CoopTilleuls\Bundle\CKEditorSonataMediaBundle\CoopTilleulsCKEditorSonataMediaBundle(),
+        // ...
+    );
+}
+```
+
+Install bundles:
+
+```
+$ composer update
+```
+
+Configure IvoryCKEditorBundle to use the bundle as file browser:
+
+``` yaml
+# app/config/config.yml
+
+ivory_ck_editor:
+    default_config: default
+    configs:
+        default:
+            filebrowserBrowseRoute: admin_sonata_media_media_browser
+            filebrowserImageBrowseRoute: admin_sonata_media_media_browser
+            # Display images by default when clicking the image dialog browse button
+            filebrowserImageBrowseRouteParameters:
+                provider: sonata.media.provider.image
+            filebrowserUploadRoute: admin_sonata_media_media_upload
+            filebrowserUploadRouteParameters:
+                provider: sonata.media.provider.file
+            # Upload file as image when sending a file from the image dialog
+            filebrowserImageUploadRoute: admin_sonata_media_media_upload
+            filebrowserImageUploadRouteParameters:
+                provider: sonata.media.provider.image
+                context: my-context # Optional, to upload in a custom context
+```
