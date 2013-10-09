@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.7 - 2.1.7 (????-??-??)
+### 1.1.7 - 2.1.7 (2013-10-09)
 
  * 03f90cf - Upgrade CKEditor to 4.2.1
  * 4a37ad8 - [Doc] SonataMedia integration
