@@ -256,8 +256,9 @@ class CKEditorType extends AbstractType
             );
 
             $view->vars['js_path'] = $this->assetsHelper->getUrl($form->getConfig()->getAttribute('js_path'));
-            $view->vars['config'] = json_encode($form->getConfig()->getAttribute('config'));
-            $view->vars['plugins'] = $form->getConfig()->getAttribute('plugins');
+
+            $this->buildConfig($view, $form);
+            $this->buildPlugins($view, $form);
         }
     }
 
@@ -299,5 +300,33 @@ class CKEditorType extends AbstractType
     public function getName()
     {
         return 'ckeditor';
+    }
+
+    /**
+     * Builds the CKEditor configuration.
+     *
+     * @param \Symfony\Component\Form\FormView      $view The form view.
+     * @param \Symfony\Component\Form\FormInterface $form The form.
+     */
+    protected function buildConfig(FormView $view, FormInterface $form)
+    {
+        $config = json_encode($form->getConfig()->getAttribute('config'));
+
+        if (strpos($config, 'CKEDITOR.') !== false) {
+            $config = preg_replace('/"(CKEDITOR\.[A-Z_]+)"/', '$1', $config);
+        }
+
+        $view->vars['config'] = $config;
+    }
+
+    /**
+     * Builds the CKEditor plugins.
+     *
+     * @param \Symfony\Component\Form\FormView      $view The form view.
+     * @param \Symfony\Component\Form\FormInterface $form The form.
+     */
+    protected function buildPlugins(FormView $view, FormInterface $form)
+    {
+        $view->vars['plugins'] = $form->getConfig()->getAttribute('plugins');
     }
 }

@@ -2,6 +2,7 @@
 
 ### 1.1.8 - 2.1.8 (????-??-??)
 
+ * 434e92f - [Type] Add CKEditor constants support
  * af8f9da - Upgrade CKEditor to 4.3
 
 ### 1.1.7 - 2.1.7 (2013-10-09)
