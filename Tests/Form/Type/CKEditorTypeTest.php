@@ -269,6 +269,34 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array_merge($configuredConfig, $explicitConfig), json_decode($view->get('config'), true));
     }
 
+    public function testConfigWithCKEditorConstants()
+    {
+        $options = array(
+            'config' => array(
+                'enterMode'      => 'CKEDITOR.ENTER_BR',
+                'shiftEnterMode' => 'CKEDITOR.ENTER_BR',
+            ),
+        );
+
+        $this->configManagerMock
+            ->expects($this->once())
+            ->method('setConfig')
+            ->with($this->anything(), $this->equalTo($options['config']));
+
+        $this->configManagerMock
+            ->expects($this->once())
+            ->method('getConfig')
+            ->with($this->anything())
+            ->will($this->returnValue($options['config']));
+
+        $form = $this->factory->create('ckeditor', null, $options);
+        $view = $form->createView();
+
+        $expected = '{"enterMode":CKEDITOR.ENTER_BR,"shiftEnterMode":CKEDITOR.ENTER_BR}';
+
+        $this->assertSame($expected, $view->get('config'));
+    }
+
     public function testDefaultPlugins()
     {
         $form = $this->factory->create('ckeditor');
