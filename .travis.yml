@@ -1,21 +1,23 @@
 language: php
 
-php:
-    - 5.3.3
-    - 5.3
-    - 5.4
-    - 5.5
+php: 5.3.3
 
 env:
     - SYMFONY_VERSION="2.1.*"
     - SYMFONY_VERSION="2.2.*"
     - SYMFONY_VERSION="2.3.*"
+    - SYMFONY_VERSION="2.4.*"
 
 before_script:
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
     - composer install --dev --prefer-source
 
 script: bin/phpunit
+
+branches:
+    only:
+        - master
+        - 2.0
 
 notifications:
     email: geloen.eric@gmail.com
