@@ -63,6 +63,10 @@ class IvoryCKEditorExtension extends Extension
             if (!empty($config['plugins'])) {
                 $this->registerPlugins($config, $container);
             }
+
+            if (!empty($config['templates'])) {
+                $this->registerTemplates($config, $container);
+            }
         }
     }
 
@@ -138,6 +142,21 @@ class IvoryCKEditorExtension extends Extension
     }
 
     /**
+     * Registers the CKEditor templates.
+     *
+     * @param array                                                   $config    The CKEditor configuration.
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     */
+    protected function registerTemplates(array $config, ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('ivory_ck_editor.template_manager');
+
+        foreach ($config['templates'] as $name => $template) {
+            $definition->addMethodCall('setTemplate', array($name, $template));
+        }
+    }
+
+    /**
      * Merges the toolbars into the CKEditor configurations.
      *
      * @param array $config The CKEditor configuration.
@@ -194,10 +213,16 @@ class IvoryCKEditorExtension extends Extension
                 array('Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'),
                 array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
                 array('Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'),
-                array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'),
+                array(
+                    'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton',
+                    'HiddenField',
+                ),
                 '/',
                 array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'),
-                array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'),
+                array(
+                    'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                ),
                 array('Link', 'Unlink', 'Anchor'),
                 array('Image', 'FLash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'),
                 '/',

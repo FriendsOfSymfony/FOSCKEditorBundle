@@ -17,6 +17,10 @@
                 CKEDITOR.plugins.addExternal('{{ plugin_name }}', '{{ plugin.path }}', '{{ plugin.filename }}');
             {% endfor %}
 
+            {% for template_name, template in templates %}
+                CKEDITOR.addTemplates('{{ template_name }}', {{ template | json_encode | raw }});
+            {% endfor %}
+
             CKEDITOR.replace('{{ id }}', {{ config | raw }});
         </script>
     {% endif %}

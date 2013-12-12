@@ -121,8 +121,8 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->pluginManager->hasPlugin('wordcount'));
 
         $this->assertSame(
-            array('path' => '/my/rewritten/path', 'filename' => 'plugin.js'),
-            $this->pluginManager->getPlugin('wordcount')
+            array('wordcount' => array('path' => '/my/rewritten/path', 'filename' => 'plugin.js')),
+            $this->pluginManager->getPlugins()
         );
     }
 
