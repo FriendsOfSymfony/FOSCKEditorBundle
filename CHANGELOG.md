@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.8 - 2.1.8 (????-??-??)
+### 1.1.8 - 2.1.8 (2013-12-12)
 
  * b22d11c - Upgrade CKEditor to 4.3.1
  * c9e65d7 - [Travis] Simplify matrix + Add Symfony 2.4 to the build
