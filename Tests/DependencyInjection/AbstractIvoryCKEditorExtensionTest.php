@@ -264,6 +264,40 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->leaveScope('request');
     }
 
+    public function testTemplates()
+    {
+        $this->loadConfiguration($this->container, 'templates');
+        $this->container->compile();
+
+        $this->container->enterScope('request');
+
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo('/my/path'), $this->equalTo(null))
+            ->will($this->returnValue('/my/rewritten/path'));
+
+        $templateManager = $this->container->get('ivory_ck_editor.template_manager');
+
+        $expected = array(
+            'default' => array(
+                'imagesPath' => '/my/rewritten/path',
+                'templates'  => array(
+                    array(
+                        'title'       => 'My Template',
+                        'image'       => 'image.jpg',
+                        'description' => 'My awesome description',
+                        'html'        => '<h1>Template</h1><p>Type your text here.</p>',
+                    ),
+                ),
+            ),
+        );
+
+        $this->assertSame($expected, $templateManager->getTemplates());
+
+        $this->container->leaveScope('request');
+    }
+
     public function testCustomPaths()
     {
         $this->loadConfiguration($this->container, 'custom_paths');

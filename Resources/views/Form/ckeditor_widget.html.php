@@ -16,6 +16,10 @@
             CKEDITOR.plugins.addExternal('<?php echo $pluginName ?>', '<?php echo $plugin['path'] ?>', '<?php echo $plugin['filename'] ?>');
         <?php endforeach; ?>
 
+        <?php foreach ($templates as $templateName => $template): ?>
+            CKEDITOR.addTemplates('<?php echo $templateName ?>', <?php echo json_encode($template) ?>);
+        <?php endforeach; ?>
+
         CKEDITOR.replace('<?php echo $id ?>', <?php echo $config ?>);
     </script>
 <?php endif; ?>

@@ -51,6 +51,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
                 'js_path'   => 'js_path',
                 'config'    => json_encode(array()),
                 'plugins'   => array(),
+                'templates' => array(),
             )
         );
 
@@ -83,7 +84,20 @@ EOF;
                 'base_path' => 'base_path',
                 'js_path'   => 'js_path',
                 'config'    => json_encode(array('foo' => 'bar')),
-                'plugins'   => array('foo' => array('path' => 'path', 'filename' => 'filename')),
+                'plugins'   => array(
+                    'foo' => array('path' => 'path', 'filename' => 'filename'),
+                ),
+                'templates' => array(
+                    'foo' => array(
+                        'imagesPath' => 'path',
+                        'templates'  => array(
+                            array(
+                                'title' => 'My Template',
+                                'html'  => '<h1>Template</h1>',
+                            ),
+                        ),
+                    )
+                ),
             )
         );
 
@@ -98,6 +112,7 @@ if (CKEDITOR.instances['id']) {
 delete CKEDITOR.instances['id'];
 }
 CKEDITOR.plugins.addExternal('foo', 'path', 'filename');
+CKEDITOR.addTemplates('foo', {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
 CKEDITOR.replace('id', {"foo":"bar"});
 </script>
 
