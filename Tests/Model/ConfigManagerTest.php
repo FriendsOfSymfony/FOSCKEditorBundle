@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\Model;
 
 use Ivory\CKEditorBundle\Model\ConfigManager;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Config manager test.
@@ -198,6 +199,36 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
                 'filebrowser'.$filebrowser.'Route'           => 'browse_route',
                 'filebrowser'.$filebrowser.'RouteParameters' => array('foo' => 'bar'),
                 'filebrowser'.$filebrowser.'RouteAbsolute'   => true,
+            )
+        );
+
+        $this->assertSame(
+            array('filebrowser'.$filebrowser.'Url' => 'browse_url'),
+            $this->configManager->getConfig('foo')
+        );
+    }
+
+    /**
+     * @dataProvider filebrowserProvider
+     */
+    public function testConfigFileBrowserHandler($filebrowser)
+    {
+        $this->routerMock
+            ->expects($this->once())
+            ->method('generate')
+            ->with(
+                $this->equalTo('browse_route'),
+                $this->equalTo(array('foo' => 'bar')),
+                $this->equalTo(true)
+            )
+            ->will($this->returnValue('browse_url'));
+
+        $this->configManager->setConfig(
+            'foo',
+            array(
+                'filebrowser'.$filebrowser.'Handler' => function (RouterInterface $router) {
+                    return $router->generate('browse_route', array('foo' => 'bar'), true);
+                },
             )
         );
 
