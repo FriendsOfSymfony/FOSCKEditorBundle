@@ -84,6 +84,54 @@ $builder->add('field', 'ckeditor', array(
 ));
 ```
 
+## Templates support
+
+The bundle offers you the ability to manage extra templates. To use this feature, you need to enable the `templates`
+plugins shipped with the bundle and configure your templates. Like plugins, you can define them at the form level or in
+your configuration file:
+
+``` php
+$builder->add('field', 'ckeditor', array(
+    'config' => array(
+        'extraPlugins' => 'templates',
+        'templates'    => 'my_template',
+    ),
+    'templates' => array(
+        'my_template' => array(
+            'imagesPath' => '/bundles/mybundle/templates/images',
+            'templates'  => array(
+                array(
+                    'title'       => 'My Template',
+                    'image'       => 'images.jpg',
+                    'description' => 'My awesome template',
+                    'html'        => '<p>Crazy template :)</p>',
+                ),
+                // ...
+            ),
+        ),
+    ),
+));
+```
+
+``` yaml
+# app/config/config.yml
+ivory_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+            extraPlugins: "templates"
+            templates:    "my_templates"
+    templates:
+        my_templates:
+            imagesPath: "/bundles/mybundle/templates/images"
+            templates:
+                -
+                    title:       "My Template"
+                    image:       "image.jpg"
+                    description: "My awesome template"
+                    html:        "<p>Crazy template :)</p>"
+```
+
 ## Fallback to textarea for testing purpose
 
 Sometime you don't want to use the CKEditor widget but a simple textarea (e.g testing purpose). As CKEditor uses an
