@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.9 - 2.1.9 (????-??-??)
+
+ * c199353 - [Model] Add templates support
+
 ### 1.1.8 - 2.1.8 (2013-12-12)
 
  * b22d11c - Upgrade CKEditor to 4.3.1
