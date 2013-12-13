@@ -34,6 +34,9 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface */
     protected $pluginManagerMock;
 
+    /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface */
+    protected $stylesSetManagerMock;
+
     /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface */
     protected $templateManagerMock;
 
@@ -50,6 +53,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->configManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
         $this->pluginManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
+        $this->stylesSetManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\StylesSetManagerInterface');
         $this->templateManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
 
         $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
@@ -64,6 +68,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             'bundles/ckeditor/ckeditor.js',
             $this->configManagerMock,
             $this->pluginManagerMock,
+            $this->stylesSetManagerMock,
             $this->templateManagerMock,
             $this->assetsHelperMock,
             $this->assetsVersionTrimerHelperMock
@@ -82,6 +87,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         unset($this->assetsHelperMock);
         unset($this->configManagerMock);
         unset($this->pluginManagerMock);
+        unset($this->stylesSetManagerMock);
         unset($this->templateManagerMock);
         unset($this->ckEditorType);
         unset($this->factory);
@@ -94,6 +100,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('bundles/ckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
         $this->assertSame($this->configManagerMock, $this->ckEditorType->getConfigManager());
         $this->assertSame($this->pluginManagerMock, $this->ckEditorType->getPluginManager());
+        $this->assertSame($this->stylesSetManagerMock, $this->ckEditorType->getStylesSetManager());
         $this->assertSame($this->templateManagerMock, $this->ckEditorType->getTemplateManager());
         $this->assertSame($this->assetsHelperMock, $this->ckEditorType->getAssetsHelper());
         $this->assertSame($this->assetsVersionTrimerHelperMock, $this->ckEditorType->getAssetsVersionTrimerHelper());
@@ -388,6 +395,90 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $view = $form->createView();
 
         $this->assertSame(array_merge($explicitPlugins, $configuredPlugins), $view->get('plugins'));
+    }
+
+    public function testDefaultStylesSet()
+    {
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertEmpty($view->get('styles'));
+    }
+
+    public function testPluginsWithExplicitStylesSet()
+    {
+        $stylesSets = array(
+            'default' => array(
+                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
+                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
+            ),
+        );
+
+        $this->stylesSetManagerMock
+            ->expects($this->once())
+            ->method('setStylesSets')
+            ->with($this->equalTo($stylesSets));
+
+        $this->stylesSetManagerMock
+            ->expects($this->once())
+            ->method('getStylesSets')
+            ->will($this->returnValue($stylesSets));
+
+        $form = $this->factory->create('ckeditor', null, array('styles' => $stylesSets));
+
+        $view = $form->createView();
+
+        $this->assertSame($stylesSets, $view->get('styles'));
+    }
+
+    public function testPluginsWithConfiguredStylesSets()
+    {
+        $stylesSets = array(
+            'default' => array(
+                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
+                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
+            ),
+        );
+
+        $this->stylesSetManagerMock
+            ->expects($this->once())
+            ->method('getStylesSets')
+            ->will($this->returnValue($stylesSets));
+
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertSame($stylesSets, $view->get('styles'));
+    }
+
+    public function testPluginsWithConfiguredAndExplicitStylesSets()
+    {
+        $configuredStylesSets = array(
+            'foo' => array(
+                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
+            ),
+        );
+
+        $explicitStylesSets = array(
+            'bar' => array(
+                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
+            ),
+        );
+
+        $this->stylesSetManagerMock
+            ->expects($this->once())
+            ->method('setStylesSets')
+            ->with($this->equalTo($explicitStylesSets));
+
+        $this->stylesSetManagerMock
+            ->expects($this->once())
+            ->method('getStylesSets')
+            ->will($this->returnValue(array_merge($explicitStylesSets, $configuredStylesSets)));
+
+        $form = $this->factory->create('ckeditor', null, array('styles' => $explicitStylesSets));
+        $view = $form->createView();
+
+        $this->assertSame(array_merge($explicitStylesSets, $configuredStylesSets), $view->get('styles'));
     }
 
     public function testDefaultTemplates()
