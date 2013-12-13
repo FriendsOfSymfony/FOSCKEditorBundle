@@ -8,6 +8,7 @@
         <parameter key="ivory_ck_editor.form.type.class">Ivory\CKEditorBundle\Form\Type\CKEditorType</parameter>
         <parameter key="ivory_ck_editor.config_manager.class">Ivory\CKEditorBundle\Model\ConfigManager</parameter>
         <parameter key="ivory_ck_editor.plugin_manager.class">Ivory\CKEditorBundle\Model\PluginManager</parameter>
+        <parameter key="ivory_ck_editor.styles_set_manager.class">Ivory\CKEditorBundle\Model\StylesSetManager</parameter>
         <parameter key="ivory_ck_editor.template_manager.class">Ivory\CKEditorBundle\Model\TemplateManager</parameter>
     </parameters>
 
@@ -18,6 +19,7 @@
             <argument>%ivory_ck_editor.form.type.js_path%</argument>
             <argument type="service" id="ivory_ck_editor.config_manager" />
             <argument type="service" id="ivory_ck_editor.plugin_manager" />
+            <argument type="service" id="ivory_ck_editor.styles_set_manager" />
             <argument type="service" id="ivory_ck_editor.template_manager" />
             <argument type="service" id="templating.helper.assets" />
             <argument type="service" id="ivory_ck_editor.helper.assets_version_trimer" />
@@ -34,6 +36,11 @@
             <argument type="service" id="templating.helper.assets" />
             <argument type="service" id="ivory_ck_editor.helper.assets_version_trimer" />
         </service>
+
+        <service
+            id="ivory_ck_editor.styles_set_manager"
+            class="%ivory_ck_editor.styles_set_manager.class%"
+        />
 
         <service id="ivory_ck_editor.template_manager" class="%ivory_ck_editor.template_manager.class%" scope="request">
             <argument type="service" id="templating.helper.assets" />

@@ -64,6 +64,10 @@ class IvoryCKEditorExtension extends Extension
                 $this->registerPlugins($config, $container);
             }
 
+            if (!empty($config['styles'])) {
+                $this->registerStylesSet($config, $container);
+            }
+
             if (!empty($config['templates'])) {
                 $this->registerTemplates($config, $container);
             }
@@ -138,6 +142,31 @@ class IvoryCKEditorExtension extends Extension
 
         foreach ($config['plugins'] as $name => $plugin) {
             $definition->addMethodCall('setPlugin', array($name, $plugin));
+        }
+    }
+
+    /**
+     * Registers the CKEditor styles set.
+     *
+     * @param array                                                   $config    The CKEditor configuration.
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     */
+    protected function registerStylesSet(array $config, ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('ivory_ck_editor.styles_set_manager');
+
+        foreach ($config['styles'] as $name => $styleSet) {
+            foreach ($styleSet as &$style) {
+                if (empty($style['styles'])) {
+                    unset($style['styles']);
+                }
+
+                if (empty($style['attributes'])) {
+                    unset($style['attributes']);
+                }
+            }
+
+            $definition->addMethodCall('setStylesSet', array($name, $styleSet));
         }
     }
 

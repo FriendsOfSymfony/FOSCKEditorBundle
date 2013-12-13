@@ -2,6 +2,7 @@
 
 ### 1.1.9 - 2.1.9 (????-??-??)
 
+ * 9ecc2c1 - [Model] Add stylesSet support
  * c199353 - [Model] Add templates support
 
 ### 1.1.8 - 2.1.8 (2013-12-12)

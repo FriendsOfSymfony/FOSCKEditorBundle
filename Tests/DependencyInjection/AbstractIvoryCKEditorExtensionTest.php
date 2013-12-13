@@ -264,6 +264,23 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->leaveScope('request');
     }
 
+    public function testStylesSets()
+    {
+        $this->loadConfiguration($this->container, 'styles_sets');
+        $this->container->compile();
+
+        $stylesSetManager = $this->container->get('ivory_ck_editor.styles_set_manager');
+
+        $expected = array(
+            'default' => array(
+                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
+                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
+            )
+        );
+
+        $this->assertSame($expected, $stylesSetManager->getStylesSets());
+    }
+
     public function testTemplates()
     {
         $this->loadConfiguration($this->container, 'templates');
