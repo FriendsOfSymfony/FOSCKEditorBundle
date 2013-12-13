@@ -5,13 +5,38 @@ related to URLs which allows to manage file browse/upload. As explain
 [here](http://symfony.com/doc/current/book/routing.html), Symfony provides a powerfull routing component allowing you
 to generate URLs. These concepts are directly managed by the bundle by adding three new options for each "*Url" option:
 
-For example, the filebrowserBrowseUrl options can be generated with these three new options:
+For example, the filebrowserBrowseUrl option can be generated with these three new options:
 
   * filebrowserBrowseRoute
   * filebrowserBrowseRouteParameters
   * filebrowserBrowseRouteAbsolute
 
-The concerned options are:
+``` php
+$builder->add('field', 'ckeditor', array(
+    'config' => array(
+        'filebrowserBrowseRoute'           => 'my_route',
+        'filebrowserBrowseRouteParameters' => array('slug' => 'my-slug'),
+        'filebrowserBrowseRouteAbsolute'   => true,
+    ),
+));
+```
+
+If this process does not fit your needs, you can use the `filebrowser*Handler` option allowing you to build your own
+url with a simple closure:
+
+``` php
+$builder->add('field', 'ckeditor', array(
+    'config' => array(
+        'filebrowserBrowseHandler' => function (RouterInterface $router) {
+            return $router->generate('my_route', array('slug' => 'my-slug', true);
+        },
+    ),
+));
+```
+
+A closure will allow you to use the `use` keyword in order to make it aware of your own dependencies :)
+
+These features are about the following options:
 
  * filebrowserBrowseUrl
  * filebrowserFlashBrowseUrl
