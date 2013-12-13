@@ -14,6 +14,7 @@ namespace Ivory\CKEditorBundle\Form\Type;
 use Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper;
 use Ivory\CKEditorBundle\Model\ConfigManagerInterface;
 use Ivory\CKEditorBundle\Model\PluginManagerInterface;
+use Ivory\CKEditorBundle\Model\StylesSetManagerInterface;
 use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
@@ -43,6 +44,9 @@ class CKEditorType extends AbstractType
     /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface */
     protected $pluginManager;
 
+    /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface */
+    protected $stylesSetManager;
+
     /** @var \Ivory\CKEditorBundle\Model\TemplateManager*/
     protected $templateManager;
 
@@ -61,6 +65,7 @@ class CKEditorType extends AbstractType
      * @param string                                                 $jsPath                    The CKEditor JS path.
      * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface     $configManager             The config manager.
      * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface     $pluginManager             The plugin manager.
+     * @param \Ivory\CKEditorBundle\Model\StylesSetManagerInterface  $stylesSetManager          The styles set manager.
      * @param \Ivory\CKEditorBundle\Model\TemplateManagerInterface   $templateManager           The template manager.
      * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper  $assetsHelper              The assets helper.
      * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
@@ -71,6 +76,7 @@ class CKEditorType extends AbstractType
         $jsPath,
         ConfigManagerInterface $configManager,
         PluginManagerInterface $pluginManager,
+        StylesSetManagerInterface $stylesSetManager,
         TemplateManagerInterface $templateManager,
         CoreAssetsHelper $assetsHelper,
         AssetsVersionTrimerHelper $assetsVersionTrimerHelper
@@ -80,6 +86,7 @@ class CKEditorType extends AbstractType
         $this->setJsPath($jsPath);
         $this->setConfigManager($configManager);
         $this->setPluginManager($pluginManager);
+        $this->setStylesSetManager($stylesSetManager);
         $this->setTemplateManager($templateManager);
         $this->setAssetsHelper($assetsHelper);
         $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
@@ -182,6 +189,26 @@ class CKEditorType extends AbstractType
     }
 
     /**
+     * Gets the styles set manager.
+     *
+     * @return \Ivory\CKEditorBundle\Model\StylesSetManagerInterface The styles set manager.
+     */
+    public function getStylesSetManager()
+    {
+        return $this->stylesSetManager;
+    }
+
+    /**
+     * Sets the styles set manager.
+     *
+     * @param \Ivory\CKEditorBundle\Model\StylesSetManagerInterface $stylesSetManager The styles set manager.
+     */
+    public function setStylesSetManager(StylesSetManagerInterface $stylesSetManager)
+    {
+        $this->stylesSetManager = $stylesSetManager;
+    }
+
+    /**
      * Gets the CKEditor template manager.
      *
      * @return \Ivory\CKEditorBundle\Model\TemplateManagerInterface The CKEditor template manager.
@@ -263,10 +290,12 @@ class CKEditorType extends AbstractType
             }
 
             $this->pluginManager->setPlugins($options['plugins']);
+            $this->stylesSetManager->setStylesSets($options['styles']);
             $this->templateManager->setTemplates($options['templates']);
 
             $builder->setAttribute('config', $this->configManager->getConfig($options['config_name']));
             $builder->setAttribute('plugins', $this->pluginManager->getPlugins());
+            $builder->setAttribute('styles', $this->stylesSetManager->getStylesSets());
             $builder->setAttribute('templates', $this->templateManager->getTemplates());
         }
     }
@@ -288,6 +317,7 @@ class CKEditorType extends AbstractType
 
             $this->buildConfig($view, $form);
             $this->buildPlugins($view, $form);
+            $this->buildStylesSet($view, $form);
             $this->buildTemplates($view, $form);
         }
     }
@@ -304,6 +334,7 @@ class CKEditorType extends AbstractType
             'config_name' => $this->configManager->getDefaultConfig(),
             'config'      => array(),
             'plugins'     => array(),
+            'styles'      => array(),
             'templates'   => array(),
         );
     }
@@ -344,6 +375,17 @@ class CKEditorType extends AbstractType
     protected function buildPlugins(FormView $view, FormInterface $form)
     {
         $view->set('plugins', $form->getAttribute('plugins'));
+    }
+
+    /**
+     * Builds the CKEditor styles set.
+     *
+     * @param \Symfony\Component\Form\FormView      $view The form view.
+     * @param \Symfony\Component\Form\FormInterface $form The form.
+     */
+    protected function buildStylesSet(FormView $view, FormInterface $form)
+    {
+        $view->set('styles', $form->getAttribute('styles'));
     }
 
     /**
