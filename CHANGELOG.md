@@ -2,6 +2,7 @@
 
 ### 1.1.9 - 2.1.9 (????-??-??)
 
+ * 58f9549 - [ConfigManager] Allow to define filebrowser*Url via a closure
  * 9ecc2c1 - [Model] Add stylesSet support
  * c199353 - [Model] Add templates support
 
