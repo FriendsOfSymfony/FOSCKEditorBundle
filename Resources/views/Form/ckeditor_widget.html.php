@@ -1,4 +1,4 @@
-<textarea <?php echo $view['form']->block($form, 'attributes') ?>><?php echo $value ?></textarea>
+<textarea <?php echo $view['form']->block($form, 'attributes') ?>><?php echo htmlspecialchars($value) ?></textarea>
 
 <?php if ($enable) : ?>
     <script type="text/javascript">
