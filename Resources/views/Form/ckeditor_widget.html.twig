@@ -1,5 +1,5 @@
 {% block ckeditor_widget %}
-    <textarea {{ block('widget_attributes') }}>{{ value | raw }}</textarea>
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 
     {% if enable %}
         <script type="text/javascript">

@@ -44,7 +44,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
         $output = $this->renderTemplate(
             array(
                 'id'        => 'id',
-                'value'     => 'value',
+                'value'     => '<p>value</p>',
                 'enable'    => true,
                 'base_path' => 'base_path',
                 'js_path'   => 'js_path',
@@ -56,7 +56,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
         );
 
         $expected = <<<EOF
-<textarea >value</textarea>
+<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 var CKEDITOR_BASEPATH = 'base_path';
 </script>
@@ -78,7 +78,7 @@ EOF;
         $output = $this->renderTemplate(
             array(
                 'id'        => 'id',
-                'value'     => 'value',
+                'value'     => '<p>value</p>',
                 'enable'    => true,
                 'base_path' => 'base_path',
                 'js_path'   => 'js_path',
@@ -106,7 +106,7 @@ EOF;
         );
 
         $expected = <<<EOF
-<textarea >value</textarea>
+<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 var CKEDITOR_BASEPATH = 'base_path';
 </script>
