@@ -88,7 +88,7 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->routerMock, $this->configManager->getRouter());
         $this->assertNull($this->configManager->getDefaultConfig());
         $this->assertFalse($this->configManager->hasConfigs());
-        $this->assertEmpty($this->configManager->getConfigs());
+        $this->assertSame(array(), $this->configManager->getConfigs());
     }
 
     public function testInitialState()

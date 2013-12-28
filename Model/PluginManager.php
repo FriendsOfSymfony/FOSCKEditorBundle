@@ -29,7 +29,7 @@ class PluginManager implements PluginManagerInterface
     protected $assetsVersionTrimerHelper;
 
     /** @var array */
-    protected $plugins;
+    protected $plugins = array();
 
     /**
      * Creates a plugin manager.

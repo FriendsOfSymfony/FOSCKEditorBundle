@@ -58,6 +58,7 @@ class TemplateManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->assetsHelperMock, $this->templateManager->getAssetsHelper());
         $this->assertSame($this->assetsVersionTrimerHelperMock, $this->templateManager->getAssetsVersionTrimerHelper());
         $this->assertFalse($this->templateManager->hasTemplates());
+        $this->assertSame(array(), $this->templateManager->getTemplates());
     }
 
     public function testInitialState()
