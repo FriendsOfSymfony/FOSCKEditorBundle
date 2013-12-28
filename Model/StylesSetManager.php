@@ -21,7 +21,7 @@ use Ivory\CKEditorBundle\Exception\StylesSetManagerException;
 class StylesSetManager implements StylesSetManagerInterface
 {
     /** @var array */
-    protected $stylesSets;
+    protected $stylesSets = array();
 
     /**
      * Creates a styles set manager.
@@ -30,8 +30,6 @@ class StylesSetManager implements StylesSetManagerInterface
      */
     public function __construct(array $stylesSets = array())
     {
-        $this->stylesSets = array();
-
         $this->setStylesSets($stylesSets);
     }
 

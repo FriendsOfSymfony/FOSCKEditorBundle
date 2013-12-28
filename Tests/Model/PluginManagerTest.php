@@ -58,6 +58,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->assetsHelperMock, $this->pluginManager->getAssetsHelper());
         $this->assertSame($this->assetsVersionTrimerHelperMock, $this->pluginManager->getAssetsVersionTrimerHelper());
         $this->assertFalse($this->pluginManager->hasPlugins());
+        $this->assertSame(array(), $this->pluginManager->getPlugins());
     }
 
     public function testInitialState()

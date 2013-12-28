@@ -29,7 +29,7 @@ class TemplateManager implements TemplateManagerInterface
     protected $assetsVersionTrimerHelper;
 
     /** @var array */
-    protected $templates;
+    protected $templates = array();
 
     /**
      * Creates a plugin manager.

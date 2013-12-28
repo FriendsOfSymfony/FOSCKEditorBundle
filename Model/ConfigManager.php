@@ -36,7 +36,7 @@ class ConfigManager implements ConfigManagerInterface
     protected $defaultConfig;
 
     /** @var array */
-    protected $configs;
+    protected $configs = array();
 
     /**
      * Creates a CKEditor config manager.

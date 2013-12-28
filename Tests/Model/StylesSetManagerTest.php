@@ -42,6 +42,7 @@ class StylesSetManagerTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertFalse($this->stylesSetManager->hasStylesSets());
+        $this->assertSame(array(), $this->stylesSetManager->getStylesSets());
     }
 
     public function testInitialState()
