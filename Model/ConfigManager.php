@@ -206,7 +206,10 @@ class ConfigManager implements ConfigManagerInterface
      */
     public function mergeConfig($name, array $config)
     {
-        $this->setConfig($name, array_merge($this->getConfig($name), $config));
+        $previousConfig = $this->getConfig($name);
+        $this->setConfig($name, $config);
+
+        $this->configs[$name] = array_merge($previousConfig, $this->getConfig($name));
     }
 
     /**

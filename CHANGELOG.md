@@ -2,6 +2,7 @@
 
 ### 1.1.9 - 2.1.9 (????-??-??)
 
+ * ebeb553 - [ConfigManager] Fix merge config behavior
  * 4808b41 - Fix Config, Plugin, Template & StylesSet arrays initialization
  * ec2f56d - [Template] Fix textarea value escaping
  * 58f9549 - [ConfigManager] Allow to define filebrowser*Url via a closure
