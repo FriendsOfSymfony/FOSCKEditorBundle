@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.1.9 - 2.1.9 (????-??-??)
+### 1.1.9 - 2.1.9 (2014-01-04)
 
  * ebeb553 - [ConfigManager] Fix merge config behavior
  * 4808b41 - Fix Config, Plugin, Template & StylesSet arrays initialization
