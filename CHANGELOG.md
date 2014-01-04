@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 2.2.0 (????-??-??)
+
+ * 2b1786a - Update new year
+ * cdad813 - Deprecate Symfony 2.0
+
 ### 1.1.9 - 2.1.9 (2014-01-04)
 
  * ebeb553 - [ConfigManager] Fix merge config behavior
