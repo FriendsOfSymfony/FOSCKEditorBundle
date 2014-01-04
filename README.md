@@ -1,7 +1,6 @@
 # README
 
-1.*: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?branch=2.0)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
-2.*: [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png?banch=master)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
+[![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
 
 The bundle provides a [CKEditor](http://ckeditor.com/) integration for your Symfony2 Project. It automatically registers
 the new `ckeditor` form type which can be easily configured.
