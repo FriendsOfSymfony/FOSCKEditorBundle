@@ -7,7 +7,7 @@ Require the bundle in your composer.json file:
 ```
 {
     "require": {
-        "egeloen/ckeditor-bundle": "2.*",
+        "egeloen/ckeditor-bundle": "~2.0",
     }
 }
 ```
@@ -40,6 +40,7 @@ Add Ivory CKEditor bundle to your deps file:
 [IvoryCKEditorBundle]
     git=http://github.com/egeloen/IvoryCKEditorBundle.git
     target=bundles/Ivory/CKEditorBundle
+    version=1.1.9
 ```
 
 I recommend you to specify a version in order to easily maintain your project. The versions are available in the
@@ -82,3 +83,5 @@ your `web` directory. To fix it, simply run:
 ``` bash
 $ php app/console assets:install --symlink
 ```
+
+Be aware that the Symfony 2.0 version of the bundle is no longer maintain.

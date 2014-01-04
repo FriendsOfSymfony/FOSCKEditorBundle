@@ -13,9 +13,6 @@ the new `ckeditor` form type which can be easily configured.
  3. [Configuration](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/configuration.md) (Optional)
  4. [File Browse/Upload](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/file_browse_upload.md) (Optional)
 
-The bundle is compatible with all Symfony2 versions. For BC reasons, you must use the 2.0 branch of the bundle for
-Symfony 2.0 (1.* version of the bundle) and the master branch for Symfony >= 2.1 (2.* version of the bundle).
-
 ## Contribute
 
 We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
