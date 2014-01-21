@@ -2,6 +2,7 @@
 
 ### 2.2.0 (????-??-??)
 
+ * ff12310 - Upgrade CKEditor to 4.3.2
  * 2b1786a - Update new year
  * cdad813 - Deprecate Symfony 2.0
 
