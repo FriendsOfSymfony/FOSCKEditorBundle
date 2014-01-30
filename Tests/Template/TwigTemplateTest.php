@@ -11,8 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Ivory\CKEditorBundle\Helper\CKEditorHelper;
+use Ivory\CKEditorBundle\Twig\CKEditorExtension;
 
 /**
  * Twig template test.
@@ -32,7 +32,13 @@ class TwigTemplateTest extends AbstractTemplateTest
      */
     protected function setUp()
     {
-        $this->twig = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__.'/../../Resources/views/Form'));
+        parent::setUp();
+
+        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem(__DIR__.'/../../Resources/views/Form'));
+        $this->twig->addExtension(new CKEditorExtension(
+            new CKEditorHelper($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock, $this->routerMock)
+        ));
+
         $this->template = $this->twig->loadTemplate('ckeditor_widget.html.twig');
     }
 
@@ -41,6 +47,8 @@ class TwigTemplateTest extends AbstractTemplateTest
      */
     protected function tearDown()
     {
+        parent::tearDown();
+
         unset($this->template);
         unset($this->twig);
     }

@@ -12,7 +12,6 @@
 namespace Ivory\CKEditorBundle\Tests\Model;
 
 use Ivory\CKEditorBundle\Model\ConfigManager;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Config manager test.
@@ -24,32 +23,12 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
     protected $configManager;
 
-    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
-    protected $assetsHelperMock;
-
-    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
-    protected $assetsVersionTrimerHelperMock;
-
-    /** @var \Symfony\Component\Routing\RouterInterface */
-    protected $routerMock;
-
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
-        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
-
-        $this->configManager = new ConfigManager(
-            $this->assetsHelperMock,
-            $this->assetsVersionTrimerHelperMock,
-            $this->routerMock
-        );
+        $this->configManager = new ConfigManager();
     }
 
     /**
@@ -57,35 +36,11 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        unset($this->assetsHelperMock);
-        unset($this->assetsVersionTrimerHelperMock);
-        unset($this->routerMock);
         unset($this->configManager);
-    }
-
-    /**
-     * Gets the valid filebrowsers keys.
-     *
-     * @return array The valid filebrowsers keys.
-     */
-    public static function filebrowserProvider()
-    {
-        return array(
-            array('Browse'),
-            array('FlashBrowse'),
-            array('ImageBrowse'),
-            array('ImageBrowseLink'),
-            array('Upload'),
-            array('FlashUpload'),
-            array('ImageUpload'),
-        );
     }
 
     public function testDefaultState()
     {
-        $this->assertSame($this->assetsHelperMock, $this->configManager->getAssetsHelper());
-        $this->assertSame($this->assetsVersionTrimerHelperMock, $this->configManager->getAssetsVersionTrimerHelper());
-        $this->assertSame($this->routerMock, $this->configManager->getRouter());
         $this->assertNull($this->configManager->getDefaultConfig());
         $this->assertFalse($this->configManager->hasConfigs());
         $this->assertSame(array(), $this->configManager->getConfigs());
@@ -98,13 +53,7 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
             'bar' => array('bar'),
         );
 
-        $this->configManager = new ConfigManager(
-            $this->assetsHelperMock,
-            $this->assetsVersionTrimerHelperMock,
-            $this->routerMock,
-            $configs,
-            'foo'
-        );
+        $this->configManager = new ConfigManager($configs, 'foo');
 
         $this->assertSame('foo', $this->configManager->getDefaultConfig());
         $this->assertTrue($this->configManager->hasConfigs());
@@ -140,102 +89,6 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
     public function testDefaultConfigWithInvalidValue()
     {
         $this->configManager->setDefaultConfig('foo');
-    }
-
-    public function testConfigContentsCssWithString()
-    {
-        $this->assetsHelperMock
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with($this->equalTo('foo'), $this->equalTo(null))
-            ->will($this->returnValue('bar'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->once())
-            ->method('trim')
-            ->with($this->equalTo('bar'))
-            ->will($this->returnValue('baz'));
-
-        $this->configManager->setConfig('foo', array('contentsCss' => 'foo'));
-
-        $this->assertSame(array('contentsCss' => array('baz')), $this->configManager->getConfig('foo'));
-    }
-
-    public function testConfigContentsCssWithArray()
-    {
-        $this->assetsHelperMock
-            ->expects($this->any())
-            ->method('getUrl')
-            ->will($this->returnValueMap(array(array('foo', null, 'foo1'), array('bar', null, 'bar1'))));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->any())
-            ->method('trim')
-            ->will($this->returnValueMap(array(array('foo1', 'baz1'), array('bar1', 'baz2'))));
-
-        $this->configManager->setConfig('foo', array('contentsCss' => array('foo', 'bar')));
-
-        $this->assertSame(array('contentsCss' => array('baz1', 'baz2')), $this->configManager->getConfig('foo'));
-    }
-
-    /**
-     * @dataProvider filebrowserProvider
-     */
-    public function testConfigFileBrowser($filebrowser)
-    {
-        $this->routerMock
-            ->expects($this->once())
-            ->method('generate')
-            ->with(
-                $this->equalTo('browse_route'),
-                $this->equalTo(array('foo' => 'bar')),
-                $this->equalTo(true)
-            )
-            ->will($this->returnValue('browse_url'));
-
-        $this->configManager->setConfig(
-            'foo',
-            array(
-                'filebrowser'.$filebrowser.'Route'           => 'browse_route',
-                'filebrowser'.$filebrowser.'RouteParameters' => array('foo' => 'bar'),
-                'filebrowser'.$filebrowser.'RouteAbsolute'   => true,
-            )
-        );
-
-        $this->assertSame(
-            array('filebrowser'.$filebrowser.'Url' => 'browse_url'),
-            $this->configManager->getConfig('foo')
-        );
-    }
-
-    /**
-     * @dataProvider filebrowserProvider
-     */
-    public function testConfigFileBrowserHandler($filebrowser)
-    {
-        $this->routerMock
-            ->expects($this->once())
-            ->method('generate')
-            ->with(
-                $this->equalTo('browse_route'),
-                $this->equalTo(array('foo' => 'bar')),
-                $this->equalTo(true)
-            )
-            ->will($this->returnValue('browse_url'));
-
-        $this->configManager->setConfig(
-            'foo',
-            array(
-                'filebrowser'.$filebrowser.'Handler' => function (RouterInterface $router) {
-                    return $router->generate('browse_route', array('foo' => 'bar'), true);
-                },
-            )
-        );
-
-        $this->assertSame(
-            array('filebrowser'.$filebrowser.'Url' => 'browse_url'),
-            $this->configManager->getConfig('foo')
-        );
     }
 
     /**

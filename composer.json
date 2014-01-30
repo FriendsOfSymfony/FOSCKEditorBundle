@@ -2,7 +2,7 @@
     "name": "egeloen/ckeditor-bundle",
     "type": "symfony-bundle",
     "description": "Provides a CKEditor integration for your Symfony2 Project.",
-    "keywords": ["ckeditor"],
+    "keywords": [ "ckeditor" ],
     "license": "MIT",
     "authors": [
         {
@@ -32,7 +32,7 @@
     "target-dir": "Ivory/CKEditorBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1-dev"
+            "dev-master": "2.2-dev"
         }
     }
 }
