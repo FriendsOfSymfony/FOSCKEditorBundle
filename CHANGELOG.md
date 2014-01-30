@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.2.0 (????-??-??)
+### 2.2.0 (2014-01-30)
 
  * db93af5 - [Model] Move all view logic to an helper
  * ff12310 - Upgrade CKEditor to 4.3.2
