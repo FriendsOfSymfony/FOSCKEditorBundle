@@ -6,6 +6,7 @@
 >
     <parameters>
         <parameter key="ivory_ck_editor.helper.assets_version_trimer.class">Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper</parameter>
+        <parameter key="ivory_ck_editor.helper.templating.class">Ivory\CKEditorBundle\Helper\CKEditorHelper</parameter>
     </parameters>
 
     <services>
@@ -13,5 +14,16 @@
             id="ivory_ck_editor.helper.assets_version_trimer"
             class="%ivory_ck_editor.helper.assets_version_trimer.class%"
         />
+
+        <service
+            id="ivory_ck_editor.helper.templating"
+            class="%ivory_ck_editor.helper.templating.class%"
+            scope="request"
+        >
+            <argument type="service" id="templating.helper.assets" />
+            <argument type="service" id="ivory_ck_editor.helper.assets_version_trimer" strict="false" />
+            <argument type="service" id="router" />
+            <tag name="templating.helper" alias="ivory_ckeditor" />
+        </service>
     </services>
 </container>

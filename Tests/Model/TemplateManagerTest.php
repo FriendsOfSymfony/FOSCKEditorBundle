@@ -23,24 +23,12 @@ class TemplateManagerTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Model\TemplateManager */
     protected $templateManager;
 
-    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
-    protected $assetsHelperMock;
-
-    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
-    protected $assetsVersionTrimerHelperMock;
-
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
-
-        $this->templateManager = new TemplateManager($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock);
+        $this->templateManager = new TemplateManager();
     }
 
     /**
@@ -49,79 +37,17 @@ class TemplateManagerTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         unset($this->templateManager);
-        unset($this->assetsHelperMock);
-        unset($this->assetsVersionTrimerHelperMock);
     }
 
     public function testDefaultState()
     {
-        $this->assertSame($this->assetsHelperMock, $this->templateManager->getAssetsHelper());
-        $this->assertSame($this->assetsVersionTrimerHelperMock, $this->templateManager->getAssetsVersionTrimerHelper());
         $this->assertFalse($this->templateManager->hasTemplates());
         $this->assertSame(array(), $this->templateManager->getTemplates());
     }
 
     public function testInitialState()
     {
-        $this->assetsHelperMock
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with($this->equalTo('/my/path'), $this->equalTo(null))
-            ->will($this->returnValue('foo'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->once())
-            ->method('trim')
-            ->with($this->equalTo('foo'))
-            ->will($this->returnValue('/my/rewritten/path'));
-
-        $this->templateManager = new TemplateManager(
-            $this->assetsHelperMock,
-            $this->assetsVersionTrimerHelperMock,
-            array(
-                'default' => array(
-                    'imagesPath' => '/my/path',
-                    'templates'  => array(
-                        array(
-                            'title' => 'My Template',
-                            'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                        ),
-                    ),
-                ),
-            )
-        );
-
-        $this->assertTrue($this->templateManager->hasTemplates());
-        $this->assertTrue($this->templateManager->hasTemplate('default'));
-
-        $expected = array(
-            'imagesPath' => '/my/rewritten/path',
-            'templates'  => array(
-                array(
-                    'title' => 'My Template',
-                    'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                ),
-            ),
-        );
-
-        $this->assertSame($expected, $this->templateManager->getTemplate('default'));
-    }
-
-    public function testTemplates()
-    {
-        $this->assetsHelperMock
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with($this->equalTo('/my/path'), $this->equalTo(null))
-            ->will($this->returnValue('foo'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->once())
-            ->method('trim')
-            ->with($this->equalTo('foo'))
-            ->will($this->returnValue('/my/rewritten/path'));
-
-        $this->templateManager->setTemplates(array(
+        $templates = array(
             'default' => array(
                 'imagesPath' => '/my/path',
                 'templates'  => array(
@@ -131,14 +57,20 @@ class TemplateManagerTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
             ),
-        ));
+        );
+
+        $this->templateManager = new TemplateManager($templates);
 
         $this->assertTrue($this->templateManager->hasTemplates());
         $this->assertTrue($this->templateManager->hasTemplate('default'));
+        $this->assertSame($templates['default'], $this->templateManager->getTemplate('default'));
+    }
 
-        $expected = array(
+    public function testTemplates()
+    {
+        $templates = array(
             'default' => array(
-                'imagesPath' => '/my/rewritten/path',
+                'imagesPath' => '/my/path',
                 'templates'  => array(
                     array(
                         'title' => 'My Template',
@@ -148,7 +80,11 @@ class TemplateManagerTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertSame($expected, $this->templateManager->getTemplates());
+        $this->templateManager->setTemplates($templates);
+
+        $this->assertTrue($this->templateManager->hasTemplates());
+        $this->assertTrue($this->templateManager->hasTemplate('default'));
+        $this->assertSame($templates, $this->templateManager->getTemplates());
     }
 
     /**

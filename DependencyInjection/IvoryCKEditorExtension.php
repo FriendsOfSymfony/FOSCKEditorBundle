@@ -45,7 +45,7 @@ class IvoryCKEditorExtension extends Extension
     protected function register(array $config, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        foreach (array('helper', 'form') as $service) {
+        foreach (array('helper', 'form', 'twig') as $service) {
             $loader->load($service.'.xml');
         }
 

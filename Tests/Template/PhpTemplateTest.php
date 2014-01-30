@@ -11,6 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
+use Ivory\CKEditorBundle\Helper\CKEditorHelper;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
@@ -33,6 +34,8 @@ class PhpTemplateTest extends AbstractTemplateTest
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->phpEngine = new PhpEngine(
             new TemplateNameParser(),
             new FilesystemLoader(__DIR__.'/../../Resources/views/Form/%name%')
@@ -47,7 +50,10 @@ class PhpTemplateTest extends AbstractTemplateTest
             ->method('getName')
             ->will($this->returnValue('form'));
 
-        $this->phpEngine->addHelpers(array($this->formHelperMock));
+        $this->phpEngine->addHelpers(array(
+            $this->formHelperMock,
+            new CKEditorHelper($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock, $this->routerMock),
+        ));
     }
 
     /**
@@ -55,7 +61,9 @@ class PhpTemplateTest extends AbstractTemplateTest
      */
     protected function tearDown()
     {
-        unset($this->formHelper);
+        parent::tearDown();
+
+        unset($this->formHelperMock);
         unset($this->phpEngine);
     }
 
