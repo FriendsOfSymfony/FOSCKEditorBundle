@@ -2,6 +2,7 @@
 
 ### 2.2.0 (????-??-??)
 
+ * db93af5 - [Model] Move all view logic to an helper
  * ff12310 - Upgrade CKEditor to 4.3.2
  * 2b1786a - Update new year
  * cdad813 - Deprecate Symfony 2.0
