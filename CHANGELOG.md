@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 2.2.1 (????-??-??)
+
+ * aa81171 - [Travis] Make symfony/form dynamic
+ * e51427c - [Twig] Fix js escaping
+ * fa08cd3 - [Twig] Fix caching by lazy loading services scoped request
+
 ### 2.2.0 (2014-01-30)
 
  * db93af5 - [Model] Move all view logic to an helper
