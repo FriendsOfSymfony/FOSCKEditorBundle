@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.2.1 (????-??-??)
+### 2.2.1 (2014-01-31)
 
  * aa81171 - [Travis] Make symfony/form dynamic
  * e51427c - [Twig] Fix js escaping
