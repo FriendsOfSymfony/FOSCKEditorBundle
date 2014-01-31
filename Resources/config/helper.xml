@@ -15,14 +15,8 @@
             class="%ivory_ck_editor.helper.assets_version_trimer.class%"
         />
 
-        <service
-            id="ivory_ck_editor.helper.templating"
-            class="%ivory_ck_editor.helper.templating.class%"
-            scope="request"
-        >
-            <argument type="service" id="templating.helper.assets" />
-            <argument type="service" id="ivory_ck_editor.helper.assets_version_trimer" strict="false" />
-            <argument type="service" id="router" />
+        <service id="ivory_ck_editor.helper.templating" class="%ivory_ck_editor.helper.templating.class%">
+            <argument type="service" id="service_container" />
             <tag name="templating.helper" alias="ivory_ckeditor" />
         </service>
     </services>

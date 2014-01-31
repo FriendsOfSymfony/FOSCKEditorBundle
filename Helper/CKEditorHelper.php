@@ -11,9 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Helper;
 
-use Symfony\Component\Templating\Helper\CoreAssetsHelper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\Helper\Helper;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * CKEditor helper.
@@ -22,90 +21,17 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class CKEditorHelper extends Helper
 {
-    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
-    protected $assetsHelper;
-
-    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
-    protected $assetsVersionTrimerHelper;
-
-    /** @var \Symfony\Component\Routing\RouterInterface */
-    protected $router;
+    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
+    protected $container;
 
     /**
      * Creates a CKEditor template helper.
      *
-     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper  $assetsHelper              The assets helper.
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
-     * @param \Symfony\Component\Routing\RouterInterface             $router                    The router.
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container The container.
      */
-    public function __construct(
-        CoreAssetsHelper $assetsHelper,
-        AssetsVersionTrimerHelper $assetsVersionTrimerHelper,
-        RouterInterface $router
-    ) {
-        $this->setAssetsHelper($assetsHelper);
-        $this->setAssetsVersionTrimerHelper($assetsVersionTrimerHelper);
-        $this->setRouter($router);
-    }
-
-    /**
-     * Gets the assets helper.
-     *
-     * @return \Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
-     */
-    public function getAssetsHelper()
+    public function __construct(ContainerInterface $container)
     {
-        return $this->assetsHelper;
-    }
-
-    /**
-     * Sets the assets helper.
-     *
-     * @param \Symfony\Component\Templating\Helper\CoreAssetsHelper $assetsHelper The assets helper.
-     */
-    public function setAssetsHelper(CoreAssetsHelper $assetsHelper)
-    {
-        $this->assetsHelper = $assetsHelper;
-    }
-
-    /**
-     * Gets the assets version trimer helper.
-     *
-     * @return \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper The assets version trimer helper.
-     */
-    public function getAssetsVersionTrimerHelper()
-    {
-        return $this->assetsVersionTrimerHelper;
-    }
-
-    /**
-     * Sets the assets version trimer helper.
-     *
-     * @param \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper $assetsVersionTrimerHelper The version trimer.
-     */
-    public function setAssetsVersionTrimerHelper(AssetsVersionTrimerHelper $assetsVersionTrimerHelper)
-    {
-        $this->assetsVersionTrimerHelper = $assetsVersionTrimerHelper;
-    }
-
-    /**
-     * Gets the router.
-     *
-     * @return \Symfony\Component\Routing\RouterInterface The router.
-     */
-    public function getRouter()
-    {
-        return $this->router;
-    }
-
-    /**
-     * Sets the router.
-     *
-     * @param \Symfony\Component\Routing\RouterInterface $router The router.
-     */
-    public function setRouter(RouterInterface $router)
-    {
-        $this->router = $router;
+        $this->container = $container;
     }
 
     /**
@@ -117,7 +43,7 @@ class CKEditorHelper extends Helper
      */
     public function renderBasePath($basePath)
     {
-        return $this->assetsVersionTrimerHelper->trim($this->assetsHelper->getUrl($basePath));
+        return $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($basePath));
     }
 
     /**
@@ -129,7 +55,7 @@ class CKEditorHelper extends Helper
      */
     public function renderJsPath($jsPath)
     {
-        return $this->assetsHelper->getUrl($jsPath);
+        return $this->getAssetsHelper()->getUrl($jsPath);
     }
 
     /**
@@ -147,13 +73,13 @@ class CKEditorHelper extends Helper
 
             $config['contentsCss'] = array();
             foreach ($cssContents as $cssContent) {
-                $config['contentsCss'][] = $this->assetsVersionTrimerHelper->trim(
-                    $this->assetsHelper->getUrl($cssContent)
+                $config['contentsCss'][] = $this->getAssetsVersionTrimerHelper()->trim(
+                    $this->getAssetsHelper()->getUrl($cssContent)
                 );
             }
         }
 
-        $router = $this->router;
+        $router = $this->getRouter();
 
         $filebrowser = function ($key, array &$config) use ($router) {
             $filebrowserHandler = 'filebrowser'.$key.'Handler';
@@ -227,7 +153,7 @@ EOF;
         return sprintf(
             'CKEDITOR.plugins.addExternal("%s", "%s", "%s");',
             $name,
-            $this->assetsVersionTrimerHelper->trim($this->assetsHelper->getUrl($plugin['path'])),
+            $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($plugin['path'])),
             $plugin['filename']
         );
     }
@@ -256,8 +182,8 @@ EOF;
     public function renderTemplate($name, array $template)
     {
         if (isset($template['imagesPath'])) {
-            $template['imagesPath'] = $this->assetsVersionTrimerHelper->trim(
-                $this->assetsHelper->getUrl($template['imagesPath'])
+            $template['imagesPath'] = $this->getAssetsVersionTrimerHelper()->trim(
+                $this->getAssetsHelper()->getUrl($template['imagesPath'])
             );
         }
 
@@ -270,5 +196,35 @@ EOF;
     public function getName()
     {
         return 'ivory_ckeditor';
+    }
+
+    /**
+     * Gets the assets helper.
+     *
+     * @return \Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
+     */
+    protected function getAssetsHelper()
+    {
+        return $this->container->get('templating.helper.assets');
+    }
+
+    /**
+     * Gets the assets version trimer helper.
+     *
+     * @return \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper The assets version trimer helper.
+     */
+    protected function getAssetsVersionTrimerHelper()
+    {
+        return $this->container->get('ivory_ck_editor.helper.assets_version_trimer');
+    }
+
+    /**
+     * Gets the router.
+     *
+     * @return \Symfony\Component\Routing\RouterInterface The router.
+     */
+    protected function getRouter()
+    {
+        return $this->container->get('router');
     }
 }

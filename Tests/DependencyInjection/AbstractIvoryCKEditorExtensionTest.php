@@ -13,7 +13,6 @@ namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Scope;
 
 /**
  * Abstract Ivory CKEditor extension test.
@@ -43,8 +42,6 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $this->container = new ContainerBuilder();
-
-        $this->container->addScope(new Scope('request'));
 
         $this->container->set('templating.helper.assets', $this->assetsHelperMock);
         $this->container->set('router', $this->routerMock);

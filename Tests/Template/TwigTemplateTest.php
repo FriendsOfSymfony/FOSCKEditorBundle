@@ -35,9 +35,7 @@ class TwigTemplateTest extends AbstractTemplateTest
         parent::setUp();
 
         $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem(__DIR__.'/../../Resources/views/Form'));
-        $this->twig->addExtension(new CKEditorExtension(
-            new CKEditorHelper($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock, $this->routerMock)
-        ));
+        $this->twig->addExtension(new CKEditorExtension(new CKEditorHelper($this->containerMock)));
 
         $this->template = $this->twig->loadTemplate('ckeditor_widget.html.twig');
     }
