@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\Helper;
 
 use Ivory\CKEditorBundle\Helper\CKEditorHelper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -23,6 +24,9 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Ivory\CKEditorBundle\Helper\CKEditorHelper */
     protected $helper;
+
+    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
+    protected $containerMock;
 
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
     protected $assetsHelperMock;
@@ -45,11 +49,30 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         $this->assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
-        $this->helper = new CKEditorHelper(
-            $this->assetsHelperMock,
-            $this->assetsVersionTrimerHelperMock,
-            $this->routerMock
-        );
+        $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+
+        $this->containerMock
+            ->expects($this->any())
+            ->method('get')
+            ->will($this->returnValueMap(array(
+                array(
+                    'templating.helper.assets',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->assetsHelperMock,
+                ),
+                array(
+                    'ivory_ck_editor.helper.assets_version_trimer',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->assetsVersionTrimerHelperMock,
+                ),
+                array(
+                    'router',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->routerMock
+                ),
+            )));
+
+        $this->helper = new CKEditorHelper($this->containerMock);
     }
 
     /**
@@ -58,6 +81,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         unset($this->helper);
+        unset($this->containerMock);
         unset($this->routerMock);
         unset($this->assetsVersionTrimerHelperMock);
         unset($this->assetsHelperMock);
@@ -79,42 +103,6 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
             array('FlashUpload'),
             array('ImageUpload'),
         );
-    }
-
-    public function testInitialState()
-    {
-        $this->assertSame($this->assetsHelperMock, $this->helper->getAssetsHelper());
-        $this->assertSame($this->assetsVersionTrimerHelperMock, $this->helper->getAssetsVersionTrimerHelper());
-        $this->assertSame($this->routerMock, $this->helper->getRouter());
-    }
-
-    public function testAssetsHelper()
-    {
-        $assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->helper->setAssetsHelper($assetsHelperMock);
-
-        $this->assertSame($assetsHelperMock, $this->helper->getAssetsHelper());
-    }
-
-    public function testAssetsVersionTrimerHelper()
-    {
-        $assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
-
-        $this->helper->setAssetsVersionTrimerHelper($assetsVersionTrimerHelperMock);
-
-        $this->assertSame($assetsVersionTrimerHelperMock, $this->helper->getAssetsVersionTrimerHelper());
-    }
-
-    public function testRouter()
-    {
-        $routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
-
-        $this->helper->setRouter($routerMock);
-
-        $this->assertSame($routerMock, $this->helper->getRouter());
     }
 
     public function testRenderBasePath()

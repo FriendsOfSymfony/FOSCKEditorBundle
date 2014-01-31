@@ -10,6 +10,7 @@ env:
 
 before_script:
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
+    - composer require --no-update symfony/form:${SYMFONY_VERSION}
     - composer install --dev --prefer-source
 
 script: bin/phpunit

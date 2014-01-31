@@ -52,7 +52,7 @@ class PhpTemplateTest extends AbstractTemplateTest
 
         $this->phpEngine->addHelpers(array(
             $this->formHelperMock,
-            new CKEditorHelper($this->assetsHelperMock, $this->assetsVersionTrimerHelperMock, $this->routerMock),
+            new CKEditorHelper($this->containerMock),
         ));
     }
 

@@ -38,11 +38,10 @@ class CKEditorExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        $options = array('is_safe' => array('html', 'js'));
+        $options = array('is_safe' => array('html'));
 
         return array(
             new \Twig_SimpleFunction('ckeditor_base_path', array($this->helper, 'renderBasePath'), $options),
-            new \Twig_SimpleFunction('ckeditor_js_path', array($this->helper, 'renderJsPath'), $options),
             new \Twig_SimpleFunction('ckeditor_js_path', array($this->helper, 'renderJsPath'), $options),
             new \Twig_SimpleFunction('ckeditor_replace', array($this->helper, 'renderReplace'), $options),
             new \Twig_SimpleFunction('ckeditor_destroy', array($this->helper, 'renderDestroy'), $options),
