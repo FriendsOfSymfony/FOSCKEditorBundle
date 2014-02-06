@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.2.2 (????-??-??)
+
+ * 648aa63 - [Helper] Only render StylesSet if they are not already registered
+
 ### 2.2.1 (2014-01-31)
 
  * aa81171 - [Travis] Make symfony/form dynamic
