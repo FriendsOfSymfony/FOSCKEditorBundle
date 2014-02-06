@@ -16,8 +16,6 @@ the new `ckeditor` form type which can be easily configured.
 
 We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
 
-All contributions must be done on the 2.0 branch unless you have a good reason.
-
 ## License
 
 The Ivory CKEditor Bundle is under the MIT license. For the full copyright and license information, please read the
