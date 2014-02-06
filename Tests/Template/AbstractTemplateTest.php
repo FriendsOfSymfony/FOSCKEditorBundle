@@ -169,7 +169,7 @@ if (CKEDITOR.instances["id"]) {
 delete CKEDITOR.instances["id"];
 }
 CKEDITOR.plugins.addExternal("foo", "path", "filename");
-CKEDITOR.stylesSet.add("default", [{"name":"Blue Title","element":"h2","styles":{"color":"Blue"}}]);
+if (CKEDITOR.stylesSet.get("default") === null) { CKEDITOR.stylesSet.add("default", [{"name":"Blue Title","element":"h2","styles":{"color":"Blue"}}]); }
 CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
 CKEDITOR.replace("id", {"foo":"bar"});
 </script>

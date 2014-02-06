@@ -268,7 +268,7 @@ EOF;
     public function testRenderStylesSet()
     {
         $this->assertSame(
-            'CKEDITOR.stylesSet.add("foo", {"foo":"bar"});',
+            'if (CKEDITOR.stylesSet.get("foo") === null) { CKEDITOR.stylesSet.add("foo", {"foo":"bar"}); }',
             $this->helper->renderStylesSet('foo', array('foo' => 'bar'))
         );
     }

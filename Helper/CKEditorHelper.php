@@ -161,14 +161,19 @@ EOF;
     /**
      * Renders a styles set.
      *
-     * @param string $name The name
-     * @param array $stylesSet The style set.
+     * @param string $name      The name
+     * @param array  $stylesSet The style set.
      *
      * @return The rendered style set.
      */
     public function renderStylesSet($name, array $stylesSet)
     {
-        return sprintf('CKEDITOR.stylesSet.add("%s", %s);', $name, json_encode($stylesSet));
+        return sprintf(
+            'if (CKEDITOR.stylesSet.get("%s") === null) { CKEDITOR.stylesSet.add("%s", %s); }',
+            $name,
+            $name,
+            json_encode($stylesSet)
+        );
     }
 
     /**
