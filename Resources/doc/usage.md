@@ -92,7 +92,7 @@ configuration file:
 ``` php
 $builder->add('field', 'ckeditor', array(
     'config' => array(
-        'styles' => 'my_styles',
+        'stylesSet' => 'my_styles',
     ),
     'styles' => array(
         'my_styles' => array(
@@ -109,7 +109,7 @@ ivory_ck_editor:
     default_config: my_config
     configs:
         my_config:
-            styles: "my_styles"
+            stylesSet: "my_styles"
     styles:
         my_styles:
             - { name: "Blue Title", element: "h2", styles: { color: "Blue" }}
