@@ -1,7 +1,8 @@
 # CHANGELOG
 
-### 2.2.2 (????-??-??)
+### 2.3.0 (????-??-??)
 
+ * ac6db2a - Upgrade CKEditor to 4.4.0
  * 648aa63 - [Helper] Only render StylesSet if they are not already registered
 
 ### 2.2.1 (2014-01-31)
