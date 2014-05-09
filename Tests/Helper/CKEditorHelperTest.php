@@ -221,6 +221,39 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testRenderReplaceWithProtectedSource()
+    {
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"protectedSource":[/<\?[\s\S]*?\?>/g,/<%[\s\S]*?%>/g]});',
+            $this->helper->renderReplace('foo', array(
+                'protectedSource' => array(
+                    '/<\?[\s\S]*?\?>/g',
+                    '/<%[\s\S]*?%>/g',
+                )
+            ))
+        );
+    }
+
+    public function testRenderReplaceWithStylesheetParserSkipSelectors()
+    {
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"stylesheetParser_skipSelectors":/(^body\.|^caption\.|\.high|^\.)/i});',
+            $this->helper->renderReplace('foo', array(
+                'stylesheetParser_skipSelectors' => '/(^body\.|^caption\.|\.high|^\.)/i',
+            ))
+        );
+    }
+
+    public function testRenderReplaceWithStylesheetParserValidSelectors()
+    {
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"stylesheetParser_validSelectors":/\^(p|span)\.\w+/});',
+            $this->helper->renderReplace('foo', array(
+                'stylesheetParser_validSelectors' => '/\^(p|span)\.\w+/',
+            ))
+        );
+    }
+
     public function testRenderReplaceWithCKEditorConstants()
     {
         $this->assertSame(
@@ -236,13 +269,10 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderDestroy()
     {
-        $expected = <<<EOF
-if (CKEDITOR.instances["foo"]) {
-    delete CKEDITOR.instances["foo"];
-}
-EOF;
-
-        $this->assertSame($expected, $this->helper->renderDestroy('foo'));
+        $this->assertSame(
+            'if (CKEDITOR.instances["foo"]) { delete CKEDITOR.instances["foo"]; }',
+            $this->helper->renderDestroy('foo')
+        );
     }
 
     public function testRenderPlugin()
