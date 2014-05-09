@@ -11,6 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Helper;
 
+use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\Helper\Helper;
 
@@ -21,6 +22,9 @@ use Symfony\Component\Templating\Helper\Helper;
  */
 class CKEditorHelper extends Helper
 {
+    /** @var \Ivory\JsonBuilder\JsonBuilder */
+    protected $jsonBuilder;
+
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
     protected $container;
 
@@ -31,6 +35,7 @@ class CKEditorHelper extends Helper
      */
     public function __construct(ContainerInterface $container)
     {
+        $this->jsonBuilder = new JsonBuilder();
         $this->container = $container;
     }
 
@@ -43,7 +48,9 @@ class CKEditorHelper extends Helper
      */
     public function renderBasePath($basePath)
     {
-        return $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($basePath));
+        return $this->getAssetsVersionTrimerHelper()->trim(
+            $this->getAssetsHelper()->getUrl($basePath)
+        );
     }
 
     /**
@@ -79,18 +86,27 @@ class CKEditorHelper extends Helper
             }
         }
 
-        $router = $this->getRouter();
+        $filebrowserKeys = array(
+            'Browse',
+            'FlashBrowse',
+            'ImageBrowse',
+            'ImageBrowseLink',
+            'Upload',
+            'FlashUpload',
+            'ImageUpload',
+        );
 
-        $filebrowser = function ($key, array &$config) use ($router) {
-            $filebrowserHandler = 'filebrowser'.$key.'Handler';
-            $filebrowserRoute = 'filebrowser'.$key.'Route';
-            $filebrowserRouteParameters = 'filebrowser'.$key.'RouteParameters';
-            $filebrowserRouteAbsolute = 'filebrowser'.$key.'RouteAbsolute';
+        foreach ($filebrowserKeys as $filebrowserKey) {
+            $filebrowserHandler = 'filebrowser'.$filebrowserKey.'Handler';
+            $filebrowserUrl = 'filebrowser'.$filebrowserKey.'Url';
+            $filebrowserRoute = 'filebrowser'.$filebrowserKey.'Route';
+            $filebrowserRouteParameters = 'filebrowser'.$filebrowserKey.'RouteParameters';
+            $filebrowserRouteAbsolute = 'filebrowser'.$filebrowserKey.'RouteAbsolute';
 
             if (isset($config[$filebrowserHandler])) {
-                $config['filebrowser'.$key.'Url'] = $config[$filebrowserHandler]($router);
+                $config[$filebrowserUrl] = $config[$filebrowserHandler]($this->getRouter());
             } elseif (isset($config[$filebrowserRoute])) {
-                $config['filebrowser'.$key.'Url'] = $router->generate(
+                $config[$filebrowserUrl] = $this->getRouter()->generate(
                     $config[$filebrowserRoute],
                     isset($config[$filebrowserRouteParameters]) ? $config[$filebrowserRouteParameters] : array(),
                     isset($config[$filebrowserRouteAbsolute]) ? $config[$filebrowserRouteAbsolute] : false
@@ -101,26 +117,45 @@ class CKEditorHelper extends Helper
             unset($config[$filebrowserRoute]);
             unset($config[$filebrowserRouteParameters]);
             unset($config[$filebrowserRouteAbsolute]);
-        };
+        }
 
-        $keys = array(
-            'Browse',
-            'FlashBrowse',
-            'ImageBrowse',
-            'ImageBrowseLink',
-            'Upload',
-            'FlashUpload',
-            'ImageUpload',
+        $this->jsonBuilder
+            ->reset()
+            ->setValues($config);
+
+        if (isset($config['protectedSource'])) {
+            foreach ($config['protectedSource'] as $key => $value) {
+                $this->jsonBuilder->setValue(
+                    sprintf('[protectedSource][%s]', $key),
+                    $value,
+                    false
+                );
+            }
+        }
+
+        $escapedValueKeys = array(
+            'stylesheetParser_skipSelectors',
+            'stylesheetParser_validSelectors',
         );
 
-        foreach ($keys as $key) {
-            $filebrowser($key, $config);
+        foreach ($escapedValueKeys as $escapedValueKey) {
+            if (isset($config[$escapedValueKey])) {
+                $this->jsonBuilder->setValue(
+                    sprintf('[%s]', $escapedValueKey),
+                    $config[$escapedValueKey],
+                    false
+                );
+            }
         }
 
         return sprintf(
             'CKEDITOR.replace("%s", %s);',
             $id,
-            preg_replace('/"(CKEDITOR\.[A-Z_]+)"/', '$1', json_encode($config))
+            preg_replace(
+                '/"(CKEDITOR\.[A-Z_]+)"/',
+                '$1',
+                $this->jsonBuilder->build()
+            )
         );
     }
 
@@ -133,11 +168,11 @@ class CKEditorHelper extends Helper
      */
     public function renderDestroy($id)
     {
-        return <<<EOF
-if (CKEDITOR.instances["$id"]) {
-    delete CKEDITOR.instances["$id"];
-}
-EOF;
+        return sprintf(
+            'if (CKEDITOR.instances["%s"]) { delete CKEDITOR.instances["%s"]; }',
+            $id,
+            $id
+        );
     }
 
     /**
@@ -153,7 +188,9 @@ EOF;
         return sprintf(
             'CKEDITOR.plugins.addExternal("%s", "%s", "%s");',
             $name,
-            $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($plugin['path'])),
+            $this->getAssetsVersionTrimerHelper()->trim(
+                $this->getAssetsHelper()->getUrl($plugin['path'])
+            ),
             $plugin['filename']
         );
     }
@@ -168,11 +205,15 @@ EOF;
      */
     public function renderStylesSet($name, array $stylesSet)
     {
+        $this->jsonBuilder
+            ->reset()
+            ->setValues($stylesSet);
+
         return sprintf(
             'if (CKEDITOR.stylesSet.get("%s") === null) { CKEDITOR.stylesSet.add("%s", %s); }',
             $name,
             $name,
-            json_encode($stylesSet)
+            $this->jsonBuilder->build()
         );
     }
 
@@ -192,7 +233,15 @@ EOF;
             );
         }
 
-        return sprintf('CKEDITOR.addTemplates("%s", %s);', $name, json_encode($template));
+        $this->jsonBuilder
+            ->reset()
+            ->setValues($template);
+
+        return sprintf(
+            'CKEDITOR.addTemplates("%s", %s);',
+            $name,
+            $this->jsonBuilder->build()
+        );
     }
 
     /**
