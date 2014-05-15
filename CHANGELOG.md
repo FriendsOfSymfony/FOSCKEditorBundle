@@ -2,6 +2,7 @@
 
 ### 2.3.0 (????-??-??)
 
+ * 4fb29d1 - [Helper] Only load the CKEditor library one time
  * 41636f9 - Add coveralls support
  * 13e7038 - Allow RegExp by relying on egeloen/json-builder
  * ac6db2a - Upgrade CKEditor to 4.4.0
