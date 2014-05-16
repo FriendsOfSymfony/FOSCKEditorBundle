@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.3.0 (????-??-??)
+### 2.3.0 (2014-05-16)
 
  * 4fb29d1 - [Helper] Only load the CKEditor library one time
  * 41636f9 - Add coveralls support
