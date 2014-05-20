@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.3.1 (????-??-??)
+
+ * b430689 - Upgrade CKEditor to 4.4.1
+
 ### 2.3.0 (2014-05-16)
 
  * 4fb29d1 - [Helper] Only load the CKEditor library one time
