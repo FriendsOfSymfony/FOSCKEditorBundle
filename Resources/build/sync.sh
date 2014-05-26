@@ -7,7 +7,7 @@ ckeditorPath=$(readlink -f $(dirname $(readlink -f $0))/../public/)
 rm -rf $ckeditorPath/*
 
 # Clone the latest CKEditor full relase
-git clone -b stable/full git://github.com/ckeditor/ckeditor-releases.git $ckeditorPath
+git clone -b full/stable git://github.com/ckeditor/ckeditor-releases.git $ckeditorPath
 
 # Remove Git versionning
 rm -rf $ckeditorPath/.git
