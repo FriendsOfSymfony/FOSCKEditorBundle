@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.3.1 (????-??-??)
+### 2.3.1 (2014-05-26)
 
  * 478c4ed - Fix CKEditor target branch
  * b430689 - Upgrade CKEditor to 4.4.1
