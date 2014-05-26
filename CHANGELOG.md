@@ -2,6 +2,7 @@
 
 ### 2.3.1 (????-??-??)
 
+ * 478c4ed - Fix CKEditor target branch
  * b430689 - Upgrade CKEditor to 4.4.1
 
 ### 2.3.0 (2014-05-16)
