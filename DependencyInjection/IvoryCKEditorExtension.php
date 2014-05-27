@@ -12,37 +12,22 @@
 namespace Ivory\CKEditorBundle\DependencyInjection;
 
 use Ivory\CKEditorBundle\Exception\DependencyInjectionException;
-use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 /**
  * Ivory CKEditor extension.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class IvoryCKEditorExtension extends Extension
+class IvoryCKEditorExtension extends ConfigurableExtension
 {
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
-    {
-        $processor = new Processor();
-        $config = $processor->processConfiguration(new Configuration(), $configs);
-
-        $this->register($config, $container);
-    }
-
-    /**
-     * Registers the CKEditor configuration.
-     *
-     * @param array                                                   $config    The CKEditor configuration
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
-     */
-    protected function register(array $config, ContainerBuilder $container)
+    protected function loadInternal(array $config, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         foreach (array('helper', 'form', 'twig') as $service) {
