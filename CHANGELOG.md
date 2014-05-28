@@ -2,6 +2,9 @@
 
 ### 2.3.2 (????-??-??)
 
+ * 805161b - [Model] Improve interface PHPDoc
+ * 8e1cb8d - [Test] Fix PHPDoc
+ * e5aeb4c - [README] Add Scrutunizer CI badge
  * ccfd632 - [Helper] Refactor CKEditorHelper::renderReplace for better comprehension
  * fb0c5e5 - Fix PHPDoc + CS
  * 1ef08af - [DependencyInjection] Refactor extension for a better comprehension
