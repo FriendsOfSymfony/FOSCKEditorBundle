@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Fixtures\Extension;
+namespace Ivory\CKEditorBundle\Tests\Fixtures\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;

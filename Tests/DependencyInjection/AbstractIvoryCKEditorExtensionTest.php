@@ -11,8 +11,8 @@
 
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
-use Ivory\CKEditorBundle\Tests\DependencyInjection\Fixtures\Extension\FrameworkExtension;
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
+use Ivory\CKEditorBundle\Tests\Fixtures\Extension\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
