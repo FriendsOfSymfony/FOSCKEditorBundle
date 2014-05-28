@@ -11,6 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
+use Ivory\CKEditorBundle\Tests\DependencyInjection\Fixtures\Extension\FrameworkExtension;
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -46,9 +47,11 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->set('templating.helper.assets', $this->assetsHelperMock);
         $this->container->set('router', $this->routerMock);
 
-        $this->container->setParameter('templating.engines', array('php', 'twig'));
-        $this->container->registerExtension($extension = new IvoryCKEditorExtension());
-        $this->container->loadFromExtension($extension->getAlias());
+        $this->container->registerExtension($framework = new FrameworkExtension());
+        $this->container->loadFromExtension($framework->getAlias());
+
+        $this->container->registerExtension($ckeditor = new IvoryCKEditorExtension());
+        $this->container->loadFromExtension($ckeditor->getAlias());
     }
 
     /**
