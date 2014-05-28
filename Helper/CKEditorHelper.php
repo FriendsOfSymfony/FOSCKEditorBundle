@@ -88,88 +88,13 @@ class CKEditorHelper extends Helper
     {
         $this->loaded = true;
 
-        if (isset($config['contentsCss'])) {
-            $cssContents = (array) $config['contentsCss'];
-
-            $config['contentsCss'] = array();
-            foreach ($cssContents as $cssContent) {
-                $config['contentsCss'][] = $this->getAssetsVersionTrimerHelper()->trim(
-                    $this->getAssetsHelper()->getUrl($cssContent)
-                );
-            }
-        }
-
-        $filebrowserKeys = array(
-            'Browse',
-            'FlashBrowse',
-            'ImageBrowse',
-            'ImageBrowseLink',
-            'Upload',
-            'FlashUpload',
-            'ImageUpload',
-        );
-
-        foreach ($filebrowserKeys as $filebrowserKey) {
-            $filebrowserHandler = 'filebrowser'.$filebrowserKey.'Handler';
-            $filebrowserUrl = 'filebrowser'.$filebrowserKey.'Url';
-            $filebrowserRoute = 'filebrowser'.$filebrowserKey.'Route';
-            $filebrowserRouteParameters = 'filebrowser'.$filebrowserKey.'RouteParameters';
-            $filebrowserRouteAbsolute = 'filebrowser'.$filebrowserKey.'RouteAbsolute';
-
-            if (isset($config[$filebrowserHandler])) {
-                $config[$filebrowserUrl] = $config[$filebrowserHandler]($this->getRouter());
-            } elseif (isset($config[$filebrowserRoute])) {
-                $config[$filebrowserUrl] = $this->getRouter()->generate(
-                    $config[$filebrowserRoute],
-                    isset($config[$filebrowserRouteParameters]) ? $config[$filebrowserRouteParameters] : array(),
-                    isset($config[$filebrowserRouteAbsolute]) ? $config[$filebrowserRouteAbsolute] : false
-                );
-            }
-
-            unset($config[$filebrowserHandler]);
-            unset($config[$filebrowserRoute]);
-            unset($config[$filebrowserRouteParameters]);
-            unset($config[$filebrowserRouteAbsolute]);
-        }
-
         $this->jsonBuilder
             ->reset()
-            ->setValues($config);
+            ->setValues($this->fixConfigFilebrowsers($this->fixConfigContentsCss($config)));
 
-        if (isset($config['protectedSource'])) {
-            foreach ($config['protectedSource'] as $key => $value) {
-                $this->jsonBuilder->setValue(
-                    sprintf('[protectedSource][%s]', $key),
-                    $value,
-                    false
-                );
-            }
-        }
+        $this->fixConfigEscapedValues($config);
 
-        $escapedValueKeys = array(
-            'stylesheetParser_skipSelectors',
-            'stylesheetParser_validSelectors',
-        );
-
-        foreach ($escapedValueKeys as $escapedValueKey) {
-            if (isset($config[$escapedValueKey])) {
-                $this->jsonBuilder->setValue(
-                    sprintf('[%s]', $escapedValueKey),
-                    $config[$escapedValueKey],
-                    false
-                );
-            }
-        }
-
-        return sprintf(
-            'CKEDITOR.replace("%s", %s);',
-            $id,
-            preg_replace(
-                '/"(CKEDITOR\.[A-Z_]+)"/',
-                '$1',
-                $this->jsonBuilder->build()
-            )
-        );
+        return sprintf('CKEDITOR.replace("%s", %s);', $id, $this->fixConfigConstants($this->jsonBuilder->build()));
     }
 
     /**
@@ -181,11 +106,7 @@ class CKEditorHelper extends Helper
      */
     public function renderDestroy($id)
     {
-        return sprintf(
-            'if (CKEDITOR.instances["%s"]) { delete CKEDITOR.instances["%s"]; }',
-            $id,
-            $id
-        );
+        return sprintf('if (CKEDITOR.instances["%s"]) { delete CKEDITOR.instances["%s"]; }', $id, $id);
     }
 
     /**
@@ -201,9 +122,7 @@ class CKEditorHelper extends Helper
         return sprintf(
             'CKEDITOR.plugins.addExternal("%s", "%s", "%s");',
             $name,
-            $this->getAssetsVersionTrimerHelper()->trim(
-                $this->getAssetsHelper()->getUrl($plugin['path'])
-            ),
+            $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($plugin['path'])),
             $plugin['filename']
         );
     }
@@ -250,11 +169,7 @@ class CKEditorHelper extends Helper
             ->reset()
             ->setValues($template);
 
-        return sprintf(
-            'CKEDITOR.addTemplates("%s", %s);',
-            $name,
-            $this->jsonBuilder->build()
-        );
+        return sprintf('CKEDITOR.addTemplates("%s", %s);', $name, $this->jsonBuilder->build());
     }
 
     /**
@@ -263,6 +178,111 @@ class CKEditorHelper extends Helper
     public function getName()
     {
         return 'ivory_ckeditor';
+    }
+
+    /**
+     * Fixes the config contents css.
+     *
+     * @param array $config The config.
+     *
+     * @return array The fixed config.
+     */
+    protected function fixConfigContentsCss(array $config)
+    {
+        if (isset($config['contentsCss'])) {
+            $cssContents = (array) $config['contentsCss'];
+
+            $config['contentsCss'] = array();
+            foreach ($cssContents as $cssContent) {
+                $config['contentsCss'][] = $this->getAssetsVersionTrimerHelper()->trim(
+                    $this->getAssetsHelper()->getUrl($cssContent)
+                );
+            }
+        }
+
+        return $config;
+    }
+
+    /**
+     * Fix the config filebrowsers.
+     *
+     * @param array $config The config.
+     *
+     * @return array The fixed config.
+     */
+    protected function fixConfigFilebrowsers(array $config)
+    {
+        $filebrowserKeys = array(
+            'Browse',
+            'FlashBrowse',
+            'ImageBrowse',
+            'ImageBrowseLink',
+            'Upload',
+            'FlashUpload',
+            'ImageUpload',
+        );
+
+        foreach ($filebrowserKeys as $filebrowserKey) {
+            $filebrowserHandler = 'filebrowser'.$filebrowserKey.'Handler';
+            $filebrowserUrl = 'filebrowser'.$filebrowserKey.'Url';
+            $filebrowserRoute = 'filebrowser'.$filebrowserKey.'Route';
+            $filebrowserRouteParameters = 'filebrowser'.$filebrowserKey.'RouteParameters';
+            $filebrowserRouteAbsolute = 'filebrowser'.$filebrowserKey.'RouteAbsolute';
+
+            if (isset($config[$filebrowserHandler])) {
+                $config[$filebrowserUrl] = $config[$filebrowserHandler]($this->getRouter());
+            } elseif (isset($config[$filebrowserRoute])) {
+                $config[$filebrowserUrl] = $this->getRouter()->generate(
+                    $config[$filebrowserRoute],
+                    isset($config[$filebrowserRouteParameters]) ? $config[$filebrowserRouteParameters] : array(),
+                    isset($config[$filebrowserRouteAbsolute]) ? $config[$filebrowserRouteAbsolute] : false
+                );
+            }
+
+            unset($config[$filebrowserHandler]);
+            unset($config[$filebrowserRoute]);
+            unset($config[$filebrowserRouteParameters]);
+            unset($config[$filebrowserRouteAbsolute]);
+        }
+
+        return $config;
+    }
+
+    /**
+     * Fixes the config escaped values and sets them on the json builder.
+     *
+     * @param array $config The config.
+     */
+    protected function fixConfigEscapedValues(array $config)
+    {
+        if (isset($config['protectedSource'])) {
+            foreach ($config['protectedSource'] as $key => $value) {
+                $this->jsonBuilder->setValue(sprintf('[protectedSource][%s]', $key), $value, false);
+            }
+        }
+
+        $escapedValueKeys = array(
+            'stylesheetParser_skipSelectors',
+            'stylesheetParser_validSelectors',
+        );
+
+        foreach ($escapedValueKeys as $escapedValueKey) {
+            if (isset($config[$escapedValueKey])) {
+                $this->jsonBuilder->setValue(sprintf('[%s]', $escapedValueKey), $config[$escapedValueKey], false);
+            }
+        }
+    }
+
+    /**
+     * Fixes the config constants.
+     *
+     * @param string $json The json config.
+     *
+     * @return string The fixes config.
+     */
+    protected function fixConfigConstants($json)
+    {
+        return preg_replace('/"(CKEDITOR\.[A-Z_]+)"/', '$1', $json);
     }
 
     /**
