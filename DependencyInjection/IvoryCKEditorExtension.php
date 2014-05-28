@@ -61,8 +61,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $container->setParameter(
                 'templating.helper.form.resources',
                 array_merge(
-                    $container->getParameter('templating.helper.form.resources'),
-                    array('IvoryCKEditorBundle:Form')
+                    array('IvoryCKEditorBundle:Form'),
+                    $container->getParameter('templating.helper.form.resources')
                 )
             );
         }
@@ -71,8 +71,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $container->setParameter(
                 'twig.form.resources',
                 array_merge(
-                    $container->getParameter('twig.form.resources'),
-                    array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig')
+                    array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig'),
+                    $container->getParameter('twig.form.resources')
                 )
             );
         }
