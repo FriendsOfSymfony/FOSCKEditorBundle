@@ -27,16 +27,16 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Form\Type\CKEditorType */
     protected $ckEditorType;
 
-    /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
+    /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $configManagerMock;
 
-    /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface */
+    /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $pluginManagerMock;
 
-    /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface */
+    /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $stylesSetManagerMock;
 
-    /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface */
+    /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $templateManagerMock;
 
     /**

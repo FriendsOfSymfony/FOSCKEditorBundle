@@ -25,16 +25,16 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
     /** @var \Ivory\CKEditorBundle\Helper\CKEditorHelper */
     protected $helper;
 
-    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
+    /** @var \Symfony\Component\DependencyInjection\ContainerInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $containerMock;
 
-    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
     protected $assetsHelperMock;
 
-    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper */
+    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper|\PHPUnit_Framework_MockObject_MockObject */
     protected $assetsVersionTrimerHelperMock;
 
-    /** @var \Symfony\Component\Routing\RouterInterface */
+    /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $routerMock;
 
     /**

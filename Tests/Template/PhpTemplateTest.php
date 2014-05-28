@@ -26,7 +26,7 @@ class PhpTemplateTest extends AbstractTemplateTest
     /** @var \Symfony\Component\Templating\PhpEngine */
     protected $phpEngine;
 
-    /** @var \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper */
+    /** @var \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper|\PHPUnit_Framework_MockObject_MockObject */
     protected $formHelperMock;
 
     /**
@@ -38,7 +38,7 @@ class PhpTemplateTest extends AbstractTemplateTest
 
         $this->phpEngine = new PhpEngine(
             new TemplateNameParser(),
-            new FilesystemLoader(__DIR__.'/../../Resources/views/Form/%name%')
+            new FilesystemLoader(array(__DIR__.'/../../Resources/views/Form/%name%'))
         );
 
         $this->formHelperMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper')

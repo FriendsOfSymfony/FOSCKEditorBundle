@@ -25,10 +25,10 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
     /** @var \Symfony\Component\DependencyInjection\ContainerBuilder */
     protected $container;
 
-    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper */
+    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
     protected $assetsHelperMock;
 
-    /** @var \Symfony\Component\Routing\RouterInterface */
+    /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $routerMock;
 
     /**
