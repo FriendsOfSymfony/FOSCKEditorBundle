@@ -36,6 +36,8 @@ interface TemplateManagerInterface
      * Sets the CKEditor templates.
      *
      * @param array $templates The CKEditor templates.
+     *
+     * @return null No return value.
      */
     public function setTemplates(array $templates);
 
@@ -62,6 +64,8 @@ interface TemplateManagerInterface
      *
      * @param string $name     The CKEditor template name.
      * @param array  $template The CKEditor template.
+     *
+     * @return null No return value.
      */
     public function setTemplate($name, array $template);
 }

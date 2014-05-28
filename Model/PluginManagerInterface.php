@@ -36,6 +36,8 @@ interface PluginManagerInterface
      * Sets the CKEditor plugins.
      *
      * @param array $plugins The CKEditor plugins.
+     *
+     * @return null No return value.
      */
     public function setPlugins(array $plugins);
 
@@ -62,6 +64,8 @@ interface PluginManagerInterface
      *
      * @param string $name   The CKEditor plugin name.
      * @param array  $plugin The CKEditor plugin.
+     *
+     * @return null No return value.
      */
     public function setPlugin($name, array $plugin);
 }

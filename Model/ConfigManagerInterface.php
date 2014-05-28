@@ -29,6 +29,8 @@ interface ConfigManagerInterface
      * Sets the default configuration name.
      *
      * @param string $defaultConfig The default configuration name.
+     *
+     * @return null No return value.
      */
     public function setDefaultConfig($defaultConfig);
 
@@ -50,6 +52,8 @@ interface ConfigManagerInterface
      * Sets the CKEditor configs.
      *
      * @param array $configs The CKEditor configs.
+     *
+     * @return null No return value.
      */
     public function setConfigs(array $configs);
 
@@ -76,6 +80,8 @@ interface ConfigManagerInterface
      *
      * @param string $name   The CKEditor config name.
      * @param array  $config The CKEditor config.
+     *
+     * @return null No return value.
      */
     public function setConfig($name, array $config);
 
@@ -84,6 +90,8 @@ interface ConfigManagerInterface
      *
      * @param string $name   The CKEditor config name.
      * @param array  $config The CKEditor config.
+     *
+     * @return null No return value.
      */
     public function mergeConfig($name, array $config);
 }

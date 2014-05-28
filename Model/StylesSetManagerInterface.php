@@ -36,6 +36,8 @@ interface StylesSetManagerInterface
      * Sets the CKEditor styles sets.
      *
      * @param array $stylesSets The CKEditor styles sets.
+     *
+     * @return null No return value.
      */
     public function setStylesSets(array $stylesSets);
 
@@ -62,6 +64,8 @@ interface StylesSetManagerInterface
      *
      * @param string $name      The CKEditor styles set name.
      * @param array  $stylesSet The CKEditor styles set.
+     *
+     * @return null No return value.
      */
     public function setStylesSet($name, array $stylesSet);
 }
