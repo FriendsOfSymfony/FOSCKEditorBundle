@@ -29,8 +29,8 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * Creates a CKEditor config manager.
      *
-     * @param array  $configs       The CKEditor configs.
-     * @param string $defaultConfig The default config name.
+     * @param array       $configs       The CKEditor configs.
+     * @param string|null $defaultConfig The default config name.
      */
     public function __construct(array $configs = array(), $defaultConfig = null)
     {

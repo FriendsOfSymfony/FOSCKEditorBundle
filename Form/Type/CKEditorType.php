@@ -81,7 +81,7 @@ class CKEditorType extends AbstractType
     /**
      * Sets/Checks if the widget is enabled.
      *
-     * @param bolean $enable TRUE if the widget is enabled else FALSE.
+     * @param boolean|null $enable TRUE if the widget is enabled else FALSE.
      *
      * @return boolean TRUE if the widget is enabled else FALSE.
      */
@@ -137,7 +137,7 @@ class CKEditorType extends AbstractType
     /**
      * Gets the CKEditor config manager.
      *
-     * @return type The CKEditor config manager.
+     * @return \Ivory\CKEditorBundle\Model\ConfigManagerInterface The CKEditor config manager.
      */
     public function getConfigManager()
     {
@@ -157,7 +157,7 @@ class CKEditorType extends AbstractType
     /**
      * Gets the CKEditor plugin manager.
      *
-     * @return type The CKEditor plugin manager.
+     * @return \Ivory\CKEditorBundle\Model\PluginManagerInterface The CKEditor plugin manager.
      */
     public function getPluginManager()
     {

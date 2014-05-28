@@ -23,7 +23,7 @@ use Symfony\Component\Templating\Helper\Helper;
 class CKEditorHelper extends Helper
 {
     /** @var boolean */
-    protected $loaded;
+    protected $loaded = false;
 
     /** @var \Ivory\JsonBuilder\JsonBuilder */
     protected $jsonBuilder;
@@ -38,7 +38,6 @@ class CKEditorHelper extends Helper
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->loaded = false;
         $this->jsonBuilder = new JsonBuilder();
         $this->container = $container;
     }
@@ -62,9 +61,7 @@ class CKEditorHelper extends Helper
      */
     public function renderBasePath($basePath)
     {
-        return $this->getAssetsVersionTrimerHelper()->trim(
-            $this->getAssetsHelper()->getUrl($basePath)
-        );
+        return $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($basePath));
     }
 
     /**
@@ -82,8 +79,8 @@ class CKEditorHelper extends Helper
     /**
      * Renders the replace.
      *
-     * @param string $id    The identifier.
-     * @param array $config The config.
+     * @param string $id     The identifier.
+     * @param array  $config The config.
      *
      * @return string The rendered replace.
      */
@@ -217,7 +214,7 @@ class CKEditorHelper extends Helper
      * @param string $name      The name
      * @param array  $stylesSet The style set.
      *
-     * @return The rendered style set.
+     * @return string The rendered style set.
      */
     public function renderStylesSet($name, array $stylesSet)
     {
