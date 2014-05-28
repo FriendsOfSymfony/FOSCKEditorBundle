@@ -2,6 +2,7 @@
 
 ### 2.3.2 (????-??-??)
 
+ * ccfd632 - [Helper] Refactor CKEditorHelper::renderReplace for better comprehension
  * fb0c5e5 - Fix PHPDoc + CS
  * 1ef08af - [DependencyInjection] Refactor extension for a better comprehension
  * d8cef6f - [DependencyInjection] Split configuration
