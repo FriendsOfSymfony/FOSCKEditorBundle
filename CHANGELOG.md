@@ -2,6 +2,7 @@
 
 ### 2.3.2 (????-??-??)
 
+ * ea39ae1 - [DependencyInjection] Prepend resources instead of append them
  * 7d6f016 - [Test] Move fixtures at the root test directory
  * 805161b - [Model] Improve interface PHPDoc
  * 8e1cb8d - [Test] Fix PHPDoc
