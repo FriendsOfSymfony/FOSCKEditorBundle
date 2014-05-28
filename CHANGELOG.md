@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 2.3.2 (????-??-??)
+
+ * fb0c5e5 - Fix PHPDoc + CS
+ * 1ef08af - [DependencyInjection] Refactor extension for a better comprehension
+ * d8cef6f - [DependencyInjection] Split configuration
+ * 6c10e68 - [DependencyInjection] Rely on ConfigurableExtension
+
 ### 2.3.1 (2014-05-26)
 
  * 478c4ed - Fix CKEditor target branch
