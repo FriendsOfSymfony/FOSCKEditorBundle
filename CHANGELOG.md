@@ -2,6 +2,8 @@
 
 ### 2.3.2 (????-??-??)
 
+ * 88b21ea - [Travis] Add Symfony 2.5 + Remove 2.0 branch
+ * 5793ab2 - [Helper] Fix test according to Symfony
  * ea39ae1 - [DependencyInjection] Prepend resources instead of append them
  * 7d6f016 - [Test] Move fixtures at the root test directory
  * 805161b - [Model] Improve interface PHPDoc
