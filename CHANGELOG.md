@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.3.2 (????-??-??)
+### 2.3.2 (2014-06-17)
 
  * 88b21ea - [Travis] Add Symfony 2.5 + Remove 2.0 branch
  * 5793ab2 - [Helper] Fix test according to Symfony
