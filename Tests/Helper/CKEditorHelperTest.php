@@ -110,7 +110,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'), $this->equalTo(null))
+            ->with($this->equalTo('foo'))
             ->will($this->returnValue('bar'));
 
         $this->assetsVersionTrimerHelperMock
@@ -127,7 +127,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'), $this->equalTo(null))
+            ->with($this->equalTo('foo'))
             ->will($this->returnValue('bar'));
 
         $this->assertSame('bar', $this->helper->renderJsPath('foo'));
@@ -138,7 +138,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'), $this->equalTo(null))
+            ->with($this->equalTo('foo'))
             ->will($this->returnValue('bar'));
 
         $this->assetsVersionTrimerHelperMock
@@ -156,14 +156,28 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
     public function testRenderReplaceWithArrayContentsCss()
     {
         $this->assetsHelperMock
-            ->expects($this->any())
+            ->expects($this->at(0))
             ->method('getUrl')
-            ->will($this->returnValueMap(array(array('foo', null, 'foo1'), array('bar', null, 'bar1'))));
+            ->with($this->equalTo('foo'))
+            ->will($this->returnValue('foo1'));
 
         $this->assetsVersionTrimerHelperMock
-            ->expects($this->any())
+            ->expects($this->at(0))
             ->method('trim')
-            ->will($this->returnValueMap(array(array('foo1', 'baz1'), array('bar1', 'baz2'))));
+            ->with($this->equalTo('foo1'))
+            ->will($this->returnValue('baz1'));
+
+        $this->assetsHelperMock
+            ->expects($this->at(1))
+            ->method('getUrl')
+            ->with($this->equalTo('bar'))
+            ->will($this->returnValue('bar1'));
+
+        $this->assetsVersionTrimerHelperMock
+            ->expects($this->at(1))
+            ->method('trim')
+            ->with($this->equalTo('bar1'))
+            ->will($this->returnValue('baz2'));
 
         $this->assertSame(
             'CKEDITOR.replace("foo", {"contentsCss":["baz1","baz2"]});',
@@ -280,7 +294,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'), $this->equalTo(null))
+            ->with($this->equalTo('foo'))
             ->will($this->returnValue('bar'));
 
         $this->assetsVersionTrimerHelperMock
@@ -308,7 +322,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'), $this->equalTo(null))
+            ->with($this->equalTo('foo'))
             ->will($this->returnValue('bar'));
 
         $this->assetsVersionTrimerHelperMock
