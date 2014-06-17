@@ -7,6 +7,7 @@ env:
     - SYMFONY_VERSION="2.2.*"
     - SYMFONY_VERSION="2.3.*"
     - SYMFONY_VERSION="2.4.*"
+    - SYMFONY_VERSION="2.5.*"
 
 before_script:
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
@@ -18,9 +19,7 @@ script: bin/phpunit --coverage-clover clover.xml
 after_script: bin/coveralls
 
 branches:
-    only:
-        - master
-        - 2.0
+    only: master
 
 notifications:
     email: geloen.eric@gmail.com
