@@ -26,12 +26,11 @@
         "helios-ag/fm-elfinder-bundle": "Allows to use the elfinder as CKEditor file manager"
     },
     "autoload": {
-        "psr-0": { "Ivory\\CKEditorBundle": "" }
+        "psr-4": { "Ivory\\CKEditorBundle\\": "" }
     },
     "config": {
         "bin-dir": "bin/"
     },
-    "target-dir": "Ivory/CKEditorBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "2.3-dev"
