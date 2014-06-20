@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 2.3.3 (????-??-??)
+
+ * cd4099b - [Travis][Composer] Remove --dev
+ * 1ca9425 - [Composer] Clean suggest section
+ * cb750c9 - [Composer] Upgrade to PSR-4
+
 ### 2.3.2 (2014-06-17)
 
  * 88b21ea - [Travis] Add Symfony 2.5 + Remove 2.0 branch
