@@ -41,15 +41,113 @@ class CKEditorExtension extends \Twig_Extension
         $options = array('is_safe' => array('html'));
 
         return array(
-            new \Twig_SimpleFunction('ckeditor_is_loaded', array($this->helper, 'isLoaded'), $options),
-            new \Twig_SimpleFunction('ckeditor_base_path', array($this->helper, 'renderBasePath'), $options),
-            new \Twig_SimpleFunction('ckeditor_js_path', array($this->helper, 'renderJsPath'), $options),
-            new \Twig_SimpleFunction('ckeditor_replace', array($this->helper, 'renderReplace'), $options),
-            new \Twig_SimpleFunction('ckeditor_destroy', array($this->helper, 'renderDestroy'), $options),
-            new \Twig_SimpleFunction('ckeditor_plugin', array($this->helper, 'renderPlugin'), $options),
-            new \Twig_SimpleFunction('ckeditor_styles_set', array($this->helper, 'renderStylesSet'), $options),
-            new \Twig_SimpleFunction('ckeditor_template', array($this->helper, 'renderTemplate'), $options),
+            new \Twig_SimpleFunction('ckeditor_is_loaded', array($this, 'isLoaded'), $options),
+            new \Twig_SimpleFunction('ckeditor_base_path', array($this, 'renderBasePath'), $options),
+            new \Twig_SimpleFunction('ckeditor_js_path', array($this, 'renderJsPath'), $options),
+            new \Twig_SimpleFunction('ckeditor_replace', array($this, 'renderReplace'), $options),
+            new \Twig_SimpleFunction('ckeditor_destroy', array($this, 'renderDestroy'), $options),
+            new \Twig_SimpleFunction('ckeditor_plugin', array($this, 'renderPlugin'), $options),
+            new \Twig_SimpleFunction('ckeditor_styles_set', array($this, 'renderStylesSet'), $options),
+            new \Twig_SimpleFunction('ckeditor_template', array($this, 'renderTemplate'), $options),
         );
+    }
+
+    /**
+     * Checks if CKEditor is loaded.
+     *
+     * @return boolean TRUE if CKEditor is loaded else FALSE.
+     */
+    public function isLoaded()
+    {
+        return $this->helper->isLoaded();
+    }
+
+    /**
+     * Renders the base path.
+     *
+     * @param string $basePath The base path.
+     *
+     * @return string The rendered base path.
+     */
+    public function renderBasePath($basePath)
+    {
+        return $this->helper->renderBasePath($basePath);
+    }
+
+    /**
+     * Renders the js path.
+     *
+     * @param string $jsPath The js path.
+     *
+     * @return string The rendered js path.
+     */
+    public function renderJsPath($jsPath)
+    {
+        return $this->helper->renderJsPath($jsPath);
+    }
+
+    /**
+     * Renders the replace.
+     *
+     * @param string $id     The identifier.
+     * @param array  $config The config.
+     *
+     * @return string The rendered replace.
+     */
+    public function renderReplace($id, array $config)
+    {
+        return $this->helper->renderReplace($id, $config);
+    }
+
+    /**
+     * Renders the destroy.
+     *
+     * @param string $id The identifier.
+     *
+     * @return string The rendered destroy.
+     */
+    public function renderDestroy($id)
+    {
+        return $this->helper->renderDestroy($id);
+    }
+
+    /**
+     * Renders a plugin.
+     *
+     * @param string $name   The name.
+     * @param array  $plugin The plugin.
+     *
+     * @return string The rendered plugin.
+     */
+    public function renderPlugin($name, array $plugin)
+    {
+        return $this->helper->renderPlugin($name, $plugin);
+    }
+
+    /**
+     * Renders a styles set.
+     *
+     * @param string $name      The name
+     * @param array  $stylesSet The style set.
+     *
+     * @return string The rendered style set.
+     */
+    public function renderStylesSet($name, array $stylesSet)
+    {
+        return $this->helper->renderStylesSet($name, $stylesSet);
+    }
+
+    /**
+     * Renders a template.
+     *
+     * @param string $name     The template name.
+     * @param array  $template The template.
+     *
+     * @return string The rendered template.
+     */
+    public function renderTemplate($name, array $template)
+    {
+        return $this->helper->renderTemplate($name, $template);
     }
 
     /**
