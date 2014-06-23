@@ -2,6 +2,8 @@
 
 ### 2.3.3 (????-??-??)
 
+ * 05f36a5 - [Composer] Bump PHP to 5.3.3 + Twig to 1.12 + PHPUnit to 4.0
+ * b3b7a23 - [Twig] Proxify helper calls on the extension
  * cd4099b - [Travis][Composer] Remove --dev
  * 1ca9425 - [Composer] Clean suggest section
  * cb750c9 - [Composer] Upgrade to PSR-4
