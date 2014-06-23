@@ -1,25 +1,36 @@
 language: php
 
-php: 5.3.3
+php:
+    - 5.3.3
+    - 5.3
+    - 5.4
+    - 5.5
+    - 5.6
+    - hhvm
+    - hhvm-nightly
 
 env:
-    - SYMFONY_VERSION="2.1.*"
-    - SYMFONY_VERSION="2.2.*"
-    - SYMFONY_VERSION="2.3.*"
-    - SYMFONY_VERSION="2.4.*"
-    - SYMFONY_VERSION="2.5.*"
+    - SYMFONY_VERSION=2.1.*
+    - SYMFONY_VERSION=2.2.*
+    - SYMFONY_VERSION=2.3.*
+    - SYMFONY_VERSION=2.4.*
+    - SYMFONY_VERSION=2.5.*
+    - SYMFONY_VERSION=dev-master
 
 before_script:
-    - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
-    - composer require --no-update symfony/form:${SYMFONY_VERSION}
+    - composer self-update
+    - composer require --no-update symfony/symfony:${SYMFONY_VERSION}
     - composer install --prefer-source
 
 script: bin/phpunit --coverage-clover clover.xml
 
 after_script: bin/coveralls
 
-branches:
-    only: master
+matrix:
+    allow_failures:
+        - php: hhvm
+        - php: hhvm-nightly
+        - env: SYMFONY_VERSION=dev-master
 
 notifications:
     email: geloen.eric@gmail.com
