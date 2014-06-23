@@ -2,6 +2,7 @@
 
 ### 2.3.3 (????-??-??)
 
+ * c24f3c4 - [README] Add packagist badges
  * 843f88d - [Test] Fix PHP template engine setup for HHVM
  * bdfa451 - [Travis] Increase build matrix
  * 05f36a5 - [Composer] Bump PHP to 5.3.3 + Twig to 1.12 + PHPUnit to 4.0
