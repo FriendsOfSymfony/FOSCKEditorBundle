@@ -36,24 +36,18 @@ class PhpTemplateTest extends AbstractTemplateTest
     {
         parent::setUp();
 
-        $this->phpEngine = new PhpEngine(
-            new TemplateNameParser(),
-            new FilesystemLoader(array(__DIR__.'/../../Resources/views/Form/%name%'))
-        );
-
         $this->formHelperMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->formHelperMock
-            ->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue('form'));
-
-        $this->phpEngine->addHelpers(array(
-            $this->formHelperMock,
-            new CKEditorHelper($this->containerMock),
-        ));
+        $this->phpEngine = new PhpEngine(
+            new TemplateNameParser(),
+            new FilesystemLoader(array(__DIR__.'/../../Resources/views/Form/%name%')),
+            array(
+                'form' => $this->formHelperMock,
+                new CKEditorHelper($this->containerMock),
+            )
+        );
     }
 
     /**
