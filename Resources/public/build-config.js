@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -28,11 +28,20 @@ var CKBUILDER_CONFIG = {
 	skin: 'moono',
 	preset: 'full',
 	ignore: [
-		'dev',
+		'.bender',
+		'.DS_Store',
 		'.gitignore',
 		'.gitattributes',
+		'.idea',
+		'.mailmap',
+		'bender.js',
+		'bender-err.log',
+		'bender-out.log',
+		'dev',
+		'node_modules',
+		'package.json',
 		'README.md',
-		'.mailmap'
+		'tests'
 	],
 	plugins : {
 		'a11yhelp' : 1,
