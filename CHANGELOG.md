@@ -2,6 +2,9 @@
 
 ### 2.4.0 (????-??-??)
 
+ * 7bd8f86 - [Resources] Upgrade CKEditor to 4.4.2
+ * 5e8fc10 - [Templating] Move the CKEditorHelper class from the Helper to the Templating namespace
+ * cc711dd - [Helper] Merge the AssetsVersionTrimerHelper into the CKEditorHelper
  * c24f3c4 - [README] Add packagist badges
  * 843f88d - [Test] Fix PHP template engine setup for HHVM
  * bdfa451 - [Travis] Increase build matrix
