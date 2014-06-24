@@ -1,5 +1,16 @@
 # UPGRADE
 
+### 2.3 to 2.4
+
+The `Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper` methods have been merged into the
+`Ivory\CKEditorBundle\Helper\CKEditorHelper` and so, the `Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper` class
+has been removed. Additionally, the `ivory_ck_editor.helper.assets_version_trimer` service and the
+`ivory_ck_editor.helper.assets_version_trimer.class` parameter has been removed.
+
+### 2.2 to 2.3
+
+The CKEditor version has been upgraded from 4.3.2 to 4.4.0.
+
 ### 2.1 to 2.2
 
 The responsibility of generating routes and assets path have been moved to a dedicated templating helper for a better

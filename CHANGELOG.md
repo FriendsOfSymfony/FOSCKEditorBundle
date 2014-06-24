@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.3.3 (????-??-??)
+### 2.4.0 (????-??-??)
 
  * c24f3c4 - [README] Add packagist badges
  * 843f88d - [Test] Fix PHP template engine setup for HHVM

@@ -82,16 +82,6 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         );
     }
 
-    public function testAssetsVersionTrimer()
-    {
-        $this->container->compile();
-
-        $this->assertInstanceOf(
-            'Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper',
-            $this->container->get('ivory_ck_editor.helper.assets_version_trimer')
-        );
-    }
-
     public function testTwigResources()
     {
         $this->container->compile();

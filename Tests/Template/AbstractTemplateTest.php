@@ -26,9 +26,6 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
     protected $assetsHelperMock;
 
-    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper|\PHPUnit_Framework_MockObject_MockObject */
-    protected $assetsVersionTrimerHelperMock;
-
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $routerMock;
 
@@ -37,6 +34,8 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
+
         $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
             ->disableOriginalConstructor()
             ->getMock();
@@ -46,17 +45,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
             ->method('getUrl')
             ->will($this->returnArgument(0));
 
-        $this->assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->any())
-            ->method('trim')
-            ->will($this->returnArgument(0));
-
-        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
-
         $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
-
         $this->containerMock
             ->expects($this->any())
             ->method('get')
@@ -65,11 +54,6 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
                     'templating.helper.assets',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
                     $this->assetsHelperMock,
-                ),
-                array(
-                    'ivory_ck_editor.helper.assets_version_trimer',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->assetsVersionTrimerHelperMock,
                 ),
                 array(
                     'router',
@@ -85,7 +69,6 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         unset($this->routerMock);
-        unset($this->assetsVersionTrimerHelperMock);
         unset($this->assetsHelperMock);
         unset($this->containerMock);
     }

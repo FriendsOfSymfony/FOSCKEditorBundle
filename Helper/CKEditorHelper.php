@@ -61,7 +61,7 @@ class CKEditorHelper extends Helper
      */
     public function renderBasePath($basePath)
     {
-        return $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($basePath));
+        return $this->fixPath($this->getAssetsHelper()->getUrl($basePath));
     }
 
     /**
@@ -122,7 +122,7 @@ class CKEditorHelper extends Helper
         return sprintf(
             'CKEDITOR.plugins.addExternal("%s", "%s", "%s");',
             $name,
-            $this->getAssetsVersionTrimerHelper()->trim($this->getAssetsHelper()->getUrl($plugin['path'])),
+            $this->fixPath($this->getAssetsHelper()->getUrl($plugin['path'])),
             $plugin['filename']
         );
     }
@@ -160,7 +160,7 @@ class CKEditorHelper extends Helper
     public function renderTemplate($name, array $template)
     {
         if (isset($template['imagesPath'])) {
-            $template['imagesPath'] = $this->getAssetsVersionTrimerHelper()->trim(
+            $template['imagesPath'] = $this->fixPath(
                 $this->getAssetsHelper()->getUrl($template['imagesPath'])
             );
         }
@@ -194,9 +194,7 @@ class CKEditorHelper extends Helper
 
             $config['contentsCss'] = array();
             foreach ($cssContents as $cssContent) {
-                $config['contentsCss'][] = $this->getAssetsVersionTrimerHelper()->trim(
-                    $this->getAssetsHelper()->getUrl($cssContent)
-                );
+                $config['contentsCss'][] = $this->fixPath($this->getAssetsHelper()->getUrl($cssContent));
             }
         }
 
@@ -204,7 +202,7 @@ class CKEditorHelper extends Helper
     }
 
     /**
-     * Fix the config filebrowsers.
+     * Fixes the config filebrowsers.
      *
      * @param array $config The config.
      *
@@ -278,11 +276,27 @@ class CKEditorHelper extends Helper
      *
      * @param string $json The json config.
      *
-     * @return string The fixes config.
+     * @return string The fixed config.
      */
     protected function fixConfigConstants($json)
     {
         return preg_replace('/"(CKEDITOR\.[A-Z_]+)"/', '$1', $json);
+    }
+
+    /**
+     * Fixes a path.
+     *
+     * @param string $path The path.
+     *
+     * @return string The fixed path.
+     */
+    protected function fixPath($path)
+    {
+        if (($position = strpos($path, '?')) !== false) {
+            return substr($path, 0, $position);
+        }
+
+        return $path;
     }
 
     /**
@@ -293,16 +307,6 @@ class CKEditorHelper extends Helper
     protected function getAssetsHelper()
     {
         return $this->container->get('templating.helper.assets');
-    }
-
-    /**
-     * Gets the assets version trimer helper.
-     *
-     * @return \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper The assets version trimer helper.
-     */
-    protected function getAssetsVersionTrimerHelper()
-    {
-        return $this->container->get('ivory_ck_editor.helper.assets_version_trimer');
     }
 
     /**

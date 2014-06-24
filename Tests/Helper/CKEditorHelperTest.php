@@ -31,9 +31,6 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
     protected $assetsHelperMock;
 
-    /** @var \Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper|\PHPUnit_Framework_MockObject_MockObject */
-    protected $assetsVersionTrimerHelperMock;
-
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $routerMock;
 
@@ -46,11 +43,9 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->assetsVersionTrimerHelperMock = $this->getMock('Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper');
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
-
         $this->containerMock
             ->expects($this->any())
             ->method('get')
@@ -59,11 +54,6 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
                     'templating.helper.assets',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
                     $this->assetsHelperMock,
-                ),
-                array(
-                    'ivory_ck_editor.helper.assets_version_trimer',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->assetsVersionTrimerHelperMock,
                 ),
                 array(
                     'router',
@@ -83,16 +73,45 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         unset($this->helper);
         unset($this->containerMock);
         unset($this->routerMock);
-        unset($this->assetsVersionTrimerHelperMock);
         unset($this->assetsHelperMock);
     }
 
     /**
-     * Gets the valid filebrowsers keys.
+     * Gets the url.
      *
-     * @return array The valid filebrowsers keys.
+     * @return array The url.
      */
-    public static function filebrowserProvider()
+    public function pathProvider()
+    {
+        return array(
+            array('path', 'url', 'url'),
+            array('path', 'url?v=2', 'url'),
+        );
+    }
+
+    /**
+     * Gets the urls.
+     *
+     * @return array The urls.
+     */
+    public function pathsProvider()
+    {
+        return array(
+            array(array('path'), array('url'), array('url')),
+            array(array('path'), array('url?v=2'), array('url')),
+            array(array('path1', 'path2'), array('url1', 'url2'), array('url1', 'url2')),
+            array(array('path1', 'path2'), array('url1?v=2', 'url2'), array('url1', 'url2')),
+            array(array('path1', 'path2'), array('url1', 'url2?v=2'), array('url1', 'url2')),
+            array(array('path1', 'path2'), array('url1?v=2', 'url2?v=2'), array('url1', 'url2')),
+        );
+    }
+
+    /**
+     * Gets the filebrowsers keys.
+     *
+     * @return array The filebrowsers keys.
+     */
+    public function filebrowserProvider()
     {
         return array(
             array('Browse'),
@@ -105,21 +124,18 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testRenderBasePath()
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testRenderBasePath($path, $asset, $url)
     {
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'))
-            ->will($this->returnValue('bar'));
+            ->with($this->equalTo($path))
+            ->will($this->returnValue($asset));
 
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->once())
-            ->method('trim')
-            ->with($this->equalTo('bar'))
-            ->will($this->returnValue('baz'));
-
-        $this->assertSame('baz', $this->helper->renderBasePath('foo'));
+        $this->assertSame($url, $this->helper->renderBasePath($path));
     }
 
     public function testRenderJsPath()
@@ -133,55 +149,39 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('bar', $this->helper->renderJsPath('foo'));
     }
 
-    public function testRenderReplaceWithStringContentsCss()
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testRenderReplaceWithStringContentsCss($path, $asset, $url)
     {
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'))
-            ->will($this->returnValue('bar'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->once())
-            ->method('trim')
-            ->with($this->equalTo('bar'))
-            ->will($this->returnValue('baz'));
+            ->with($this->equalTo($path))
+            ->will($this->returnValue($asset));
 
         $this->assertSame(
-            'CKEDITOR.replace("foo", {"contentsCss":["baz"]});',
-            $this->helper->renderReplace('foo', array('contentsCss' => 'foo'))
+            'CKEDITOR.replace("foo", {"contentsCss":['.json_encode($url).']});',
+            $this->helper->renderReplace('foo', array('contentsCss' => $path))
         );
     }
 
-    public function testRenderReplaceWithArrayContentsCss()
+    /**
+     * @dataProvider pathsProvider
+     */
+    public function testRenderReplaceWithArrayContentsCss(array $paths, array $assets, array $urls)
     {
-        $this->assetsHelperMock
-            ->expects($this->at(0))
-            ->method('getUrl')
-            ->with($this->equalTo('foo'))
-            ->will($this->returnValue('foo1'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->at(0))
-            ->method('trim')
-            ->with($this->equalTo('foo1'))
-            ->will($this->returnValue('baz1'));
-
-        $this->assetsHelperMock
-            ->expects($this->at(1))
-            ->method('getUrl')
-            ->with($this->equalTo('bar'))
-            ->will($this->returnValue('bar1'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->at(1))
-            ->method('trim')
-            ->with($this->equalTo('bar1'))
-            ->will($this->returnValue('baz2'));
+        foreach (array_keys($paths) as $key) {
+            $this->assetsHelperMock
+                ->expects($this->at($key))
+                ->method('getUrl')
+                ->with($this->equalTo($paths[$key]))
+                ->will($this->returnValue($assets[$key]));
+        }
 
         $this->assertSame(
-            'CKEDITOR.replace("foo", {"contentsCss":["baz1","baz2"]});',
-            $this->helper->renderReplace('foo', array('contentsCss' => array('foo', 'bar')))
+            'CKEDITOR.replace("foo", {"contentsCss":'.json_encode($urls).'});',
+            $this->helper->renderReplace('foo', array('contentsCss' => $paths))
         );
     }
 
@@ -201,7 +201,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('browse_url'));
 
         $this->assertSame(
-            sprintf('CKEDITOR.replace("foo", {"filebrowser%sUrl":"browse_url"});', $filebrowser),
+            'CKEDITOR.replace("foo", {"filebrowser'.$filebrowser.'Url":"browse_url"});',
             $this->helper->renderReplace('foo', array(
                 'filebrowser'.$filebrowser.'Route'           => 'browse_route',
                 'filebrowser'.$filebrowser.'RouteParameters' => array('foo' => 'bar'),
@@ -226,7 +226,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('browse_url'));
 
         $this->assertSame(
-            sprintf('CKEDITOR.replace("foo", {"filebrowser%sUrl":"browse_url"});', $filebrowser),
+            'CKEDITOR.replace("foo", {"filebrowser'.$filebrowser.'Url":"browse_url"});',
             $this->helper->renderReplace('foo', array(
                 'filebrowser'.$filebrowser.'Handler' => function (RouterInterface $router) {
                     return $router->generate('browse_route', array('foo' => 'bar'), true);
@@ -289,23 +289,20 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testRenderPlugin()
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testRenderPlugin($path, $asset, $url)
     {
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'))
-            ->will($this->returnValue('bar'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->once())
-            ->method('trim')
-            ->with($this->equalTo('bar'))
-            ->will($this->returnValue('baz'));
+            ->with($this->equalTo($path))
+            ->will($this->returnValue($asset));
 
         $this->assertSame(
-            'CKEDITOR.plugins.addExternal("foo", "baz", "bat");',
-            $this->helper->renderPlugin('foo', array('path' => 'foo', 'filename' => 'bat'))
+            'CKEDITOR.plugins.addExternal("foo", '.json_encode($url).', "bat");',
+            $this->helper->renderPlugin('foo', array('path' => $path, 'filename' => 'bat'))
         );
     }
 
@@ -317,23 +314,20 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testRenderTemplate()
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testRenderTemplate($path, $asset, $url)
     {
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
-            ->with($this->equalTo('foo'))
-            ->will($this->returnValue('bar'));
-
-        $this->assetsVersionTrimerHelperMock
-            ->expects($this->once())
-            ->method('trim')
-            ->with($this->equalTo('bar'))
-            ->will($this->returnValue('baz'));
+            ->with($this->equalTo($path))
+            ->will($this->returnValue($asset));
 
         $this->assertSame(
-            'CKEDITOR.addTemplates("foo", {"imagesPath":"baz","filename":"bat"});',
-            $this->helper->renderTemplate('foo', array('imagesPath' => 'foo', 'filename' => 'bat'))
+            'CKEDITOR.addTemplates("foo", {"imagesPath":'.json_encode($url).',"filename":"bat"});',
+            $this->helper->renderTemplate('foo', array('imagesPath' => $path, 'filename' => 'bat'))
         );
     }
 
