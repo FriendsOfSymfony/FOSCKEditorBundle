@@ -10,7 +10,7 @@
 
     <services>
         <service id="ivory_ck_editor.twig_extension" class="%ivory_ck_editor.twig_extension.class%">
-            <argument type="service" id="ivory_ck_editor.helper.templating" />
+            <argument type="service" id="ivory_ck_editor.templating.helper" />
             <tag name="twig.extension" />
         </service>
     </services>

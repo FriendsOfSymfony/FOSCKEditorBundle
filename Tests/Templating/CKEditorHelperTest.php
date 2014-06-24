@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Helper;
+namespace Ivory\CKEditorBundle\Tests\Templating;
 
-use Ivory\CKEditorBundle\Helper\CKEditorHelper;
+use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -22,7 +22,7 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\CKEditorBundle\Helper\CKEditorHelper */
+    /** @var \Ivory\CKEditorBundle\Templating\CKEditorHelper */
     protected $helper;
 
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface|\PHPUnit_Framework_MockObject_MockObject */

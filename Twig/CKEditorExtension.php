@@ -11,7 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Twig;
 
-use Ivory\CKEditorBundle\Helper\CKEditorHelper;
+use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 
 /**
  * CKEditorExtension
@@ -20,13 +20,13 @@ use Ivory\CKEditorBundle\Helper\CKEditorHelper;
  */
 class CKEditorExtension extends \Twig_Extension
 {
-    /** @var \Ivory\CKEditorBundle\Helper\CKEditorHelper */
+    /** @var \Ivory\CKEditorBundle\Templating\CKEditorHelper */
     protected $helper;
 
     /**
      * Creates a CKEditor extension.
      *
-     * @param \Ivory\CKEditorBundle\Helper\CKEditorHelper $helper The CKEditor helper.
+     * @param \Ivory\CKEditorBundle\Templating\CKEditorHelper $helper The CKEditor helper.
      */
     public function __construct(CKEditorHelper $helper)
     {

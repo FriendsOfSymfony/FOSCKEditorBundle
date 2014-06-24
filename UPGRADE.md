@@ -7,6 +7,11 @@ The `Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper` methods have been me
 has been removed. Additionally, the `ivory_ck_editor.helper.assets_version_trimer` service and the
 `ivory_ck_editor.helper.assets_version_trimer.class` parameter has been removed.
 
+The `Ivory\CKEditorBundle\Helper\CKEditorHelper` class has been moved to
+`Ivory\CKEditorBundle\Templating\CKEditorHelper` and so, the `ivory_ck_editor.helper.templating` service has been
+renamed to `ivory_ck_editor.templating.helper`. Additionally, the `Resources/config/helper.xml` file has been renamed
+to `Resources/config/templating.xml`.
+
 ### 2.2 to 2.3
 
 The CKEditor version has been upgraded from 4.3.2 to 4.4.0.

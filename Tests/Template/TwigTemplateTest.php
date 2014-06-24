@@ -11,7 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
-use Ivory\CKEditorBundle\Helper\CKEditorHelper;
+use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 use Ivory\CKEditorBundle\Twig\CKEditorExtension;
 
 /**
@@ -35,7 +35,7 @@ class TwigTemplateTest extends AbstractTemplateTest
         parent::setUp();
 
         $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem(array(__DIR__.'/../../Resources/views/Form')));
-        $this->twig->addExtension(new CKEditorExtension(new CKEditorHelper($this->containerMock)));
+        $this->twig->addExtension(new CKEditorExtension($this->helper));
 
         $this->template = $this->twig->loadTemplate('ckeditor_widget.html.twig');
     }

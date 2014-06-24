@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Helper;
+namespace Ivory\CKEditorBundle\Templating;
 
 use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
