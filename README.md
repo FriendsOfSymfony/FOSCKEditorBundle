@@ -3,6 +3,8 @@
 [![Build Status](https://secure.travis-ci.org/egeloen/IvoryCKEditorBundle.png)](http://travis-ci.org/egeloen/IvoryCKEditorBundle)
 [![Coverage Status](https://coveralls.io/repos/egeloen/IvoryCKEditorBundle/badge.png?branch=master)](https://coveralls.io/r/egeloen/IvoryCKEditorBundle?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/egeloen/IvoryCKEditorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/egeloen/IvoryCKEditorBundle/?branch=master)
+[![Dependency Status](http://www.versioneye.com/php/egeloen:ckeditor-bundle/badge.svg)](http://www.versioneye.com/php/egeloen:ckeditor-bundle)
+
 [![Latest Stable Version](https://poser.pugx.org/egeloen/ckeditor-bundle/v/stable.svg)](https://packagist.org/packages/egeloen/ckeditor-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/egeloen/ckeditor-bundle/v/unstable.svg)](https://packagist.org/packages/egeloen/ckeditor-bundle)
 [![Total Downloads](https://poser.pugx.org/egeloen/ckeditor-bundle/downloads.svg)](https://packagist.org/packages/egeloen/ckeditor-bundle)
