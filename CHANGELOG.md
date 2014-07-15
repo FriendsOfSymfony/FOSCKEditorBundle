@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.4.0 (????-??-??)
+### 2.4.0 (2014-07-15)
 
  * c9fdfbe - [Resources] Upgrade CKEditor to 4.4.3
  * b2d2abc - [README] Add versioneye badge
