@@ -2,6 +2,7 @@
 
 ### 2.4.0 (????-??-??)
 
+ * c9fdfbe - [Resources] Upgrade CKEditor to 4.4.3
  * b2d2abc - [README] Add versioneye badge
  * 7bd8f86 - [Resources] Upgrade CKEditor to 4.4.2
  * 5e8fc10 - [Templating] Move the CKEditorHelper class from the Helper to the Templating namespace
