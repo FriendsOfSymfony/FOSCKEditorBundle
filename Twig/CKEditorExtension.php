@@ -41,7 +41,6 @@ class CKEditorExtension extends \Twig_Extension
         $options = array('is_safe' => array('html'));
 
         return array(
-            new \Twig_SimpleFunction('ckeditor_is_loaded', array($this, 'isLoaded'), $options),
             new \Twig_SimpleFunction('ckeditor_base_path', array($this, 'renderBasePath'), $options),
             new \Twig_SimpleFunction('ckeditor_js_path', array($this, 'renderJsPath'), $options),
             new \Twig_SimpleFunction('ckeditor_replace', array($this, 'renderReplace'), $options),
@@ -50,16 +49,6 @@ class CKEditorExtension extends \Twig_Extension
             new \Twig_SimpleFunction('ckeditor_styles_set', array($this, 'renderStylesSet'), $options),
             new \Twig_SimpleFunction('ckeditor_template', array($this, 'renderTemplate'), $options),
         );
-    }
-
-    /**
-     * Checks if CKEditor is loaded.
-     *
-     * @return boolean TRUE if CKEditor is loaded else FALSE.
-     */
-    public function isLoaded()
-    {
-        return $this->helper->isLoaded();
     }
 
     /**

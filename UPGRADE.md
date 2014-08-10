@@ -1,5 +1,14 @@
 # UPGRADE
 
+### 2.4 to 2.5
+
+It is not possible to automatically load the ckeditor library only once. Then, the
+`Ivory\CKEditorBundle\Templating\CKEditorHelper::$loaded` property, the
+`Ivory\CKEditorBundle\Templating\CKEditorHelper::isLoaded` method, the
+`Ivory\CKEditorBundle\Twig\CKEditorExtension::isLoaded` method and the `ckeditor_is_loaded` twig function have been
+removed. The PHP and Twig templates have been updated accordingly and then, the CKEditor library is now loaded for
+each fields regardless if it has already been loaded previously.
+
 ### 2.3 to 2.4
 
 The `Ivory\CKEditorBundle\Helper\AssetsVersionTrimerHelper` methods have been merged into the

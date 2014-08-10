@@ -1,14 +1,10 @@
 <textarea <?php echo $view['form']->block($form, 'attributes') ?>><?php echo htmlspecialchars($value) ?></textarea>
 
 <?php if ($enable) : ?>
-    <?php if (!$view['ivory_ckeditor']->isLoaded()) : ?>
-        <script type="text/javascript">
-            var CKEDITOR_BASEPATH = "<?php echo $view['ivory_ckeditor']->renderBasePath($base_path); ?>";
-        </script>
-
-        <script type="text/javascript" src="<?php echo $view['ivory_ckeditor']->renderJsPath($js_path); ?>"></script>
-    <?php endif; ?>
-
+    <script type="text/javascript">
+        var CKEDITOR_BASEPATH = "<?php echo $view['ivory_ckeditor']->renderBasePath($base_path); ?>";
+    </script>
+    <script type="text/javascript" src="<?php echo $view['ivory_ckeditor']->renderJsPath($js_path); ?>"></script>
     <script type="text/javascript">
         <?php echo $view['ivory_ckeditor']->renderDestroy($id); ?>
 

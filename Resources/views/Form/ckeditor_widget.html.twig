@@ -2,14 +2,10 @@
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 
     {% if enable %}
-        {% if not ckeditor_is_loaded() %}
-            <script type="text/javascript">
-                var CKEDITOR_BASEPATH = "{{ ckeditor_base_path(base_path) }}";
-            </script>
-
-            <script type="text/javascript" src="{{ ckeditor_js_path(js_path) }}"></script>
-        {% endif %}
-
+        <script type="text/javascript">
+            var CKEDITOR_BASEPATH = "{{ ckeditor_base_path(base_path) }}";
+        </script>
+        <script type="text/javascript" src="{{ ckeditor_js_path(js_path) }}"></script>
         <script type="text/javascript">
             {{ ckeditor_destroy(id) }}
 

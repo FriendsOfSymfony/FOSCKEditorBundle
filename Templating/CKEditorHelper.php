@@ -22,9 +22,6 @@ use Symfony\Component\Templating\Helper\Helper;
  */
 class CKEditorHelper extends Helper
 {
-    /** @var boolean */
-    protected $loaded = false;
-
     /** @var \Ivory\JsonBuilder\JsonBuilder */
     protected $jsonBuilder;
 
@@ -40,16 +37,6 @@ class CKEditorHelper extends Helper
     {
         $this->jsonBuilder = new JsonBuilder();
         $this->container = $container;
-    }
-
-    /**
-     * Checks if CKEditor is loaded.
-     *
-     * @return boolean TRUE if CKEditor is loaded else FALSE.
-     */
-    public function isLoaded()
-    {
-        return $this->loaded;
     }
 
     /**
@@ -86,8 +73,6 @@ class CKEditorHelper extends Helper
      */
     public function renderReplace($id, array $config)
     {
-        $this->loaded = true;
-
         $this->jsonBuilder
             ->reset()
             ->setValues($this->fixConfigFilebrowsers($this->fixConfigContentsCss($config)));
