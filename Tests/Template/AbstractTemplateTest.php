@@ -88,6 +88,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
                 'id'        => 'id',
                 'value'     => '<p>value</p>',
                 'enable'    => true,
+                'autoload'  => true,
                 'base_path' => 'base_path',
                 'js_path'   => 'js_path',
                 'config'    => array(),
@@ -123,6 +124,7 @@ EOF;
                 'id'        => 'id',
                 'value'     => '<p>value</p>',
                 'enable'    => true,
+                'autoload'  => true,
                 'base_path' => 'base_path',
                 'js_path'   => 'js_path',
                 'config'    => array('foo' => 'bar'),
@@ -169,19 +171,49 @@ EOF;
         $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
     }
 
+    public function testRenderWithNotAutoloadedWidget()
+    {
+        $output = $this->renderTemplate(
+            array(
+                'form'      => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'        => 'id',
+                'value'     => '<p>value</p>',
+                'enable'    => true,
+                'autoload'  => false,
+                'config'    => array(),
+                'plugins'   => array(),
+                'styles'    => array(),
+                'templates' => array(),
+            )
+        );
+
+        $expected = <<<EOF
+<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
+<script type="text/javascript">
+if (CKEDITOR.instances["id"]) {
+delete CKEDITOR.instances["id"];
+}
+CKEDITOR.replace("id", []);
+</script>
+
+EOF;
+
+        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
+    }
+
     public function testRenderWithDisableWidget()
     {
         $output = $this->renderTemplate(
             array(
                 'form'   => $this->getMock('Symfony\Component\Form\FormView'),
                 'id'     => 'id',
-                'value'  => 'value',
+                'value'  => '<p>value</p>',
                 'enable' => false,
             )
         );
 
         $expected = <<<EOF
-<textarea >value</textarea>
+<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 
 EOF;
 

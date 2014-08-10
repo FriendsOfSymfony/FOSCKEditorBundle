@@ -51,6 +51,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->ckEditorType = new CKEditorType(
             true,
+            true,
             'bundles/ckeditor/',
             'bundles/ckeditor/ckeditor.js',
             $this->configManagerMock,
@@ -80,12 +81,33 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->assertTrue($this->ckEditorType->isEnable());
+        $this->assertTrue($this->ckEditorType->isAutoload());
         $this->assertSame('bundles/ckeditor/', $this->ckEditorType->getBasePath());
         $this->assertSame('bundles/ckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
         $this->assertSame($this->configManagerMock, $this->ckEditorType->getConfigManager());
         $this->assertSame($this->pluginManagerMock, $this->ckEditorType->getPluginManager());
         $this->assertSame($this->stylesSetManagerMock, $this->ckEditorType->getStylesSetManager());
         $this->assertSame($this->templateManagerMock, $this->ckEditorType->getTemplateManager());
+    }
+
+    public function testAutoloadWithConfiguredValue()
+    {
+        $this->ckEditorType->isAutoload(false);
+
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('autoload', $view->vars);
+        $this->assertFalse($view->vars['autoload']);
+    }
+
+    public function testEnableWithConfiguredAndExplicitValue()
+    {
+        $form = $this->factory->create('ckeditor', null, array('enable' => false));
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('enable', $view->vars);
+        $this->assertFalse($view->vars['enable']);
     }
 
     public function testBaseAndJsPathWithConfiguredValues()
@@ -542,8 +564,11 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('enable', $view->vars);
         $this->assertFalse($view->vars['enable']);
 
+        $this->assertArrayNotHasKey('autoload', $view->vars);
         $this->assertArrayNotHasKey('config', $view->vars);
         $this->assertArrayNotHasKey('plugins', $view->vars);
+        $this->assertArrayNotHasKey('stylesheets', $view->vars);
+        $this->assertArrayNotHasKey('templates', $view->vars);
     }
 
     public function testExplicitDisable()
@@ -568,7 +593,10 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('enable', $view->vars);
         $this->assertFalse($view->vars['enable']);
 
+        $this->assertArrayNotHasKey('autoload', $view->vars);
         $this->assertArrayNotHasKey('config', $view->vars);
         $this->assertArrayNotHasKey('plugins', $view->vars);
+        $this->assertArrayNotHasKey('stylesheets', $view->vars);
+        $this->assertArrayNotHasKey('templates', $view->vars);
     }
 }

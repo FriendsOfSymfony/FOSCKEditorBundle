@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
             ->root('ivory_ck_editor')
             ->children()
                 ->booleanNode('enable')->defaultTrue()->end()
+                ->booleanNode('autoload')->defaultTrue()->end()
                 ->scalarNode('base_path')->defaultValue('bundles/ivoryckeditor/')->end()
                 ->scalarNode('js_path')->defaultValue('bundles/ivoryckeditor/ckeditor.js')->end()
                 ->scalarNode('default_config')->end()
