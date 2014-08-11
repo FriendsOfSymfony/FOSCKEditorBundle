@@ -9,13 +9,7 @@ php:
     - hhvm
     - hhvm-nightly
 
-env:
-    - SYMFONY_VERSION=2.1.*
-    - SYMFONY_VERSION=2.2.*
-    - SYMFONY_VERSION=2.3.*
-    - SYMFONY_VERSION=2.4.*
-    - SYMFONY_VERSION=2.5.*
-    - SYMFONY_VERSION=dev-master
+env: SYMFONY_VERSION=2.3.*
 
 before_script:
     - composer self-update
@@ -27,6 +21,17 @@ script: bin/phpunit --coverage-clover clover.xml
 after_script: bin/coveralls
 
 matrix:
+    include:
+        - php: 5.5
+          env: SYMFONY_VERSION=2.1.*
+        - php: 5.5
+          env: SYMFONY_VERSION=2.2.*
+        - php: 5.5
+          env: SYMFONY_VERSION=2.4.*
+        - php: 5.5
+          env: SYMFONY_VERSION=2.5.*
+        - php: 5.5
+          env: SYMFONY_VERSION=dev-master
     allow_failures:
         - php: hhvm
         - php: hhvm-nightly
