@@ -2,6 +2,7 @@
 
 ### 2.5.0 (????-??-??)
 
+ * e47d803 - [Travis] Improve build matrix
  * f785de0 - Allow to disable the CKEditor library loading
  * c43e326 - [Helper] Revert only load the CKEditor library one time
 
