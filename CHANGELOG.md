@@ -2,6 +2,7 @@
 
 ### 2.5.0 (????-??-??)
 
+ * f785de0 - Allow to disable the CKEditor library loading
  * c43e326 - [Helper] Revert only load the CKEditor library one time
 
 ### 2.4.0 (2014-07-15)
