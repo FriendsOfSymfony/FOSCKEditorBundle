@@ -7,7 +7,12 @@ It is not possible to automatically load the ckeditor library only once. Then, t
 `Ivory\CKEditorBundle\Templating\CKEditorHelper::isLoaded` method, the
 `Ivory\CKEditorBundle\Twig\CKEditorExtension::isLoaded` method and the `ckeditor_is_loaded` twig function have been
 removed. The PHP and Twig templates have been updated accordingly and then, the CKEditor library is now loaded for
-each fields regardless if it has already been loaded previously.
+each fields regardless if it has already been loaded previously. Anyway, a new feature has been added in order to let
+you the control of the CKEditor library loading ([doc](/Resources/doc/usage.md#load-manually-the-library)).
+
+In order to give you the ability to control the CKEditor library loading, the
+`Ivory\CKEditorBundle\Form\Type\CKEditorType` constructor has been updated. Now, it takes the autoload flag as second
+argument and all others arguments have been moved forward.
 
 ### 2.3 to 2.4
 

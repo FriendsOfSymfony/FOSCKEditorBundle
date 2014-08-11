@@ -31,6 +31,9 @@ class CKEditorType extends AbstractType
     /** @var boolean */
     protected $enable;
 
+    /** @var boolean */
+    protected $autoload;
+
     /** @var string */
     protected $basePath;
 
@@ -53,6 +56,7 @@ class CKEditorType extends AbstractType
      * Creates a CKEditor type.
      *
      * @param boolean                                               $enable           The enable flag.
+     * @param boolean                                               $autoload         The autoload flag.
      * @param string                                                $basePath         The CKEditor base path.
      * @param string                                                $jsPath           The CKEditor JS path.
      * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface    $configManager    The config manager.
@@ -62,6 +66,7 @@ class CKEditorType extends AbstractType
      */
     public function __construct(
         $enable,
+        $autoload,
         $basePath,
         $jsPath,
         ConfigManagerInterface $configManager,
@@ -70,6 +75,7 @@ class CKEditorType extends AbstractType
         TemplateManagerInterface $templateManager
     ) {
         $this->isEnable($enable);
+        $this->isAutoload($autoload);
         $this->setBasePath($basePath);
         $this->setJsPath($jsPath);
         $this->setConfigManager($configManager);
@@ -92,6 +98,22 @@ class CKEditorType extends AbstractType
         }
 
         return $this->enable;
+    }
+
+    /**
+     * Sets/Checks if the widget is autoloaded.
+     *
+     * @param boolean $autoload TRUE if the widget is autoloaded else FALSE.
+     *
+     * @return boolean TRUE if the widget is autoloaded else FALSE.
+     */
+    public function isAutoload($autoload = null)
+    {
+        if ($autoload !== null) {
+            $this->autoload = (bool) $autoload;
+        }
+
+        return $this->autoload;
     }
 
     /**
@@ -222,6 +244,7 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('enable', $options['enable']);
 
         if ($builder->getAttribute('enable')) {
+            $builder->setAttribute('autoload', $options['autoload']);
             $builder->setAttribute('base_path', $options['base_path']);
             $builder->setAttribute('js_path', $options['js_path']);
 
@@ -254,6 +277,7 @@ class CKEditorType extends AbstractType
         $view->vars['enable'] = $form->getConfig()->getAttribute('enable');
 
         if ($form->getConfig()->getAttribute('enable')) {
+            $view->vars['autoload'] = $form->getConfig()->getAttribute('autoload');
             $view->vars['base_path'] = $form->getConfig()->getAttribute('base_path');
             $view->vars['js_path'] = $form->getConfig()->getAttribute('js_path');
             $view->vars['config'] = $form->getConfig()->getAttribute('config');
@@ -271,6 +295,7 @@ class CKEditorType extends AbstractType
         $resolver
             ->setDefaults(array(
                 'enable'      => $this->enable,
+                'autoload'    => $this->autoload,
                 'base_path'   => $this->basePath,
                 'js_path'     => $this->jsPath,
                 'config_name' => $this->configManager->getDefaultConfig(),
@@ -281,6 +306,7 @@ class CKEditorType extends AbstractType
             ))
             ->addAllowedTypes(array(
                 'enable'      => 'bool',
+                'autoload'    => 'bool',
                 'config_name' => array('string', 'null'),
                 'base_path'   => array('string'),
                 'js_path'     => array('string'),

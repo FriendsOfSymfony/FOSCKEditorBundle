@@ -164,6 +164,26 @@ ivory_ck_editor:
                     html:        "<p>Crazy template :)</p>"
 ```
 
+## Load manually the library
+
+By default, all fields loads the CKEditor library. It means if you have multiple CKEditor fields, there will be
+multiple CKEditor library loading (as much as you have fields). If you want to control it, you can configure the
+bundle to not load the library at all and let you the control of it. To disable the CKEditor libary loading, you can
+do it globally:
+
+``` yaml
+ivory_ck_editor:
+    autoload: false
+```
+
+Or, if you just want to disable it for a specific field, you can use:
+
+``` php
+$builder->add('field', 'ckeditor', array('autoload' => false));
+```
+
+Be aware, the library must be loaded before any field have been rendered.
+
 ## Fallback to textarea for testing purpose
 
 Sometime you don't want to use the CKEditor widget but a simple textarea (e.g testing purpose). As CKEditor uses an

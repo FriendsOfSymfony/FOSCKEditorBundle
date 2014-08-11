@@ -35,6 +35,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         }
 
         $container->setParameter('ivory_ck_editor.form.type.enable', $config['enable']);
+        $container->setParameter('ivory_ck_editor.form.type.autoload', $config['autoload']);
         $container->setParameter('ivory_ck_editor.form.type.base_path', $config['base_path']);
         $container->setParameter('ivory_ck_editor.form.type.js_path', $config['js_path']);
 
