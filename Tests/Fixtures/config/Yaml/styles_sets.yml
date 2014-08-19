@@ -4,8 +4,8 @@ ivory_ck_editor:
             -
                 name: "Blue Title"
                 element: "h2"
-                styles: { color: "Blue" }
+                styles: { text-decoration: "underline" }
             -
                 name: "CSS Style"
                 element: "span"
-                attributes: { class: "my_style" }
+                attributes: { data-class: "my-style" }
