@@ -2,6 +2,7 @@
 
 ### 2.5.0 (????-??-??)
 
+ * 35baf4c - [Composer] Refine deps
  * ba8b84a - Upgrade CKEditor to 4.4.4
  * b9f21fa - [Config] Fix stylesSet YAML keys normalization
  * e47d803 - [Travis] Improve build matrix
