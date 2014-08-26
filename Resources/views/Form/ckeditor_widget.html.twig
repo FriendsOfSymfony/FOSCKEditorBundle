@@ -23,7 +23,7 @@
                 {{ ckeditor_template(template_name, template) }}
             {% endfor %}
 
-            {{ ckeditor_replace(id, config) }}
+            {{ ckeditor_replace(id, config, input_sync) }}
         </script>
     {% endif %}
 {% endblock %}

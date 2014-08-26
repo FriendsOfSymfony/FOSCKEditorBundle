@@ -66,12 +66,13 @@ class CKEditorHelper extends Helper
     /**
      * Renders the replace.
      *
-     * @param string $id     The identifier.
-     * @param array  $config The config.
+     * @param string  $id        The identifier.
+     * @param array   $config    The config.
+     * @param boolean $inputSync TRUE if the input is synchronized with the CKEditor instance else FALSE.
      *
      * @return string The rendered replace.
      */
-    public function renderReplace($id, array $config)
+    public function renderReplace($id, array $config, $inputSync = false)
     {
         $config = $this->fixConfigLanguage($config);
         $config = $this->fixConfigContentsCss($config);
@@ -83,7 +84,20 @@ class CKEditorHelper extends Helper
 
         $this->fixConfigEscapedValues($config);
 
-        return sprintf('CKEDITOR.replace("%s", %s);', $id, $this->fixConfigConstants($this->jsonBuilder->build()));
+        $replace = sprintf(
+            'CKEDITOR.replace("%s", %s);',
+            $id,
+            $this->fixConfigConstants($this->jsonBuilder->build())
+        );
+
+        if ($inputSync) {
+            $variable = 'ivory_ckeditor_'.$id;
+            $replace = 'var '.$variable.' = '.$replace.PHP_EOL;
+
+            return $replace.$variable.'.on(\'change\', function() { '.$variable.'.updateElement(); });';
+        }
+
+        return $replace;
     }
 
     /**

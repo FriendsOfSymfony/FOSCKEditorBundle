@@ -1,5 +1,11 @@
 # UPGRADE
 
+### 2.5 to 3.0
+
+The `Ivory\CKEDitorBundle\Form\Type\CKEditorType` scalar constructor values have been dropped in order to more easily
+keep further backward compatibility. Then, the `ivory_ck_editor.form.type.*` related container parameters have been
+dropped accordingly.
+
 ### 2.4 to 2.5
 
 It is not possible to automatically load the ckeditor library only once. Then, the

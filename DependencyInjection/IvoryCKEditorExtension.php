@@ -34,14 +34,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $loader->load($service.'.xml');
         }
 
-        $container->setParameter('ivory_ck_editor.form.type.enable', $config['enable']);
-        $container->setParameter('ivory_ck_editor.form.type.autoload', $config['autoload']);
-        $container->setParameter('ivory_ck_editor.form.type.base_path', $config['base_path']);
-        $container->setParameter('ivory_ck_editor.form.type.js_path', $config['js_path']);
-
         $this->registerResources($container);
+        $this->registerConfig($config, $container);
 
-        if ($config['enable']) {
+        if (!isset($config['enable']) || $config['enable']) {
             $this->registerConfigs($config, $container);
             $this->registerPlugins($config, $container);
             $this->registerStylesSet($config, $container);
@@ -76,6 +72,37 @@ class IvoryCKEditorExtension extends ConfigurableExtension
                     $container->getParameter('twig.form.resources')
                 )
             );
+        }
+    }
+
+    /**
+     * Registers the CKEditor config.
+     *
+     * @param array                                                   $config    The CKEditor configuration
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     */
+    protected function registerConfig(array $config, ContainerBuilder $container)
+    {
+        $formType = $container->getDefinition('ivory_ck_editor.form.type');
+
+        if (isset($config['enable'])) {
+            $formType->addMethodCall('isEnable', array($config['enable']));
+        }
+
+        if (isset($config['autoload'])) {
+            $formType->addMethodCall('isAutoload', array($config['autoload']));
+        }
+
+        if (isset($config['input_sync'])) {
+            $formType->addMethodCall('isInputSync', array($config['input_sync']));
+        }
+
+        if (isset($config['base_path'])) {
+            $formType->addMethodCall('setBasePath', array($config['base_path']));
+        }
+
+        if (isset($config['js_path'])) {
+            $formType->addMethodCall('setJsPath', array($config['js_path']));
         }
     }
 

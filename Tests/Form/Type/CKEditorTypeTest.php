@@ -50,10 +50,6 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->templateManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
 
         $this->ckEditorType = new CKEditorType(
-            true,
-            true,
-            'bundles/ckeditor/',
-            'bundles/ckeditor/ckeditor.js',
             $this->configManagerMock,
             $this->pluginManagerMock,
             $this->stylesSetManagerMock,
@@ -82,8 +78,9 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->ckEditorType->isEnable());
         $this->assertTrue($this->ckEditorType->isAutoload());
-        $this->assertSame('bundles/ckeditor/', $this->ckEditorType->getBasePath());
-        $this->assertSame('bundles/ckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
+        $this->assertFalse($this->ckEditorType->isInputSync());
+        $this->assertSame('bundles/ivoryckeditor/', $this->ckEditorType->getBasePath());
+        $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
         $this->assertSame($this->configManagerMock, $this->ckEditorType->getConfigManager());
         $this->assertSame($this->pluginManagerMock, $this->ckEditorType->getPluginManager());
         $this->assertSame($this->stylesSetManagerMock, $this->ckEditorType->getStylesSetManager());
@@ -101,6 +98,17 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($view->vars['autoload']);
     }
 
+    public function testInputSyncWithConfiguredValue()
+    {
+        $this->ckEditorType->isInputSync(true);
+
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('input_sync', $view->vars);
+        $this->assertTrue($view->vars['input_sync']);
+    }
+
     public function testEnableWithConfiguredAndExplicitValue()
     {
         $form = $this->factory->create('ckeditor', null, array('enable' => false));
@@ -116,10 +124,10 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $view = $form->createView();
 
         $this->assertArrayHasKey('base_path', $view->vars);
-        $this->assertSame('bundles/ckeditor/', $view->vars['base_path']);
+        $this->assertSame('bundles/ivoryckeditor/', $view->vars['base_path']);
 
         $this->assertArrayHasKey('js_path', $view->vars);
-        $this->assertSame('bundles/ckeditor/ckeditor.js', $view->vars['js_path']);
+        $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $view->vars['js_path']);
     }
 
     public function testBaseAndJsPathWithConfiguredAndExplicitValues()

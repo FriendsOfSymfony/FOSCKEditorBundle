@@ -78,14 +78,15 @@ class CKEditorExtension extends \Twig_Extension
     /**
      * Renders the replace.
      *
-     * @param string $id     The identifier.
-     * @param array  $config The config.
+     * @param string  $id        The identifier.
+     * @param array   $config    The config.
+     * @param boolean $inputSync TRUE if the input is synchronized with the CKEditor instance else FALSE.
      *
      * @return string The rendered replace.
      */
-    public function renderReplace($id, array $config)
+    public function renderReplace($id, array $config, $inputSync = false)
     {
-        return $this->helper->renderReplace($id, $config);
+        return $this->helper->renderReplace($id, $config, $inputSync);
     }
 
     /**

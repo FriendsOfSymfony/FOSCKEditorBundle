@@ -14,10 +14,6 @@
 
     <services>
         <service id="ivory_ck_editor.form.type" class="%ivory_ck_editor.form.type.class%">
-            <argument>%ivory_ck_editor.form.type.enable%</argument>
-            <argument>%ivory_ck_editor.form.type.autoload%</argument>
-            <argument>%ivory_ck_editor.form.type.base_path%</argument>
-            <argument>%ivory_ck_editor.form.type.js_path%</argument>
             <argument type="service" id="ivory_ck_editor.config_manager" />
             <argument type="service" id="ivory_ck_editor.plugin_manager" />
             <argument type="service" id="ivory_ck_editor.styles_set_manager" />
