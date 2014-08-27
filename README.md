@@ -15,17 +15,21 @@ the new `ckeditor` form type which can be easily configured.
 
 ## Documentation
 
- 1. [Installation](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/installation.md)
- 2. [Usage](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/usage.md)
- 3. [Configuration](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/configuration.md) (Optional)
- 4. [File Browse/Upload](http://github.com/egeloen/IvoryCKEditorBundle/blob/master/Resources/doc/file_browse_upload.md) (Optional)
+ 1. [Installation](/Resources/doc/installation.md)
+ 2. [Usage](/Resources/doc/usage.md)
+ 3. [Configuration](/Resources/doc/configuration.md) (Optional)
+ 4. [File Browse/Upload](/Resources/doc/file_browse_upload.md) (Optional)
+
+## Testing
+
+The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**. To
+execute the test suite, check the travis [configuration](/.travis.yml).
 
 ## Contribute
 
-We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
+We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!.
 
 ## License
 
 The Ivory CKEditor Bundle is under the MIT license. For the full copyright and license information, please read the
-[LICENSE](https://github.com/egeloen/IvoryCKEditorBundle/blob/master/LICENSE) file that was distributed with this
-source code.
+[LICENSE](/LICENSE) file that was distributed with this source code.
