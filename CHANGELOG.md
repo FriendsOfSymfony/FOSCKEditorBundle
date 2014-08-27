@@ -2,6 +2,8 @@
 
 ### 2.5.0 (????-??-??)
 
+ * 47cdde6 - [README] Rely on relative link
+ * ce5813f - Add contributing doc
  * 35baf4c - [Composer] Refine deps
  * ba8b84a - Upgrade CKEditor to 4.4.4
  * b9f21fa - [Config] Fix stylesSet YAML keys normalization
