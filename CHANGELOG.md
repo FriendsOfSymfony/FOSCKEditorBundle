@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.5.0 (????-??-??)
+### 2.5.0 (2014-08-29)
 
  * 24e81ff - [Gitignore] Remove Composer installer and phar
  * 47cdde6 - [README] Rely on relative link
