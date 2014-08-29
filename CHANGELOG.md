@@ -2,6 +2,7 @@
 
 ### 2.5.0 (????-??-??)
 
+ * 24e81ff - [Gitignore] Remove Composer installer and phar
  * 47cdde6 - [README] Rely on relative link
  * ce5813f - Add contributing doc
  * 35baf4c - [Composer] Refine deps
