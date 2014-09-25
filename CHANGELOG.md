@@ -2,6 +2,7 @@
 
 ### 2.5.1 (????-??-??)
 
+ * 3b43d72 - Upgrade CKEditor to 4.4.5
  * 6be9ee8 - [Build] Move CKEditor sync script from Resources/build/sync.sh to bin/ckeditor-sync
 
 ### 2.5.0 (2014-08-29)
