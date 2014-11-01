@@ -137,7 +137,7 @@ Add CoopTilleulsCKEditorSonataMediaBundle in your `composer.json` file:
 ``` json
 {
     "require": {
-        "tilleuls/ckeditor-sonata-mediabundle": "~1.0",
+        "tilleuls/ckeditor-sonata-media-bundle": "~1.0",
     }
 }
 ```
