@@ -77,6 +77,19 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Gets the language.
+     *
+     * @return array The language.
+     */
+    public function languageProvider()
+    {
+        return array(
+            array('en', 'en'),
+            array('pt_BR', 'pt-br'),
+        );
+    }
+
+    /**
      * Gets the url.
      *
      * @return array The url.
@@ -147,6 +160,17 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('bar'));
 
         $this->assertSame('bar', $this->helper->renderJsPath('foo'));
+    }
+
+    /**
+     * @dataProvider languageProvider
+     */
+    public function testRenderReplaceWithLanguage($symfonyLocale, $ckEditorLocale)
+    {
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"language":"'.$ckEditorLocale.'"});',
+            $this->helper->renderReplace('foo', array('language' => $symfonyLocale))
+        );
     }
 
     /**

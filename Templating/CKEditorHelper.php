@@ -73,9 +73,13 @@ class CKEditorHelper extends Helper
      */
     public function renderReplace($id, array $config)
     {
+        $config = $this->fixConfigLanguage($config);
+        $config = $this->fixConfigContentsCss($config);
+        $config = $this->fixConfigFilebrowsers($config);
+
         $this->jsonBuilder
             ->reset()
-            ->setValues($this->fixConfigFilebrowsers($this->fixConfigContentsCss($config)));
+            ->setValues($config);
 
         $this->fixConfigEscapedValues($config);
 
@@ -163,6 +167,22 @@ class CKEditorHelper extends Helper
     public function getName()
     {
         return 'ivory_ckeditor';
+    }
+
+    /**
+     * Fixes the config language.
+     *
+     * @param array $config The config.
+     *
+     * @return array The fixed config.
+     */
+    protected function fixConfigLanguage(array $config)
+    {
+        if (isset($config['language'])) {
+            $config['language'] = strtolower(str_replace('_', '-', $config['language']));
+        }
+
+        return $config;
     }
 
     /**
