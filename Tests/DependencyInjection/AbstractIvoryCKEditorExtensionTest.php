@@ -237,6 +237,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
             'default' => array(
                 array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('text-decoration' => 'underline')),
                 array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('data-class' => 'my-style')),
+                array('name' => 'Widget Style', 'type' => 'widget', 'widget' => 'my-widget', 'attributes' => array('data-class' => 'my-style')),
             )
         );
 

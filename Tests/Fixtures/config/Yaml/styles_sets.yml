@@ -9,3 +9,8 @@ ivory_ck_editor:
                 name: "CSS Style"
                 element: "span"
                 attributes: { data-class: "my-style" }
+            -
+                name: "Widget Style"
+                type: widget
+                widget: "my-widget"
+                attributes: { data-class: "my-style" }
