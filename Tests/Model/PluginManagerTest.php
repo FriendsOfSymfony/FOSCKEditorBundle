@@ -21,7 +21,7 @@ use Ivory\CKEditorBundle\Model\PluginManager;
 class PluginManagerTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Ivory\CKEditorBundle\Model\PluginManager */
-    protected $pluginManager;
+    private $pluginManager;
 
     /**
      * {@inheritdoc}

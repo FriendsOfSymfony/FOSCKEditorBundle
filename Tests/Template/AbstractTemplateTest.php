@@ -25,13 +25,13 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
     protected $helper;
 
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $containerMock;
+    private $containerMock;
 
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
-    protected $assetsHelperMock;
+    private $assetsHelperMock;
 
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $routerMock;
+    private $routerMock;
 
     /**
      * {@inheritdoc}
@@ -242,7 +242,7 @@ EOF;
      *
      * @return string The normalized output.
      */
-    protected function normalizeOutput($output)
+    private function normalizeOutput($output)
     {
         return str_replace(PHP_EOL, '', str_replace(' ', '', $output));
     }

@@ -21,7 +21,7 @@ use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 class CKEditorExtension extends \Twig_Extension
 {
     /** @var \Ivory\CKEditorBundle\Templating\CKEditorHelper */
-    protected $helper;
+    private $helper;
 
     /**
      * Creates a CKEditor extension.

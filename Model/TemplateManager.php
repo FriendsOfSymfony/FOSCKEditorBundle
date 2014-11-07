@@ -21,7 +21,7 @@ use Ivory\CKEditorBundle\Exception\TemplateManagerException;
 class TemplateManager implements TemplateManagerInterface
 {
     /** @var array */
-    protected $templates = array();
+    private $templates = array();
 
     /**
      * Creates a plugin manager.

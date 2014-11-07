@@ -29,31 +29,31 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class CKEditorType extends AbstractType
 {
     /** @var boolean */
-    protected $enable = true;
+    private $enable = true;
 
     /** @var boolean */
-    protected $autoload = true;
+    private $autoload = true;
 
     /** @var boolean */
-    protected $inputSync = false;
+    private $inputSync = false;
 
     /** @var string */
-    protected $basePath = 'bundles/ivoryckeditor/';
+    private $basePath = 'bundles/ivoryckeditor/';
 
     /** @var string */
-    protected $jsPath = 'bundles/ivoryckeditor/ckeditor.js';
+    private $jsPath = 'bundles/ivoryckeditor/ckeditor.js';
 
     /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
-    protected $configManager;
+    private $configManager;
 
     /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface */
-    protected $pluginManager;
+    private $pluginManager;
 
     /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface */
-    protected $stylesSetManager;
+    private $stylesSetManager;
 
-    /** @var \Ivory\CKEditorBundle\Model\TemplateManager*/
-    protected $templateManager;
+    /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface */
+    private $templateManager;
 
     /**
      * Creates a CKEditor type.

@@ -2,7 +2,10 @@
 
 ### 2.5 to 3.0
 
-The `Ivory\CKEDitorBundle\Form\Type\CKEditorType` scalar constructor values have been dropped in order to more easily
+All protected properties and methods have been updated to private except for entry points. This is mostly motivated for
+enforcing the encapsulation and easing backward compatibility.
+
+The `Ivory\CKEditorBundle\Form\Type\CKEditorType` scalar constructor values have been dropped in order to more easily
 keep further backward compatibility. Then, the `ivory_ck_editor.form.type.*` related container parameters have been
 dropped accordingly.
 

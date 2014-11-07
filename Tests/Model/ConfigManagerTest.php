@@ -21,7 +21,7 @@ use Ivory\CKEditorBundle\Model\ConfigManager;
 class ConfigManagerTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
-    protected $configManager;
+    private $configManager;
 
     /**
      * {@inheritdoc}

@@ -21,7 +21,7 @@ use Ivory\CKEditorBundle\Exception\PluginManagerException;
 class PluginManager implements PluginManagerInterface
 {
     /** @var array */
-    protected $plugins = array();
+    private $plugins = array();
 
     /**
      * Creates a plugin manager.
