@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.5.2 (????-??-??)
+
+ * e8a41a4 - Add type and widget options for styles
+
 ### 2.5.1 (2014-10-30)
 
  * 3b43d72 - Upgrade CKEditor to 4.4.5
