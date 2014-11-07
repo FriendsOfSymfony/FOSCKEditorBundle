@@ -2,6 +2,7 @@
 
 ### 2.5.2 (????-??-??)
 
+ * 133bcfc - [Doc] Link to fmelfinder doc
  * e8a41a4 - Add type and widget options for styles
 
 ### 2.5.1 (2014-10-30)
