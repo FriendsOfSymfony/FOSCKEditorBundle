@@ -98,6 +98,7 @@ $builder->add('field', 'ckeditor', array(
         'my_styles' => array(
             array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
             array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
+            array('name' => 'Widget Style', 'type' => 'widget' => 'widget' => 'my_widget', 'attributes' => array('class' => 'my_widget_style')),
         ),
     ),
 ));
@@ -114,6 +115,7 @@ ivory_ck_editor:
         my_styles:
             - { name: "Blue Title", element: "h2", styles: { color: "Blue" }}
             - { name: "CSS Style", element: "span", attributes: { class: "my_style" }}
+            - { name: "Widget Style", type: widget, widget: "my_widget", attributes: { class: "my_widget_style" }}
 ```
 
 ## Templates support

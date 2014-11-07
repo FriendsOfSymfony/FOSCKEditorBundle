@@ -252,13 +252,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     protected function fixStylesSet(array $stylesSet)
     {
         foreach ($stylesSet as &$value) {
-            if (empty($value['styles'])) {
-                unset($value['styles']);
-            }
-
-            if (empty($value['attributes'])) {
-                unset($value['attributes']);
-            }
+            $value = array_filter($value);
         }
 
         return $stylesSet;

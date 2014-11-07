@@ -90,6 +90,8 @@ class Configuration implements ConfigurationInterface
                 ->prototype('array')
                     ->children()
                         ->scalarNode('name')->end()
+                        ->scalarNode('type')->end()
+                        ->scalarNode('widget')->end()
                         ->scalarNode('element')->end()
                         ->arrayNode('styles')
                             ->normalizeKeys(false)
