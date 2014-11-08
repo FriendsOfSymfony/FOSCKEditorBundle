@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.5.2 (????-??-??)
+### 2.5.2 (2014-11-08)
 
  * 900d69b - [Config] Fix language conversion
  * 133bcfc - [Doc] Link to fmelfinder doc
