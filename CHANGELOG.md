@@ -2,6 +2,7 @@
 
 ### 3.0.0 (????-??-??)
 
+ * cc0a387 - [Encapsulation] Move everything from protected to private (except for entry point)
  * 03045fd - [Form] Add input_sync option
 
 ### 2.5.2 (2014-11-08)
