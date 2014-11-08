@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 3.0.0 (????-??-??)
+
+ * 03045fd - [Form] Add input_sync option
+
 ### 2.5.2 (2014-11-08)
 
  * 900d69b - [Config] Fix language conversion
