@@ -186,6 +186,23 @@ $builder->add('field', 'ckeditor', array('autoload' => false));
 
 Be aware, the library must be loaded before any field have been rendered.
 
+## Synchronize the textarea
+
+When the textarea is transformed into a CKEditor widget, the textarea value is no more populated except for form
+submission. Then, it leads to issues when you try to serialize form in javascript or you try to rely on the textare
+value. To automatically synchronize the textarea value, you can do it globally:
+
+``` yaml
+ivory_ck_editor:
+    input_sync: true
+```
+
+Or, you can do it locally:
+
+``` php
+$builder->add('field', 'ckeditor', array('input_sync' => true));
+```
+
 ## Fallback to textarea for testing purpose
 
 Sometime you don't want to use the CKEditor widget but a simple textarea (e.g testing purpose). As CKEditor uses an

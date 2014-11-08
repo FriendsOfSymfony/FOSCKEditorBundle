@@ -29,16 +29,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class CKEditorType extends AbstractType
 {
     /** @var boolean */
-    protected $enable;
+    protected $enable = true;
 
     /** @var boolean */
-    protected $autoload;
+    protected $autoload = true;
+
+    /** @var boolean */
+    protected $inputSync = false;
 
     /** @var string */
-    protected $basePath;
+    protected $basePath = 'bundles/ivoryckeditor/';
 
     /** @var string */
-    protected $jsPath;
+    protected $jsPath = 'bundles/ivoryckeditor/ckeditor.js';
 
     /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
     protected $configManager;
@@ -55,29 +58,17 @@ class CKEditorType extends AbstractType
     /**
      * Creates a CKEditor type.
      *
-     * @param boolean                                               $enable           The enable flag.
-     * @param boolean                                               $autoload         The autoload flag.
-     * @param string                                                $basePath         The CKEditor base path.
-     * @param string                                                $jsPath           The CKEditor JS path.
      * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface    $configManager    The config manager.
      * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface    $pluginManager    The plugin manager.
      * @param \Ivory\CKEditorBundle\Model\StylesSetManagerInterface $stylesSetManager The styles set manager.
      * @param \Ivory\CKEditorBundle\Model\TemplateManagerInterface  $templateManager  The template manager.
      */
     public function __construct(
-        $enable,
-        $autoload,
-        $basePath,
-        $jsPath,
         ConfigManagerInterface $configManager,
         PluginManagerInterface $pluginManager,
         StylesSetManagerInterface $stylesSetManager,
         TemplateManagerInterface $templateManager
     ) {
-        $this->isEnable($enable);
-        $this->isAutoload($autoload);
-        $this->setBasePath($basePath);
-        $this->setJsPath($jsPath);
         $this->setConfigManager($configManager);
         $this->setPluginManager($pluginManager);
         $this->setStylesSetManager($stylesSetManager);
@@ -114,6 +105,22 @@ class CKEditorType extends AbstractType
         }
 
         return $this->autoload;
+    }
+
+    /**
+     * Sets/Checks if the input is synchonized with the widget.
+     *
+     * @param boolean $inputSync TRUE if the input is synchronized with the widget else FALSE.
+     *
+     * @return boolean TRUE if the input is synchronized with the widget else FALSE.
+     */
+    public function isInputSync($inputSync = null)
+    {
+        if ($inputSync !== null) {
+            $this->inputSync = (bool) $inputSync;
+        }
+
+        return $this->inputSync;
     }
 
     /**
@@ -245,6 +252,7 @@ class CKEditorType extends AbstractType
 
         if ($builder->getAttribute('enable')) {
             $builder->setAttribute('autoload', $options['autoload']);
+            $builder->setAttribute('input_sync', $options['input_sync']);
             $builder->setAttribute('base_path', $options['base_path']);
             $builder->setAttribute('js_path', $options['js_path']);
 
@@ -278,6 +286,7 @@ class CKEditorType extends AbstractType
 
         if ($form->getConfig()->getAttribute('enable')) {
             $view->vars['autoload'] = $form->getConfig()->getAttribute('autoload');
+            $view->vars['input_sync'] = $form->getConfig()->getAttribute('input_sync');
             $view->vars['base_path'] = $form->getConfig()->getAttribute('base_path');
             $view->vars['js_path'] = $form->getConfig()->getAttribute('js_path');
             $view->vars['config'] = $form->getConfig()->getAttribute('config');
@@ -296,6 +305,7 @@ class CKEditorType extends AbstractType
             ->setDefaults(array(
                 'enable'      => $this->enable,
                 'autoload'    => $this->autoload,
+                'input_sync'  => $this->inputSync,
                 'base_path'   => $this->basePath,
                 'js_path'     => $this->jsPath,
                 'config_name' => $this->configManager->getDefaultConfig(),
@@ -307,6 +317,7 @@ class CKEditorType extends AbstractType
             ->addAllowedTypes(array(
                 'enable'      => 'bool',
                 'autoload'    => 'bool',
+                'input_sync'  => 'bool',
                 'config_name' => array('string', 'null'),
                 'base_path'   => array('string'),
                 'js_path'     => array('string'),

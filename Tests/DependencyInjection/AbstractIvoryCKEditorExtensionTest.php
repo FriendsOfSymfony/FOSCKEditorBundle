@@ -126,6 +126,14 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isAutoload());
     }
 
+    public function testInputSync()
+    {
+        $this->loadConfiguration($this->container, 'input_sync');
+        $this->container->compile();
+
+        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->isInputSync());
+    }
+
     public function testSingleConfiguration()
     {
         $this->loadConfiguration($this->container, 'single_configuration');

@@ -84,17 +84,18 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
     {
         $output = $this->renderTemplate(
             array(
-                'form'      => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'        => 'id',
-                'value'     => '<p>value</p>',
-                'enable'    => true,
-                'autoload'  => true,
-                'base_path' => 'base_path',
-                'js_path'   => 'js_path',
-                'config'    => array(),
-                'plugins'   => array(),
-                'styles'    => array(),
-                'templates' => array(),
+                'form'       => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'         => 'id',
+                'value'      => '<p>value</p>',
+                'enable'     => true,
+                'autoload'   => true,
+                'input_sync' => false,
+                'base_path'  => 'base_path',
+                'js_path'    => 'js_path',
+                'config'     => array(),
+                'plugins'    => array(),
+                'styles'     => array(),
+                'templates'  => array(),
             )
         );
 
@@ -120,23 +121,24 @@ EOF;
     {
         $output = $this->renderTemplate(
             array(
-                'form'      => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'        => 'id',
-                'value'     => '<p>value</p>',
-                'enable'    => true,
-                'autoload'  => true,
-                'base_path' => 'base_path',
-                'js_path'   => 'js_path',
-                'config'    => array('foo' => 'bar'),
-                'plugins'   => array(
+                'form'       => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'         => 'id',
+                'value'      => '<p>value</p>',
+                'enable'     => true,
+                'autoload'   => true,
+                'input_sync' => false,
+                'base_path'  => 'base_path',
+                'js_path'    => 'js_path',
+                'config'     => array('foo' => 'bar'),
+                'plugins'    => array(
                     'foo' => array('path' => 'path', 'filename' => 'filename'),
                 ),
-                'styles'    => array(
+                'styles'     => array(
                     'default' => array(
                         array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
                     ),
                 ),
-                'templates' => array(
+                'templates'  => array(
                     'foo' => array(
                         'imagesPath' => 'path',
                         'templates'  => array(
@@ -175,15 +177,18 @@ EOF;
     {
         $output = $this->renderTemplate(
             array(
-                'form'      => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'        => 'id',
-                'value'     => '<p>value</p>',
-                'enable'    => true,
-                'autoload'  => false,
-                'config'    => array(),
-                'plugins'   => array(),
-                'styles'    => array(),
-                'templates' => array(),
+                'form'       => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'         => 'id',
+                'value'      => '<p>value</p>',
+                'enable'     => true,
+                'autoload'   => false,
+                'input_sync' => true,
+                'base_path'  => 'base_path',
+                'js_path'    => 'js_path',
+                'config'     => array(),
+                'plugins'    => array(),
+                'styles'     => array(),
+                'templates'  => array(),
             )
         );
 
@@ -193,7 +198,8 @@ EOF;
 if (CKEDITOR.instances["id"]) {
 delete CKEDITOR.instances["id"];
 }
-CKEDITOR.replace("id", []);
+var ivory_ckeditor_id = CKEDITOR.replace("id", []);
+ivory_ckeditor_id.on('change', function() { ivory_ckeditor_id.updateElement(); });
 </script>
 
 EOF;
