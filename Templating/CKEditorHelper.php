@@ -23,10 +23,10 @@ use Symfony\Component\Templating\Helper\Helper;
 class CKEditorHelper extends Helper
 {
     /** @var \Ivory\JsonBuilder\JsonBuilder */
-    protected $jsonBuilder;
+    private $jsonBuilder;
 
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
-    protected $container;
+    private $container;
 
     /**
      * Creates a CKEditor template helper.
@@ -206,7 +206,7 @@ class CKEditorHelper extends Helper
      *
      * @return array The fixed config.
      */
-    protected function fixConfigContentsCss(array $config)
+    private function fixConfigContentsCss(array $config)
     {
         if (isset($config['contentsCss'])) {
             $cssContents = (array) $config['contentsCss'];
@@ -227,7 +227,7 @@ class CKEditorHelper extends Helper
      *
      * @return array The fixed config.
      */
-    protected function fixConfigFilebrowsers(array $config)
+    private function fixConfigFilebrowsers(array $config)
     {
         $filebrowserKeys = array(
             'Browse',
@@ -270,7 +270,7 @@ class CKEditorHelper extends Helper
      *
      * @param array $config The config.
      */
-    protected function fixConfigEscapedValues(array $config)
+    private function fixConfigEscapedValues(array $config)
     {
         if (isset($config['protectedSource'])) {
             foreach ($config['protectedSource'] as $key => $value) {
@@ -297,7 +297,7 @@ class CKEditorHelper extends Helper
      *
      * @return string The fixed config.
      */
-    protected function fixConfigConstants($json)
+    private function fixConfigConstants($json)
     {
         return preg_replace('/"(CKEDITOR\.[A-Z_]+)"/', '$1', $json);
     }
@@ -309,7 +309,7 @@ class CKEditorHelper extends Helper
      *
      * @return string The fixed path.
      */
-    protected function fixPath($path)
+    private function fixPath($path)
     {
         if (($position = strpos($path, '?')) !== false) {
             return substr($path, 0, $position);
@@ -323,7 +323,7 @@ class CKEditorHelper extends Helper
      *
      * @return \Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
      */
-    protected function getAssetsHelper()
+    private function getAssetsHelper()
     {
         return $this->container->get('templating.helper.assets');
     }
@@ -333,7 +333,7 @@ class CKEditorHelper extends Helper
      *
      * @return \Symfony\Component\Routing\RouterInterface The router.
      */
-    protected function getRouter()
+    private function getRouter()
     {
         return $this->container->get('router');
     }

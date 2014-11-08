@@ -21,7 +21,7 @@ use Ivory\CKEditorBundle\Model\TemplateManager;
 class TemplateManagerTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Ivory\CKEditorBundle\Model\TemplateManager */
-    protected $templateManager;
+    private $templateManager;
 
     /**
      * {@inheritdoc}

@@ -22,22 +22,22 @@ use Symfony\Component\Form\Forms;
 class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Symfony\Component\Form\FormFactoryInterface */
-    protected $factory;
+    private $factory;
 
     /** @var \Ivory\CKEditorBundle\Form\Type\CKEditorType */
-    protected $ckEditorType;
+    private $ckEditorType;
 
     /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $configManagerMock;
+    private $configManagerMock;
 
     /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $pluginManagerMock;
+    private $pluginManagerMock;
 
     /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $stylesSetManagerMock;
+    private $stylesSetManagerMock;
 
     /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $templateManagerMock;
+    private $templateManagerMock;
 
     /**
      * {@inheritdooc}

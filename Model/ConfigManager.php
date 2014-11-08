@@ -21,10 +21,10 @@ use Ivory\CKEditorBundle\Exception\ConfigManagerException;
 class ConfigManager implements ConfigManagerInterface
 {
     /** @var string */
-    protected $defaultConfig;
+    private $defaultConfig;
 
     /** @var array */
-    protected $configs = array();
+    private $configs = array();
 
     /**
      * Creates a CKEditor config manager.

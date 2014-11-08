@@ -51,7 +51,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The configs node.
      */
-    protected function createConfigsNode()
+    private function createConfigsNode()
     {
         return $this->createNode('configs')
             ->useAttributeAsKey('name')
@@ -66,7 +66,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The plugins node.
      */
-    protected function createPluginsNode()
+    private function createPluginsNode()
     {
         return $this->createNode('plugins')
             ->useAttributeAsKey('name')
@@ -83,7 +83,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The styles node.
      */
-    protected function createStylesNode()
+    private function createStylesNode()
     {
         return $this->createNode('styles')
             ->useAttributeAsKey('name')
@@ -114,7 +114,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The templates node.
      */
-    protected function createTemplatesNode()
+    private function createTemplatesNode()
     {
         return $this->createNode('templates')
             ->useAttributeAsKey('name')
@@ -140,7 +140,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The toolbars node.
      */
-    protected function createToolbarsNode()
+    private function createToolbarsNode()
     {
         return $this->createNode('toolbars')
             ->addDefaultsIfNotSet()
@@ -167,7 +167,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The node.
      */
-    protected function createNode($name)
+    private function createNode($name)
     {
         return $this->createTreeBuilder()->root($name);
     }
@@ -177,7 +177,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder.
      */
-    protected function createTreeBuilder()
+    private function createTreeBuilder()
     {
         return new TreeBuilder();
     }

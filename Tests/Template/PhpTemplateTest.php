@@ -23,10 +23,10 @@ use Symfony\Component\Templating\TemplateNameParser;
 class PhpTemplateTest extends AbstractTemplateTest
 {
     /** @var \Symfony\Component\Templating\PhpEngine */
-    protected $phpEngine;
+    private $phpEngine;
 
     /** @var \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper|\PHPUnit_Framework_MockObject_MockObject */
-    protected $formHelperMock;
+    private $formHelperMock;
 
     /**
      * {@inheritdoc}

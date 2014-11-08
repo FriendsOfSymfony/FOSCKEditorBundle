@@ -23,13 +23,13 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Symfony\Component\DependencyInjection\ContainerBuilder */
-    protected $container;
+    private $container;
 
     /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
-    protected $assetsHelperMock;
+    private $assetsHelperMock;
 
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $routerMock;
+    private $routerMock;
 
     /**
      * {@inheritdoc}
