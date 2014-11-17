@@ -2,6 +2,7 @@
 
 ### 3.0.0 (????-??-??)
 
+ * 588ffa3 - [Test] Remove bootstrap.php
  * cc0a387 - [Encapsulation] Move everything from protected to private (except for entry point)
  * 03045fd - [Form] Add input_sync option
 
