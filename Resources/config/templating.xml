@@ -4,12 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
-    <parameters>
-        <parameter key="ivory_ck_editor.templating.helper.class">Ivory\CKEditorBundle\Templating\CKEditorHelper</parameter>
-    </parameters>
-
     <services>
-        <service id="ivory_ck_editor.templating.helper" class="%ivory_ck_editor.templating.helper.class%">
+        <service id="ivory_ck_editor.templating.helper" class="Ivory\CKEditorBundle\Templating\CKEditorHelper">
             <argument type="service" id="service_container" />
             <tag name="templating.helper" alias="ivory_ckeditor" />
         </service>
