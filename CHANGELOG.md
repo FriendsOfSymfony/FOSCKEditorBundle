@@ -2,6 +2,8 @@
 
 ### 3.0.0 (????-??-??)
 
+ * 00086ab - Add .gitattributes
+ * 3c82c18 - [Readme] Fix badge uri
  * 6feb086 - [DependencyInjection] Remove *.class parameters
  * 588ffa3 - [Test] Remove bootstrap.php
  * cc0a387 - [Encapsulation] Move everything from protected to private (except for entry point)
