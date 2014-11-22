@@ -50,7 +50,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
         $plugins = array(
             'wordcount' => array(
                 'path'     => '/my/path',
-                'filename' => 'plugin.js'
+                'filename' => 'plugin.js',
             ),
         );
 
@@ -66,7 +66,7 @@ class PluginManagerTest extends \PHPUnit_Framework_TestCase
         $plugins = array(
             'wordcount' => array(
                 'path'     => '/my/path',
-                'filename' => 'plugin.js'
+                'filename' => 'plugin.js',
             ),
         );
 

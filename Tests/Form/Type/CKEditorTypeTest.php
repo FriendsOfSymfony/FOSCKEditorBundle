@@ -461,7 +461,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
                     array(
                         'title' => 'My Template',
                         'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                    )
+                    ),
                 ),
             ),
         );
@@ -528,7 +528,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
                     array(
                         'title' => 'My Extra Template',
                         'html'  => '<h2>Template</h2><p>Type your text here.</p>',
-                    )
+                    ),
                 ),
             ),
         );

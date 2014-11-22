@@ -58,7 +58,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
                 array(
                     'router',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->routerMock
+                    $this->routerMock,
                 ),
             )));
 
@@ -267,7 +267,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
                 'protectedSource' => array(
                     '/<\?[\s\S]*?\?>/g',
                     '/<%[\s\S]*?%>/g',
-                )
+                ),
             ))
         );
     }

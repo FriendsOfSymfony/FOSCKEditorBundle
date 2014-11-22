@@ -11,7 +11,6 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
-use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 use Ivory\CKEditorBundle\Twig\CKEditorExtension;
 
 /**

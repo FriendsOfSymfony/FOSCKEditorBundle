@@ -62,7 +62,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
                 array(
                     'router',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->routerMock
+                    $this->routerMock,
                 ),
             )));
 
@@ -147,7 +147,7 @@ EOF;
                                 'html'  => '<h1>Template</h1>',
                             ),
                         ),
-                    )
+                    ),
                 ),
             )
         );
