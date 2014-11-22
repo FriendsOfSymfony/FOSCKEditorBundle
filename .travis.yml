@@ -11,29 +11,38 @@ php:
 
 env: SYMFONY_VERSION=2.3.*
 
-before_script:
+cache:
+    directories:
+        - vendor
+        - $HOME/.composer/cache
+
+install:
     - composer self-update
-    - composer require --no-update symfony/symfony:${SYMFONY_VERSION}
+    - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
+    - composer require --no-update symfony/form:${SYMFONY_VERSION}
+    - if [[ "$SYMFONY_VERSION" = *dev* ]]; then sed -i "s/\"MIT\"/\"MIT\",\"minimum-stability\":\"dev\"/g" composer.json; fi
     - composer install --prefer-source
 
 script: bin/phpunit --coverage-clover clover.xml
 
-after_script: bin/coveralls
+after_script: bin/coveralls -v
 
 matrix:
     include:
-        - php: 5.5
+        - php: 5.6
           env: SYMFONY_VERSION=2.2.*
-        - php: 5.5
+        - php: 5.6
           env: SYMFONY_VERSION=2.4.*
-        - php: 5.5
+        - php: 5.6
           env: SYMFONY_VERSION=2.5.*
-        - php: 5.5
-          env: SYMFONY_VERSION=dev-master
+        - php: 5.6
+          env: SYMFONY_VERSION=2.6.*@dev
+        - php: 5.6
+          env: SYMFONY_VERSION=2.7.*@dev
     allow_failures:
-        - php: hhvm
         - php: hhvm-nightly
-        - env: SYMFONY_VERSION=dev-master
+        - env: SYMFONY_VERSION=2.6.*@dev
+        - env: SYMFONY_VERSION=2.7.*@dev
 
 notifications:
     email: geloen.eric@gmail.com
