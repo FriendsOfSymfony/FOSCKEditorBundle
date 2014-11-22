@@ -2,6 +2,7 @@
 
 ### 3.0.0 (????-??-??)
 
+ * 280abf1 - [Travis] Update config
  * 00086ab - Add .gitattributes
  * 3c82c18 - [Readme] Fix badge uri
  * 6feb086 - [DependencyInjection] Remove *.class parameters
