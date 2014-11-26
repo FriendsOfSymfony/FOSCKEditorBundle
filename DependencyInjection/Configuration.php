@@ -95,7 +95,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('name')->end()
                         ->scalarNode('type')->end()
                         ->scalarNode('widget')->end()
-                        ->scalarNode('element')->end()
+                        ->variableNode('element')->end()
                         ->arrayNode('styles')
                             ->normalizeKeys(false)
                             ->useAttributeAsKey('name')

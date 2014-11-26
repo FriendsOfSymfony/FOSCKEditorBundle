@@ -98,6 +98,7 @@ $builder->add('field', 'ckeditor', array(
         'my_styles' => array(
             array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
             array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
+            array('name' => 'Multiple Element Style', 'element' => array('h2', 'span'), 'attributes' => array('class' => 'my_class')),
             array('name' => 'Widget Style', 'type' => 'widget' => 'widget' => 'my_widget', 'attributes' => array('class' => 'my_widget_style')),
         ),
     ),

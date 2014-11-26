@@ -14,3 +14,7 @@ ivory_ck_editor:
                 type: widget
                 widget: "my-widget"
                 attributes: { data-class: "my-style" }
+            -
+                name: "Multiple Elements Style"
+                element: ["span", "p", "h3"]
+                attributes: { data-class: "my-style" }
