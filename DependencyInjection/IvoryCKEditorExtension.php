@@ -93,6 +93,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $formType->addMethodCall('isAutoload', array($config['autoload']));
         }
 
+        if (isset($config['jquery'])) {
+            $formType->addMethodCall('useJquery', array($config['jquery']));
+        }
+
         if (isset($config['input_sync'])) {
             $formType->addMethodCall('isInputSync', array($config['input_sync']));
         }
@@ -103,6 +107,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
 
         if (isset($config['js_path'])) {
             $formType->addMethodCall('setJsPath', array($config['js_path']));
+        }
+
+        if (isset($config['jquery_path'])) {
+            $formType->addMethodCall('setJqueryPath', array($config['jquery_path']));
         }
     }
 
