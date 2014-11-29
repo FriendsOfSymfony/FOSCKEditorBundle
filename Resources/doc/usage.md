@@ -186,6 +186,36 @@ $builder->add('field', 'ckeditor', array('autoload' => false));
 
 Be aware, the library must be loaded before any field have been rendered.
 
+## JQuery adapter
+
+The CKEditor JQuery adapter is by default not loaded even if the `autoload` option is enabled. In order to load it,
+the `autoload` flag must be enabled and you must explicitely enable the jquery adapter. You can do it globally:
+
+``` yaml
+ivory_ckeditor:
+    jquery: true
+```
+
+Or, if you just want to enable it for a specific field, you can use:
+
+``` php
+$builder->add('field', 'ckeditor', array('jquery' => true));
+```
+
+Additionally, by default, the JQuery adapter used is the [one](/Resources/public/adapters/jquery.js) shipped with the
+bundle. If you want to use your own, you can configure it globally:
+
+``` yaml
+ivory_ckeditor:
+    jquery_path: your/own/jquery.js
+```
+
+Or, you can configure it just for a specific field:
+
+``` php
+$builder->add('field', 'ckeditor', array('jquery_path' => 'your/own/jquery.js'));
+```
+
 ## Synchronize the textarea
 
 When the textarea is transformed into a CKEditor widget, the textarea value is no more populated except for form

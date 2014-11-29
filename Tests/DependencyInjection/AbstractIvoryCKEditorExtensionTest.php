@@ -81,8 +81,11 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertInstanceOf('Ivory\CKEditorBundle\Form\Type\CKEditorType', $type);
         $this->assertTrue($type->isEnable());
         $this->assertTrue($type->isAutoload());
+        $this->assertFalse($type->useJquery());
+        $this->assertFalse($type->isInputSync());
         $this->assertSame('bundles/ivoryckeditor/', $type->getBasePath());
         $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $type->getJsPath());
+        $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $type->getJqueryPath());
         $this->assertSame($this->container->get('ivory_ck_editor.config_manager'), $type->getConfigManager());
         $this->assertSame($this->container->get('ivory_ck_editor.plugin_manager'), $type->getPluginManager());
         $this->assertSame($this->container->get('ivory_ck_editor.styles_set_manager'), $type->getStylesSetManager());
@@ -132,6 +135,22 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->compile();
 
         $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->isInputSync());
+    }
+
+    public function testJquery()
+    {
+        $this->loadConfiguration($this->container, 'jquery');
+        $this->container->compile();
+
+        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->useJquery());
+    }
+
+    public function testJqueryPath()
+    {
+        $this->loadConfiguration($this->container, 'jquery_path');
+        $this->container->compile();
+
+        $this->assertSame('foo/jquery.js', $this->container->get('ivory_ck_editor.form.type')->getJqueryPath());
     }
 
     public function testSingleConfiguration()

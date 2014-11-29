@@ -7,6 +7,9 @@
                 var CKEDITOR_BASEPATH = "{{ ckeditor_base_path(base_path) }}";
             </script>
             <script type="text/javascript" src="{{ ckeditor_js_path(js_path) }}"></script>
+            {% if jquery %}
+                <script type="text/javascript" src="{{ ckeditor_js_path(jquery_path) }}"></script>
+            {% endif %}
         {% endif %}
         <script type="text/javascript">
             {{ ckeditor_destroy(id) }}

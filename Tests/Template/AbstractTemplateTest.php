@@ -89,6 +89,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
                 'value'      => '<p>value</p>',
                 'enable'     => true,
                 'autoload'   => true,
+                'jquery'     => false,
                 'input_sync' => false,
                 'base_path'  => 'base_path',
                 'js_path'    => 'js_path',
@@ -127,6 +128,7 @@ EOF;
                 'enable'     => true,
                 'autoload'   => true,
                 'input_sync' => false,
+                'jquery'     => false,
                 'base_path'  => 'base_path',
                 'js_path'    => 'js_path',
                 'config'     => array('foo' => 'bar'),
@@ -166,6 +168,46 @@ CKEDITOR.plugins.addExternal("foo", "path", "filename");
 if (CKEDITOR.stylesSet.get("default") === null) { CKEDITOR.stylesSet.add("default", [{"name":"Blue Title","element":"h2","styles":{"color":"Blue"}}]); }
 CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
 CKEDITOR.replace("id", {"foo":"bar"});
+</script>
+
+EOF;
+
+        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
+    }
+
+    public function testRenderWithJquerydWidget()
+    {
+        $output = $this->renderTemplate(
+            array(
+                'form'        => $this->getMock('Symfony\Component\Form\FormView'),
+                'id'          => 'id',
+                'value'       => '<p>value</p>',
+                'enable'      => true,
+                'autoload'    => true,
+                'jquery'      => true,
+                'input_sync'  => false,
+                'base_path'   => 'base_path',
+                'js_path'     => 'js_path',
+                'jquery_path' => 'jquery_path',
+                'config'      => array(),
+                'plugins'     => array(),
+                'styles'      => array(),
+                'templates'   => array(),
+            )
+        );
+
+        $expected = <<<EOF
+<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
+<script type="text/javascript">
+var CKEDITOR_BASEPATH = "base_path";
+</script>
+<script type="text/javascript" src="js_path"></script>
+<script type="text/javascript" src="jquery_path"></script>
+<script type="text/javascript">
+if (CKEDITOR.instances["id"]) {
+delete CKEDITOR.instances["id"];
+}
+CKEDITOR.replace("id", []);
 </script>
 
 EOF;

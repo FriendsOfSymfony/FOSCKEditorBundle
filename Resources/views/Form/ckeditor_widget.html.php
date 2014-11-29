@@ -6,6 +6,9 @@
             var CKEDITOR_BASEPATH = "<?php echo $view['ivory_ckeditor']->renderBasePath($base_path); ?>";
         </script>
         <script type="text/javascript" src="<?php echo $view['ivory_ckeditor']->renderJsPath($js_path); ?>"></script>
+        <?php if ($jquery) : ?>
+            <script type="text/javascript" src="<?php echo $view['ivory_ckeditor']->renderJsPath($jquery_path); ?>"></script>
+        <?php endif; ?>
     <?php endif; ?>
     <script type="text/javascript">
         <?php echo $view['ivory_ckeditor']->renderDestroy($id); ?>

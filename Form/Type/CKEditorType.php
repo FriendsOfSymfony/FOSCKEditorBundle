@@ -35,6 +35,9 @@ class CKEditorType extends AbstractType
     private $autoload = true;
 
     /** @var boolean */
+    private $jquery = false;
+
+    /** @var boolean */
     private $inputSync = false;
 
     /** @var string */
@@ -42,6 +45,9 @@ class CKEditorType extends AbstractType
 
     /** @var string */
     private $jsPath = 'bundles/ivoryckeditor/ckeditor.js';
+
+    /** @var string */
+    private $jqueryPath = 'bundles/ivoryckeditor/adapters/jquery.js';
 
     /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
     private $configManager;
@@ -108,6 +114,22 @@ class CKEditorType extends AbstractType
     }
 
     /**
+     * Checks/Sets if the jquery adapter is loaded.
+     *
+     * @param boolean $jquery TRUE if the jquery adapter is loaded else FALSE.
+     *
+     * @return boolean TRUE if the jquery adapter is loaded else FALSE.
+     */
+    public function useJquery($jquery = null)
+    {
+        if ($jquery !== null) {
+            $this->jquery = (bool) $jquery;
+        }
+
+        return $this->jquery;
+    }
+
+    /**
      * Sets/Checks if the input is synchonized with the widget.
      *
      * @param boolean $inputSync TRUE if the input is synchronized with the widget else FALSE.
@@ -161,6 +183,26 @@ class CKEditorType extends AbstractType
     public function setJsPath($jsPath)
     {
         $this->jsPath = $jsPath;
+    }
+
+    /**
+     * Gets the jquery path.
+     *
+     * @return string The jquery path.
+     */
+    public function getJqueryPath()
+    {
+        return $this->jqueryPath;
+    }
+
+    /**
+     * Sets the jquery path.
+     *
+     * @param string $jqueryPath The jquery path.
+     */
+    public function setJqueryPath($jqueryPath)
+    {
+        $this->jqueryPath = $jqueryPath;
     }
 
     /**
@@ -252,9 +294,11 @@ class CKEditorType extends AbstractType
 
         if ($builder->getAttribute('enable')) {
             $builder->setAttribute('autoload', $options['autoload']);
+            $builder->setAttribute('jquery', $options['jquery']);
             $builder->setAttribute('input_sync', $options['input_sync']);
             $builder->setAttribute('base_path', $options['base_path']);
             $builder->setAttribute('js_path', $options['js_path']);
+            $builder->setAttribute('jquery_path', $options['jquery_path']);
 
             $config = $options['config'];
             if ($options['config_name'] === null) {
@@ -286,9 +330,11 @@ class CKEditorType extends AbstractType
 
         if ($form->getConfig()->getAttribute('enable')) {
             $view->vars['autoload'] = $form->getConfig()->getAttribute('autoload');
+            $view->vars['jquery'] = $form->getConfig()->getAttribute('jquery');
             $view->vars['input_sync'] = $form->getConfig()->getAttribute('input_sync');
             $view->vars['base_path'] = $form->getConfig()->getAttribute('base_path');
             $view->vars['js_path'] = $form->getConfig()->getAttribute('js_path');
+            $view->vars['jquery_path'] = $form->getConfig()->getAttribute('jquery_path');
             $view->vars['config'] = $form->getConfig()->getAttribute('config');
             $view->vars['plugins'] = $form->getConfig()->getAttribute('plugins');
             $view->vars['styles'] = $form->getConfig()->getAttribute('styles');
@@ -305,9 +351,11 @@ class CKEditorType extends AbstractType
             ->setDefaults(array(
                 'enable'      => $this->enable,
                 'autoload'    => $this->autoload,
+                'jquery'      => $this->jquery,
                 'input_sync'  => $this->inputSync,
                 'base_path'   => $this->basePath,
                 'js_path'     => $this->jsPath,
+                'jquery_path' => $this->jqueryPath,
                 'config_name' => $this->configManager->getDefaultConfig(),
                 'config'      => array(),
                 'plugins'     => array(),
@@ -317,10 +365,12 @@ class CKEditorType extends AbstractType
             ->addAllowedTypes(array(
                 'enable'      => 'bool',
                 'autoload'    => 'bool',
+                'jquery'      => 'bool',
                 'input_sync'  => 'bool',
                 'config_name' => array('string', 'null'),
-                'base_path'   => array('string'),
-                'js_path'     => array('string'),
+                'base_path'   => 'string',
+                'js_path'     => 'string',
+                'jquery_path' => 'string',
                 'config'      => 'array',
                 'plugins'     => 'array',
                 'styles'      => 'array',
