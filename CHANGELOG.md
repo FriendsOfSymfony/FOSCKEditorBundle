@@ -2,6 +2,7 @@
 
 ### 3.0.0 (????-??-??)
 
+ * c573a39 - Add JQuery adapter support
  * 4035ca0 - Upgrade CKEditor to 4.4.6
  * 280abf1 - [Travis] Update config
  * 00086ab - Add .gitattributes
