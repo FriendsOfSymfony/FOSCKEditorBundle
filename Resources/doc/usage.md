@@ -84,6 +84,23 @@ $builder->add('field', 'ckeditor', array(
 ));
 ```
 
+## Skin support
+
+Download a skin from [CKEditor](http://ckeditor.com/addons/skins/all) & extract it in the web or bundle resource directory:
+
+ex: `/web/ckeditor/skins/`
+
+### Register
+
+Place the following code on your config.yml and change the skin name
+
+```
+ivory_ck_editor:
+    configs:
+        my_config:
+            skin: "skin_name,/absolute/web/skin/path/" # ex: ckeditor/skins/skin_name/ if you placed in the web directory
+```
+
 ## StylesSet support
 
 The bundle allows you to define your own styles. Like plugins, you can define them at the form level or in your
