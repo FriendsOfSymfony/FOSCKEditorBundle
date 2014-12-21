@@ -12,14 +12,16 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/framework-bundle": "~2.2",
+        "egeloen/json-builder": "~2.0@dev",
+        "symfony/dependency-injection": "~2.2",
         "symfony/form": "~2.2",
-        "egeloen/json-builder": "~2.0@dev"
+        "symfony/framework-bundle": "~2.2",
+        "symfony/yaml": "^2.0.5"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
-        "twig/twig": "~1.12",
-        "satooshi/php-coveralls": "~0.6"
+        "satooshi/php-coveralls": "~0.6",
+        "twig/twig": "~1.12"
     },
     "suggest": {
         "twig/twig": "Allows to use twig templates"
