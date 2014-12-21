@@ -2,6 +2,7 @@
 
 ### 3.0.0 (????-??-??)
 
+ * c875b8b - [Travis] Add composer prefer-lowest build
  * b23b5d1 - [Travis] Move Symfony 2.6.*@dev to 2.6.*
  * c6c5dbe - Add stylesSet element array support
  * c573a39 - Add JQuery adapter support
