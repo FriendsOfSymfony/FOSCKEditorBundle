@@ -43,7 +43,7 @@ class CKEditorExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('ckeditor_base_path', array($this, 'renderBasePath'), $options),
             new \Twig_SimpleFunction('ckeditor_js_path', array($this, 'renderJsPath'), $options),
-            new \Twig_SimpleFunction('ckeditor_replace', array($this, 'renderReplace'), $options),
+            new \Twig_SimpleFunction('ckeditor_widget', array($this, 'renderWidget'), $options),
             new \Twig_SimpleFunction('ckeditor_destroy', array($this, 'renderDestroy'), $options),
             new \Twig_SimpleFunction('ckeditor_plugin', array($this, 'renderPlugin'), $options),
             new \Twig_SimpleFunction('ckeditor_styles_set', array($this, 'renderStylesSet'), $options),
@@ -76,17 +76,18 @@ class CKEditorExtension extends \Twig_Extension
     }
 
     /**
-     * Renders the replace.
+     * Renders the widget.
      *
      * @param string  $id        The identifier.
      * @param array   $config    The config.
+     * @param boolean $inline    TRUE if the widget is inlined else FALSE.
      * @param boolean $inputSync TRUE if the input is synchronized with the CKEditor instance else FALSE.
      *
-     * @return string The rendered replace.
+     * @return string The rendered widget.
      */
-    public function renderReplace($id, array $config, $inputSync = false)
+    public function renderWidget($id, array $config, $inline = false, $inputSync = false)
     {
-        return $this->helper->renderReplace($id, $config, $inputSync);
+        return $this->helper->renderWidget($id, $config, $inline, $inputSync);
     }
 
     /**
