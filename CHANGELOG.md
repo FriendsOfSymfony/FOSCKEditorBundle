@@ -2,6 +2,7 @@
 
 ### 3.0.0 (????-??-??)
 
+ * cbad747 - Add inline editing support
  * c875b8b - [Travis] Add composer prefer-lowest build
  * b23b5d1 - [Travis] Move Symfony 2.6.*@dev to 2.6.*
  * c6c5dbe - Add stylesSet element array support
