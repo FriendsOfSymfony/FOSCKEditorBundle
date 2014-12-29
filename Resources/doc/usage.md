@@ -204,6 +204,23 @@ $builder->add('field', 'ckeditor', array('autoload' => false));
 
 Be aware, the library must be loaded before any field have been rendered.
 
+## Inline support
+
+By default, the bundle uses a [classic editing](http://docs.ckeditor.com/#!/guide/dev_framed) which relies on
+`CKEDITOR.replace`. If you want to use the [inline editing](http://docs.ckeditor.com/#!/guide/dev_inline) which relies
+on `CKEDITOR.inline`, you can configure it globally:
+
+``` yaml
+ivory_ck_editor:
+    inline: true
+```
+
+Or, if you just want to enable it for a specific field, you can use:
+
+``` php
+$builder->add('field', 'ckeditor', array('inline' => true));
+```
+
 ## JQuery adapter
 
 The CKEditor JQuery adapter is by default not loaded even if the `autoload` option is enabled. In order to load it,

@@ -26,7 +26,7 @@
                 {{ ckeditor_template(template_name, template) }}
             {% endfor %}
 
-            {{ ckeditor_replace(id, config, input_sync) }}
+            {{ ckeditor_widget(id, config, inline, input_sync) }}
         </script>
     {% endif %}
 {% endblock %}

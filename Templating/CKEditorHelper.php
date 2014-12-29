@@ -64,15 +64,16 @@ class CKEditorHelper extends Helper
     }
 
     /**
-     * Renders the replace.
+     * Renders the widget.
      *
      * @param string  $id        The identifier.
      * @param array   $config    The config.
+     * @param boolean $inline    TRUE if the widget is inlined else FALSE.
      * @param boolean $inputSync TRUE if the input is synchronized with the CKEditor instance else FALSE.
      *
-     * @return string The rendered replace.
+     * @return string The rendered widget.
      */
-    public function renderReplace($id, array $config, $inputSync = false)
+    public function renderWidget($id, array $config, $inline = false, $inputSync = false)
     {
         $config = $this->fixConfigLanguage($config);
         $config = $this->fixConfigContentsCss($config);
@@ -85,7 +86,8 @@ class CKEditorHelper extends Helper
         $this->fixConfigEscapedValues($config);
 
         $replace = sprintf(
-            'CKEDITOR.replace("%s", %s);',
+            'CKEDITOR.%s("%s", %s);',
+            $inline ? 'inline' : 'replace',
             $id,
             $this->fixConfigConstants($this->jsonBuilder->build())
         );

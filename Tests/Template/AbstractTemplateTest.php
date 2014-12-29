@@ -82,24 +82,6 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderWithSimpleWidget()
     {
-        $output = $this->renderTemplate(
-            array(
-                'form'       => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'         => 'id',
-                'value'      => '<p>value</p>',
-                'enable'     => true,
-                'autoload'   => true,
-                'jquery'     => false,
-                'input_sync' => false,
-                'base_path'  => 'base_path',
-                'js_path'    => 'js_path',
-                'config'     => array(),
-                'plugins'    => array(),
-                'styles'     => array(),
-                'templates'  => array(),
-            )
-        );
-
         $expected = <<<EOF
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
@@ -115,85 +97,35 @@ CKEDITOR.replace("id", []);
 
 EOF;
 
-        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
+        $this->assertTemplate($expected, $this->getContext());
     }
 
     public function testRenderWithFullWidget()
     {
-        $output = $this->renderTemplate(
-            array(
-                'form'       => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'         => 'id',
-                'value'      => '<p>value</p>',
-                'enable'     => true,
-                'autoload'   => true,
-                'input_sync' => false,
-                'jquery'     => false,
-                'base_path'  => 'base_path',
-                'js_path'    => 'js_path',
-                'config'     => array('foo' => 'bar'),
-                'plugins'    => array(
-                    'foo' => array('path' => 'path', 'filename' => 'filename'),
+        $context = array(
+            'inline' => true,
+            'jquery' => true,
+            'input_sync' => true,
+            'config' => array('foo' => 'bar'),
+            'plugins' => array(
+                'foo' => array('path' => 'path', 'filename' => 'filename'),
+            ),
+            'styles' => array(
+                'default' => array(
+                    array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
                 ),
-                'styles'     => array(
-                    'default' => array(
-                        array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-                    ),
-                ),
-                'templates'  => array(
-                    'foo' => array(
-                        'imagesPath' => 'path',
-                        'templates'  => array(
-                            array(
-                                'title' => 'My Template',
-                                'html'  => '<h1>Template</h1>',
-                            ),
+            ),
+            'templates' => array(
+                'foo' => array(
+                    'imagesPath' => 'path',
+                    'templates' => array(
+                        array(
+                            'title' => 'My Template',
+                            'html' => '<h1>Template</h1>',
                         ),
                     ),
                 ),
-            )
-        );
-
-        $expected = <<<EOF
-<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
-<script type="text/javascript">
-var CKEDITOR_BASEPATH = "base_path";
-</script>
-<script type="text/javascript" src="js_path"></script>
-<script type="text/javascript">
-if (CKEDITOR.instances["id"]) {
-delete CKEDITOR.instances["id"];
-}
-CKEDITOR.plugins.addExternal("foo", "path", "filename");
-if (CKEDITOR.stylesSet.get("default") === null) { CKEDITOR.stylesSet.add("default", [{"name":"Blue Title","element":"h2","styles":{"color":"Blue"}}]); }
-CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
-CKEDITOR.replace("id", {"foo":"bar"});
-</script>
-
-EOF;
-
-        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
-    }
-
-    public function testRenderWithJquerydWidget()
-    {
-        $output = $this->renderTemplate(
-            array(
-                'form'        => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'          => 'id',
-                'value'       => '<p>value</p>',
-                'enable'      => true,
-                'autoload'    => true,
-                'jquery'      => true,
-                'input_sync'  => false,
-                'base_path'   => 'base_path',
-                'js_path'     => 'js_path',
-                'jquery_path' => 'jquery_path',
-                'config'      => array(),
-                'plugins'     => array(),
-                'styles'      => array(),
-                'templates'   => array(),
-            )
+            ),
         );
 
         $expected = <<<EOF
@@ -207,65 +139,42 @@ var CKEDITOR_BASEPATH = "base_path";
 if (CKEDITOR.instances["id"]) {
 delete CKEDITOR.instances["id"];
 }
-CKEDITOR.replace("id", []);
+CKEDITOR.plugins.addExternal("foo", "path", "filename");
+if (CKEDITOR.stylesSet.get("default") === null) { CKEDITOR.stylesSet.add("default", [{"name":"Blue Title","element":"h2","styles":{"color":"Blue"}}]); }
+CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
+var ivory_ckeditor_id = CKEDITOR.inline("id", {"foo":"bar"});
+ivory_ckeditor_id.on('change', function(){ ivory_ckeditor_id.updateElement(); });
 </script>
 
 EOF;
 
-        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
+        $this->assertTemplate($expected, array_merge($this->getContext(), $context));
     }
 
     public function testRenderWithNotAutoloadedWidget()
     {
-        $output = $this->renderTemplate(
-            array(
-                'form'       => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'         => 'id',
-                'value'      => '<p>value</p>',
-                'enable'     => true,
-                'autoload'   => false,
-                'input_sync' => true,
-                'base_path'  => 'base_path',
-                'js_path'    => 'js_path',
-                'config'     => array(),
-                'plugins'    => array(),
-                'styles'     => array(),
-                'templates'  => array(),
-            )
-        );
-
         $expected = <<<EOF
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 if (CKEDITOR.instances["id"]) {
 delete CKEDITOR.instances["id"];
 }
-var ivory_ckeditor_id = CKEDITOR.replace("id", []);
-ivory_ckeditor_id.on('change', function() { ivory_ckeditor_id.updateElement(); });
+CKEDITOR.replace("id", []);
 </script>
 
 EOF;
 
-        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
+        $this->assertTemplate($expected, array_merge($this->getContext(), array('autoload' => false)));
     }
 
     public function testRenderWithDisableWidget()
     {
-        $output = $this->renderTemplate(
-            array(
-                'form'   => $this->getMock('Symfony\Component\Form\FormView'),
-                'id'     => 'id',
-                'value'  => '<p>value</p>',
-                'enable' => false,
-            )
-        );
-
         $expected = <<<EOF
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 
 EOF;
 
-        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($output));
+        $this->assertTemplate($expected, array_merge($this->getContext(), array('enable' => false)));
     }
 
     /**
@@ -276,6 +185,43 @@ EOF;
      * @return string The template output.
      */
     abstract protected function renderTemplate(array $context = array());
+
+    /**
+     * Gets the context.
+     *
+     * @return array The context.
+     */
+    private function getContext()
+    {
+        return array(
+            'form'        => $this->getMock('Symfony\Component\Form\FormView'),
+            'id'          => 'id',
+            'value'       => '<p>value</p>',
+            'enable'      => true,
+            'autoload'    => true,
+            'inline'      => false,
+            'jquery'      => false,
+            'input_sync'  => false,
+            'base_path'   => 'base_path',
+            'js_path'     => 'js_path',
+            'jquery_path' => 'jquery_path',
+            'config'      => array(),
+            'plugins'     => array(),
+            'styles'      => array(),
+            'templates'   => array(),
+        );
+    }
+
+    /**
+     * Asserts a template.
+     *
+     * @param string $expected The expected template.
+     * @param array  $context  The context.
+     */
+    private function assertTemplate($expected, array $context)
+    {
+        $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($this->renderTemplate($context)));
+    }
 
     /**
      * Normalizes the output by removing the heading whitespaces.

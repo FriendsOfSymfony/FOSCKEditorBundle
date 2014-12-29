@@ -25,6 +25,6 @@
             <?php echo $view['ivory_ckeditor']->renderTemplate($templateName, $template); ?>
         <?php endforeach; ?>
 
-        <?php echo $view['ivory_ckeditor']->renderReplace($id, $config, $input_sync); ?>
+        <?php echo $view['ivory_ckeditor']->renderWidget($id, $config, $inline, $input_sync); ?>
     </script>
 <?php endif; ?>
