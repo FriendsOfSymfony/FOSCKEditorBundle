@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 3.0.0 (????-??-??)
+### 3.0.0 (2014-12-29)
 
  * cbad747 - Add inline editing support
  * c875b8b - [Travis] Add composer prefer-lowest build
