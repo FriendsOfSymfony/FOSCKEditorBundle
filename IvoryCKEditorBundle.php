@@ -12,12 +12,22 @@
 namespace Ivory\CKEditorBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Ivory\CKEditorBundle\DependencyInjection\Compiler;
 
 /**
  * Ivory CKEditor bundle.
  *
  * @author GeLo <geloen.eric@gmail.com>
+ * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 class IvoryCKEditorBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new Compiler\AssetsHelperCompilerPass());
+    }
 }

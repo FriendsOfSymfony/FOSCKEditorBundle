@@ -19,6 +19,7 @@ use Symfony\Component\Templating\Helper\Helper;
  * CKEditor helper.
  *
  * @author GeLo <geloen.eric@gmail.com>
+ * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 class CKEditorHelper extends Helper
 {
@@ -323,11 +324,11 @@ class CKEditorHelper extends Helper
     /**
      * Gets the assets helper.
      *
-     * @return \Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
+     * @return \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
      */
     private function getAssetsHelper()
     {
-        return $this->container->get('templating.helper.assets');
+        return $this->container->get('assets.packages');
     }
 
     /**

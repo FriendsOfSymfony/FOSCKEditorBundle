@@ -19,13 +19,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * Abstract Ivory CKEditor extension test.
  *
  * @author GeLo <geloen.eric@gmail.com>
+ * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Symfony\Component\DependencyInjection\ContainerBuilder */
     private $container;
 
-    /** @var \Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
     private $assetsHelperMock;
 
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
@@ -36,15 +37,21 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
      */
     protected function setUp()
     {
-        $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
+        if (class_exists('Symfony\Component\Asset\Packages')) {
+            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Asset\Packages')
+                ->disableOriginalConstructor()
+                ->getMock();
+        } else {
+            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+                ->disableOriginalConstructor()
+                ->getMock();
+        }
 
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $this->container = new ContainerBuilder();
 
-        $this->container->set('templating.helper.assets', $this->assetsHelperMock);
+        $this->container->set('assets.packages', $this->assetsHelperMock);
         $this->container->set('router', $this->routerMock);
 
         $this->container->registerExtension($framework = new FrameworkExtension());
@@ -329,6 +336,15 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
 
         $this->assertSame('foo', $ckEditorType->getBasePath());
         $this->assertSame('foo/ckeditor.js', $ckEditorType->getJsPath());
+    }
+
+    public function testTemplatingConfiguration()
+    {
+        $this->container->compile();
+
+        $helper = $this->container->get('ivory_ck_editor.templating.helper');
+
+        $this->assertInstanceOf('Ivory\CKEditorBundle\Templating\CKEditorHelper', $helper);
     }
 
     /**
