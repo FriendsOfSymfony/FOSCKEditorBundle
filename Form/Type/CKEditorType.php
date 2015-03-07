@@ -20,6 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * CKEditor type.
@@ -384,21 +385,31 @@ class CKEditorType extends AbstractType
                 'styles'      => array(),
                 'templates'   => array(),
             ))
-            ->addAllowedTypes(array(
-                'enable'      => 'bool',
-                'autoload'    => 'bool',
-                'inline'      => 'bool',
-                'jquery'      => 'bool',
-                'input_sync'  => 'bool',
-                'config_name' => array('string', 'null'),
-                'base_path'   => 'string',
-                'js_path'     => 'string',
-                'jquery_path' => 'string',
-                'config'      => 'array',
-                'plugins'     => 'array',
-                'styles'      => 'array',
-                'templates'   => 'array',
-            ));
+        ;
+
+        $allowedTypesMap = array(
+            'enable'      => 'bool',
+            'autoload'    => 'bool',
+            'inline'      => 'bool',
+            'jquery'      => 'bool',
+            'input_sync'  => 'bool',
+            'config_name' => array('string', 'null'),
+            'base_path'   => 'string',
+            'js_path'     => 'string',
+            'jquery_path' => 'string',
+            'config'      => 'array',
+            'plugins'     => 'array',
+            'styles'      => 'array',
+            'templates'   => 'array',
+        );
+
+        if (Kernel::VERSION_ID >= 20600) {
+             foreach ($allowedTypesMap as $option => $allowedTypes) {
+                 $resolver->addAllowedTypes($option, $allowedTypes);
+             }
+        } else {
+            $resolver->addAllowedTypes($allowedTypesMap);
+        }
     }
 
     /**
