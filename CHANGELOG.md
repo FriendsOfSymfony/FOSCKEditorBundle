@@ -2,6 +2,8 @@
 
 ### 3.0.1 (????-??-??)
 
+ * e651f63 - Use assets.packages instead of templating.helper.assets
+ * c0da2ac - Use new way of adding allowed types for symfony >= 2.6
  * 9f3f97c - [Composer] Allow egeloen/json-builder 1.0.*
  * 8f720d0 - Upgrade CKEditor to 4.4.7
 
