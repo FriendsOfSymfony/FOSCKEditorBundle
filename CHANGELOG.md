@@ -2,6 +2,7 @@
 
 ### 3.0.1 (????-??-??)
 
+ * 9f3f97c - [Composer] Allow egeloen/json-builder 1.0.*
  * 8f720d0 - Upgrade CKEditor to 4.4.7
 
 ### 3.0.0 (2014-12-29)
