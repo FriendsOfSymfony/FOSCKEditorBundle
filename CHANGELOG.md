@@ -2,6 +2,7 @@
 
 ### 3.0.1 (????-??-??)
 
+ * 982342e - Move resources merging in a compiler pass
  * 838a249 - [Form][Type] Add BC layer for setDefaultOptions
  * e651f63 - Use assets.packages instead of templating.helper.assets
  * c0da2ac - Use new way of adding allowed types for symfony >= 2.6
