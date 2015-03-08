@@ -2,6 +2,7 @@
 
 ### 3.0.1 (????-??-??)
 
+ * 838a249 - [Form][Type] Add BC layer for setDefaultOptions
  * e651f63 - Use assets.packages instead of templating.helper.assets
  * c0da2ac - Use new way of adding allowed types for symfony >= 2.6
  * 9f3f97c - [Composer] Allow egeloen/json-builder 1.0.*
