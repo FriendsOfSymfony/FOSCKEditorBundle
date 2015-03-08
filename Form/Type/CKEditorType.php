@@ -19,6 +19,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -367,7 +368,7 @@ class CKEditorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(
@@ -404,12 +405,20 @@ class CKEditorType extends AbstractType
         );
 
         if (Kernel::VERSION_ID >= 20600) {
-             foreach ($allowedTypesMap as $option => $allowedTypes) {
-                 $resolver->addAllowedTypes($option, $allowedTypes);
-             }
+            foreach ($allowedTypesMap as $option => $allowedTypes) {
+                $resolver->addAllowedTypes($option, $allowedTypes);
+            }
         } else {
             $resolver->addAllowedTypes($allowedTypesMap);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**
