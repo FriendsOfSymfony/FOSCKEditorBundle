@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 3.0.1 (????-??-??)
+### 3.0.1 (2015-03-08)
 
  * 982342e - Move resources merging in a compiler pass
  * 838a249 - [Form][Type] Add BC layer for setDefaultOptions
