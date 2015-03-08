@@ -34,7 +34,6 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $loader->load($service.'.xml');
         }
 
-        $this->registerResources($container);
         $this->registerConfig($config, $container);
 
         if (!isset($config['enable']) || $config['enable']) {
@@ -42,36 +41,6 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $this->registerPlugins($config, $container);
             $this->registerStylesSet($config, $container);
             $this->registerTemplates($config, $container);
-        }
-    }
-
-    /**
-     * Registers the form resources for the PHP/Twig templating engines.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
-     */
-    private function registerResources(ContainerBuilder $container)
-    {
-        $templatingEngines = $container->getParameter('templating.engines');
-
-        if (in_array('php', $templatingEngines)) {
-            $container->setParameter(
-                'templating.helper.form.resources',
-                array_merge(
-                    array('IvoryCKEditorBundle:Form'),
-                    $container->getParameter('templating.helper.form.resources')
-                )
-            );
-        }
-
-        if (in_array('twig', $templatingEngines)) {
-            $container->setParameter(
-                'twig.form.resources',
-                array_merge(
-                    array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig'),
-                    $container->getParameter('twig.form.resources')
-                )
-            );
         }
     }
 

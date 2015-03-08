@@ -28,20 +28,26 @@ class IvoryCKEditorBundleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\Component\HttpKernel\Bundle\Bundle', $bundle);
     }
 
-    public function testAddAssetHelperCompilerPassOnBuild()
+    public function testCompilerPasses()
     {
-        $containerMock = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('addCompilerPass'))
+        $containerBuilder = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
             ->disableOriginalConstructor()
+            ->setMethods(array('addCompilerPass'))
             ->getMock();
 
-        $containerMock
-            ->expects($this->once())
+        $containerBuilder
+            ->expects($this->at(0))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass'));
+            ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass'))
+            ->will($this->returnSelf());
+
+        $containerBuilder
+            ->expects($this->at(1))
+            ->method('addCompilerPass')
+            ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass'))
+            ->will($this->returnSelf());
 
         $bundle = new IvoryCKEditorBundle();
-
-        $bundle->build($containerMock);
+        $bundle->build($containerBuilder);
     }
 }
