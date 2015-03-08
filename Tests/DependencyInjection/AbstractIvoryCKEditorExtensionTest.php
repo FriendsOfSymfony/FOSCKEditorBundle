@@ -11,6 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
+use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
 use Ivory\CKEditorBundle\Tests\Fixtures\Extension\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -98,27 +99,6 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertSame($this->container->get('ivory_ck_editor.plugin_manager'), $type->getPluginManager());
         $this->assertSame($this->container->get('ivory_ck_editor.styles_set_manager'), $type->getStylesSetManager());
         $this->assertSame($this->container->get('ivory_ck_editor.template_manager'), $type->getTemplateManager());
-    }
-
-    public function testTwigResources()
-    {
-        $this->container->compile();
-
-        $this->assertTrue(
-            in_array(
-                'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
-                $this->container->getParameter('twig.form.resources')
-            )
-        );
-    }
-
-    public function testPhpResources()
-    {
-        $this->container->compile();
-
-        $this->assertTrue(
-            in_array('IvoryCKEditorBundle:Form', $this->container->getParameter('templating.helper.form.resources'))
-        );
     }
 
     public function testDisable()

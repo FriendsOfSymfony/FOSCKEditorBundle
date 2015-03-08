@@ -11,9 +11,10 @@
 
 namespace Ivory\CKEditorBundle;
 
+use Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass;
+use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Ivory\CKEditorBundle\DependencyInjection\Compiler;
 
 /**
  * Ivory CKEditor bundle.
@@ -28,6 +29,8 @@ class IvoryCKEditorBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new Compiler\AssetsHelperCompilerPass());
+        $container
+            ->addCompilerPass(new ResourceCompilerPass())
+            ->addCompilerPass(new AssetsHelperCompilerPass());
     }
 }
