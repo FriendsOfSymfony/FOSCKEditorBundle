@@ -227,7 +227,7 @@ The CKEditor JQuery adapter is by default not loaded even if the `autoload` opti
 the `autoload` flag must be enabled and you must explicitely enable the jquery adapter. You can do it globally:
 
 ``` yaml
-ivory_ckeditor:
+ivory_ck_editor:
     jquery: true
 ```
 
@@ -241,7 +241,7 @@ Additionally, by default, the JQuery adapter used is the [one](/Resources/public
 bundle. If you want to use your own, you can configure it globally:
 
 ``` yaml
-ivory_ckeditor:
+ivory_ck_editor:
     jquery_path: your/own/jquery.js
 ```
 
