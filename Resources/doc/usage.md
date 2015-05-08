@@ -237,6 +237,9 @@ Or, if you just want to enable it for a specific field, you can use:
 $builder->add('field', 'ckeditor', array('jquery' => true));
 ```
 
+We recommend to use JQuery adapter if your app relies on JQuery.
+It allows to wrap CKEditor code in `$(document).ready()`
+
 Additionally, by default, the JQuery adapter used is the [one](/Resources/public/adapters/jquery.js) shipped with the
 bundle. If you want to use your own, you can configure it globally:
 

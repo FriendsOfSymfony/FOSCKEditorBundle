@@ -11,6 +11,10 @@
         <?php endif; ?>
     <?php endif; ?>
     <script type="text/javascript">
+        <?php if ($jquery) : ?>
+            $(function () {
+        <?php endif; ?>
+
         <?php echo $view['ivory_ckeditor']->renderDestroy($id); ?>
 
         <?php foreach ($plugins as $pluginName => $plugin): ?>
@@ -26,5 +30,9 @@
         <?php endforeach; ?>
 
         <?php echo $view['ivory_ckeditor']->renderWidget($id, $config, $inline, $input_sync); ?>
+
+        <?php if ($jquery) : ?>
+            });
+        <?php endif; ?>
     </script>
 <?php endif; ?>

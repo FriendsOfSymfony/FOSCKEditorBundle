@@ -143,6 +143,7 @@ var CKEDITOR_BASEPATH = "base_path";
 <script type="text/javascript" src="js_path"></script>
 <script type="text/javascript" src="jquery_path"></script>
 <script type="text/javascript">
+$(function () {
 if (CKEDITOR.instances["id"]) {
 delete CKEDITOR.instances["id"];
 }
@@ -151,6 +152,7 @@ if (CKEDITOR.stylesSet.get("default") === null) { CKEDITOR.stylesSet.add("defaul
 CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
 var ivory_ckeditor_id = CKEDITOR.inline("id", {"foo":"bar"});
 ivory_ckeditor_id.on('change', function(){ ivory_ckeditor_id.updateElement(); });
+});
 </script>
 
 EOF;
