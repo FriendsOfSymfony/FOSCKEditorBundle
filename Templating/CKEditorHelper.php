@@ -232,7 +232,7 @@ class CKEditorHelper extends Helper
      */
     private function fixConfigFilebrowsers(array $config)
     {
-        $filebrowserKeys = array(
+        $keys = array(
             'Browse',
             'FlashBrowse',
             'ImageBrowse',
@@ -242,27 +242,28 @@ class CKEditorHelper extends Helper
             'ImageUpload',
         );
 
-        foreach ($filebrowserKeys as $filebrowserKey) {
-            $filebrowserHandler = 'filebrowser'.$filebrowserKey.'Handler';
-            $filebrowserUrl = 'filebrowser'.$filebrowserKey.'Url';
-            $filebrowserRoute = 'filebrowser'.$filebrowserKey.'Route';
-            $filebrowserRouteParameters = 'filebrowser'.$filebrowserKey.'RouteParameters';
-            $filebrowserRouteAbsolute = 'filebrowser'.$filebrowserKey.'RouteAbsolute';
+        foreach ($keys as $key) {
+            $fileBrowserKey = 'filebrowser'.$key;
+            $handler = $fileBrowserKey.'Handler';
+            $url = $fileBrowserKey.'Url';
+            $route = $fileBrowserKey.'Route';
+            $routeParameters = $fileBrowserKey.'RouteParameters';
+            $routeAbsolute = $fileBrowserKey.'RouteAbsolute';
 
-            if (isset($config[$filebrowserHandler])) {
-                $config[$filebrowserUrl] = $config[$filebrowserHandler]($this->getRouter());
-            } elseif (isset($config[$filebrowserRoute])) {
-                $config[$filebrowserUrl] = $this->getRouter()->generate(
-                    $config[$filebrowserRoute],
-                    isset($config[$filebrowserRouteParameters]) ? $config[$filebrowserRouteParameters] : array(),
-                    isset($config[$filebrowserRouteAbsolute]) ? $config[$filebrowserRouteAbsolute] : false
+            if (isset($config[$handler])) {
+                $config[$url] = $config[$handler]($this->getRouter());
+            } elseif (isset($config[$route])) {
+                $config[$url] = $this->getRouter()->generate(
+                    $config[$route],
+                    isset($config[$routeParameters]) ? $config[$routeParameters] : array(),
+                    isset($config[$routeAbsolute]) ? $config[$routeAbsolute] : false
                 );
             }
 
-            unset($config[$filebrowserHandler]);
-            unset($config[$filebrowserRoute]);
-            unset($config[$filebrowserRouteParameters]);
-            unset($config[$filebrowserRouteAbsolute]);
+            unset($config[$handler]);
+            unset($config[$route]);
+            unset($config[$routeParameters]);
+            unset($config[$routeAbsolute]);
         }
 
         return $config;
