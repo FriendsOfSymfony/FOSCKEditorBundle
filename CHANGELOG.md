@@ -2,6 +2,7 @@
 
 ### 3.0.2 (????-??-??)
 
+ * 0d8ede1 - [Doc] Update installation
  * afea981 - Update CKEditor to 4.5.2
  * f80cea0 - Updated CKEditor to 4.5.1
  * 29f34a8 - Removed excessive use off long variable names.
