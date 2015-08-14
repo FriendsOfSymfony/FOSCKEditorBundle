@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 3.0.2 (????-??-??)
+
+ * afea981 - Update CKEditor to 4.5.2
+ * f80cea0 - Updated CKEditor to 4.5.1
+ * 29f34a8 - Removed excessive use off long variable names.
+ * 7ee6d18 - [Template] Wrap widget code in $(document).ready() if jquery is enabled
+
 ### 3.0.1 (2015-03-08)
 
  * 982342e - Move resources merging in a compiler pass
