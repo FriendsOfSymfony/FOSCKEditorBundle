@@ -1,7 +1,7 @@
 # Usage
 
 Before starting, you should read the Symfony2 Form documentation which is available
-[here](http://symfony.com/doc/current/book/forms.html). It will give you a better understood for the next parts.
+[here](http://symfony.com/doc/current/book/forms.html). It will give you a better understanding for the next parts.
 
 To resume, the bundle simply registers a new form field type called ``ckeditor``. This type extends the
 [textarea](http://symfony.com/doc/current/reference/forms/types/textarea.html) one.
