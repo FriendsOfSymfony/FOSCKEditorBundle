@@ -6,8 +6,8 @@ php:
     - 5.4
     - 5.5
     - 5.6
+    - 7.0
     - hhvm
-    - hhvm-nightly
 
 env:
     global:
@@ -43,10 +43,12 @@ matrix:
         - php: 5.6
           env: SYMFONY_VERSION=2.6.*
         - php: 5.6
-          env: SYMFONY_VERSION=2.7.*@dev
+          env: SYMFONY_VERSION=2.7.*
+        - php: 5.6
+          env: SYMFONY_VERSION=2.8.*@dev
     allow_failures:
-        - php: hhvm-nightly
-        - env: SYMFONY_VERSION=2.7.*@dev
+        - php: 7.0
+        - env: SYMFONY_VERSION=2.8.*@dev
 
 notifications:
     email: geloen.eric@gmail.com
