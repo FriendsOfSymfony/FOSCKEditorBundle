@@ -322,24 +322,27 @@ class CKEditorType extends AbstractType
             $builder->setAttribute('js_path', $options['js_path']);
             $builder->setAttribute('jquery_path', $options['jquery_path']);
 
+            $configManager = clone $this->configManager;
+            $pluginManager = clone $this->pluginManager;
+            $stylesSetManager = clone $this->stylesSetManager;
+            $templateManager = clone $this->templateManager;
+
             $config = $options['config'];
             if ($options['config_name'] === null) {
-                $name = uniqid('ivory', true);
-
-                $options['config_name'] = $name;
-                $this->configManager->setConfig($name, $config);
+                $options['config_name'] = uniqid('ivory', true);
+                $configManager->setConfig($options['config_name'], $config);
             } else {
-                $this->configManager->mergeConfig($options['config_name'], $config);
+                $configManager->mergeConfig($options['config_name'], $config);
             }
 
-            $this->pluginManager->setPlugins($options['plugins']);
-            $this->stylesSetManager->setStylesSets($options['styles']);
-            $this->templateManager->setTemplates($options['templates']);
+            $pluginManager->setPlugins($options['plugins']);
+            $stylesSetManager->setStylesSets($options['styles']);
+            $templateManager->setTemplates($options['templates']);
 
-            $builder->setAttribute('config', $this->configManager->getConfig($options['config_name']));
-            $builder->setAttribute('plugins', $this->pluginManager->getPlugins());
-            $builder->setAttribute('styles', $this->stylesSetManager->getStylesSets());
-            $builder->setAttribute('templates', $this->templateManager->getTemplates());
+            $builder->setAttribute('config', $configManager->getConfig($options['config_name']));
+            $builder->setAttribute('plugins', $pluginManager->getPlugins());
+            $builder->setAttribute('styles', $stylesSetManager->getStylesSets());
+            $builder->setAttribute('templates', $templateManager->getTemplates());
         }
     }
 
