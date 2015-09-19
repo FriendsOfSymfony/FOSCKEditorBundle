@@ -2,6 +2,8 @@
 
 ### 3.0.2 (????-??-??)
 
+ * d69047f - [Travis] Add PHP 7 + Symfony 2.8.*@dev
+ * 02d8927 - Fix manager services infected by local configs
  * 0d8ede1 - [Doc] Update installation
  * afea981 - Update CKEditor to 4.5.2
  * f80cea0 - Updated CKEditor to 4.5.1
