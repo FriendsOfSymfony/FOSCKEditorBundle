@@ -1,7 +1,8 @@
 # CHANGELOG
 
-### 3.0.2 (????-??-??)
+### 4.0.0 (????-??-??)
 
+ * 6b7eb55 - Add disable auto inline support
  * d69047f - [Travis] Add PHP 7 + Symfony 2.8.*@dev
  * 02d8927 - Fix manager services infected by local configs
  * 0d8ede1 - [Doc] Update installation
