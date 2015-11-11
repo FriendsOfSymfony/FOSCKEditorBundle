@@ -37,6 +37,9 @@ class CKEditorType extends AbstractType
     private $autoload = true;
 
     /** @var boolean */
+    private $autoInline = true;
+
+    /** @var boolean */
     private $inline = false;
 
     /** @var boolean */
@@ -116,6 +119,22 @@ class CKEditorType extends AbstractType
         }
 
         return $this->autoload;
+    }
+
+    /**
+     * Sets/Checks if the widget is auto inlined.
+     *
+     * @param boolean $autoInline TRUE if the widget is auto inlined else FALSE.
+     *
+     * @return boolean TRUE if the widget is auto inlined else FALSE.
+     */
+    public function isAutoInline($autoInline = null)
+    {
+        if ($autoInline !== null) {
+            $this->autoInline = (bool) $autoInline;
+        }
+
+        return $this->autoInline;
     }
 
     /**
@@ -315,6 +334,7 @@ class CKEditorType extends AbstractType
 
         if ($builder->getAttribute('enable')) {
             $builder->setAttribute('autoload', $options['autoload']);
+            $builder->setAttribute('auto_inline', $options['auto_inline']);
             $builder->setAttribute('inline', $options['inline']);
             $builder->setAttribute('jquery', $options['jquery']);
             $builder->setAttribute('input_sync', $options['input_sync']);
@@ -355,6 +375,7 @@ class CKEditorType extends AbstractType
 
         if ($form->getConfig()->getAttribute('enable')) {
             $view->vars['autoload'] = $form->getConfig()->getAttribute('autoload');
+            $view->vars['auto_inline'] = $form->getConfig()->getAttribute('auto_inline');
             $view->vars['inline'] = $form->getConfig()->getAttribute('inline');
             $view->vars['jquery'] = $form->getConfig()->getAttribute('jquery');
             $view->vars['input_sync'] = $form->getConfig()->getAttribute('input_sync');
@@ -377,6 +398,7 @@ class CKEditorType extends AbstractType
             ->setDefaults(array(
                 'enable'      => $this->enable,
                 'autoload'    => $this->autoload,
+                'auto_inline' => $this->autoInline,
                 'inline'      => $this->inline,
                 'jquery'      => $this->jquery,
                 'input_sync'  => $this->inputSync,
@@ -394,6 +416,7 @@ class CKEditorType extends AbstractType
         $allowedTypesMap = array(
             'enable'      => 'bool',
             'autoload'    => 'bool',
+            'auto_inline' => 'bool',
             'inline'      => 'bool',
             'jquery'      => 'bool',
             'input_sync'  => 'bool',

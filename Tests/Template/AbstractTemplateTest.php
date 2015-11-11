@@ -110,6 +110,7 @@ EOF;
     public function testRenderWithFullWidget()
     {
         $context = array(
+            'auto_inline' => false,
             'inline' => true,
             'jquery' => true,
             'input_sync' => true,
@@ -150,6 +151,7 @@ delete CKEDITOR.instances["id"];
 CKEDITOR.plugins.addExternal("foo", "path", "filename");
 if (CKEDITOR.stylesSet.get("default") === null) { CKEDITOR.stylesSet.add("default", [{"name":"Blue Title","element":"h2","styles":{"color":"Blue"}}]); }
 CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
+CKEDITOR.disableAutoInline = true;
 var ivory_ckeditor_id = CKEDITOR.inline("id", {"foo":"bar"});
 ivory_ckeditor_id.on('change', function(){ ivory_ckeditor_id.updateElement(); });
 });
@@ -208,6 +210,7 @@ EOF;
             'value'       => '<p>value</p>',
             'enable'      => true,
             'autoload'    => true,
+            'auto_inline' => true,
             'inline'      => false,
             'jquery'      => false,
             'input_sync'  => false,

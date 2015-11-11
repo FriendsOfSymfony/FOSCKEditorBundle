@@ -29,7 +29,7 @@
             <?php echo $view['ivory_ckeditor']->renderTemplate($templateName, $template); ?>
         <?php endforeach; ?>
 
-        <?php echo $view['ivory_ckeditor']->renderWidget($id, $config, $inline, $input_sync); ?>
+        <?php echo $view['ivory_ckeditor']->renderWidget($id, $config, array('auto_inline' => $auto_inline, 'inline' => $inline, 'input_sync' => $input_sync)); ?>
 
         <?php if ($jquery) : ?>
             });

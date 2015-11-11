@@ -221,10 +221,28 @@ Or, if you just want to enable it for a specific field, you can use:
 $builder->add('field', 'ckeditor', array('inline' => true));
 ```
 
+## Disable auto inline
+
+By default, CKEditor enables the auto inline feature meaning that any `contenteditable` attribute sets to `true` will
+be converted to ckeditor instance automatically. If you want to disable it, you can do it globally:
+
+``` yaml
+ivory_ck_editor:
+    auto_inline: false
+```
+
+Or, if you just want to disable it at runtime, you can use:
+
+``` php
+$builder->add('field', 'ckeditor', array('auto_inline' => false));
+```
+
+Be aware this option will only disable the CKEditor auto inline feature not the browser one if it supports it.
+
 ## JQuery adapter
 
 The CKEditor JQuery adapter is by default not loaded even if the `autoload` option is enabled. In order to load it,
-the `autoload` flag must be enabled and you must explicitely enable the jquery adapter. You can do it globally:
+the `autoload` flag must be enabled and you must explicitly enable the jquery adapter. You can do it globally:
 
 ``` yaml
 ivory_ck_editor:

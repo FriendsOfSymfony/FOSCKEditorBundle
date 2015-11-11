@@ -67,14 +67,18 @@ class CKEditorHelper extends Helper
     /**
      * Renders the widget.
      *
-     * @param string  $id        The identifier.
-     * @param array   $config    The config.
-     * @param boolean $inline    TRUE if the widget is inlined else FALSE.
-     * @param boolean $inputSync TRUE if the input is synchronized with the CKEditor instance else FALSE.
+     * @param string $id      The identifier.
+     * @param array  $config  The config.
+     * @param array  $options The options.
+     *
+     * The available options are:
+     *  - auto_inline: boolean
+     *  - inline: boolean
+     *  - input_sync: boolean
      *
      * @return string The rendered widget.
      */
-    public function renderWidget($id, array $config, $inline = false, $inputSync = false)
+    public function renderWidget($id, array $config, array $options = array())
     {
         $config = $this->fixConfigLanguage($config);
         $config = $this->fixConfigContentsCss($config);
@@ -86,21 +90,25 @@ class CKEditorHelper extends Helper
 
         $this->fixConfigEscapedValues($config);
 
-        $replace = sprintf(
+        $autoInline = isset($options['auto_inline']) && !$options['auto_inline']
+            ? 'CKEDITOR.disableAutoInline = true;'.PHP_EOL
+            : null;
+
+        $widget = sprintf(
             'CKEDITOR.%s("%s", %s);',
-            $inline ? 'inline' : 'replace',
+            isset($options['inline']) && $options['inline'] ? 'inline' : 'replace',
             $id,
             $this->fixConfigConstants($this->jsonBuilder->build())
         );
 
-        if ($inputSync) {
+        if (isset($options['input_sync']) && $options['input_sync']) {
             $variable = 'ivory_ckeditor_'.$id;
-            $replace = 'var '.$variable.' = '.$replace.PHP_EOL;
+            $widget = 'var '.$variable.' = '.$widget.PHP_EOL;
 
-            return $replace.$variable.'.on(\'change\', function() { '.$variable.'.updateElement(); });';
+            return $autoInline.$widget.$variable.'.on(\'change\', function() { '.$variable.'.updateElement(); });';
         }
 
-        return $replace;
+        return $autoInline.$widget;
     }
 
     /**

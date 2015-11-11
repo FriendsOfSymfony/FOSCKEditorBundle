@@ -312,11 +312,24 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testRenderWidgetWithoutAutoInline()
+    {
+        $expected = <<<EOF
+CKEDITOR.disableAutoInline = true;
+CKEDITOR.replace("foo", []);
+EOF;
+
+        $this->assertSame(
+            $expected,
+            $this->helper->renderWidget('foo', array(), array('auto_inline' => false))
+        );
+    }
+
     public function testRenderWidgetWithInline()
     {
         $this->assertSame(
             'CKEDITOR.inline("foo", []);',
-            $this->helper->renderWidget('foo', array(), true)
+            $this->helper->renderWidget('foo', array(), array('inline' => true))
         );
     }
 
@@ -327,7 +340,7 @@ var ivory_ckeditor_foo = CKEDITOR.replace("foo", []);
 ivory_ckeditor_foo.on('change', function() { ivory_ckeditor_foo.updateElement(); });
 EOF;
 
-        $this->assertSame($expected, $this->helper->renderWidget('foo', array(), false, true));
+        $this->assertSame($expected, $this->helper->renderWidget('foo', array(), array('input_sync' => true)));
     }
 
     public function testRenderDestroy()

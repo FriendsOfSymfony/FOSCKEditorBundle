@@ -89,6 +89,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertInstanceOf('Ivory\CKEditorBundle\Form\Type\CKEditorType', $type);
         $this->assertTrue($type->isEnable());
         $this->assertTrue($type->isAutoload());
+        $this->assertTrue($type->isAutoInline());
         $this->assertFalse($type->isInline());
         $this->assertFalse($type->useJquery());
         $this->assertFalse($type->isInputSync());
@@ -115,6 +116,14 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->compile();
 
         $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isAutoload());
+    }
+
+    public function testAutoInline()
+    {
+        $this->loadConfiguration($this->container, 'auto_inline');
+        $this->container->compile();
+
+        $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isAutoInline());
     }
 
     public function testInline()

@@ -78,16 +78,15 @@ class CKEditorExtension extends \Twig_Extension
     /**
      * Renders the widget.
      *
-     * @param string  $id        The identifier.
-     * @param array   $config    The config.
-     * @param boolean $inline    TRUE if the widget is inlined else FALSE.
-     * @param boolean $inputSync TRUE if the input is synchronized with the CKEditor instance else FALSE.
+     * @param string $id      The identifier.
+     * @param array  $config  The config.
+     * @param array  $options The options.
      *
      * @return string The rendered widget.
      */
-    public function renderWidget($id, array $config, $inline = false, $inputSync = false)
+    public function renderWidget($id, array $config, array $options = array())
     {
-        return $this->helper->renderWidget($id, $config, $inline, $inputSync);
+        return $this->helper->renderWidget($id, $config, $options);
     }
 
     /**

@@ -78,6 +78,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->ckEditorType->isEnable());
         $this->assertTrue($this->ckEditorType->isAutoload());
+        $this->assertTrue($this->ckEditorType->isAutoInline());
         $this->assertFalse($this->ckEditorType->isInline());
         $this->assertFalse($this->ckEditorType->useJquery());
         $this->assertFalse($this->ckEditorType->isInputSync());
@@ -146,6 +147,35 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('autoload', $view->vars);
         $this->assertFalse($view->vars['autoload']);
+    }
+
+    public function testAutoInlineWithDefaultValue()
+    {
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('auto_inline', $view->vars);
+        $this->assertTrue($view->vars['auto_inline']);
+    }
+
+    public function testAutoInlineWithConfiguredValue()
+    {
+        $this->ckEditorType->isAutoInline(false);
+
+        $form = $this->factory->create('ckeditor');
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('auto_inline', $view->vars);
+        $this->assertFalse($view->vars['auto_inline']);
+    }
+
+    public function testAutoInlineWithExplicitValue()
+    {
+        $form = $this->factory->create('ckeditor', null, array('auto_inline' => false));
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('auto_inline', $view->vars);
+        $this->assertFalse($view->vars['auto_inline']);
     }
 
     public function testInlineWithDefaultValue()

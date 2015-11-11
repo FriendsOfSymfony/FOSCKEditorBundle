@@ -1,5 +1,22 @@
 # UPGRADE
 
+### 3.0 to 4.0
+
+The rendering of the CKEditor widget for the PHP and twig engine have been updated. Instead of taking each option as
+argument, it now takes an array options allowing to more easy add new features without breaking BC. If you directly use
+the `ckeditor_widget` twig function or the `$view['ckeditor']->renderWidget` php function, then you will not be
+affected by the BC break. For the others, you should know use:
+
+```
+{{ ckeditor_widget(id, config, {inline: inline, input_sync: input_sync} }}
+```
+
+or
+
+```
+<?php echo $view['ckeditor']->renderWidget($id, $config, array('inline' => $inline, 'input_sync' => $input_sync)); ?>
+```
+
 ### 2.5 to 3.0
 
 All protected properties and methods have been updated to private except for entry points. This is mostly motivated for

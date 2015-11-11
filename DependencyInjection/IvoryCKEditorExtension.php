@@ -58,6 +58,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $formType->addMethodCall('isEnable', array($config['enable']));
         }
 
+        if (isset($config['auto_inline'])) {
+            $formType->addMethodCall('isAutoInline', array($config['auto_inline']));
+        }
+
         if (isset($config['inline'])) {
             $formType->addMethodCall('isInline', array($config['inline']));
         }
