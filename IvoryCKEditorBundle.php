@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle;
 
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass;
+use Ivory\CKEditorBundle\DependencyInjection\Compiler\FormTypeCompilerPass;
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -31,6 +32,7 @@ class IvoryCKEditorBundle extends Bundle
     {
         $container
             ->addCompilerPass(new ResourceCompilerPass())
-            ->addCompilerPass(new AssetsHelperCompilerPass());
+            ->addCompilerPass(new AssetsHelperCompilerPass())
+            ->addCompilerPass(new FormTypeCompilerPass());
     }
 }

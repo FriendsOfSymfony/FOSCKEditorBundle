@@ -452,6 +452,12 @@ class CKEditorType extends AbstractType
      */
     public function getParent()
     {
+        // Prefer the FQCN if the getBlockPrefix method exists on the parent method
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            return 'Symfony\Component\Form\Extension\Core\Type\TextareaType';
+        }
+
+        // Return the legacy shortname; drop this when Symfony <2.8 support is removed
         return 'textarea';
     }
 
@@ -459,6 +465,14 @@ class CKEditorType extends AbstractType
      * {@inheritdoc}
      */
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
     {
         return 'ckeditor';
     }

@@ -31,6 +31,11 @@ $builder->add('field', 'ckeditor', array(
 ));
 ```
 
+**NOTE** As of Symfony 2.8, the second parameter for ``$builder->add()`` accepts the fully qualified class name of the
+form type and is required in Symfony 3.0. In these Symfony versions, you should replace the ``ckeditor`` parameter value
+with ``Ivory\CKEditorBundle\Form\Type\CKEditorType`` or its constant ``CKEditorType::class`` if your on PHP 5.5 or 
+upper.
+
 A toolbar is an array of toolbars (strips), each one being also an array, containing a list of UI items. To do a
 carriage return, you just have to add the char ``/`` between strips.
 

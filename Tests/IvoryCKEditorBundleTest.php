@@ -47,6 +47,12 @@ class IvoryCKEditorBundleTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass'))
             ->will($this->returnSelf());
 
+        $containerBuilder
+            ->expects($this->at(2))
+            ->method('addCompilerPass')
+            ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\FormTypeCompilerPass'))
+            ->will($this->returnSelf());
+
         $bundle = new IvoryCKEditorBundle();
         $bundle->build($containerBuilder);
     }

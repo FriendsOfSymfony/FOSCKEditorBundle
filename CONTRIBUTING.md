@@ -50,6 +50,14 @@ To run the tests, use the following command:
 $ bin/phpunit
 ```
 
+As your patch should also be compatible with Symfony 3, the bundle integrates the `symfony/phpunit-bridge` component
+in order to detect if you're not using Symfony deprecated features. To detect them, configure the bridge in strict
+mode with the following command:
+
+``` bash
+$ SYMFONY_DEPRECATIONS_HELPER=strict bin/phpunit
+```
+
 Then, when you have fixed the bug, tested it and documented it, you can commit and push it with the following commands:
 
 ``` bash

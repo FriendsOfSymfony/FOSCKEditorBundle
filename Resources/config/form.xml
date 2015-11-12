@@ -10,7 +10,7 @@
             <argument type="service" id="ivory_ck_editor.plugin_manager" />
             <argument type="service" id="ivory_ck_editor.styles_set_manager" />
             <argument type="service" id="ivory_ck_editor.template_manager" />
-            <tag name="form.type" alias="ckeditor" />
+            <tag name="form.type" />
         </service>
 
         <service id="ivory_ck_editor.config_manager" class="Ivory\CKEditorBundle\Model\ConfigManager" />
