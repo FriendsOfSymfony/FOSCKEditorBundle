@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 4.0.0 (????-??-??)
+### 4.0.0 (2015-12-06)
 
  * 147166c - Update CKEditor to 4.5.5
  * 9e4ae7e - Make code base compatible with Symfony3
