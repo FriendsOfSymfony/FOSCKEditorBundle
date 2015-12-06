@@ -2,6 +2,8 @@
 
 ### 4.0.0 (????-??-??)
 
+ * 147166c - Update CKEditor to 4.5.5
+ * 9e4ae7e - Make code base compatible with Symfony3
  * 6b7eb55 - Add disable auto inline support
  * d69047f - [Travis] Add PHP 7 + Symfony 2.8.*@dev
  * 02d8927 - Fix manager services infected by local configs
