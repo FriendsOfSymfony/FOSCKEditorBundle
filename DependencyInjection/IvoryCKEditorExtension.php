@@ -16,6 +16,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Ivory CKEditor extension.
@@ -41,6 +42,12 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $this->registerPlugins($config, $container);
             $this->registerStylesSet($config, $container);
             $this->registerTemplates($config, $container);
+        }
+
+        if (Kernel::VERSION_ID < 30000) {
+            $container->getDefinition('ivory_ck_editor.form.type')
+                ->clearTag('form.type')
+                ->addTag('form.type', array('alias' => 'ckeditor'));
         }
     }
 

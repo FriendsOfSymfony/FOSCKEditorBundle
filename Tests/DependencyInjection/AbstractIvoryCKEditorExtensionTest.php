@@ -15,6 +15,7 @@ use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
 use Ivory\CKEditorBundle\Tests\Fixtures\Extension\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Abstract Ivory CKEditor extension test.
@@ -80,7 +81,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
      */
     abstract protected function loadConfiguration(ContainerBuilder $container, $configuration);
 
-    public function testDefaultFormType()
+    public function testFormType()
     {
         $this->container->compile();
 
@@ -100,6 +101,19 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertSame($this->container->get('ivory_ck_editor.plugin_manager'), $type->getPluginManager());
         $this->assertSame($this->container->get('ivory_ck_editor.styles_set_manager'), $type->getStylesSetManager());
         $this->assertSame($this->container->get('ivory_ck_editor.template_manager'), $type->getTemplateManager());
+    }
+
+    public function testFormTag()
+    {
+        $this->container->compile();
+
+        $tag = $this->container->getDefinition('ivory_ck_editor.form.type')->getTag('form.type');
+
+        if (Kernel::VERSION_ID < 30000) {
+            $this->assertSame(array(array('alias' => 'ckeditor')), $tag);
+        } else {
+            $this->assertSame(array(array()), $tag);
+        }
     }
 
     public function testDisable()
