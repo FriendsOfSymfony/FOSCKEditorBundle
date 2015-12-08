@@ -16,11 +16,6 @@ env:
         - SYMFONY_VERSION=2.3.*
         - SYMFONY_PHPUNIT_BRIDGE_VERSION=2.7.*
 
-cache:
-    directories:
-        - vendor
-        - $HOME/.composer/cache
-
 install:
     - composer self-update
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
