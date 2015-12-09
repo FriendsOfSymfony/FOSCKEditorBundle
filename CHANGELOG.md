@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 4.0.1 (????-??-??)
+
+ * bff1d04 - Fix form type tag BC layer
+ 
 ### 4.0.0 (2015-12-06)
 
  * 147166c - Update CKEditor to 4.5.5
