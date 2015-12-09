@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 4.0.1 (????-??-??)
+### 4.0.1 (2015-12-09)
 
  * bff1d04 - Fix form type tag BC layer
  
