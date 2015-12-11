@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 4.0.2 (????-??-??)
+
+ * 8ce6f81 - Update CKEditor to 4.5.6
+ * c65bfa1 - [Templating] Make Asset/Templating component optional
+   
 ### 4.0.1 (2015-12-09)
 
  * bff1d04 - Fix form type tag BC layer
