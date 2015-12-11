@@ -49,7 +49,7 @@ class CKEditorHelper extends Helper
      */
     public function renderBasePath($basePath)
     {
-        return $this->fixPath($this->getAssetsHelper()->getUrl($basePath));
+        return $this->fixPath($this->fixUrl($basePath));
     }
 
     /**
@@ -61,7 +61,7 @@ class CKEditorHelper extends Helper
      */
     public function renderJsPath($jsPath)
     {
-        return $this->getAssetsHelper()->getUrl($jsPath);
+        return $this->fixUrl($jsPath);
     }
 
     /**
@@ -136,7 +136,7 @@ class CKEditorHelper extends Helper
         return sprintf(
             'CKEDITOR.plugins.addExternal("%s", "%s", "%s");',
             $name,
-            $this->fixPath($this->getAssetsHelper()->getUrl($plugin['path'])),
+            $this->fixPath($this->fixUrl($plugin['path'])),
             $plugin['filename']
         );
     }
@@ -174,9 +174,7 @@ class CKEditorHelper extends Helper
     public function renderTemplate($name, array $template)
     {
         if (isset($template['imagesPath'])) {
-            $template['imagesPath'] = $this->fixPath(
-                $this->getAssetsHelper()->getUrl($template['imagesPath'])
-            );
+            $template['imagesPath'] = $this->fixPath($this->fixUrl($template['imagesPath']));
         }
 
         $this->jsonBuilder
@@ -224,7 +222,7 @@ class CKEditorHelper extends Helper
 
             $config['contentsCss'] = array();
             foreach ($cssContents as $cssContent) {
-                $config['contentsCss'][] = $this->fixPath($this->getAssetsHelper()->getUrl($cssContent));
+                $config['contentsCss'][] = $this->fixPath($this->fixUrl($cssContent));
             }
         }
 
@@ -331,13 +329,31 @@ class CKEditorHelper extends Helper
     }
 
     /**
+     * Fixes an url.
+     *
+     * @param string $url The url.
+     *
+     * @return string The fixed url.
+     */
+    private function fixUrl($url)
+    {
+        $assetsHelper = $this->getAssetsHelper();
+
+        if ($assetsHelper !== null) {
+            $url = $assetsHelper->getUrl($url);
+        }
+
+        return $url;
+    }
+
+    /**
      * Gets the assets helper.
      *
-     * @return \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper The assets helper.
+     * @return \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|null The assets helper.
      */
     private function getAssetsHelper()
     {
-        return $this->container->get('assets.packages');
+        return $this->container->get('assets.packages', ContainerInterface::NULL_ON_INVALID_REFERENCE);
     }
 
     /**
