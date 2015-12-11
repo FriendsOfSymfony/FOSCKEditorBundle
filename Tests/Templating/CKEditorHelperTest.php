@@ -59,7 +59,7 @@ class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValueMap(array(
                 array(
                     'assets.packages',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    ContainerInterface::NULL_ON_INVALID_REFERENCE,
                     $this->assetsHelperMock,
                 ),
                 array(

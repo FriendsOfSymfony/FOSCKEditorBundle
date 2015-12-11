@@ -12,7 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Assets helper compiler pass test.
@@ -21,18 +21,15 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
-    private $containerBuilderMock;
+    /** @var \Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass */
+    private $assetsHelperCompilerPass;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->containerBuilderMock = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('hasDefinition', 'setAlias'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->assetsHelperCompilerPass = new AssetsHelperCompilerPass();
     }
 
     /**
@@ -43,63 +40,73 @@ class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
         unset($this->containerBuilderMock);
     }
 
-    public function testAssetsPackagesExists()
+    public function testAssetsPackagesAliasWithTemplatingHelperAssets()
     {
-        $this->containerBuilderMock
+        if (Kernel::VERSION_ID >= 27000) {
+            $this->markTestSkipped();
+        }
+
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->setMethods(array('has', 'setAlias'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container
             ->expects($this->once())
-            ->method('hasDefinition')
-            ->with('assets.packages')
+            ->method('has')
+            ->with($this->identicalTo($legacy = 'templating.helper.assets'))
             ->will($this->returnValue(true));
 
-        $compilerPass = new AssetsHelperCompilerPass();
-
-        $compilerPass->process($this->containerBuilderMock);
-    }
-
-    public function testAssetsPackagesNotExists()
-    {
-        $this->containerBuilderMock
-            ->expects($this->at(0))
-            ->method('hasDefinition')
-            ->with('assets.packages')
-            ->will($this->returnValue(false));
-
-        $this->containerBuilderMock
-            ->expects($this->at(1))
-            ->method('hasDefinition')
-            ->with('templating.helper.assets')
-            ->will($this->returnValue(true));
-
-        $this->containerBuilderMock
+        $container
             ->expects($this->once())
             ->method('setAlias')
-            ->with($this->equalTo('assets.packages'), $this->equalTo('templating.helper.assets'));
+            ->with(
+                $this->identicalTo('assets.packages'),
+                $this->identicalTo($legacy)
+            );
 
-        $compilerPass = new AssetsHelperCompilerPass();
-
-        $compilerPass->process($this->containerBuilderMock);
+        $this->assetsHelperCompilerPass->process($container);
     }
 
-    /**
-     * @expectedException \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @expectedExceptionMessage You have requested a non-existent service "templating.helper.assets".
-     */
-    public function testMissingService()
+    public function testAssetsPackagesAliasWithoutTemplatingHelperAssets()
     {
-        $this->containerBuilderMock
-            ->expects($this->at(0))
-            ->method('hasDefinition')
-            ->with('assets.packages')
+        if (Kernel::VERSION_ID >= 27000) {
+            $this->markTestSkipped();
+        }
+
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->setMethods(array('has', 'setAlias'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container
+            ->expects($this->once())
+            ->method('has')
+            ->with($this->identicalTo($legacy = 'templating.helper.assets'))
             ->will($this->returnValue(false));
 
-        $this->containerBuilderMock
-            ->expects($this->at(1))
-            ->method('hasDefinition')
-            ->with('templating.helper.assets')
-            ->will($this->returnValue(false));
+        $container
+            ->expects($this->never())
+            ->method('setAlias');
 
-        $compilerPass = new AssetsHelperCompilerPass();
+        $this->assetsHelperCompilerPass->process($container);
+    }
 
-        $compilerPass->process($this->containerBuilderMock);
+    public function testAssetsPackagesAliasWithAssetsPackage()
+    {
+        if (Kernel::VERSION_ID < 27000) {
+            $this->markTestSkipped();
+        }
+
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->setMethods(array('setAlias'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container
+            ->expects($this->never())
+            ->method('setAlias');
+
+        $this->assetsHelperCompilerPass->process($container);
     }
 }
