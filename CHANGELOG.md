@@ -2,6 +2,7 @@
 
 ### 4.0.2 (????-??-??)
 
+ * 97c60e0 - [Template] Introduce ckeditor_widget_extra block
  * 39fd4b8 - [Configuration] Don't normalize plugins/stylesSets/templates names
  * 0e618f6 - [AssetsHelper] Fix BC layer
  * 8ce6f81 - Update CKEditor to 4.5.6
