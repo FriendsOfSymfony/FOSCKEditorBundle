@@ -266,7 +266,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->loadConfiguration($this->container, 'plugins');
         $this->container->compile();
 
-        $expected = array('wordcount' => array(
+        $expected = array('plugin-name' => array(
             'path'     => '/my/path',
             'filename' => 'plugin.js',
         ));
@@ -280,7 +280,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->compile();
 
         $expected = array(
-            'default' => array(
+            'styles-set-name' => array(
                 array(
                     'name'    => 'Blue Title',
                     'element' => 'h2',
@@ -314,7 +314,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->compile();
 
         $expected = array(
-            'default' => array(
+            'template-name' => array(
                 'imagesPath' => '/my/path',
                 'templates'  => array(
                     array(

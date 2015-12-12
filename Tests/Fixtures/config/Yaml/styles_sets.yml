@@ -1,6 +1,6 @@
 ivory_ck_editor:
     styles:
-        default:
+        styles-set-name:
             -
                 name: "Blue Title"
                 element: "h2"

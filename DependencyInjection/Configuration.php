@@ -58,8 +58,10 @@ class Configuration implements ConfigurationInterface
     private function createConfigsNode()
     {
         return $this->createNode('configs')
+            ->normalizeKeys(false)
             ->useAttributeAsKey('name')
             ->prototype('array')
+                ->normalizeKeys(false)
                 ->useAttributeAsKey('name')
                 ->prototype('variable')->end()
             ->end();
@@ -73,6 +75,7 @@ class Configuration implements ConfigurationInterface
     private function createPluginsNode()
     {
         return $this->createNode('plugins')
+            ->normalizeKeys(false)
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
@@ -90,6 +93,7 @@ class Configuration implements ConfigurationInterface
     private function createStylesNode()
     {
         return $this->createNode('styles')
+            ->normalizeKeys(false)
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->prototype('array')
@@ -121,6 +125,7 @@ class Configuration implements ConfigurationInterface
     private function createTemplatesNode()
     {
         return $this->createNode('templates')
+            ->normalizeKeys(false)
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()

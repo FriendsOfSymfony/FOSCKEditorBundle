@@ -1,5 +1,5 @@
 ivory_ck_editor:
     plugins:
-        wordcount:
+        plugin-name:
             path:     "/my/path"
             filename: "plugin.js"

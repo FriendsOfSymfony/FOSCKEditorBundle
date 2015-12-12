@@ -1,6 +1,6 @@
 ivory_ck_editor:
     templates:
-        default:
+        template-name:
             imagesPath: "/my/path"
             templates:
                 -
