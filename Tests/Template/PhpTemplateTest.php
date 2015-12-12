@@ -28,6 +28,9 @@ class PhpTemplateTest extends AbstractTemplateTest
     /** @var \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper|\PHPUnit_Framework_MockObject_MockObject */
     private $formHelperMock;
 
+    /** @var \Symfony\Component\Templating\Helper\SlotsHelper|\PHPUnit_Framework_MockObject_MockObject */
+    private $slotsHelperMock;
+
     /**
      * {@inheritdoc}
      */
@@ -39,11 +42,16 @@ class PhpTemplateTest extends AbstractTemplateTest
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->slotsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\SlotsHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->phpEngine = new PhpEngine(
             new TemplateNameParser(),
             new FilesystemLoader(array(__DIR__.'/../../Resources/views/Form/%name%')),
             array(
-                'form' => $this->formHelperMock,
+                'form'  => $this->formHelperMock,
+                'slots' => $this->slotsHelperMock,
                 $this->helper,
             )
         );
