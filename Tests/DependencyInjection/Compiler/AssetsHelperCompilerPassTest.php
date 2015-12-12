@@ -42,7 +42,7 @@ class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
 
     public function testAssetsPackagesAliasWithTemplatingHelperAssets()
     {
-        if (Kernel::VERSION_ID >= 27000) {
+        if (Kernel::VERSION_ID >= 20700) {
             $this->markTestSkipped();
         }
 
@@ -70,7 +70,7 @@ class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
 
     public function testAssetsPackagesAliasWithoutTemplatingHelperAssets()
     {
-        if (Kernel::VERSION_ID >= 27000) {
+        if (Kernel::VERSION_ID >= 20700) {
             $this->markTestSkipped();
         }
 
@@ -94,7 +94,7 @@ class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
 
     public function testAssetsPackagesAliasWithAssetsPackage()
     {
-        if (Kernel::VERSION_ID < 27000) {
+        if (Kernel::VERSION_ID < 20700) {
             $this->markTestSkipped();
         }
 

@@ -27,7 +27,7 @@ class AssetsHelperCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (Kernel::VERSION_ID < 27000 && $container->has('templating.helper.assets')) {
+        if (Kernel::VERSION_ID < 20700 && $container->has('templating.helper.assets')) {
             $container->setAlias('assets.packages', 'templating.helper.assets');
         }
     }
