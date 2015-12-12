@@ -2,6 +2,7 @@
 
 ### 4.0.2 (????-??-??)
 
+ * 39fd4b8 - [Configuration] Don't normalize plugins/stylesSets/templates names
  * 0e618f6 - [AssetsHelper] Fix BC layer
  * 8ce6f81 - Update CKEditor to 4.5.6
  * c65bfa1 - [Templating] Make Asset/Templating component optional
