@@ -43,12 +43,18 @@ class ResourceCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         $containerBuilder = $this->createContainerBuilderMock();
         $containerBuilder
-            ->expects($this->any())
-            ->method('getParameter')
+            ->expects($this->exactly(2))
+            ->method('hasParameter')
             ->will($this->returnValueMap(array(
-                array('templating.engines', array('twig')),
-                array($parameter = 'twig.form.resources', array($template = 'foo')),
+                array('templating.helper.form.resources', false),
+                array($parameter = 'twig.form.resources', true),
             )));
+
+        $containerBuilder
+            ->expects($this->once())
+            ->method('getParameter')
+            ->with($this->identicalTo($parameter))
+            ->will($this->returnValue(array($template = 'layout.html.twig')));
 
         $containerBuilder
             ->expects($this->once())
@@ -65,12 +71,18 @@ class ResourceCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         $containerBuilder = $this->createContainerBuilderMock();
         $containerBuilder
-            ->expects($this->any())
-            ->method('getParameter')
+            ->expects($this->exactly(2))
+            ->method('hasParameter')
             ->will($this->returnValueMap(array(
-                array('templating.engines', array('php')),
-                array($parameter = 'templating.helper.form.resources', array($template = 'foo')),
+                array($parameter = 'templating.helper.form.resources', true),
+                array('twig.form.resources', false),
             )));
+
+        $containerBuilder
+            ->expects($this->once())
+            ->method('getParameter')
+            ->with($this->identicalTo($parameter))
+            ->will($this->returnValue(array($template = 'layout.html.php')));
 
         $containerBuilder
             ->expects($this->once())
@@ -92,7 +104,7 @@ class ResourceCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
             ->disableOriginalConstructor()
-            ->setMethods(array('getParameter', 'setParameter'))
+            ->setMethods(array('hasParameter', 'getParameter', 'setParameter'))
             ->getMock();
     }
 }

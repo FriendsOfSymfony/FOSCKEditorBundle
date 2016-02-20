@@ -11,6 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
+use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
@@ -52,7 +53,7 @@ class PhpTemplateTest extends AbstractTemplateTest
             array(
                 'form'  => $this->formHelperMock,
                 'slots' => $this->slotsHelperMock,
-                $this->helper,
+                new CKEditorHelper($this->renderer),
             )
         );
     }

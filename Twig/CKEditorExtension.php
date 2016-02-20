@@ -11,26 +11,27 @@
 
 namespace Ivory\CKEditorBundle\Twig;
 
+use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 
 /**
- * CKEditorExtension
+ * CKEditor Twig extension.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorExtension extends \Twig_Extension
+class CKEditorExtension extends \Twig_Extension implements CKEditorRendererInterface
 {
-    /** @var \Ivory\CKEditorBundle\Templating\CKEditorHelper */
-    private $helper;
+    /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface */
+    private $renderer;
 
     /**
-     * Creates a CKEditor extension.
+     * Creates a CKEditor Twig extension.
      *
-     * @param \Ivory\CKEditorBundle\Templating\CKEditorHelper $helper The CKEditor helper.
+     * @param \Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface $renderer The CKEditor renderer.
      */
-    public function __construct(CKEditorHelper $helper)
+    public function __construct(CKEditorRendererInterface $renderer)
     {
-        $this->helper = $helper;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -52,92 +53,59 @@ class CKEditorExtension extends \Twig_Extension
     }
 
     /**
-     * Renders the base path.
-     *
-     * @param string $basePath The base path.
-     *
-     * @return string The rendered base path.
+     * {@inheritdoc}
      */
     public function renderBasePath($basePath)
     {
-        return $this->helper->renderBasePath($basePath);
+        return $this->renderer->renderBasePath($basePath);
     }
 
     /**
-     * Renders the js path.
-     *
-     * @param string $jsPath The js path.
-     *
-     * @return string The rendered js path.
+     * {@inheritdoc}
      */
     public function renderJsPath($jsPath)
     {
-        return $this->helper->renderJsPath($jsPath);
+        return $this->renderer->renderJsPath($jsPath);
     }
 
     /**
-     * Renders the widget.
-     *
-     * @param string $id      The identifier.
-     * @param array  $config  The config.
-     * @param array  $options The options.
-     *
-     * @return string The rendered widget.
+     * {@inheritdoc}
      */
     public function renderWidget($id, array $config, array $options = array())
     {
-        return $this->helper->renderWidget($id, $config, $options);
+        return $this->renderer->renderWidget($id, $config, $options);
     }
 
     /**
-     * Renders the destroy.
-     *
-     * @param string $id The identifier.
-     *
-     * @return string The rendered destroy.
+     * {@inheritdoc}
      */
     public function renderDestroy($id)
     {
-        return $this->helper->renderDestroy($id);
+        return $this->renderer->renderDestroy($id);
     }
 
     /**
-     * Renders a plugin.
-     *
-     * @param string $name   The name.
-     * @param array  $plugin The plugin.
-     *
-     * @return string The rendered plugin.
+     * {@inheritdoc}
      */
     public function renderPlugin($name, array $plugin)
     {
-        return $this->helper->renderPlugin($name, $plugin);
+        return $this->renderer->renderPlugin($name, $plugin);
     }
 
     /**
-     * Renders a styles set.
-     *
-     * @param string $name      The name
-     * @param array  $stylesSet The style set.
-     *
-     * @return string The rendered style set.
+     * {@inheritdoc}
      */
     public function renderStylesSet($name, array $stylesSet)
     {
-        return $this->helper->renderStylesSet($name, $stylesSet);
+        return $this->renderer->renderStylesSet($name, $stylesSet);
     }
 
     /**
-     * Renders a template.
-     *
-     * @param string $name     The template name.
-     * @param array  $template The template.
-     *
-     * @return string The rendered template.
+     * {@inheritdoc}
      */
     public function renderTemplate($name, array $template)
     {
-        return $this->helper->renderTemplate($name, $template);
+        return $this->renderer->renderTemplate($name, $template);
     }
 
     /**
@@ -145,6 +113,6 @@ class CKEditorExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return $this->helper->getName();
+        return 'ivory_ckeditor';
     }
 }

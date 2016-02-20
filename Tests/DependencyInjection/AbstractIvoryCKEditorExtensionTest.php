@@ -11,7 +11,6 @@
 
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
 use Ivory\CKEditorBundle\Tests\Fixtures\Extension\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Kernel;
  * Assets helper compiler pass test.
  *
  * @author Adam Misiorny <adam.misiorny@gmail.com>
+ * @author GeLo <geloen.eric@gmail.com>
  */
 class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
@@ -46,14 +47,10 @@ class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped();
         }
 
-        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('has', 'setAlias'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $container = $this->createContainerBuilderMock();
         $container
             ->expects($this->once())
-            ->method('has')
+            ->method('hasDefinition')
             ->with($this->identicalTo($legacy = 'templating.helper.assets'))
             ->will($this->returnValue(true));
 
@@ -74,14 +71,10 @@ class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped();
         }
 
-        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('has', 'setAlias'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $container = $this->createContainerBuilderMock();
         $container
             ->expects($this->once())
-            ->method('has')
+            ->method('hasDefinition')
             ->with($this->identicalTo($legacy = 'templating.helper.assets'))
             ->will($this->returnValue(false));
 
@@ -98,15 +91,24 @@ class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped();
         }
 
-        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('setAlias'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $container = $this->createContainerBuilderMock();
         $container
             ->expects($this->never())
             ->method('setAlias');
 
         $this->assetsHelperCompilerPass->process($container);
+    }
+
+    /**
+     * Creates a container builder mock.
+     *
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function createContainerBuilderMock()
+    {
+        return $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->disableOriginalConstructor()
+            ->setMethods(array('hasDefinition', 'setAlias'))
+            ->getMock();
     }
 }

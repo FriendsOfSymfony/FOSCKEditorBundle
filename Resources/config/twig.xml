@@ -6,7 +6,7 @@
 >
     <services>
         <service id="ivory_ck_editor.twig_extension" class="Ivory\CKEditorBundle\Twig\CKEditorExtension">
-            <argument type="service" id="ivory_ck_editor.templating.helper" />
+            <argument type="service" id="ivory_ck_editor.renderer" />
             <tag name="twig.extension" />
         </service>
     </services>

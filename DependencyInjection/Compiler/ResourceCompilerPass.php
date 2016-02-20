@@ -26,24 +26,22 @@ class ResourceCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $templatingEngines = $container->getParameter('templating.engines');
-
-        if (in_array('php', $templatingEngines)) {
+        if ($container->hasParameter($parameter = 'templating.helper.form.resources')) {
             $container->setParameter(
-                'templating.helper.form.resources',
+                $parameter,
                 array_merge(
                     array('IvoryCKEditorBundle:Form'),
-                    $container->getParameter('templating.helper.form.resources')
+                    $container->getParameter($parameter)
                 )
             );
         }
 
-        if (in_array('twig', $templatingEngines)) {
+        if ($container->hasParameter($parameter = 'twig.form.resources')) {
             $container->setParameter(
-                'twig.form.resources',
+                $parameter,
                 array_merge(
                     array('IvoryCKEditorBundle:Form:ckeditor_widget.html.twig'),
-                    $container->getParameter('twig.form.resources')
+                    $container->getParameter($parameter)
                 )
             );
         }

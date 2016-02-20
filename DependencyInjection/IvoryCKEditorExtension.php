@@ -31,7 +31,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        foreach (array('form', 'templating', 'twig') as $service) {
+        foreach (array('form', 'renderer', 'templating', 'twig') as $service) {
             $loader->load($service.'.xml');
         }
 
