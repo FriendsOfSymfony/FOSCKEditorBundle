@@ -18,6 +18,7 @@ env:
 
 install:
     - composer self-update
+    - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config disable-tls true; fi
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
     - composer require --no-update symfony/form:${SYMFONY_VERSION}
     - composer require --dev --no-update symfony/phpunit-bridge:${SYMFONY_PHPUNIT_BRIDGE_VERSION}
