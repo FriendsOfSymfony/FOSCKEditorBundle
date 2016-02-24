@@ -11,14 +11,11 @@
 [![License](https://poser.pugx.org/egeloen/ckeditor-bundle/license.svg)](https://packagist.org/packages/egeloen/ckeditor-bundle)
 
 The bundle provides a [CKEditor](http://ckeditor.com/) integration for your Symfony2 Project. It automatically registers
-the new `ckeditor` form type which can be easily configured.
+the new `ckeditor` form type which can be easily as well as highly configured.
 
 ## Documentation
 
- 1. [Installation](/Resources/doc/installation.md)
- 2. [Usage](/Resources/doc/usage.md)
- 3. [Configuration](/Resources/doc/configuration.md) (Optional)
- 4. [File Browse/Upload](/Resources/doc/file_browse_upload.md) (Optional)
+Please, read the [official documentation](/Resources/doc/index.rst).
 
 ## Testing
 
