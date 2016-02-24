@@ -2,7 +2,7 @@ Define reusable configuration
 =============================
 
 The CKEditor bundle provides an advanced configuration which can be reused on
-multiple CKEditor instance. Instead of duplicate the configuration on each form
+multiple CKEditor instances. Instead of duplicate the configuration on each form
 builder, you can directly configure it once and reuse it all the time. The
 bundle allows you to define as many configurations as you want.
 
@@ -52,9 +52,9 @@ If you want to override some parts of the defined config, you can still use the
 Define default configuration
 ----------------------------
 
-If you want to define globally your configuration in order to make it used by
-default without having to use the ``config_name`` option, you can use the
-``default_config`` node:
+If you want to define your configuration globally to use it by default without
+having to use the ``config_name`` option, you can use the ``default_config``
+node:
 
 .. code-block:: yaml
 
