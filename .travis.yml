@@ -14,14 +14,12 @@ env:
         - COMPOSER_PREFER_LOWEST=false
         - SYMFONY_DEPRECATIONS_HELPER=weak
         - SYMFONY_VERSION=2.3.*
-        - SYMFONY_PHPUNIT_BRIDGE_VERSION=2.7.*
 
 install:
     - composer self-update
     - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config disable-tls true; fi
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
     - composer require --no-update symfony/form:${SYMFONY_VERSION}
-    - composer require --dev --no-update symfony/phpunit-bridge:${SYMFONY_PHPUNIT_BRIDGE_VERSION}
     - if [[ "$SYMFONY_VERSION" = *dev* ]]; then sed -i "s/\"MIT\"/\"MIT\",\"minimum-stability\":\"dev\"/g" composer.json; fi
     - composer update --prefer-source `if [[ $COMPOSER_PREFER_LOWEST = true ]]; then echo "--prefer-lowest --prefer-stable"; fi`
 
@@ -34,7 +32,7 @@ matrix:
         - php: 5.6
           env: SYMFONY_VERSION=2.3.* COMPOSER_PREFER_LOWEST=true
         - php: 5.6
-          env: SYMFONY_VERSION=3.0.* SYMFONY_PHPUNIT_BRIDGE_VERSION=3.0.* COMPOSER_PREFER_LOWEST=true
+          env: SYMFONY_VERSION=3.0.* COMPOSER_PREFER_LOWEST=true
         - php: 5.6
           env: SYMFONY_VERSION=2.2.*
         - php: 5.6
@@ -46,13 +44,13 @@ matrix:
         - php: 5.6
           env: SYMFONY_VERSION=2.7.*
         - php: 5.6
-          env: SYMFONY_VERSION=2.8.* SYMFONY_PHPUNIT_BRIDGE_VERSION=2.8.* SYMFONY_DEPRECATIONS_HELPER=strict
+          env: SYMFONY_VERSION=2.8.* SYMFONY_DEPRECATIONS_HELPER=strict
         - php: 5.6
-          env: SYMFONY_VERSION=3.0.* SYMFONY_PHPUNIT_BRIDGE_VERSION=3.0.* SYMFONY_DEPRECATIONS_HELPER=strict
+          env: SYMFONY_VERSION=3.0.* SYMFONY_DEPRECATIONS_HELPER=strict
         - php: 5.6
-          env: SYMFONY_VERSION=3.0.*@dev SYMFONY_PHPUNIT_BRIDGE_VERSION=3.0.*@dev SYMFONY_DEPRECATIONS_HELPER=strict
+          env: SYMFONY_VERSION=3.1.*@dev SYMFONY_DEPRECATIONS_HELPER=strict
     allow_failures:
-        - env: SYMFONY_VERSION=3.0.*@dev SYMFONY_PHPUNIT_BRIDGE_VERSION=3.0.*@dev SYMFONY_DEPRECATIONS_HELPER=strict
+        - env: SYMFONY_VERSION=3.1.*@dev SYMFONY_DEPRECATIONS_HELPER=strict
 
 notifications:
     email: geloen.eric@gmail.com
