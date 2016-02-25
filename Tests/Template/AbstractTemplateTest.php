@@ -11,7 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Tests\Template;
 
-use Ivory\CKEditorBundle\Templating\CKEditorHelper;
+use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -22,8 +22,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Ivory\CKEditorBundle\Templating\CKEditorHelper */
-    protected $helper;
+    /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRenderer */
+    protected $renderer;
 
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $containerMock;
@@ -73,7 +73,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
                 ),
             )));
 
-        $this->helper = new CKEditorHelper($this->containerMock);
+        $this->renderer = new CKEditorRenderer($this->containerMock);
     }
 
     /**
@@ -84,7 +84,12 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
         unset($this->routerMock);
         unset($this->assetsHelperMock);
         unset($this->containerMock);
-        unset($this->helper);
+        unset($this->renderer);
+    }
+
+    public function testDefaultState()
+    {
+        $this->assertInstanceOf('Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface', $this->renderer);
     }
 
     public function testRenderWithSimpleWidget()

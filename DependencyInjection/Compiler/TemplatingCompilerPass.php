@@ -11,25 +11,27 @@
 
 namespace Ivory\CKEditorBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Create assets.packages fallback alias for Symfony < 2.7
+ * Templating compiler pass.
  *
- * @author Adam Misiorny <adam.misiorny@gmail.com>
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AssetsHelperCompilerPass implements CompilerPassInterface
+class TemplatingCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if (Kernel::VERSION_ID < 20700 && $container->hasDefinition($definition = 'templating.helper.assets')) {
-            $container->setAlias('assets.packages', $definition);
+        if (!$container->hasDefinition('templating.engine.php')) {
+            $container->removeDefinition('ivory_ck_editor.templating.helper');
+        }
+
+        if (!$container->hasDefinition('twig')) {
+            $container->removeDefinition('ivory_ck_editor.twig_extension');
         }
     }
 }

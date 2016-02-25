@@ -4,9 +4,9 @@
 /vendor
 
 # PHPUnit
+/build
 /phpunit.xml
 /clover.xml
-/report
 
 # Coveralls
 /coveralls.json
