@@ -3,7 +3,7 @@ Use inline editing
 
 By default, the bundle uses a `Classic Editing`_ which relies on
 ``CKEDITOR.replace``. If you want to use the `Inline Editing`_ which relies on
-``CKEDITOR.inline``, you can configure globally it in your configuration:
+``CKEDITOR.inline``, you can configure it globally in your configuration:
 
 .. code-block:: yaml
 

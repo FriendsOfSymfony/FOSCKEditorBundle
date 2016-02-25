@@ -85,20 +85,20 @@ but much more powerful closure and so make it aware of your dependencies:
         ),
     ));
 
-Integration
------------
+Integration with Other Projects
+-------------------------------
 
 If you want to simplify your life, you can directly use other bundles which have
 already integrated the concept explain in the previous chapter.
 
-CoopTilleulsCKEditorSonataMediaBundle
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sonata integration
+~~~~~~~~~~~~~~~~~~
 
 The `CoopTilleulsCKEditorSonataMediaBundle`_ provides a `SonataMedia`_
 integration with this bundle.
 
-FMElfinderBundle
-~~~~~~~~~~~~~~~~
+ELFinder integration
+~~~~~~~~~~~~~~~~~~~~
 
 The `FMElfinderBundle`_ provides a `ELFinder`_ integration with this bundle.
 
