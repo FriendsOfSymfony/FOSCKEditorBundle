@@ -15,7 +15,7 @@ the new `ckeditor` form type which can be easily as well as highly configured.
 
 ## Documentation
 
-Please, read the [official documentation](/Resources/doc/index.rst).
+Please, read the [official documentation](http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html).
 
 ## Testing
 
