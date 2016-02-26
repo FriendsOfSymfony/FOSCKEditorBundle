@@ -2,6 +2,8 @@
 
 ### 4.0.2 (????-??-??)
 
+ * ba497b4 - [Renderer] Decouple the Twig extension from the Templating component
+ * 971ed32 - [Documentation] Rewrite doc using RestructuredText
  * 97c60e0 - [Template] Introduce ckeditor_widget_extra block
  * 39fd4b8 - [Configuration] Don't normalize plugins/stylesSets/templates names
  * 0e618f6 - [AssetsHelper] Fix BC layer
