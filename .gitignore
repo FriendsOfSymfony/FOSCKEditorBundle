@@ -1,12 +1,7 @@
 # Composer
-/bin
 /composer.lock
 /vendor
 
 # PHPUnit
 /build
 /phpunit.xml
-/clover.xml
-
-# Coveralls
-/coveralls.json

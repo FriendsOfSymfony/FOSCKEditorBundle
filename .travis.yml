@@ -17,15 +17,18 @@ env:
 
 install:
     - composer self-update
+    - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config secure-http false; fi
     - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config disable-tls true; fi
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
     - composer require --no-update symfony/form:${SYMFONY_VERSION}
     - if [[ "$SYMFONY_VERSION" = *dev* ]]; then sed -i "s/\"MIT\"/\"MIT\",\"minimum-stability\":\"dev\"/g" composer.json; fi
     - composer update --prefer-source `if [[ $COMPOSER_PREFER_LOWEST = true ]]; then echo "--prefer-lowest --prefer-stable"; fi`
 
-script: bin/phpunit --coverage-clover clover.xml
+script: vendor/bin/phpunit --coverage-clover build/clover.xml
 
-after_script: bin/coveralls -v
+after_success:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --format=php-clover build/clover.xml
 
 matrix:
     include:

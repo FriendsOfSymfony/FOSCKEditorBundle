@@ -1,7 +1,15 @@
-inherit: true
-
 filter:
     excluded_paths:
         - bin/*
         - vendor/*
         - Tests/*
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+tools:
+    external_code_coverage:
+        timeout: 3600
+        runs: 17
