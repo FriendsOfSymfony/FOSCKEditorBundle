@@ -84,6 +84,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->assertTrue($this->ckEditorType->isEnable());
+        $this->assertFalse($this->ckEditorType->isAsync());
         $this->assertTrue($this->ckEditorType->isAutoload());
         $this->assertTrue($this->ckEditorType->isAutoInline());
         $this->assertFalse($this->ckEditorType->isInline());
@@ -125,6 +126,35 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('enable', $view->vars);
         $this->assertFalse($view->vars['enable']);
+    }
+
+    public function testAsyncWithDefaultValue()
+    {
+        $form = $this->factory->create($this->formType);
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('async', $view->vars);
+        $this->assertFalse($view->vars['async']);
+    }
+
+    public function testAsyncWithConfiguredValue()
+    {
+        $this->ckEditorType->isAsync(true);
+
+        $form = $this->factory->create($this->formType);
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('async', $view->vars);
+        $this->assertTrue($view->vars['async']);
+    }
+
+    public function testAsyncWithExplicitValue()
+    {
+        $form = $this->factory->create($this->formType, null, array('async' => true));
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('async', $view->vars);
+        $this->assertTrue($view->vars['async']);
     }
 
     public function testAutoloadWithDefaultValue()

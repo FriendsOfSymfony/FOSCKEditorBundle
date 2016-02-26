@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
             ->root('ivory_ck_editor')
             ->children()
                 ->booleanNode('enable')->end()
+                ->booleanNode('async')->end()
                 ->booleanNode('auto_inline')->end()
                 ->booleanNode('inline')->end()
                 ->booleanNode('autoload')->end()

@@ -12,7 +12,6 @@
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
-use Ivory\CKEditorBundle\Tests\Fixtures\Extension\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -33,6 +32,9 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $routerMock;
 
+    /** @var \Symfony\Component\Form\FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $formRendererMock;
+
     /**
      * {@inheritdoc}
      */
@@ -49,17 +51,17 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         }
 
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->formRendererMock = $this->getMock('Symfony\Component\Form\FormRendererInterface');
 
         $this->container = new ContainerBuilder();
 
         $this->container->set('assets.packages', $this->assetsHelperMock);
         $this->container->set('router', $this->routerMock);
+        $this->container->set('templating.form.renderer', $this->formRendererMock);
+        $this->container->set('twig.form.renderer', $this->formRendererMock);
 
-        $this->container->registerExtension($framework = new FrameworkExtension());
-        $this->container->loadFromExtension($framework->getAlias());
-
-        $this->container->registerExtension($ckeditor = new IvoryCKEditorExtension());
-        $this->container->loadFromExtension($ckeditor->getAlias());
+        $this->container->registerExtension($extension = new IvoryCKEditorExtension());
+        $this->container->loadFromExtension($extension->getAlias());
     }
 
     /**
@@ -121,6 +123,14 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->compile();
 
         $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isEnable());
+    }
+
+    public function testAsync()
+    {
+        $this->loadConfiguration($this->container, 'async');
+        $this->container->compile();
+
+        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->isAsync());
     }
 
     public function testAutoload()

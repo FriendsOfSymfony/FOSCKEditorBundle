@@ -55,6 +55,6 @@ class TwigTemplateTest extends AbstractTemplateTest
      */
     protected function renderTemplate(array $context = array())
     {
-        return $this->template->render($context);
+        return $this->template->renderBlock('ckeditor_widget', $context);
     }
 }

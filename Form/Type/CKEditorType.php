@@ -34,6 +34,9 @@ class CKEditorType extends AbstractType
     private $enable = true;
 
     /** @var boolean */
+    private $async = false;
+
+    /** @var boolean */
     private $autoload = true;
 
     /** @var boolean */
@@ -103,6 +106,22 @@ class CKEditorType extends AbstractType
         }
 
         return $this->enable;
+    }
+
+    /**
+     * Sets/Checks if the widget is async.
+     *
+     * @param boolean|null $async TRUE if the widget is async else FALSE.
+     *
+     * @return boolean TRUE if the widget is async else FALSE.
+     */
+    public function isAsync($async = null)
+    {
+        if ($async !== null) {
+            $this->async = (bool) $async;
+        }
+
+        return $this->async;
     }
 
     /**
@@ -333,6 +352,7 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('enable', $options['enable']);
 
         if ($builder->getAttribute('enable')) {
+            $builder->setAttribute('async', $options['async']);
             $builder->setAttribute('autoload', $options['autoload']);
             $builder->setAttribute('auto_inline', $options['auto_inline']);
             $builder->setAttribute('inline', $options['inline']);
@@ -374,6 +394,7 @@ class CKEditorType extends AbstractType
         $view->vars['enable'] = $form->getConfig()->getAttribute('enable');
 
         if ($form->getConfig()->getAttribute('enable')) {
+            $view->vars['async'] = $form->getConfig()->getAttribute('async');
             $view->vars['autoload'] = $form->getConfig()->getAttribute('autoload');
             $view->vars['auto_inline'] = $form->getConfig()->getAttribute('auto_inline');
             $view->vars['inline'] = $form->getConfig()->getAttribute('inline');
@@ -397,6 +418,7 @@ class CKEditorType extends AbstractType
         $resolver
             ->setDefaults(array(
                 'enable'      => $this->enable,
+                'async'       => $this->async,
                 'autoload'    => $this->autoload,
                 'auto_inline' => $this->autoInline,
                 'inline'      => $this->inline,
@@ -415,6 +437,7 @@ class CKEditorType extends AbstractType
 
         $allowedTypesMap = array(
             'enable'      => 'bool',
+            'async'       => 'bool',
             'autoload'    => 'bool',
             'auto_inline' => 'bool',
             'inline'      => 'bool',
