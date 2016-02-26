@@ -2,6 +2,7 @@
 
 ### 4.0.2 (????-??-??)
 
+ * 4320322 - Upgrade CKEditor to 4.5.7
  * ba497b4 - [Renderer] Decouple the Twig extension from the Templating component
  * 971ed32 - [Documentation] Rewrite doc using RestructuredText
  * 97c60e0 - [Template] Introduce ckeditor_widget_extra block
