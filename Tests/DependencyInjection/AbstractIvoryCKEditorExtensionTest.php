@@ -346,7 +346,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
 
         $ckEditorType = $this->container->get('ivory_ck_editor.form.type');
 
-        $this->assertSame('foo', $ckEditorType->getBasePath());
+        $this->assertSame('foo/', $ckEditorType->getBasePath());
         $this->assertSame('foo/ckeditor.js', $ckEditorType->getJsPath());
     }
 
