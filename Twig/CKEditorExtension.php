@@ -12,7 +12,6 @@
 namespace Ivory\CKEditorBundle\Twig;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use Ivory\CKEditorBundle\Templating\CKEditorHelper;
 
 /**
  * CKEditor Twig extension.

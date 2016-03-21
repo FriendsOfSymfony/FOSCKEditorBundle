@@ -1,6 +1,5 @@
 filter:
     excluded_paths:
-        - bin/*
         - vendor/*
         - Tests/*
 

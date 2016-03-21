@@ -214,6 +214,7 @@ EOF;
             'id'          => 'id',
             'value'       => '<p>value</p>',
             'enable'      => true,
+            'async'       => false,
             'autoload'    => true,
             'auto_inline' => true,
             'inline'      => false,
