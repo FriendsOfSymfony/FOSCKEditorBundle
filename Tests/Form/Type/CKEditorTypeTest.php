@@ -334,7 +334,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
             $this->formType,
             null,
             array(
-                'base_path' => 'foo/',
+                'base_path' => 'foo',
                 'js_path'   => 'foo/ckeditor.js',
             )
         );

@@ -19,6 +19,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -432,8 +433,7 @@ class CKEditorType extends AbstractType
                 'plugins'     => array(),
                 'styles'      => array(),
                 'templates'   => array(),
-            ))
-        ;
+            ));
 
         $allowedTypesMap = array(
             'enable'      => 'bool',
@@ -453,12 +453,28 @@ class CKEditorType extends AbstractType
             'templates'   => 'array',
         );
 
+        $normalizers = array(
+            'base_path' => function (Options $options, $value) {
+                if (substr($value, -1) !== '/') {
+                    $value .= '/';
+                }
+
+                return $value;
+            },
+        );
+
         if (Kernel::VERSION_ID >= 20600) {
             foreach ($allowedTypesMap as $option => $allowedTypes) {
                 $resolver->addAllowedTypes($option, $allowedTypes);
             }
+
+            foreach ($normalizers as $option => $normalizer) {
+                $resolver->setNormalizer($option, $normalizer);
+            }
         } else {
-            $resolver->addAllowedTypes($allowedTypesMap);
+            $resolver
+                ->addAllowedTypes($allowedTypesMap)
+                ->setNormalizers($normalizers);
         }
     }
 
