@@ -60,7 +60,7 @@ Or you can configure it in your widget:
     ));
 
 Then, install the third party bundles as explained in its
-`documentation<https://github.com/egeloen/IvoryFormExtraBundle/blob/master/Resources/doc/installation.md>`_.
+`documentation <https://github.com/egeloen/IvoryFormExtraBundle/blob/master/Resources/doc/installation.md>`_.
 
 Finally, in your Twig template, you can render the form javascript with:
 

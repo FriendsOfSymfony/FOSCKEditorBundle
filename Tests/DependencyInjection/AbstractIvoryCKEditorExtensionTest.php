@@ -95,6 +95,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertFalse($type->isInline());
         $this->assertFalse($type->useJquery());
         $this->assertFalse($type->isInputSync());
+        $this->assertFalse($type->useRequireJs());
         $this->assertSame('bundles/ivoryckeditor/', $type->getBasePath());
         $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $type->getJsPath());
         $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $type->getJqueryPath());
@@ -163,6 +164,14 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->compile();
 
         $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->isInputSync());
+    }
+
+    public function testRequireJs()
+    {
+        $this->loadConfiguration($this->container, 'require_js');
+        $this->container->compile();
+
+        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->useRequireJs());
     }
 
     public function testJquery()

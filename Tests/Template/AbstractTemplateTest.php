@@ -117,7 +117,6 @@ EOF;
         $context = array(
             'auto_inline' => false,
             'inline' => true,
-            'jquery' => true,
             'input_sync' => true,
             'config' => array('foo' => 'bar'),
             'plugins' => array(
@@ -147,9 +146,7 @@ EOF;
 var CKEDITOR_BASEPATH = "base_path";
 </script>
 <script type="text/javascript" src="js_path"></script>
-<script type="text/javascript" src="jquery_path"></script>
 <script type="text/javascript">
-$(function () {
 if (CKEDITOR.instances["id"]) {
 delete CKEDITOR.instances["id"];
 }
@@ -159,12 +156,54 @@ CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Temp
 CKEDITOR.disableAutoInline = true;
 var ivory_ckeditor_id = CKEDITOR.inline("id", {"foo":"bar"});
 ivory_ckeditor_id.on('change', function(){ ivory_ckeditor_id.updateElement(); });
-});
 </script>
 
 EOF;
 
         $this->assertTemplate($expected, array_merge($this->getContext(), $context));
+    }
+
+    public function testRenderWithJQuery()
+    {
+        $expected = <<<EOF
+<textarea>&lt;p&gt;value&lt;/p&gt;</textarea>
+<script type="text/javascript">
+var CKEDITOR_BASEPATH="base_path";
+</script>
+<script type="text/javascript" src="js_path"></script>
+<script type="text/javascript" src="jquery_path"></script>
+<script type="text/javascript">
+$(function() {
+if (CKEDITOR.instances["id"]) {
+deleteCKEDITOR.instances["id"];
+}
+CKEDITOR.replace("id",[]);
+});
+</script>
+EOF;
+
+        $this->assertTemplate($expected, array_merge($this->getContext(), array('jquery' => true)));
+    }
+
+    public function testRenderWithRequireJs()
+    {
+        $expected = <<<EOF
+<textarea>&lt;p&gt;value&lt;/p&gt;</textarea>
+<script type="text/javascript">
+var CKEDITOR_BASEPATH = "base_path";
+</script>
+<script type="text/javascript" src="js_path"></script>
+<script type="text/javascript">
+require(['ckeditor'], function() {
+if (CKEDITOR.instances["id"]) {
+deleteCKEDITOR.instances["id"];
+}
+CKEDITOR.replace("id",[]);
+});
+</script>
+EOF;
+
+        $this->assertTemplate($expected, array_merge($this->getContext(), array('require_js' => true)));
     }
 
     public function testRenderWithNotAutoloadedWidget()
@@ -220,6 +259,7 @@ EOF;
             'inline'      => false,
             'jquery'      => false,
             'input_sync'  => false,
+            'require_js'  => false,
             'base_path'   => 'base_path',
             'js_path'     => 'js_path',
             'jquery_path' => 'jquery_path',

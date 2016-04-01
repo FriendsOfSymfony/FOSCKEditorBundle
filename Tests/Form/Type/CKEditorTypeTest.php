@@ -90,6 +90,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->ckEditorType->isInline());
         $this->assertFalse($this->ckEditorType->useJquery());
         $this->assertFalse($this->ckEditorType->isInputSync());
+        $this->assertFalse($this->ckEditorType->useRequireJs());
         $this->assertSame('bundles/ivoryckeditor/', $this->ckEditorType->getBasePath());
         $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
         $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $this->ckEditorType->getJqueryPath());
@@ -300,6 +301,35 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('input_sync', $view->vars);
         $this->assertTrue($view->vars['input_sync']);
+    }
+
+    public function testRequireJsWithDefaultValue()
+    {
+        $form = $this->factory->create($this->formType);
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('require_js', $view->vars);
+        $this->assertFalse($view->vars['require_js']);
+    }
+
+    public function testRequireJsWithConfiguredValue()
+    {
+        $this->ckEditorType->useRequireJs(true);
+
+        $form = $this->factory->create($this->formType);
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('require_js', $view->vars);
+        $this->assertTrue($view->vars['require_js']);
+    }
+
+    public function testRequireJsWithExplicitValue()
+    {
+        $form = $this->factory->create($this->formType, null, array('require_js' => true));
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('require_js', $view->vars);
+        $this->assertTrue($view->vars['require_js']);
     }
 
     public function testBaseAndJsPathWithDefaultValues()

@@ -12,6 +12,10 @@
         $(function () {
     <?php endif; ?>
 
+    <?php if ($require_js) : ?>
+        require(['ckeditor'], function() {
+    <?php endif; ?>
+
     <?php echo $view['ivory_ckeditor']->renderDestroy($id); ?>
 
     <?php foreach ($plugins as $pluginName => $plugin): ?>
@@ -33,6 +37,10 @@
         $config,
         array('auto_inline' => $auto_inline, 'inline' => $inline, 'input_sync' => $input_sync)
     ); ?>
+
+    <?php if ($require_js) : ?>
+        });
+    <?php endif; ?>
 
     <?php if ($jquery) : ?>
         });
