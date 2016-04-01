@@ -13,6 +13,7 @@ namespace Ivory\CKEditorBundle\Tests\Renderer;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -223,24 +224,53 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider filebrowserProvider
      */
-    public function testRenderWidgetWithFileBrowser($filebrowser)
+    public function testRenderWidgetWithMinimalFileBrowser($filebrowser)
     {
         $this->routerMock
             ->expects($this->once())
             ->method('generate')
             ->with(
-                $this->equalTo('browse_route'),
-                $this->equalTo(array('foo' => 'bar')),
-                $this->equalTo(true)
+                $this->identicalTo($route = 'browse_route'),
+                $this->identicalTo(array()),
+                $this->identicalTo(
+                    defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_PATH')
+                        ? UrlGeneratorInterface::ABSOLUTE_PATH
+                        : false
+                )
+            )
+            ->will($this->returnValue('browse_url'));
+
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"filebrowser'.$filebrowser.'Url":"browse_url"});',
+            $this->renderer->renderWidget('foo', array('filebrowser'.$filebrowser.'Route' => $route))
+        );
+    }
+
+    /**
+     * @dataProvider filebrowserProvider
+     */
+    public function testRenderWidgetWithMaximalFileBrowser($filebrowser)
+    {
+        $this->routerMock
+            ->expects($this->once())
+            ->method('generate')
+            ->with(
+                $this->identicalTo($route = 'browse_route'),
+                $this->identicalTo($routeParameters = array('foo' => 'bar')),
+                $this->identicalTo(
+                    $routeType = defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_PATH')
+                        ? UrlGeneratorInterface::ABSOLUTE_PATH
+                        : true
+                )
             )
             ->will($this->returnValue('browse_url'));
 
         $this->assertSame(
             'CKEDITOR.replace("foo", {"filebrowser'.$filebrowser.'Url":"browse_url"});',
             $this->renderer->renderWidget('foo', array(
-                'filebrowser'.$filebrowser.'Route'           => 'browse_route',
-                'filebrowser'.$filebrowser.'RouteParameters' => array('foo' => 'bar'),
-                'filebrowser'.$filebrowser.'RouteAbsolute'   => true,
+                'filebrowser'.$filebrowser.'Route'           => $route,
+                'filebrowser'.$filebrowser.'RouteParameters' => $routeParameters,
+                'filebrowser'.$filebrowser.'RouteAbsolute'   => $routeType,
             ))
         );
     }
