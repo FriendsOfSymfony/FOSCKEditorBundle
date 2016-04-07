@@ -91,6 +91,7 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->ckEditorType->useJquery());
         $this->assertFalse($this->ckEditorType->isInputSync());
         $this->assertFalse($this->ckEditorType->useRequireJs());
+        $this->assertFalse($this->ckEditorType->hasFilebrowsers());
         $this->assertSame('bundles/ivoryckeditor/', $this->ckEditorType->getBasePath());
         $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
         $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $this->ckEditorType->getJqueryPath());
@@ -98,6 +99,40 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->pluginManagerMock, $this->ckEditorType->getPluginManager());
         $this->assertSame($this->stylesSetManagerMock, $this->ckEditorType->getStylesSetManager());
         $this->assertSame($this->templateManagerMock, $this->ckEditorType->getTemplateManager());
+    }
+
+    public function testSetFilebrowsers()
+    {
+        $this->ckEditorType->setFilebrowsers($filebrowsers = array(
+            'VideoBrowse',
+            'VideoUpload',
+        ));
+
+        $this->assertTrue($this->ckEditorType->hasFilebrowsers());
+        $this->assertSame($filebrowsers, $this->ckEditorType->getFilebrowsers());
+
+        foreach ($filebrowsers as $filebrowser) {
+            $this->assertTrue($this->ckEditorType->hasFilebrowser($filebrowser));
+        }
+    }
+
+    public function testAddFilebrowser()
+    {
+        $this->ckEditorType->addFilebrowser($filebrowser = 'VideoBrowse');
+
+        $this->assertTrue($this->ckEditorType->hasFilebrowsers());
+        $this->assertSame(array($filebrowser), $this->ckEditorType->getFilebrowsers());
+        $this->assertTrue($this->ckEditorType->hasFilebrowser($filebrowser));
+    }
+
+    public function testRemoveFilebrowser()
+    {
+        $this->ckEditorType->addFilebrowser($filebrowser = 'VideoBrowse');
+        $this->ckEditorType->removeFilebrowser($filebrowser);
+
+        $this->assertFalse($this->ckEditorType->hasFilebrowsers());
+        $this->assertEmpty($this->ckEditorType->getFilebrowsers());
+        $this->assertFalse($this->ckEditorType->hasFilebrowser($filebrowser));
     }
 
     public function testEnableWithDefaultValue()
@@ -330,6 +365,42 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('require_js', $view->vars);
         $this->assertTrue($view->vars['require_js']);
+    }
+
+    public function testFilebrowsersWithDefaultValue()
+    {
+        $form = $this->factory->create($this->formType);
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('filebrowsers', $view->vars);
+        $this->assertEmpty($view->vars['filebrowsers']);
+    }
+
+    public function testFilebrowsersWithConfiguredValue()
+    {
+        $this->ckEditorType->setFilebrowsers($filebrowsers = array(
+            'VideoBrowser',
+            'VideoUpload',
+        ));
+
+        $form = $this->factory->create($this->formType);
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('filebrowsers', $view->vars);
+        $this->assertSame($filebrowsers, $view->vars['filebrowsers']);
+    }
+
+    public function testFilebrowsersWithExplicitValue()
+    {
+        $form = $this->factory->create($this->formType, null, array('filebrowsers' => $filebrowsers = array(
+            'VideoBrowse',
+            'VideoUpload',
+        )));
+
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('filebrowsers', $view->vars);
+        $this->assertSame($filebrowsers, $view->vars['filebrowsers']);
     }
 
     public function testBaseAndJsPathWithDefaultValues()

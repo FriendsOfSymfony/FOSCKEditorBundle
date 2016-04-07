@@ -60,7 +60,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
     {
         $config = $this->fixConfigLanguage($config);
         $config = $this->fixConfigContentsCss($config);
-        $config = $this->fixConfigFilebrowsers($config);
+        $config = $this->fixConfigFilebrowsers(
+            $config,
+            isset($options['filebrowsers']) ? $options['filebrowsers'] : array()
+        );
 
         $this->jsonBuilder
             ->reset()
@@ -183,13 +186,14 @@ class CKEditorRenderer implements CKEditorRendererInterface
     /**
      * Fixes the config filebrowsers.
      *
-     * @param array $config The config.
+     * @param array $config       The config.
+     * @param array $filebrowsers The filebrowsers.
      *
      * @return array The fixed config.
      */
-    private function fixConfigFilebrowsers(array $config)
+    private function fixConfigFilebrowsers(array $config, array $filebrowsers)
     {
-        $keys = array(
+        $filebrowsers = array_unique(array_merge(array(
             'Browse',
             'FlashBrowse',
             'ImageBrowse',
@@ -197,10 +201,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
             'Upload',
             'FlashUpload',
             'ImageUpload',
-        );
+        ), $filebrowsers));
 
-        foreach ($keys as $key) {
-            $fileBrowserKey = 'filebrowser'.$key;
+        foreach ($filebrowsers as $filebrowser) {
+            $fileBrowserKey = 'filebrowser'.$filebrowser;
             $handler = $fileBrowserKey.'Handler';
             $url = $fileBrowserKey.'Url';
             $route = $fileBrowserKey.'Route';

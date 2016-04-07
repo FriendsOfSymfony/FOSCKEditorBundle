@@ -21,6 +21,37 @@ The available options are:
 * filebrowserFlashUploadUrl
 * filebrowserImageUploadUrl
 
+Custom Options
+--------------
+
+CKEditor also supports custom options which can be available if you install
+plugins. For example, the HTML5 video plugin adds the following options:
+
+* filebrowserVideoBrowseUrl
+* filebrowserVideoUploadUrl
+
+To make the bundle aware of these new options, you can configure it globally
+in your configuration file:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    ivory_ck_editor:
+        filebrowsers:
+            - VideoBrowse
+            - VideoUpload
+
+Or you can configure it in your widget:
+
+.. code-block:: php
+
+    $builder->add('field', 'ckeditor', array(
+        'filebrowsers' => array(
+            'VideoUpload',
+            'VideoBrowse',
+        ),
+    ));
+
 Routing Options
 ---------------
 
