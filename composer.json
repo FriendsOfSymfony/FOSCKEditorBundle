@@ -24,6 +24,7 @@
         "twig/twig": "~1.12"
     },
     "suggest": {
+        "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously",
         "twig/twig": "Allows to use Twig templates"
     },
     "autoload": {
