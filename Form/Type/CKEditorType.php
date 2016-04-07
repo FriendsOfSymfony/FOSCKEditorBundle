@@ -55,6 +55,9 @@ class CKEditorType extends AbstractType
     /** @var boolean */
     private $inputSync = false;
 
+    /** @var array */
+    private $filebrowsers = array();
+
     /** @var string */
     private $basePath = 'bundles/ivoryckeditor/';
 
@@ -225,6 +228,72 @@ class CKEditorType extends AbstractType
     }
 
     /**
+     * Checks if there are filebrowsers.
+     *
+     * @return boolean TRUE if there are filebrowsers else FALSE.
+     */
+    public function hasFilebrowsers()
+    {
+        return !empty($this->filebrowsers);
+    }
+
+    /**
+     * Gets the filebrowsers.
+     *
+     * @return array The filebrowsers.
+     */
+    public function getFilebrowsers()
+    {
+        return $this->filebrowsers;
+    }
+
+    /**
+     * Sets the filebrowsers.
+     *
+     * @param array $filebrowsers The filebrowsers.
+     */
+    public function setFilebrowsers(array $filebrowsers)
+    {
+        foreach ($filebrowsers as $filebrowser) {
+            $this->addFilebrowser($filebrowser);
+        }
+    }
+
+    /**
+     * Checks if there is the filebrowser.
+     *
+     * @param string $filebrowser The filebrowser.
+     *
+     * @return boolean TRUE if there is the filebrowser else FALSE.
+     */
+    public function hasFilebrowser($filebrowser)
+    {
+        return in_array($filebrowser, $this->filebrowsers, true);
+    }
+
+    /**
+     * Adds a filebrowser.
+     *
+     * @param string $filebrowser The filebrowser.
+     */
+    public function addFilebrowser($filebrowser)
+    {
+        if (!$this->hasFilebrowser($filebrowser)) {
+            $this->filebrowsers[] = $filebrowser;
+        }
+    }
+
+    /**
+     * Removes a filebrowser.
+     *
+     * @param string $filebrowser The filebrowser.
+     */
+    public function removeFilebrowser($filebrowser)
+    {
+        unset($this->filebrowsers[array_search($filebrowser, $this->filebrowsers, true)]);
+    }
+
+    /**
      * Gets the CKEditor base path.
      *
      * @return string The CKEditor base path.
@@ -379,6 +448,7 @@ class CKEditorType extends AbstractType
             $builder->setAttribute('jquery', $options['jquery']);
             $builder->setAttribute('require_js', $options['require_js']);
             $builder->setAttribute('input_sync', $options['input_sync']);
+            $builder->setAttribute('filebrowsers', $options['filebrowsers']);
             $builder->setAttribute('base_path', $options['base_path']);
             $builder->setAttribute('js_path', $options['js_path']);
             $builder->setAttribute('jquery_path', $options['jquery_path']);
@@ -422,6 +492,7 @@ class CKEditorType extends AbstractType
             $view->vars['jquery'] = $form->getConfig()->getAttribute('jquery');
             $view->vars['require_js'] = $form->getConfig()->getAttribute('require_js');
             $view->vars['input_sync'] = $form->getConfig()->getAttribute('input_sync');
+            $view->vars['filebrowsers'] = $form->getConfig()->getAttribute('filebrowsers');
             $view->vars['base_path'] = $form->getConfig()->getAttribute('base_path');
             $view->vars['js_path'] = $form->getConfig()->getAttribute('js_path');
             $view->vars['jquery_path'] = $form->getConfig()->getAttribute('jquery_path');
@@ -439,41 +510,43 @@ class CKEditorType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'enable'      => $this->enable,
-                'async'       => $this->async,
-                'autoload'    => $this->autoload,
-                'auto_inline' => $this->autoInline,
-                'inline'      => $this->inline,
-                'jquery'      => $this->jquery,
-                'require_js'  => $this->requireJs,
-                'input_sync'  => $this->inputSync,
-                'base_path'   => $this->basePath,
-                'js_path'     => $this->jsPath,
-                'jquery_path' => $this->jqueryPath,
-                'config_name' => $this->configManager->getDefaultConfig(),
-                'config'      => array(),
-                'plugins'     => array(),
-                'styles'      => array(),
-                'templates'   => array(),
+                'enable'       => $this->enable,
+                'async'        => $this->async,
+                'autoload'     => $this->autoload,
+                'auto_inline'  => $this->autoInline,
+                'inline'       => $this->inline,
+                'jquery'       => $this->jquery,
+                'require_js'   => $this->requireJs,
+                'input_sync'   => $this->inputSync,
+                'filebrowsers' => $this->filebrowsers,
+                'base_path'    => $this->basePath,
+                'js_path'      => $this->jsPath,
+                'jquery_path'  => $this->jqueryPath,
+                'config_name'  => $this->configManager->getDefaultConfig(),
+                'config'       => array(),
+                'plugins'      => array(),
+                'styles'       => array(),
+                'templates'    => array(),
             ));
 
         $allowedTypesMap = array(
-            'enable'      => 'bool',
-            'async'       => 'bool',
-            'autoload'    => 'bool',
-            'auto_inline' => 'bool',
-            'inline'      => 'bool',
-            'jquery'      => 'bool',
-            'require_js'  => 'bool',
-            'input_sync'  => 'bool',
-            'config_name' => array('string', 'null'),
-            'base_path'   => 'string',
-            'js_path'     => 'string',
-            'jquery_path' => 'string',
-            'config'      => 'array',
-            'plugins'     => 'array',
-            'styles'      => 'array',
-            'templates'   => 'array',
+            'enable'       => 'bool',
+            'async'        => 'bool',
+            'autoload'     => 'bool',
+            'auto_inline'  => 'bool',
+            'inline'       => 'bool',
+            'jquery'       => 'bool',
+            'require_js'   => 'bool',
+            'input_sync'   => 'bool',
+            'filebrowsers' => 'array',
+            'config_name'  => array('string', 'null'),
+            'base_path'    => 'string',
+            'js_path'      => 'string',
+            'jquery_path'  => 'string',
+            'config'       => 'array',
+            'plugins'      => 'array',
+            'styles'       => 'array',
+            'templates'    => 'array',
         );
 
         $normalizers = array(

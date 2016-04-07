@@ -96,6 +96,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->assertFalse($type->useJquery());
         $this->assertFalse($type->isInputSync());
         $this->assertFalse($type->useRequireJs());
+        $this->assertFalse($type->hasFilebrowsers());
         $this->assertSame('bundles/ivoryckeditor/', $type->getBasePath());
         $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $type->getJsPath());
         $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $type->getJqueryPath());
@@ -188,6 +189,17 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
         $this->container->compile();
 
         $this->assertSame('foo/jquery.js', $this->container->get('ivory_ck_editor.form.type')->getJqueryPath());
+    }
+
+    public function testFilebrowsers()
+    {
+        $this->loadConfiguration($this->container, 'filebrowsers');
+        $this->container->compile();
+
+        $this->assertSame(
+            array('VideoBrowse', 'VideoUpload'),
+            $this->container->get('ivory_ck_editor.form.type')->getFilebrowsers()
+        );
     }
 
     public function testSingleConfiguration()

@@ -224,7 +224,30 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider filebrowserProvider
      */
-    public function testRenderWidgetWithMinimalFileBrowser($filebrowser)
+    public function testRenderWidgetWithFileBrowser($filebrowser)
+    {
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"filebrowser'.$filebrowser.'Url":"'.($url = 'browse_url').'"});',
+            $this->renderer->renderWidget('foo', array('filebrowser'.$filebrowser.'Url' => $url))
+        );
+    }
+
+    public function testRenderWidgetWithCustomFileBrowser()
+    {
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"filebrowser'.($filebrowser = 'VideoBrowse').'Url":"'.($url = 'browse_url').'"});',
+            $this->renderer->renderWidget(
+                'foo',
+                array('filebrowser'.$filebrowser.'Url' => $url),
+                array('filebrowsers' => array($filebrowser))
+            )
+        );
+    }
+
+    /**
+     * @dataProvider filebrowserProvider
+     */
+    public function testRenderWidgetWithMinimalRouteFileBrowser($filebrowser)
     {
         $this->routerMock
             ->expects($this->once())
@@ -249,7 +272,7 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider filebrowserProvider
      */
-    public function testRenderWidgetWithMaximalFileBrowser($filebrowser)
+    public function testRenderWidgetWithMaximalRouteFileBrowser($filebrowser)
     {
         $this->routerMock
             ->expects($this->once())
@@ -278,7 +301,7 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider filebrowserProvider
      */
-    public function testRenderWidgetWithFileBrowserHandler($filebrowser)
+    public function testRenderWidgetWithRouteFileBrowserHandler($filebrowser)
     {
         $this->routerMock
             ->expects($this->once())

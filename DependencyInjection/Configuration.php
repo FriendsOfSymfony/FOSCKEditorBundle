@@ -46,6 +46,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->createPluginsNode())
                 ->append($this->createStylesNode())
                 ->append($this->createTemplatesNode())
+                ->append($this->createFilebrowsersNode())
                 ->append($this->createToolbarsNode())
             ->end();
 
@@ -143,6 +144,19 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+            ->end();
+    }
+
+    /**
+     * Creates the filebrowsers node.
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The filebrowsers node.
+     */
+    private function createFilebrowsersNode()
+    {
+        return $this->createNode('filebrowsers')
+            ->useAttributeAsKey('name')
+            ->prototype('scalar')
             ->end();
     }
 

@@ -42,6 +42,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $this->registerPlugins($config, $container);
             $this->registerStylesSet($config, $container);
             $this->registerTemplates($config, $container);
+            $this->registerFilebrowsers($config, $container);
         }
 
         if (Kernel::VERSION_ID < 30000) {
@@ -191,6 +192,23 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         foreach ($config['templates'] as $name => $template) {
             $definition->addMethodCall('setTemplate', array($name, $template));
         }
+    }
+
+    /**
+     * Registers the CKEditor filebrowsers.
+     *
+     * @param array                                                   $config    The CKEditor configuration.
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     */
+    private function registerFilebrowsers(array $config, ContainerBuilder $container)
+    {
+        if (empty($config['filebrowsers'])) {
+            return;
+        }
+
+        $container
+            ->getDefinition('ivory_ck_editor.form.type')
+            ->addMethodCall('setFilebrowsers', array($config['filebrowsers']));
     }
 
     /**
