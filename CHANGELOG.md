@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 4.0.2 (????-??-??)
+### 4.0.2 (2016-04-07)
 
  * 116b095 - Upgrade CKEditor to 4.5.8
  * b2fae58 - [Composer] Suggest egeloen/form-extra-bundle
