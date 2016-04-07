@@ -12,6 +12,7 @@ Here, you can find all bundle features:
     loading
     file-browse-upload
     jquery
+    require-js
     textarea-sync
     textarea-fallback
     autoinline

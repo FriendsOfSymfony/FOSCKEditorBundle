@@ -85,6 +85,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $formType->addMethodCall('useJquery', array($config['jquery']));
         }
 
+        if (isset($config['require_js'])) {
+            $formType->addMethodCall('useRequireJs', array($config['require_js']));
+        }
+
         if (isset($config['input_sync'])) {
             $formType->addMethodCall('isInputSync', array($config['input_sync']));
         }

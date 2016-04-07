@@ -36,6 +36,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('inline')->end()
                 ->booleanNode('autoload')->end()
                 ->booleanNode('jquery')->end()
+                ->booleanNode('require_js')->end()
                 ->booleanNode('input_sync')->end()
                 ->scalarNode('base_path')->end()
                 ->scalarNode('js_path')->end()

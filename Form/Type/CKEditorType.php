@@ -50,6 +50,9 @@ class CKEditorType extends AbstractType
     private $jquery = false;
 
     /** @var boolean */
+    private $requireJs = false;
+
+    /** @var boolean */
     private $inputSync = false;
 
     /** @var string */
@@ -187,6 +190,22 @@ class CKEditorType extends AbstractType
         }
 
         return $this->jquery;
+    }
+
+    /**
+     * Checks/Sets if require js is used.
+     *
+     * @param boolean $requireJs TRUE if the requirejs is used else FALSE.
+     *
+     * @return boolean TRUE if the requirejs is used else FALSE.
+     */
+    public function useRequireJs($requireJs = null)
+    {
+        if ($requireJs !== null) {
+            $this->requireJs = (bool) $requireJs;
+        }
+
+        return $this->requireJs;
     }
 
     /**
@@ -358,6 +377,7 @@ class CKEditorType extends AbstractType
             $builder->setAttribute('auto_inline', $options['auto_inline']);
             $builder->setAttribute('inline', $options['inline']);
             $builder->setAttribute('jquery', $options['jquery']);
+            $builder->setAttribute('require_js', $options['require_js']);
             $builder->setAttribute('input_sync', $options['input_sync']);
             $builder->setAttribute('base_path', $options['base_path']);
             $builder->setAttribute('js_path', $options['js_path']);
@@ -400,6 +420,7 @@ class CKEditorType extends AbstractType
             $view->vars['auto_inline'] = $form->getConfig()->getAttribute('auto_inline');
             $view->vars['inline'] = $form->getConfig()->getAttribute('inline');
             $view->vars['jquery'] = $form->getConfig()->getAttribute('jquery');
+            $view->vars['require_js'] = $form->getConfig()->getAttribute('require_js');
             $view->vars['input_sync'] = $form->getConfig()->getAttribute('input_sync');
             $view->vars['base_path'] = $form->getConfig()->getAttribute('base_path');
             $view->vars['js_path'] = $form->getConfig()->getAttribute('js_path');
@@ -424,6 +445,7 @@ class CKEditorType extends AbstractType
                 'auto_inline' => $this->autoInline,
                 'inline'      => $this->inline,
                 'jquery'      => $this->jquery,
+                'require_js'  => $this->requireJs,
                 'input_sync'  => $this->inputSync,
                 'base_path'   => $this->basePath,
                 'js_path'     => $this->jsPath,
@@ -442,6 +464,7 @@ class CKEditorType extends AbstractType
             'auto_inline' => 'bool',
             'inline'      => 'bool',
             'jquery'      => 'bool',
+            'require_js'  => 'bool',
             'input_sync'  => 'bool',
             'config_name' => array('string', 'null'),
             'base_path'   => 'string',

@@ -33,6 +33,10 @@
             $(function () {
         {% endif %}
 
+        {% if require_js %}
+            require(['ckeditor'], function() {
+        {% endif %}
+
         {{ ckeditor_destroy(id) }}
 
         {% for plugin_name, plugin in plugins %}
@@ -54,6 +58,10 @@
             inline: inline,
             input_sync: input_sync
         }) }}
+
+        {% if require_js %}
+            });
+        {% endif %}
 
         {% if jquery %}
             });
