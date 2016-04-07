@@ -2,13 +2,16 @@
 
 ### 4.0.2 (????-??-??)
 
- * 4320322 - Upgrade CKEditor to 4.5.7
+ * 116b095 - Upgrade CKEditor to 4.5.8
+ * b2fae58 - [Composer] Suggest egeloen/form-extra-bundle
+ * db7b64d - Add custom filebrowsers support
+ * 48ca6c3 - RequireJS support
+ * 9c64a43 - [Routing] Fix reference type deprecation
  * ba497b4 - [Renderer] Decouple the Twig extension from the Templating component
  * 971ed32 - [Documentation] Rewrite doc using RestructuredText
  * 97c60e0 - [Template] Introduce ckeditor_widget_extra block
  * 39fd4b8 - [Configuration] Don't normalize plugins/stylesSets/templates names
  * 0e618f6 - [AssetsHelper] Fix BC layer
- * 8ce6f81 - Update CKEditor to 4.5.6
  * c65bfa1 - [Templating] Make Asset/Templating component optional
    
 ### 4.0.1 (2015-12-09)
