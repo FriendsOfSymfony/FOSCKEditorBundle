@@ -12,12 +12,6 @@
     {% endif %}
 {% endblock %}
 
-{% block ckeditor_javascript_prototype %}
-    {% if enable and async %}
-        {{ block('_ckeditor_javascript') }}
-    {% endif %}
-{% endblock %}
-
 {% block _ckeditor_javascript %}
     {% if autoload %}
         <script type="text/javascript">

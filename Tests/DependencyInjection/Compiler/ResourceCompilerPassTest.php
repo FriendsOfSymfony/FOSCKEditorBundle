@@ -62,7 +62,6 @@ class ResourceCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->identicalTo($parameter),
                 $this->identicalTo(array(
-                    'IvoryCKEditorBundle:Form:javascript.html.twig',
                     'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
                     $template,
                 ))
