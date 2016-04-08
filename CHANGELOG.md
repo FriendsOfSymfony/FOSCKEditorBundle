@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 4.0.3 (????-??-??)
+
+ * ca4ded7 - Removes dead code which break twig template compilation
+ 
 ### 4.0.2 (2016-04-07)
 
  * 116b095 - Upgrade CKEditor to 4.5.8
