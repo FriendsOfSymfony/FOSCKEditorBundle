@@ -16,9 +16,9 @@ env:
         - SYMFONY_VERSION=2.3.*
 
 install:
-    - composer self-update
     - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config secure-http false; fi
     - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config disable-tls true; fi
+    - composer self-update
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
     - composer require --no-update symfony/form:${SYMFONY_VERSION}
     - if [[ "$SYMFONY_VERSION" = *dev* ]]; then sed -i "s/\"MIT\"/\"MIT\",\"minimum-stability\":\"dev\"/g" composer.json; fi
