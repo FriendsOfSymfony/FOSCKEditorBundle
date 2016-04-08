@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 4.0.3 (????-??-??)
+### 4.0.3 (2016-04-08)
 
  * ca4ded7 - Removes dead code which break twig template compilation
  
