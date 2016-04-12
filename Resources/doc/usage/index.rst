@@ -13,6 +13,7 @@ Here, you can find all bundle features:
     file-browse-upload
     jquery
     require-js
+    append-javascript
     textarea-sync
     textarea-fallback
     autoinline

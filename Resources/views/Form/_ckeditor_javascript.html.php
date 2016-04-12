@@ -30,7 +30,7 @@
         <?php echo $view['ivory_ckeditor']->renderTemplate($templateName, $template); ?>
     <?php endforeach; ?>
 
-    <?php $view['slots']->set('ckeditor_widget_extra', '') ?>
+    <?php $view['slots']->output('ckeditor_widget_extra', '') ?>
 
     <?php echo $view['ivory_ckeditor']->renderWidget(
         $id,
