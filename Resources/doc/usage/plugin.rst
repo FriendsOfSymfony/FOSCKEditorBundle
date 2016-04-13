@@ -25,8 +25,9 @@ globally in your configuration:
     # app/config/config.yml
     ivory_ck_editor:
         default_config: my_config
-        config:
-            extraPlugins: "wordcount"
+        configs:
+            my_config:
+                extraPlugins: "wordcount"
         plugins:
             wordcount:
                 path:     "/bundles/mybundle/wordcount/"
