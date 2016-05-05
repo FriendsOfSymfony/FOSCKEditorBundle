@@ -34,8 +34,16 @@ Install the Assets
 ------------------
 
 Once, you have registered the bundle, you need to install the assets in the web
-directory:
+directory.
+
+If you're using Symfony <= 2.8:
 
 .. code-block:: bash
 
     $ php app/console assets:install web
+
+If you're using Symfony >= 3.0:
+
+.. code-block:: bash
+
+    $ php bin/console assets:install web
