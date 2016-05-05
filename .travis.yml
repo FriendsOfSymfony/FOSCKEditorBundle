@@ -1,7 +1,6 @@
 language: php
 
 php:
-    - 5.3.3
     - 5.3
     - 5.4
     - 5.5
@@ -16,8 +15,6 @@ env:
         - SYMFONY_VERSION=2.3.*
 
 install:
-    - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config secure-http false; fi
-    - if [[ "$TRAVIS_PHP_VERSION" == "5.3.3" ]]; then composer config disable-tls true; fi
     - composer self-update
     - composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
     - composer require --no-update symfony/form:${SYMFONY_VERSION}
