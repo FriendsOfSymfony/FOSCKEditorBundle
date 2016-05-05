@@ -2,6 +2,7 @@
 
 ### 4.0.4 (????-??-??)
 
+ * d2de7ea - [Doc] Update installation for Symfony >= 3
  * fa7f379 - [Doc] Update documentation for plugin configuration.
  * 900e824 - [Doc] Add section about template overriding
 
