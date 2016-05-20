@@ -2,6 +2,7 @@
 
 ### 4.0.4 (????-??-??)
 
+ * de28bd5 - [DI] Fix form alias for Symfony 2.8
  * a11ef4f - [Travis] Remove PHP 5.3.3 build
  * d2de7ea - [Doc] Update installation for Symfony >= 3
  * fa7f379 - [Doc] Update documentation for plugin configuration.
