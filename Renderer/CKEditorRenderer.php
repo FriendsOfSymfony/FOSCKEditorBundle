@@ -139,6 +139,20 @@ class CKEditorRenderer implements CKEditorRendererInterface
             $template['imagesPath'] = $this->fixPath($this->fixUrl($template['imagesPath']));
         }
 
+        if (isset($template['templates'])) {
+            foreach ($template['templates'] as &$rawTemplate) {
+                if (isset($rawTemplate['template'])) {
+                    $rawTemplate['html'] = $this->getTemplating()->render(
+                        $rawTemplate['template'],
+                        isset($rawTemplate['template_parameters']) ? $rawTemplate['template_parameters'] : array()
+                    );
+                }
+
+                unset($rawTemplate['template']);
+                unset($rawTemplate['template_parameters']);
+            }
+        }
+
         $this->jsonBuilder
             ->reset()
             ->setValues($template);
@@ -325,5 +339,19 @@ class CKEditorRenderer implements CKEditorRendererInterface
     private function getRouter()
     {
         return $this->container->get('router');
+    }
+
+    /**
+     * Gets the templating engine.
+     *
+     * @return \Symfony\Component\Templating\EngineInterface|\Twig_Environment
+     */
+    private function getTemplating()
+    {
+        if ($this->container->has($templating = 'templating')) {
+            return $this->container->get($templating);
+        }
+
+        return $this->container->get('twig');
     }
 }

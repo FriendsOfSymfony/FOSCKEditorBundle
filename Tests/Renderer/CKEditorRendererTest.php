@@ -35,6 +35,12 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $routerMock;
 
+    /** @var \Symfony\Component\Templating\EngineInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $templatingMock;
+
+    /** @var \Twig_Environment|\PHPUnit_Framework_MockObject_MockObject */
+    private $twigMock;
+
     /**
      * {@inheritdoc}
      */
@@ -51,6 +57,10 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->templatingMock = $this->getMock('Symfony\Component\Templating\EngineInterface');
+        $this->twigMock = $this->getMockBuilder('\Twig_Environment')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->containerMock
@@ -67,6 +77,16 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
                     $this->routerMock,
                 ),
+                array(
+                    'templating',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->templatingMock,
+                ),
+                array(
+                    'twig',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->twigMock,
+                ),
             )));
 
         $this->renderer = new CKEditorRenderer($this->containerMock);
@@ -79,6 +99,8 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     {
         unset($this->renderer);
         unset($this->containerMock);
+        unset($this->twigMock);
+        unset($this->templatingMock);
         unset($this->routerMock);
         unset($this->assetsHelperMock);
     }
@@ -438,15 +460,115 @@ EOF;
      */
     public function testRenderTemplate($path, $asset, $url)
     {
+        $templates = array(
+            array(
+                'title' => 'Template title',
+                'html' => '<p>Template content</p>',
+            ),
+        );
+
         $this->assetsHelperMock
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo($path))
             ->will($this->returnValue($asset));
 
+        $json = json_encode(array('imagesPath' => $url, 'templates' => $templates));
+
         $this->assertSame(
-            'CKEDITOR.addTemplates("foo", {"imagesPath":'.json_encode($url).',"filename":"bat"});',
-            $this->renderer->renderTemplate('foo', array('imagesPath' => $path, 'filename' => 'bat'))
+            'CKEDITOR.addTemplates("foo", '.$json.');',
+            $this->renderer->renderTemplate('foo', array('imagesPath' => $path, 'templates' => $templates))
+        );
+    }
+
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testRenderTemplateWithTwigTemplating($path, $asset, $url)
+    {
+        $templates = array(
+            array(
+                'title'               => 'Template title',
+                'template'            => $template = 'template_name',
+                'template_parameters' => $templateParameters = array('foo' => 'bar'),
+            ),
+        );
+
+        $processedTemplates = array(
+            array(
+                'title' => 'Template title',
+                'html'  => $html = '<p>Template content</p>',
+            ),
+        );
+
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo($path))
+            ->will($this->returnValue($asset));
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('has')
+            ->with($this->identicalTo('templating'))
+            ->will($this->returnValue(false));
+
+        $this->twigMock
+            ->expects($this->once())
+            ->method('render')
+            ->with($this->identicalTo($template), $this->identicalTo($templateParameters))
+            ->will($this->returnValue($html));
+
+        $json = json_encode(array('imagesPath' => $url, 'templates'  => $processedTemplates));
+
+        $this->assertSame(
+            'CKEDITOR.addTemplates("foo", '.$json.');',
+            $this->renderer->renderTemplate('foo', array('imagesPath' => $path, 'templates' => $templates))
+        );
+    }
+
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testRenderTemplateWithPhpTemplating($path, $asset, $url)
+    {
+        $templates = array(
+            array(
+                'title'    => 'Template title',
+                'template' => $template = 'template_name',
+            ),
+        );
+
+        $processedTemplates = array(
+            array(
+                'title' => 'Template title',
+                'html'  => $html = '<p>Template content</p>',
+            ),
+        );
+
+        $this->assetsHelperMock
+            ->expects($this->once())
+            ->method('getUrl')
+            ->with($this->equalTo($path))
+            ->will($this->returnValue($asset));
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('has')
+            ->with($this->identicalTo('templating'))
+            ->will($this->returnValue(true));
+
+        $this->templatingMock
+            ->expects($this->once())
+            ->method('render')
+            ->with($this->identicalTo($template), $this->identicalTo(array()))
+            ->will($this->returnValue($html));
+
+        $json = json_encode(array('imagesPath' => $url, 'templates'  => $processedTemplates));
+
+        $this->assertSame(
+            'CKEDITOR.addTemplates("foo", '.$json.');',
+            $this->renderer->renderTemplate('foo', array('imagesPath' => $path, 'templates' => $templates))
         );
     }
 }
