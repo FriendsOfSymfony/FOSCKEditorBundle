@@ -32,6 +32,12 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     /** @var \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
     private $assetsHelperMock;
 
+    /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit_Framework_MockObject_MockObject */
+    private $requestMock;
+
+    /** @var \Symfony\Component\HttpFoundation\RequestStack|\PHPUnit_Framework_MockObject_MockObject */
+    private $requestStackMock;
+
     /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $routerMock;
 
@@ -56,6 +62,11 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
                 ->getMock();
         }
 
+        if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $this->requestStackMock = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        }
+
+        $this->requestMock = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
         $this->templatingMock = $this->getMock('Symfony\Component\Templating\EngineInterface');
         $this->twigMock = $this->getMockBuilder('\Twig_Environment')
@@ -71,6 +82,16 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
                     'assets.packages',
                     ContainerInterface::NULL_ON_INVALID_REFERENCE,
                     $this->assetsHelperMock,
+                ),
+                array(
+                    'request',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->requestMock,
+                ),
+                array(
+                    'request_stack',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->requestStackMock,
                 ),
                 array(
                     'router',
@@ -199,11 +220,119 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider languageProvider
      */
-    public function testRenderWidgetWithLanguage($symfonyLocale, $ckEditorLocale)
+    public function testRenderWidgetWithRequestStack($symfonyLocale, $ckEditorLocale)
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $this->markTestSkipped();
+        }
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('has')
+            ->with($this->identicalTo('request_stack'))
+            ->will($this->returnValue(true));
+
+        $this->requestStackMock
+            ->expects($this->once())
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->getMock('Symfony\Component\HttpFoundation\Request')));
+
+        $request
+            ->expects($this->once())
+            ->method('getLocale')
+            ->will($this->returnValue($symfonyLocale));
+
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"language":"'.$ckEditorLocale.'"});',
+            $this->renderer->renderWidget('foo', array())
+        );
+    }
+
+    /**
+     * @dataProvider languageProvider
+     */
+    public function testRenderWidgetWithRequest($symfonyLocale, $ckEditorLocale)
+    {
+        $this->containerMock
+            ->expects($this->exactly(2))
+            ->method('has')
+            ->will($this->returnValueMap(array(
+                array('request_stack', false),
+                array('request', true),
+            )));
+
+        $this->requestMock
+            ->expects($this->once())
+            ->method('getLocale')
+            ->will($this->returnValue($symfonyLocale));
+
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"language":"'.$ckEditorLocale.'"});',
+            $this->renderer->renderWidget('foo', array())
+        );
+    }
+
+    /**
+     * @dataProvider languageProvider
+     */
+    public function testRenderWidgetWithLocaleParameter($symfonyLocale, $ckEditorLocale)
+    {
+        $this->containerMock
+            ->expects($this->exactly(2))
+            ->method('has')
+            ->will($this->returnValueMap(array(
+                array('request_stack', false),
+                array('request', false),
+            )));
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('hasParameter')
+            ->with($this->identicalTo('locale'))
+            ->will($this->returnValue(true));
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('getParameter')
+            ->with($this->identicalTo('locale'))
+            ->will($this->returnValue($symfonyLocale));
+
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"language":"'.$ckEditorLocale.'"});',
+            $this->renderer->renderWidget('foo', array())
+        );
+    }
+
+    /**
+     * @dataProvider languageProvider
+     */
+    public function testRenderWidgetWithExplicitLanguage($symfonyLocale, $ckEditorLocale)
     {
         $this->assertSame(
             'CKEDITOR.replace("foo", {"language":"'.$ckEditorLocale.'"});',
             $this->renderer->renderWidget('foo', array('language' => $symfonyLocale))
+        );
+    }
+
+    public function testRenderWidgetWithoutLocale()
+    {
+        $this->containerMock
+            ->expects($this->exactly(2))
+            ->method('has')
+            ->will($this->returnValueMap(array(
+                array('request_stack', false),
+                array('request', false),
+            )));
+
+        $this->containerMock
+            ->expects($this->once())
+            ->method('hasParameter')
+            ->with($this->identicalTo('locale'))
+            ->will($this->returnValue(false));
+
+        $this->assertSame(
+            'CKEDITOR.replace("foo", []);',
+            $this->renderer->renderWidget('foo', array())
         );
     }
 

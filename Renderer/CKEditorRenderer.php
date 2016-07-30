@@ -169,6 +169,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixConfigLanguage(array $config)
     {
+        if (!isset($config['language']) && ($language = $this->getLanguage()) !== null) {
+            $config['language'] = $language;
+        }
+
         if (isset($config['language'])) {
             $config['language'] = strtolower(str_replace('_', '-', $config['language']));
         }
@@ -322,6 +326,52 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
+     * Gets the locale.
+     *
+     * @return string|null The locale.
+     */
+    private function getLanguage()
+    {
+        if (($request = $this->getRequest()) !== null) {
+            return $request->getLocale();
+        }
+
+        if ($this->container->hasParameter($parameter = 'locale')) {
+            return $this->container->getParameter($parameter);
+        }
+    }
+
+    /**
+     * Gets the request.
+     *
+     * @return \Symfony\Component\HttpFoundation\Request|null The request.
+     */
+    private function getRequest()
+    {
+        if ($this->container->has($service = 'request_stack')) {
+            return $this->container->get($service)->getMasterRequest();
+        }
+
+        if ($this->container->has($service = 'request')) {
+            return $this->container->get($service);
+        }
+    }
+
+    /**
+     * Gets the templating engine.
+     *
+     * @return \Symfony\Component\Templating\EngineInterface|\Twig_Environment The templating engine.
+     */
+    private function getTemplating()
+    {
+        if ($this->container->has($templating = 'templating')) {
+            return $this->container->get($templating);
+        }
+
+        return $this->container->get('twig');
+    }
+
+    /**
      * Gets the assets helper.
      *
      * @return \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|null The assets helper.
@@ -339,19 +389,5 @@ class CKEditorRenderer implements CKEditorRendererInterface
     private function getRouter()
     {
         return $this->container->get('router');
-    }
-
-    /**
-     * Gets the templating engine.
-     *
-     * @return \Symfony\Component\Templating\EngineInterface|\Twig_Environment
-     */
-    private function getTemplating()
-    {
-        if ($this->container->has($templating = 'templating')) {
-            return $this->container->get($templating);
-        }
-
-        return $this->container->get('twig');
     }
 }

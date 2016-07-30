@@ -1,6 +1,7 @@
 * :doc:`/usage/config`
 * :doc:`/usage/toolbar`
 * :doc:`/usage/loading`
+* :doc:`/usage/language`
 * :doc:`/usage/file-browse-upload`
 * :doc:`/usage/jquery`
 * :doc:`/usage/textarea-sync`
