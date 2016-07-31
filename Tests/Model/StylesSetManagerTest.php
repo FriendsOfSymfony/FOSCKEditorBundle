@@ -12,13 +12,14 @@
 namespace Ivory\CKEditorBundle\Tests\Model;
 
 use Ivory\CKEditorBundle\Model\StylesSetManager;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * Styles set manager test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StylesSetManagerTest extends \PHPUnit_Framework_TestCase
+class StylesSetManagerTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\Model\StylesSetManager */
     private $stylesSetManager;

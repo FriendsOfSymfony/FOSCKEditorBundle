@@ -12,13 +12,14 @@
 namespace Ivory\CKEditorBundle\Tests\Model;
 
 use Ivory\CKEditorBundle\Model\PluginManager;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * Plugin manager test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PluginManagerTest extends \PHPUnit_Framework_TestCase
+class PluginManagerTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\Model\PluginManager */
     private $pluginManager;

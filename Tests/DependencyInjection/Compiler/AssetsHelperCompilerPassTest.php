@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
@@ -20,7 +21,7 @@ use Symfony\Component\HttpKernel\Kernel;
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AssetsHelperCompilerPassTest extends \PHPUnit_Framework_TestCase
+class AssetsHelperCompilerPassTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass */
     private $assetsHelperCompilerPass;

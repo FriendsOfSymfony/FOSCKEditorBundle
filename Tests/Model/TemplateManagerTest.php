@@ -12,13 +12,14 @@
 namespace Ivory\CKEditorBundle\Tests\Model;
 
 use Ivory\CKEditorBundle\Model\TemplateManager;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * Template manager test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TemplateManagerTest extends \PHPUnit_Framework_TestCase
+class TemplateManagerTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\Model\TemplateManager */
     private $templateManager;

@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\Renderer;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -21,7 +22,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
+class CKEditorRendererTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRenderer */
     private $renderer;
@@ -63,17 +64,17 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
         }
 
         if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $this->requestStackMock = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+            $this->requestStackMock = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         }
 
-        $this->requestMock = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        $this->templatingMock = $this->getMock('Symfony\Component\Templating\EngineInterface');
+        $this->requestMock = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $this->routerMock = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->templatingMock = $this->createMock('Symfony\Component\Templating\EngineInterface');
         $this->twigMock = $this->getMockBuilder('\Twig_Environment')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->containerMock = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->containerMock
             ->expects($this->any())
             ->method('get')
@@ -235,7 +236,7 @@ class CKEditorRendererTest extends \PHPUnit_Framework_TestCase
         $this->requestStackMock
             ->expects($this->once())
             ->method('getMasterRequest')
-            ->will($this->returnValue($request = $this->getMock('Symfony\Component\HttpFoundation\Request')));
+            ->will($this->returnValue($request = $this->createMock('Symfony\Component\HttpFoundation\Request')));
 
         $request
             ->expects($this->once())

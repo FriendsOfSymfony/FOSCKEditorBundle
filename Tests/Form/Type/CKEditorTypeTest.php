@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\Form\Forms;
 
 /**
@@ -19,7 +20,7 @@ use Symfony\Component\Form\Forms;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
+class CKEditorTypeTest extends AbstractTestCase
 {
     /** @var \Symfony\Component\Form\FormFactoryInterface */
     private $factory;
@@ -47,10 +48,10 @@ class CKEditorTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->configManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
-        $this->pluginManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
-        $this->stylesSetManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\StylesSetManagerInterface');
-        $this->templateManagerMock = $this->getMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
+        $this->configManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
+        $this->pluginManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
+        $this->stylesSetManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\StylesSetManagerInterface');
+        $this->templateManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
 
         $this->ckEditorType = new CKEditorType(
             $this->configManagerMock,

@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\Template;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -20,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTemplateTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRenderer */
     protected $renderer;
@@ -39,7 +40,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->routerMock = $this->createMock('Symfony\Component\Routing\RouterInterface');
 
         if (class_exists('Symfony\Component\Asset\Packages')) {
             $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Asset\Packages')
@@ -56,7 +57,7 @@ abstract class AbstractTemplateTest extends \PHPUnit_Framework_TestCase
             ->method('getUrl')
             ->will($this->returnArgument(0));
 
-        $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->containerMock = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->containerMock
             ->expects($this->any())
             ->method('get')
@@ -249,7 +250,7 @@ EOF;
     private function getContext()
     {
         return array(
-            'form'         => $this->getMock('Symfony\Component\Form\FormView'),
+            'form'         => $this->createMock('Symfony\Component\Form\FormView'),
             'id'           => 'id',
             'value'        => '<p>value</p>',
             'enable'       => true,

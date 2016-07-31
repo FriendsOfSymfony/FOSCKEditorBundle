@@ -12,13 +12,14 @@
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * Resource compiler pass test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ResourceCompilerPassTest extends \PHPUnit_Framework_TestCase
+class ResourceCompilerPassTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass */
     private $compilerPass;

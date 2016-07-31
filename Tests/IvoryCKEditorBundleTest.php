@@ -19,7 +19,7 @@ use Ivory\CKEditorBundle\IvoryCKEditorBundle;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-class IvoryCKEditorBundleTest extends \PHPUnit_Framework_TestCase
+class IvoryCKEditorBundleTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\IvoryCKEditorBundle */
     private $bundle;

@@ -12,6 +12,7 @@
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -21,7 +22,7 @@ use Symfony\Component\HttpKernel\Kernel;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 {
     /** @var \Symfony\Component\DependencyInjection\ContainerBuilder */
     private $container;
@@ -50,8 +51,8 @@ abstract class AbstractIvoryCKEditorExtensionTest extends \PHPUnit_Framework_Tes
                 ->getMock();
         }
 
-        $this->routerMock = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        $this->formRendererMock = $this->getMock('Symfony\Component\Form\FormRendererInterface');
+        $this->routerMock = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->formRendererMock = $this->createMock('Symfony\Component\Form\FormRendererInterface');
 
         $this->container = new ContainerBuilder();
 

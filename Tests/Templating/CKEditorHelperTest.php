@@ -12,22 +12,23 @@
 namespace Ivory\CKEditorBundle\Tests\Templating;
 
 use Ivory\CKEditorBundle\Templating\CKEditorHelper;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * CKEditor helper test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorHelperTest extends \PHPUnit_Framework_TestCase
+class CKEditorHelperTest extends AbstractTestCase
 {
     public function testLegacyContainerConstructor()
     {
-        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $container
             ->expects($this->once())
             ->method('get')
             ->with($this->identicalTo('ivory_ck_editor.renderer'))
-            ->will($this->returnValue($this->getMock('Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface')));
+            ->will($this->returnValue($this->createMock('Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface')));
 
         new CKEditorHelper($container);
     }

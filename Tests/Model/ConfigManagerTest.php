@@ -12,13 +12,14 @@
 namespace Ivory\CKEditorBundle\Tests\Model;
 
 use Ivory\CKEditorBundle\Model\ConfigManager;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * Config manager test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ConfigManagerTest extends \PHPUnit_Framework_TestCase
+class ConfigManagerTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
     private $configManager;

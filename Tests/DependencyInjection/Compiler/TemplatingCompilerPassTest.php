@@ -12,13 +12,14 @@
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * Templating compiler pass test.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TemplatingCompilerPassTest extends \PHPUnit_Framework_TestCase
+class TemplatingCompilerPassTest extends AbstractTestCase
 {
     /** @var \Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass */
     private $compilerPass;
