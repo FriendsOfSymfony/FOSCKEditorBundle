@@ -2,6 +2,7 @@
 
 ### 4.0.4 (????-??-??)
 
+ * 1f3f94a - [PHPUnit] Upgrade to latest version
  * 1bd768d - [Renderer] Add automatic language support
  * dfe2e05 - [Renderer] Allow to render template with an engine
  * a1daa71 - Upgrade CKEditor to 4.5.10
