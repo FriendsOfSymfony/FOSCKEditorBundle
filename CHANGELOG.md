@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 4.0.4 (????-??-??)
+### 4.0.4 (2016-07-31)
 
  * 1f3f94a - [PHPUnit] Upgrade to latest version
  * 1bd768d - [Renderer] Add automatic language support
