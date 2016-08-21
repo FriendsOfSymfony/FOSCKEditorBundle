@@ -45,7 +45,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $this->registerFilebrowsers($config, $container);
         }
 
-        if (Kernel::VERSION_ID < 20800) {
+        if (Kernel::VERSION_ID < 30000) {
             $container->getDefinition('ivory_ck_editor.form.type')
                 ->clearTag('form.type')
                 ->addTag('form.type', array('alias' => 'ckeditor'));

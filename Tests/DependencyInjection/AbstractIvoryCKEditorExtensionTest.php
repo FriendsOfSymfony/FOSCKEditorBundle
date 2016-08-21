@@ -113,7 +113,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $tag = $this->container->getDefinition('ivory_ck_editor.form.type')->getTag('form.type');
 
-        if (Kernel::VERSION_ID < 20800) {
+        if (Kernel::VERSION_ID < 30000) {
             $this->assertSame(array(array('alias' => 'ckeditor')), $tag);
         } else {
             $this->assertSame(array(array()), $tag);
