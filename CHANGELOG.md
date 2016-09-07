@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 4.0.5 (????-??-??)
+### 4.0.5 (2016-09-07)
 
  * dde0e2c - Upgrade CKEditor to 4.5.11
  * a3554ed - Bring back form alias support for Symfony 2.8 which have been dropped accidentally
