@@ -30,6 +30,8 @@ Or you can define it in your widget:
 Configure your templates
 ------------------------
 
+.. code-block:: yaml
+
     # app/config/config.yml
     ivory_ck_editor:
         default_config: my_config
