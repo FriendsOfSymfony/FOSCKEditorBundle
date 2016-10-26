@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 4.0.6 (????-??-??)
+
+ * c06af42 - Added missing configuration parameters for dedicated templates
+ * 8898f62 - Update style.rst
+ * e831ece - Fixed a minor syntax issue
+ 
 ### 4.0.5 (2016-09-07)
 
  * dde0e2c - Upgrade CKEditor to 4.5.11
