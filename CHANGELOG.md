@@ -2,6 +2,7 @@
 
 ### 4.0.6 (????-??-??)
 
+ * 62ca1e1 - Fix usage of deprecated routing feature
  * c06af42 - Added missing configuration parameters for dedicated templates
  * 8898f62 - Update style.rst
  * e831ece - Fixed a minor syntax issue
