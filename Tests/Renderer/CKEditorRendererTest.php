@@ -445,7 +445,7 @@ class CKEditorRendererTest extends AbstractTestCase
             $this->renderer->renderWidget('foo', array(
                 'filebrowser'.$filebrowser.'Route'           => $route,
                 'filebrowser'.$filebrowser.'RouteParameters' => $routeParameters,
-                'filebrowser'.$filebrowser.'RouteAbsolute'   => $routeType,
+                'filebrowser'.$filebrowser.'RouteAbsolute'   => true,
             ))
         );
     }

@@ -235,13 +235,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
                 $config[$url] = $this->getRouter()->generate(
                     $config[$route],
                     isset($config[$routeParameters]) ? $config[$routeParameters] : array(),
-                    isset($config[$routeAbsolute])
-                        ? $config[$routeAbsolute]
-                        : (
-                            defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_PATH')
-                                ? UrlGeneratorInterface::ABSOLUTE_PATH
-                                : false
-                        )
+                    $this->fixRoutePath(!isset($config[$routeAbsolute]) || $config[$routeAbsolute])
                 );
             }
 
@@ -318,11 +312,25 @@ class CKEditorRenderer implements CKEditorRendererInterface
     {
         $assetsHelper = $this->getAssetsHelper();
 
-        if ($assetsHelper !== null) {
-            $url = $assetsHelper->getUrl($url);
+        return $assetsHelper !== null ? $assetsHelper->getUrl($url) : $url;
+    }
+
+    /**
+     * @param bool $routePath
+     *
+     * @return int|bool
+     */
+    private function fixRoutePath($routePath)
+    {
+        if ($routePath) {
+            return defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_PATH')
+                ? UrlGeneratorInterface::ABSOLUTE_PATH
+                : true;
         }
 
-        return $url;
+        return defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::RELATIVE_PATH')
+            ? UrlGeneratorInterface::RELATIVE_PATH
+            : false;
     }
 
     /**
@@ -364,11 +372,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function getTemplating()
     {
-        if ($this->container->has($templating = 'templating')) {
-            return $this->container->get($templating);
-        }
-
-        return $this->container->get('twig');
+        return $this->container->has($templating = 'templating')
+            ? $this->container->get($templating)
+            : $this->container->get('twig');
     }
 
     /**
