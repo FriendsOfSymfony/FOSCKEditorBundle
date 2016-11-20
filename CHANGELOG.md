@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 4.0.7 (????-??-??)
+
+ * c941240 - Upgrade CKEditor to 4.6
+ 
 ### 4.0.6 (2016-10-28)
 
  * 62ca1e1 - Fix usage of deprecated routing feature
