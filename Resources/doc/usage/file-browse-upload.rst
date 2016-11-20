@@ -78,7 +78,7 @@ configuration:
     # app/config/config.yml
     ivory_ck_editor:
         default_config: my_config
-        config:
+        configs:
             my_config:
                 filebrowserBrowseRoute:           "my_route"
                 filebrowserBrowseRouteParameters: { slug: "my-slug" }
