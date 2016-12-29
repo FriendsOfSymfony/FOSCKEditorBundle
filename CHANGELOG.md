@@ -2,7 +2,7 @@
 
 ### 4.0.7 (????-??-??)
 
- * c941240 - Upgrade CKEditor to 4.6
+ * b6f07d9 - Upgrade CKEditor to 4.6.1
  
 ### 4.0.6 (2016-10-28)
 
