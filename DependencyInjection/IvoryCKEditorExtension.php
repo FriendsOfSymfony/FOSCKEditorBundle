@@ -125,6 +125,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
 
         $definition = $container->getDefinition('ivory_ck_editor.config_manager');
         foreach ($config['configs'] as $name => $configuration) {
+            if (!isset($config['default_config'])) {
+                $config['default_config'] = $name;
+            }
+
             $definition->addMethodCall('setConfig', array($name, $configuration));
         }
 

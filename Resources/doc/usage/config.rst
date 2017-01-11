@@ -25,6 +25,11 @@ Define a configuration
                 extraPlugins:           "wordcount"
                 # ...
 
+.. note::
+
+    The first configuration defined will be used as default configuration
+    if you don't explicitly configure it.
+
 Use a configuration
 -------------------
 

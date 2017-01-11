@@ -33,10 +33,15 @@ class TwigTemplateTest extends AbstractTemplateTest
     {
         parent::setUp();
 
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem(array(__DIR__.'/../../Resources/views/Form')));
-        $this->twig->addExtension(new CKEditorExtension($this->renderer));
+        $symfonyTheme = '{% block widget_attributes %}{% endblock %}';
+        $ckeditorTheme = file_get_contents(__DIR__.'/../../Resources/views/Form/ckeditor_widget.html.twig');
 
-        $this->template = $this->twig->loadTemplate('ckeditor_widget.html.twig');
+        $this->twig = new \Twig_Environment(new \Twig_Loader_Array(array(
+            'ckeditor' => $symfonyTheme.$ckeditorTheme,
+        )));
+
+        $this->twig->addExtension(new CKEditorExtension($this->renderer));
+        $this->template = $this->twig->loadTemplate('ckeditor');
     }
 
     /**

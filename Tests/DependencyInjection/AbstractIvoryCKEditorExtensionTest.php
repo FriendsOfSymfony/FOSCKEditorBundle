@@ -259,6 +259,22 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame($expected, $configManager->getConfigs());
     }
 
+    public function testDefaultConfiguration()
+    {
+        $this->loadConfiguration($this->container, 'default_configuration');
+        $this->container->compile();
+
+        $configManager = $this->container->get('ivory_ck_editor.config_manager');
+
+        $expected = array(
+            'default' => array('uiColor' => '#000000'),
+            'custom'  => array('uiColor' => '#ffffff'),
+        );
+
+        $this->assertSame('default', $configManager->getDefaultConfig());
+        $this->assertSame($expected, $configManager->getConfigs());
+    }
+
     public function testBasicToolbar()
     {
         $this->loadConfiguration($this->container, 'basic_toolbar');
