@@ -103,6 +103,7 @@ var CKEDITOR_BASEPATH = "base_path";
 <script type="text/javascript" src="js_path"></script>
 <script type="text/javascript">
 if (CKEDITOR.instances["id"]) {
+CKEDITOR.instances["id"].destroy(true);
 delete CKEDITOR.instances["id"];
 }
 CKEDITOR.replace("id", []);
@@ -149,6 +150,7 @@ var CKEDITOR_BASEPATH = "base_path";
 <script type="text/javascript" src="js_path"></script>
 <script type="text/javascript">
 if (CKEDITOR.instances["id"]) {
+CKEDITOR.instances["id"].destroy(true);
 delete CKEDITOR.instances["id"];
 }
 CKEDITOR.plugins.addExternal("foo", "path", "filename");
@@ -176,6 +178,7 @@ var CKEDITOR_BASEPATH="base_path";
 <script type="text/javascript">
 $(function() {
 if (CKEDITOR.instances["id"]) {
+CKEDITOR.instances["id"].destroy(true);
 deleteCKEDITOR.instances["id"];
 }
 CKEDITOR.replace("id",[]);
@@ -197,6 +200,7 @@ var CKEDITOR_BASEPATH = "base_path";
 <script type="text/javascript">
 require(['ckeditor'], function() {
 if (CKEDITOR.instances["id"]) {
+CKEDITOR.instances["id"].destroy(true);
 deleteCKEDITOR.instances["id"];
 }
 CKEDITOR.replace("id",[]);
@@ -213,6 +217,7 @@ EOF;
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 if (CKEDITOR.instances["id"]) {
+CKEDITOR.instances["id"].destroy(true);
 delete CKEDITOR.instances["id"];
 }
 CKEDITOR.replace("id", []);

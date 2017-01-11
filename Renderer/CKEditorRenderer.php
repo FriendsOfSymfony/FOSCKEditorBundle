@@ -97,7 +97,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     public function renderDestroy($id)
     {
-        return sprintf('if (CKEDITOR.instances["%s"]) { delete CKEDITOR.instances["%s"]; }', $id, $id);
+        return sprintf(
+            'if (CKEDITOR.instances["%1$s"]) { CKEDITOR.instances["%1$s"].destroy(true); delete CKEDITOR.instances["%1$s"]; }',
+            $id
+        );
     }
 
     /**
@@ -123,8 +126,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
             ->setValues($stylesSet);
 
         return sprintf(
-            'if (CKEDITOR.stylesSet.get("%s") === null) { CKEDITOR.stylesSet.add("%s", %s); }',
-            $name,
+            'if (CKEDITOR.stylesSet.get("%1$s") === null) { CKEDITOR.stylesSet.add("%1$s", %2$s); }',
             $name,
             $this->jsonBuilder->build()
         );

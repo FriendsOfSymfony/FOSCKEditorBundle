@@ -555,7 +555,7 @@ EOF;
     public function testRenderDestroy()
     {
         $this->assertSame(
-            'if (CKEDITOR.instances["foo"]) { delete CKEDITOR.instances["foo"]; }',
+            'if (CKEDITOR.instances["foo"]) { CKEDITOR.instances["foo"].destroy(true); delete CKEDITOR.instances["foo"]; }',
             $this->renderer->renderDestroy('foo')
         );
     }
