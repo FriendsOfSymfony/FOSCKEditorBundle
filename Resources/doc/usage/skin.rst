@@ -23,12 +23,16 @@ Then, to use your skin, just need to register it globally in your configuration:
         default_config: my_config
         configs:
             my_config:
-                skin: "skin_name,ckeditor/skins/skin_name/"
+                skin: "skin_name,/bundles/mybundle/skins/skin_name/"
 
 Or you can do it in your widget:
 
 .. code-block:: php
 
     $builder->add('field', 'ckeditor', array(
-        'config' => array('skin' => 'skin_name,ckeditor/skins/skin_name/'),
+        'config' => array('skin' => 'skin_name,/bundles/mybundle/skins/skin_name/'),
     ));
+
+.. note::
+
+    The skin path must be an absolute path relative to the `web` directory.
