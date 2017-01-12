@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * 71b21ef - [License] Happy new year
  * de2097d - [Doc] Improve skin
  * 7ef1c96 - Improve toolbar management
  * 7377bec - [Travis] Upgrade matrix
