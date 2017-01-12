@@ -12,7 +12,7 @@
 namespace Ivory\CKEditorBundle\Exception;
 
 /**
- * Depencency injection exception.
+ * Dependency injection exception.
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -28,29 +28,5 @@ class DependencyInjectionException extends Exception
     public static function invalidDefaultConfig($name)
     {
         return new static(sprintf('The default config "%s" does not exist.', $name));
-    }
-
-    /**
-     * Gets the "INVALID TOOLBAR" exception.
-     *
-     * @param string $toolbar The invalid toolbar.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\DependencyInjectionException The "INVALID TOOLBAR" exception.
-     */
-    public static function invalidToolbar($toolbar)
-    {
-        return new static(sprintf('The toolbar "%s" does not exist.', $toolbar));
-    }
-
-    /**
-     * Gets the "INVALID TOOLBAR ITEM" exception.
-     *
-     * @param string $item The invalid toolbar item.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\DependencyInjectionException The "INVALID TOOLBAR ITEM" exception.
-     */
-    public static function invalidToolbarItem($item)
-    {
-        return new static(sprintf('The toolbar item "%s" does not exist.', $item));
     }
 }

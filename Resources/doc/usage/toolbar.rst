@@ -31,9 +31,9 @@ Custom Toolbar
 
 Build a toolbar in the configuration or especially in the widget is really a
 pain. Each time, you want a custom one, you need to redefine all the structure.
-To avoid this duplication, the bundle allows you to define your toolbars in a
-separate node and reuse them. This feature is only available in your
-configuration.
+To avoid this duplication, the bundle allows you to define your own toolbars or
+override the built-in ones in a separate node and reuse them. This feature is
+only available in your configuration.
 
 .. code-block:: yaml
 
@@ -86,3 +86,22 @@ by prefixing them with a ``@``.
                 document: [ "Source", "-", "Save" ]
                 link:     [ "Anchor" ]
                 tool:     [ "Maximize" ]
+
+The built-in configurations (full, standard, basic) are also using items so if
+you want to just override one part of a configuration, just override it:
+
+.. code-block:: yaml
+
+    ivory_ck_editor:
+        configs:
+            my_config:
+                toolbar: "full"
+        toolbars:
+            items:
+                full.colors: [ "TextColor", "BGColor" ]
+                full.document: [ "Source", "-", "Preview", "Print" ]
+
+.. note::
+
+    If you want the full list of built-in items, check the
+    `Ivory\CKEditorBundle\Model\ToolbarManager` class.

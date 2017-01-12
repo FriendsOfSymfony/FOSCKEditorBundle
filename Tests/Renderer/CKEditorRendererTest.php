@@ -453,6 +453,35 @@ class CKEditorRendererTest extends AbstractTestCase
     /**
      * @dataProvider filebrowserProvider
      */
+    public function testRenderWidgetWithMaximalRelativeFileBrowser($filebrowser)
+    {
+        $this->routerMock
+            ->expects($this->once())
+            ->method('generate')
+            ->with(
+                $this->identicalTo($route = 'browse_route'),
+                $this->identicalTo($routeParameters = array('foo' => 'bar')),
+                $this->identicalTo(
+                    $routeType = defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_PATH')
+                        ? UrlGeneratorInterface::RELATIVE_PATH
+                        : false
+                )
+            )
+            ->will($this->returnValue('browse_url'));
+
+        $this->assertSame(
+            'CKEDITOR.replace("foo", {"filebrowser'.$filebrowser.'Url":"browse_url"});',
+            $this->renderer->renderWidget('foo', array(
+                'filebrowser'.$filebrowser.'Route'           => $route,
+                'filebrowser'.$filebrowser.'RouteParameters' => $routeParameters,
+                'filebrowser'.$filebrowser.'RouteAbsolute'   => false,
+            ))
+        );
+    }
+
+    /**
+     * @dataProvider filebrowserProvider
+     */
     public function testRenderWidgetWithRouteFileBrowserHandler($filebrowser)
     {
         $this->routerMock

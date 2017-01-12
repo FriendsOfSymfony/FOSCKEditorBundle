@@ -1,5 +1,15 @@
 # UPGRADE
 
+### 4.0 to 5.0
+
+The `Ivory\CKEditorBundle\Form\Type\CKEditorType` constructor now requires an `Ivory\CKEditorBundle\Model\ToolbarManagerInterface`
+as 5th arguments.
+ 
+The toolbars and toolbar items are now resolved at runtime instead at compile time.
+
+The `Ivory\CKEditorBundle\Exception\DependencyInjectionException::invalidToolbar` and
+`Ivory\CKEditorBundle\Exception\DependencyInjectionException::invalidToolbarItem` methods have been dropped.
+
 ### 3.0 to 4.0
 
 The rendering of the CKEditor widget for the PHP and twig engine have been updated. Instead of taking each option as

@@ -43,6 +43,9 @@ class CKEditorTypeTest extends AbstractTestCase
     /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $templateManagerMock;
 
+    /** @var \Ivory\CKEditorBundle\Model\ToolbarManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $toolbarManagerMock;
+
     /**
      * {@inheritdooc}
      */
@@ -52,12 +55,14 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->pluginManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
         $this->stylesSetManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\StylesSetManagerInterface');
         $this->templateManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
+        $this->toolbarManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\ToolbarManagerInterface');
 
         $this->ckEditorType = new CKEditorType(
             $this->configManagerMock,
             $this->pluginManagerMock,
             $this->stylesSetManagerMock,
-            $this->templateManagerMock
+            $this->templateManagerMock,
+            $this->toolbarManagerMock
         );
 
         $this->factory = Forms::createFormFactoryBuilder()
@@ -78,6 +83,7 @@ class CKEditorTypeTest extends AbstractTestCase
         unset($this->pluginManagerMock);
         unset($this->stylesSetManagerMock);
         unset($this->templateManagerMock);
+        unset($this->toolbarManagerMock);
         unset($this->ckEditorType);
         unset($this->factory);
     }
@@ -100,6 +106,7 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertSame($this->pluginManagerMock, $this->ckEditorType->getPluginManager());
         $this->assertSame($this->stylesSetManagerMock, $this->ckEditorType->getStylesSetManager());
         $this->assertSame($this->templateManagerMock, $this->ckEditorType->getTemplateManager());
+        $this->assertSame($this->toolbarManagerMock, $this->ckEditorType->getToolbarManager());
     }
 
     public function testSetFilebrowsers()
@@ -529,8 +536,14 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->configManagerMock
             ->expects($this->once())
             ->method('getConfig')
-            ->with('default')
+            ->with($this->identicalTo('default'))
             ->will($this->returnValue($config));
+
+        $this->toolbarManagerMock
+            ->expects($this->once())
+            ->method('resolveToolbar')
+            ->with($this->identicalTo('default'))
+            ->will($this->returnValue($config['toolbar'] = array('foo' => 'bar')));
 
         $form = $this->factory->create($this->formType, null, array('config_name' => 'default'));
         $view = $form->createView();
@@ -588,6 +601,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ->method('getConfig')
             ->with('default')
             ->will($this->returnValue(array_merge($configuredConfig, $explicitConfig)));
+
+        $this->toolbarManagerMock
+            ->expects($this->once())
+            ->method('resolveToolbar')
+            ->with($this->identicalTo('default'))
+            ->will($this->returnValue($configuredConfig['toolbar'] = array('foo' => 'bar')));
 
         $form = $this->factory->create(
             $this->formType,

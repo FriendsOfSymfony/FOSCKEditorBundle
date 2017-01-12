@@ -10,6 +10,7 @@
             <argument type="service" id="ivory_ck_editor.plugin_manager" />
             <argument type="service" id="ivory_ck_editor.styles_set_manager" />
             <argument type="service" id="ivory_ck_editor.template_manager" />
+            <argument type="service" id="ivory_ck_editor.toolbar_manager" />
             <tag name="form.type" />
         </service>
 
@@ -17,5 +18,6 @@
         <service id="ivory_ck_editor.plugin_manager" class="Ivory\CKEditorBundle\Model\PluginManager" />
         <service id="ivory_ck_editor.styles_set_manager" class="Ivory\CKEditorBundle\Model\StylesSetManager" />
         <service id="ivory_ck_editor.template_manager" class="Ivory\CKEditorBundle\Model\TemplateManager" />
+        <service id="ivory_ck_editor.toolbar_manager" class="Ivory\CKEditorBundle\Model\ToolbarManager" />
     </services>
 </container>

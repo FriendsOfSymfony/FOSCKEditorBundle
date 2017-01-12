@@ -57,4 +57,12 @@ register these dependencies. Hopefully, the ``wordcount`` has no extra dependenc
 but other plugin can require extra ones. So if it is the case, you need to redo
 the process for them and so on.
 
+Plugin icon
+-----------
+
+If you don't configure a built-in toolbar or a custom toolbar, the plugin icon
+should be visible automatically according to the plugin configuration otherwise,
+it is your responsibility to configure it. Take a look to this
+:doc:`documentation <toolbar>`.
+
 .. _`Wordcount`: http://ckeditor.com/addon/wordcount

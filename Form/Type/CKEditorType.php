@@ -15,6 +15,7 @@ use Ivory\CKEditorBundle\Model\ConfigManagerInterface;
 use Ivory\CKEditorBundle\Model\PluginManagerInterface;
 use Ivory\CKEditorBundle\Model\StylesSetManagerInterface;
 use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
+use Ivory\CKEditorBundle\Model\ToolbarManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
@@ -79,6 +80,9 @@ class CKEditorType extends AbstractType
     /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface */
     private $templateManager;
 
+    /** @var \Ivory\CKEditorBundle\Model\ToolbarManagerInterface */
+    private $toolbarManager;
+
     /**
      * Creates a CKEditor type.
      *
@@ -86,17 +90,20 @@ class CKEditorType extends AbstractType
      * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface    $pluginManager    The plugin manager.
      * @param \Ivory\CKEditorBundle\Model\StylesSetManagerInterface $stylesSetManager The styles set manager.
      * @param \Ivory\CKEditorBundle\Model\TemplateManagerInterface  $templateManager  The template manager.
+     * @param \Ivory\CKEditorBundle\Model\ToolbarManagerInterface   $toolbarManager   The toolbar manager.
      */
     public function __construct(
         ConfigManagerInterface $configManager,
         PluginManagerInterface $pluginManager,
         StylesSetManagerInterface $stylesSetManager,
-        TemplateManagerInterface $templateManager
+        TemplateManagerInterface $templateManager,
+        ToolbarManagerInterface $toolbarManager
     ) {
         $this->setConfigManager($configManager);
         $this->setPluginManager($pluginManager);
         $this->setStylesSetManager($stylesSetManager);
         $this->setTemplateManager($templateManager);
+        $this->setToolbarManager($toolbarManager);
     }
 
     /**
@@ -434,6 +441,26 @@ class CKEditorType extends AbstractType
     }
 
     /**
+     * Gets the CKEditor toolbar manager.
+     *
+     * @return \Ivory\CKEditorBundle\Model\ToolbarManagerInterface The CKEditor toolbar manager.
+     */
+    public function getToolbarManager()
+    {
+        return $this->toolbarManager;
+    }
+
+    /**
+     * Sets the CKEditor toolbar manager.
+     *
+     * @param \Ivory\CKEditorBundle\Model\ToolbarManagerInterface $toolbarManager The CKEditor toolbar manager.
+     */
+    public function setToolbarManager(ToolbarManagerInterface $toolbarManager)
+    {
+        $this->toolbarManager = $toolbarManager;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -459,6 +486,7 @@ class CKEditorType extends AbstractType
             $templateManager = clone $this->templateManager;
 
             $config = $options['config'];
+
             if ($options['config_name'] === null) {
                 $options['config_name'] = uniqid('ivory', true);
                 $configManager->setConfig($options['config_name'], $config);
@@ -470,7 +498,13 @@ class CKEditorType extends AbstractType
             $stylesSetManager->setStylesSets($options['styles']);
             $templateManager->setTemplates($options['templates']);
 
-            $builder->setAttribute('config', $configManager->getConfig($options['config_name']));
+            $config = $configManager->getConfig($options['config_name']);
+
+            if (isset($config['toolbar']) && is_string($config['toolbar'])) {
+                $config['toolbar'] = $this->toolbarManager->resolveToolbar($config['toolbar']);
+            }
+
+            $builder->setAttribute('config', $config);
             $builder->setAttribute('plugins', $pluginManager->getPlugins());
             $builder->setAttribute('styles', $stylesSetManager->getStylesSets());
             $builder->setAttribute('templates', $templateManager->getTemplates());
@@ -587,13 +621,9 @@ class CKEditorType extends AbstractType
      */
     public function getParent()
     {
-        // Prefer the FQCN if the getBlockPrefix method exists on the parent method
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            return 'Symfony\Component\Form\Extension\Core\Type\TextareaType';
-        }
-
-        // Return the legacy shortname; drop this when Symfony <2.8 support is removed
-        return 'textarea';
+        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+            : 'textarea';
     }
 
     /**

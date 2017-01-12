@@ -192,6 +192,17 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame('foo/jquery.js', $this->container->get('ivory_ck_editor.form.type')->getJqueryPath());
     }
 
+    public function testCustomPaths()
+    {
+        $this->loadConfiguration($this->container, 'custom_paths');
+        $this->container->compile();
+
+        $ckEditorType = $this->container->get('ivory_ck_editor.form.type');
+
+        $this->assertSame('foo/', $ckEditorType->getBasePath());
+        $this->assertSame('foo/ckeditor.js', $ckEditorType->getJsPath());
+    }
+
     public function testFilebrowsers()
     {
         $this->loadConfiguration($this->container, 'filebrowsers');
@@ -212,13 +223,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $expected = array(
             'default' => array(
-                'toolbar' => array(
-                    array('Source', '-', 'Save'),
-                    '/',
-                    array('Anchor'),
-                    '/',
-                    array('Maximize'),
-                ),
+                'toolbar' => 'default',
                 'uiColor' => '#000000',
             ),
         );
@@ -236,21 +241,11 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $expected = array(
             'default' => array(
-                'toolbar' => array(
-                    array('Source', '-', 'Save'),
-                    '/',
-                    array('Anchor'),
-                    '/',
-                    array('Maximize'),
-                ),
+                'toolbar' => 'default',
                 'uiColor' => '#000000',
             ),
             'custom' => array(
-                'toolbar' => array(
-                    array('Source', '-', 'Save'),
-                    '/',
-                    array('Anchor'),
-                ),
+                'toolbar' => 'custom',
                 'uiColor' => '#ffffff',
             ),
         );
@@ -273,39 +268,6 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $this->assertSame('default', $configManager->getDefaultConfig());
         $this->assertSame($expected, $configManager->getConfigs());
-    }
-
-    public function testBasicToolbar()
-    {
-        $this->loadConfiguration($this->container, 'basic_toolbar');
-        $this->container->compile();
-
-        $configManager = $this->container->get('ivory_ck_editor.config_manager');
-        $config = $configManager->getConfig('default');
-
-        $this->assertCount(4, $config['toolbar']);
-    }
-
-    public function testStandardToolbar()
-    {
-        $this->loadConfiguration($this->container, 'standard_toolbar');
-        $this->container->compile();
-
-        $configManager = $this->container->get('ivory_ck_editor.config_manager');
-        $config = $configManager->getConfig('default');
-
-        $this->assertCount(10, $config['toolbar']);
-    }
-
-    public function testFullToolbar()
-    {
-        $this->loadConfiguration($this->container, 'full_toolbar');
-        $this->container->compile();
-
-        $configManager = $this->container->get('ivory_ck_editor.config_manager');
-        $config = $configManager->getConfig('default');
-
-        $this->assertCount(13, $config['toolbar']);
     }
 
     public function testPlugins()
@@ -379,24 +341,38 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame($expected, $this->container->get('ivory_ck_editor.template_manager')->getTemplates());
     }
 
-    public function testCustomPaths()
+    public function testToolbars()
     {
-        $this->loadConfiguration($this->container, 'custom_paths');
+        $this->loadConfiguration($this->container, 'toolbars');
         $this->container->compile();
 
-        $ckEditorType = $this->container->get('ivory_ck_editor.form.type');
+        $toolbarManager = $this->container->get('ivory_ck_editor.toolbar_manager');
 
-        $this->assertSame('foo/', $ckEditorType->getBasePath());
-        $this->assertSame('foo/ckeditor.js', $ckEditorType->getJsPath());
-    }
+        $this->assertSame(
+            array(
+                'document' => array('Source', '-', 'Save'),
+                'tools'    => array('Maximize'),
+            ),
+            array_intersect_key($toolbarManager->getItems(), array('document' => true, 'tools' => true))
+        );
 
-    public function testTemplatingConfiguration()
-    {
-        $this->container->compile();
-
-        $helper = $this->container->get('ivory_ck_editor.templating.helper');
-
-        $this->assertInstanceOf('Ivory\CKEditorBundle\Templating\CKEditorHelper', $helper);
+        $this->assertSame(
+            array(
+                'default' => array(
+                    '@document',
+                    '/',
+                    array('Anchor'),
+                    '/',
+                    '@tools',
+                ),
+                'custom' => array(
+                    '@document',
+                    '/',
+                    array('Anchor'),
+                ),
+            ),
+            array_intersect_key($toolbarManager->getToolbars(), array('default' => true, 'custom' => true))
+        );
     }
 
     /**
@@ -406,26 +382,6 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
     public function testInvalidDefaultConfig()
     {
         $this->loadConfiguration($this->container, 'invalid_default_config');
-        $this->container->compile();
-    }
-
-    /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\DependencyInjectionException
-     * @expectedExceptionMessage The toolbar item "foo" does not exist.
-     */
-    public function testInvalidToolbarItem()
-    {
-        $this->loadConfiguration($this->container, 'invalid_toolbar_item');
-        $this->container->compile();
-    }
-
-    /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\DependencyInjectionException
-     * @expectedExceptionMessage The toolbar "foo" does not exist.
-     */
-    public function testInvalidToolbar()
-    {
-        $this->loadConfiguration($this->container, 'invalid_toolbar');
         $this->container->compile();
     }
 }
