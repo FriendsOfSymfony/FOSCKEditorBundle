@@ -2,6 +2,11 @@
 
 ### 5.0.0 (????-??-??)
 
+ * de2097d - [Doc] Improve skin
+ * 7ef1c96 - Improve toolbar management
+ * 7377bec - [Travis] Upgrade matrix
+ * 953e3eb - Properly destroy CKEditor instances
+ * 9273300 - Automatically use the first config as default config
  * b6f07d9 - Upgrade CKEditor to 4.6.1
  
 ### 4.0.6 (2016-10-28)
