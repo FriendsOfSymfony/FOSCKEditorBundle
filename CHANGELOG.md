@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * 7ab5db8 - Make AbstractTestCase abstract
  * e0f48e5 - Update CONTRIBUTING
  * eafe9e4 - Remove 4.x BC paths
  * 1acf8bc - [Scrutinizer] Fix code coverage configuration
