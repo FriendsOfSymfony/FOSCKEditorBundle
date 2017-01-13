@@ -12,7 +12,6 @@
 namespace Ivory\CKEditorBundle\Templating;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\Helper\Helper;
 
 /**
@@ -31,26 +30,8 @@ class CKEditorHelper extends Helper implements CKEditorRendererInterface
      *
      * @param \Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface $renderer The CKEditor renderer.
      */
-    public function __construct($renderer)
+    public function __construct(CKEditorRendererInterface $renderer)
     {
-        if ($renderer instanceof ContainerInterface) {
-            @trigger_error(sprintf(
-                'Passing a "%s" to the "%s" constructor has been deprecated in IvoryCKEditorBundle 4.0 and will be removed in 5.0. Use the "%s" instead.',
-                'Symfony\Component\DependencyInjection\ContainerInterface',
-                'Ivory\CKEditorBundle\Templating\CKEditorHelper',
-                'Ivory\CKEditorBundle\Renderer\CKEditorRenderer'
-            ), E_USER_DEPRECATED);
-
-            $renderer = $renderer->get('ivory_ck_editor.renderer');
-        }
-
-        if (!$renderer instanceof CKEditorRendererInterface) {
-            throw new \InvalidArgumentException(sprintf(
-                'The CKEditor renderer must be an instance of "%s".',
-                'Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface'
-            ));
-        }
-
         $this->renderer = $renderer;
     }
 
