@@ -2,6 +2,8 @@
 
 ### 5.0.0 (????-??-??)
 
+ * e0f48e5 - Update CONTRIBUTING
+ * eafe9e4 - Remove 4.x BC paths
  * 1acf8bc - [Scrutinizer] Fix code coverage configuration
  * 9d52b25 - Upgrade CKEditor to 4.6.2
  * 71b21ef - [License] Happy new year
