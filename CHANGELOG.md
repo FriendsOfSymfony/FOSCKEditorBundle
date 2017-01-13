@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * 86322c4 - [Travis] Add PHP 7.1 to the matrix
  * 7ab5db8 - Make AbstractTestCase abstract
  * e0f48e5 - Update CONTRIBUTING
  * eafe9e4 - Remove 4.x BC paths
