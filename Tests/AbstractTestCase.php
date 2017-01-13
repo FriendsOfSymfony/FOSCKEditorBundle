@@ -14,7 +14,7 @@ namespace Ivory\CKEditorBundle\Tests;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class AbstractTestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * Creates a mock.
