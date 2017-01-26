@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * dddc53f - Add PHP-CS-Fixer support
  * 71393af - [Travis] Only build master branch and PRs
  * 87f7834 - [Travis] Align all Symfony deps when building
  * 86322c4 - [Travis] Add PHP 7.1 to the matrix
