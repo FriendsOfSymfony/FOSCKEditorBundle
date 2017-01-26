@@ -12,18 +12,14 @@
 namespace Ivory\CKEditorBundle\Exception;
 
 /**
- * Styles set manager exception.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class StylesSetManagerException extends Exception
 {
     /**
-     * Gets the "STYLES SET DOES NOT EXIST" exception.
+     * @param string $name
      *
-     * @param string $name The invalid CKEditor styles set name.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\StylesSetManagerException The "STYLES SET DOES NOT EXIST" exception.
+     * @return StylesSetManagerException
      */
     public static function stylesSetDoesNotExist($name)
     {

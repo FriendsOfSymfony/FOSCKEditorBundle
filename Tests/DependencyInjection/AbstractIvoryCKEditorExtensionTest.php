@@ -13,28 +13,38 @@ namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
- * Abstract Ivory CKEditor extension test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 {
-    /** @var \Symfony\Component\DependencyInjection\ContainerBuilder */
+    /**
+     * @var ContainerBuilder
+     */
     private $container;
 
-    /** @var \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
-    private $assetsHelperMock;
+    /**
+     * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $packages;
 
-    /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $routerMock;
+    /**
+     * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $router;
 
-    /** @var \Symfony\Component\Form\FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $formRendererMock;
+    /**
+     * @var FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $formRenderer;
 
     /**
      * {@inheritdoc}
@@ -42,44 +52,32 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
     protected function setUp()
     {
         if (class_exists('Symfony\Component\Asset\Packages')) {
-            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Asset\Packages')
+            $this->packages = $this->getMockBuilder('Symfony\Component\Asset\Packages')
                 ->disableOriginalConstructor()
                 ->getMock();
         } else {
-            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            $this->packages = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
                 ->disableOriginalConstructor()
                 ->getMock();
         }
 
-        $this->routerMock = $this->createMock('Symfony\Component\Routing\RouterInterface');
-        $this->formRendererMock = $this->createMock('Symfony\Component\Form\FormRendererInterface');
+        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->formRenderer = $this->createMock('Symfony\Component\Form\FormRendererInterface');
 
         $this->container = new ContainerBuilder();
 
-        $this->container->set('assets.packages', $this->assetsHelperMock);
-        $this->container->set('router', $this->routerMock);
-        $this->container->set('templating.form.renderer', $this->formRendererMock);
-        $this->container->set('twig.form.renderer', $this->formRendererMock);
+        $this->container->set('assets.packages', $this->packages);
+        $this->container->set('router', $this->router);
+        $this->container->set('templating.form.renderer', $this->formRenderer);
+        $this->container->set('twig.form.renderer', $this->formRenderer);
 
         $this->container->registerExtension($extension = new IvoryCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->assetsHelperMock);
-        unset($this->routerMock);
-        unset($this->container);
-    }
-
-    /**
-     * Loads a configuration.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container     The container.
-     * @param string                                                  $configuration The configuration.
+     * @param ContainerBuilder $container
+     * @param string           $configuration
      */
     abstract protected function loadConfiguration(ContainerBuilder $container, $configuration);
 

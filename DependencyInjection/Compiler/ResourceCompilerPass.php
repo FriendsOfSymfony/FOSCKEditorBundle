@@ -15,8 +15,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Resource compiler pass.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ResourceCompilerPass implements CompilerPassInterface

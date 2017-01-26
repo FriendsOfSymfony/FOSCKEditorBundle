@@ -17,11 +17,9 @@ namespace Ivory\CKEditorBundle\Tests;
 abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Creates a mock.
+     * @param string $originalClassName
      *
-     * @param string $originalClassName The original class name.
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject The mock.
+     * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function createMock($originalClassName)
     {

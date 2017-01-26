@@ -15,8 +15,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Templating compiler pass.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class TemplatingCompilerPass implements CompilerPassInterface

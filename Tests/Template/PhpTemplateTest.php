@@ -12,25 +12,31 @@
 namespace Ivory\CKEditorBundle\Tests\Template;
 
 use Ivory\CKEditorBundle\Templating\CKEditorHelper;
+use Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper;
+use Symfony\Component\Templating\Helper\SlotsHelper;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
 
 /**
- * PHP template test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class PhpTemplateTest extends AbstractTemplateTest
 {
-    /** @var \Symfony\Component\Templating\PhpEngine */
+    /**
+     * @var PhpEngine
+     */
     private $phpEngine;
 
-    /** @var \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper|\PHPUnit_Framework_MockObject_MockObject */
-    private $formHelperMock;
+    /**
+     * @var FormHelper|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $formHelper;
 
-    /** @var \Symfony\Component\Templating\Helper\SlotsHelper|\PHPUnit_Framework_MockObject_MockObject */
-    private $slotsHelperMock;
+    /**
+     * @var SlotsHelper|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $slotsHelper;
 
     /**
      * {@inheritdoc}
@@ -39,11 +45,11 @@ class PhpTemplateTest extends AbstractTemplateTest
     {
         parent::setUp();
 
-        $this->formHelperMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper')
+        $this->formHelper = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->slotsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\SlotsHelper')
+        $this->slotsHelper = $this->getMockBuilder('Symfony\Component\Templating\Helper\SlotsHelper')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -51,22 +57,11 @@ class PhpTemplateTest extends AbstractTemplateTest
             new TemplateNameParser(),
             new FilesystemLoader(array(__DIR__.'/../../Resources/views/Form/%name%')),
             array(
-                'form'  => $this->formHelperMock,
-                'slots' => $this->slotsHelperMock,
+                'form'  => $this->formHelper,
+                'slots' => $this->slotsHelper,
                 new CKEditorHelper($this->renderer),
             )
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->formHelperMock);
-        unset($this->phpEngine);
     }
 
     /**

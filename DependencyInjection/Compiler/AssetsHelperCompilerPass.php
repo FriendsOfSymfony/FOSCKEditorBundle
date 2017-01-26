@@ -11,15 +11,13 @@
 
 namespace Ivory\CKEditorBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * Create assets.packages fallback alias for Symfony < 2.7
- *
- * @author Adam Misiorny <adam.misiorny@gmail.com>
  * @author GeLo <geloen.eric@gmail.com>
+ * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 class AssetsHelperCompilerPass implements CompilerPassInterface
 {

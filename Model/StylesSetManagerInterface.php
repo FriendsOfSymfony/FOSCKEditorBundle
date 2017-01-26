@@ -12,60 +12,42 @@
 namespace Ivory\CKEditorBundle\Model;
 
 /**
- * Ivory CKEditor styles set manager.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 interface StylesSetManagerInterface
 {
     /**
-     * Checks if the CKEditor styles sets exists.
-     *
-     * @return boolean TRUE if the CKEditor styles sets exists else FALSE.
+     * @return bool
      */
     public function hasStylesSets();
 
     /**
-     * Gets the CKEditor styles sets.
-     *
-     * @return array The CKEditor styles sets.
+     * @return array
      */
     public function getStylesSets();
 
     /**
-     * Sets the CKEditor styles sets.
-     *
-     * @param array $stylesSets The CKEditor styles sets.
-     *
-     * @return null No return value.
+     * @param array $stylesSets
      */
     public function setStylesSets(array $stylesSets);
 
     /**
-     * Checks if a specific CKEditor styles set exists.
+     * @param string $name
      *
-     * @param string $name The CKEditor styles set name.
-     *
-     * @return boolean TRUE if the CKEditor styles set exists else FALSE.
+     * @return bool
      */
     public function hasStylesSet($name);
 
     /**
-     * Gets a specific CKEditor styles set.
+     * @param string $name
      *
-     * @param string $name The CKEditor styles set name.
-     *
-     * @return array The CKEditor styles set.
+     * @return array
      */
     public function getStylesSet($name);
 
     /**
-     * Sets a CKEditor styles set.
-     *
-     * @param string $name      The CKEditor styles set name.
-     * @param array  $stylesSet The CKEditor styles set.
-     *
-     * @return null No return value.
+     * @param string $name
+     * @param array  $stylesSet
      */
     public function setStylesSet($name, array $stylesSet);
 }

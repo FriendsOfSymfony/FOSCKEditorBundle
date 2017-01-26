@@ -13,15 +13,16 @@ namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Resource compiler pass test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ResourceCompilerPassTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass */
+    /**
+     * @var ResourceCompilerPass
+     */
     private $compilerPass;
 
     /**
@@ -30,14 +31,6 @@ class ResourceCompilerPassTest extends AbstractTestCase
     protected function setUp()
     {
         $this->compilerPass = new ResourceCompilerPass();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->compilerPass);
     }
 
     public function testTwigResource()
@@ -100,9 +93,7 @@ class ResourceCompilerPassTest extends AbstractTestCase
     }
 
     /**
-     * Creates a container builder mock.
-     *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject
+     * @return ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject
      */
     private function createContainerBuilderMock()
     {

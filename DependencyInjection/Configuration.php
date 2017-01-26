@@ -11,12 +11,11 @@
 
 namespace Ivory\CKEditorBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * Ivory CKEditor configuration.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Configuration implements ConfigurationInterface
@@ -54,9 +53,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates the configs node.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The configs node.
+     * @return NodeDefinition
      */
     private function createConfigsNode()
     {
@@ -71,9 +68,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates the plugins node.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The plugins node.
+     * @return NodeDefinition
      */
     private function createPluginsNode()
     {
@@ -89,9 +84,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates the styles node.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The styles node.
+     * @return NodeDefinition
      */
     private function createStylesNode()
     {
@@ -121,9 +114,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates the templates node.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The templates node.
+     * @return NodeDefinition
      */
     private function createTemplatesNode()
     {
@@ -154,9 +145,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates the filebrowsers node.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The filebrowsers node.
+     * @return NodeDefinition
      */
     private function createFilebrowsersNode()
     {
@@ -167,9 +156,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates the toolbars node.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The toolbars node.
+     * @return NodeDefinition
      */
     private function createToolbarsNode()
     {
@@ -192,11 +179,9 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates a node.
+     * @param string $name
      *
-     * @param string $name The node name.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition The node.
+     * @return NodeDefinition
      */
     private function createNode($name)
     {
@@ -204,9 +189,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Creates a tree builder.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder.
+     * @return TreeBuilder
      */
     private function createTreeBuilder()
     {

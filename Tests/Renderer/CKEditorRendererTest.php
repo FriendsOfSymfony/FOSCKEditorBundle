@@ -13,40 +13,59 @@ namespace Ivory\CKEditorBundle\Tests\Renderer;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
- * CKEditor renderer test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorRendererTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRenderer */
+    /**
+     * @var CKEditorRenderer
+     */
     private $renderer;
 
-    /** @var \Symfony\Component\DependencyInjection\ContainerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $containerMock;
+    /**
+     * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $container;
 
-    /** @var \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
-    private $assetsHelperMock;
+    /**
+     * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $packages;
 
-    /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit_Framework_MockObject_MockObject */
-    private $requestMock;
+    /**
+     * @var Request|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $request;
 
-    /** @var \Symfony\Component\HttpFoundation\RequestStack|\PHPUnit_Framework_MockObject_MockObject */
-    private $requestStackMock;
+    /**
+     * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $requestStack;
 
-    /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $routerMock;
+    /**
+     * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $router;
 
-    /** @var \Symfony\Component\Templating\EngineInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $templatingMock;
+    /**
+     * @var EngineInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $templating;
 
-    /** @var \Twig_Environment|\PHPUnit_Framework_MockObject_MockObject */
-    private $twigMock;
+    /**
+     * @var \Twig_Environment|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $twig;
 
     /**
      * {@inheritdoc}
@@ -54,138 +73,64 @@ class CKEditorRendererTest extends AbstractTestCase
     protected function setUp()
     {
         if (class_exists('Symfony\Component\Asset\Packages')) {
-            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Asset\Packages')
+            $this->packages = $this->getMockBuilder('Symfony\Component\Asset\Packages')
                 ->disableOriginalConstructor()
                 ->getMock();
         } else {
-            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            $this->packages = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
                 ->disableOriginalConstructor()
                 ->getMock();
         }
 
         if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $this->requestStackMock = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+            $this->requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         }
 
-        $this->requestMock = $this->createMock('Symfony\Component\HttpFoundation\Request');
-        $this->routerMock = $this->createMock('Symfony\Component\Routing\RouterInterface');
-        $this->templatingMock = $this->createMock('Symfony\Component\Templating\EngineInterface');
-        $this->twigMock = $this->getMockBuilder('\Twig_Environment')
+        $this->request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->templating = $this->createMock('Symfony\Component\Templating\EngineInterface');
+        $this->twig = $this->getMockBuilder('\Twig_Environment')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->containerMock = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->containerMock
+        $this->container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->container
             ->expects($this->any())
             ->method('get')
             ->will($this->returnValueMap(array(
                 array(
                     'assets.packages',
                     ContainerInterface::NULL_ON_INVALID_REFERENCE,
-                    $this->assetsHelperMock,
+                    $this->packages,
                 ),
                 array(
                     'request',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->requestMock,
+                    $this->request,
                 ),
                 array(
                     'request_stack',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->requestStackMock,
+                    $this->requestStack,
                 ),
                 array(
                     'router',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->routerMock,
+                    $this->router,
                 ),
                 array(
                     'templating',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->templatingMock,
+                    $this->templating,
                 ),
                 array(
                     'twig',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->twigMock,
+                    $this->twig,
                 ),
             )));
 
-        $this->renderer = new CKEditorRenderer($this->containerMock);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->renderer);
-        unset($this->containerMock);
-        unset($this->twigMock);
-        unset($this->templatingMock);
-        unset($this->routerMock);
-        unset($this->assetsHelperMock);
-    }
-
-    /**
-     * Gets the language.
-     *
-     * @return array The language.
-     */
-    public function languageProvider()
-    {
-        return array(
-            array('en', 'en'),
-            array('pt_BR', 'pt-br'),
-        );
-    }
-
-    /**
-     * Gets the url.
-     *
-     * @return array The url.
-     */
-    public function pathProvider()
-    {
-        return array(
-            array('path', 'url', 'url'),
-            array('path', 'url?v=2', 'url'),
-        );
-    }
-
-    /**
-     * Gets the urls.
-     *
-     * @return array The urls.
-     */
-    public function pathsProvider()
-    {
-        return array(
-            array(array('path'), array('url'), array('url')),
-            array(array('path'), array('url?v=2'), array('url')),
-            array(array('path1', 'path2'), array('url1', 'url2'), array('url1', 'url2')),
-            array(array('path1', 'path2'), array('url1?v=2', 'url2'), array('url1', 'url2')),
-            array(array('path1', 'path2'), array('url1', 'url2?v=2'), array('url1', 'url2')),
-            array(array('path1', 'path2'), array('url1?v=2', 'url2?v=2'), array('url1', 'url2')),
-        );
-    }
-
-    /**
-     * Gets the filebrowsers keys.
-     *
-     * @return array The filebrowsers keys.
-     */
-    public function filebrowserProvider()
-    {
-        return array(
-            array('Browse'),
-            array('FlashBrowse'),
-            array('ImageBrowse'),
-            array('ImageBrowseLink'),
-            array('Upload'),
-            array('FlashUpload'),
-            array('ImageUpload'),
-        );
+        $this->renderer = new CKEditorRenderer($this->container);
     }
 
     public function testDefaultState()
@@ -198,7 +143,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderBasePath($path, $asset, $url)
     {
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo($path))
@@ -209,7 +154,7 @@ class CKEditorRendererTest extends AbstractTestCase
 
     public function testRenderJsPath()
     {
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo('foo'))
@@ -227,13 +172,13 @@ class CKEditorRendererTest extends AbstractTestCase
             $this->markTestSkipped();
         }
 
-        $this->containerMock
+        $this->container
             ->expects($this->once())
             ->method('has')
             ->with($this->identicalTo('request_stack'))
             ->will($this->returnValue(true));
 
-        $this->requestStackMock
+        $this->requestStack
             ->expects($this->once())
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createMock('Symfony\Component\HttpFoundation\Request')));
@@ -254,7 +199,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithRequest($symfonyLocale, $ckEditorLocale)
     {
-        $this->containerMock
+        $this->container
             ->expects($this->exactly(2))
             ->method('has')
             ->will($this->returnValueMap(array(
@@ -262,7 +207,7 @@ class CKEditorRendererTest extends AbstractTestCase
                 array('request', true),
             )));
 
-        $this->requestMock
+        $this->request
             ->expects($this->once())
             ->method('getLocale')
             ->will($this->returnValue($symfonyLocale));
@@ -278,7 +223,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithLocaleParameter($symfonyLocale, $ckEditorLocale)
     {
-        $this->containerMock
+        $this->container
             ->expects($this->exactly(2))
             ->method('has')
             ->will($this->returnValueMap(array(
@@ -286,13 +231,13 @@ class CKEditorRendererTest extends AbstractTestCase
                 array('request', false),
             )));
 
-        $this->containerMock
+        $this->container
             ->expects($this->once())
             ->method('hasParameter')
             ->with($this->identicalTo('locale'))
             ->will($this->returnValue(true));
 
-        $this->containerMock
+        $this->container
             ->expects($this->once())
             ->method('getParameter')
             ->with($this->identicalTo('locale'))
@@ -317,7 +262,7 @@ class CKEditorRendererTest extends AbstractTestCase
 
     public function testRenderWidgetWithoutLocale()
     {
-        $this->containerMock
+        $this->container
             ->expects($this->exactly(2))
             ->method('has')
             ->will($this->returnValueMap(array(
@@ -325,7 +270,7 @@ class CKEditorRendererTest extends AbstractTestCase
                 array('request', false),
             )));
 
-        $this->containerMock
+        $this->container
             ->expects($this->once())
             ->method('hasParameter')
             ->with($this->identicalTo('locale'))
@@ -342,7 +287,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithStringContentsCss($path, $asset, $url)
     {
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo($path))
@@ -360,7 +305,7 @@ class CKEditorRendererTest extends AbstractTestCase
     public function testRenderWidgetWithArrayContentsCss(array $paths, array $assets, array $urls)
     {
         foreach (array_keys($paths) as $key) {
-            $this->assetsHelperMock
+            $this->packages
                 ->expects($this->at($key))
                 ->method('getUrl')
                 ->with($this->equalTo($paths[$key]))
@@ -391,7 +336,7 @@ class CKEditorRendererTest extends AbstractTestCase
             $this->renderer->renderWidget(
                 'foo',
                 array('filebrowser'.$filebrowser.'Url' => $url),
-                array('filebrowsers' => array($filebrowser))
+                array('filebrowsers'                   => array($filebrowser))
             )
         );
     }
@@ -401,7 +346,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithMinimalRouteFileBrowser($filebrowser)
     {
-        $this->routerMock
+        $this->router
             ->expects($this->once())
             ->method('generate')
             ->with(
@@ -426,7 +371,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithMaximalRouteFileBrowser($filebrowser)
     {
-        $this->routerMock
+        $this->router
             ->expects($this->once())
             ->method('generate')
             ->with(
@@ -455,7 +400,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithMaximalRelativeFileBrowser($filebrowser)
     {
-        $this->routerMock
+        $this->router
             ->expects($this->once())
             ->method('generate')
             ->with(
@@ -484,7 +429,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithRouteFileBrowserHandler($filebrowser)
     {
-        $this->routerMock
+        $this->router
             ->expects($this->once())
             ->method('generate')
             ->with(
@@ -552,7 +497,7 @@ class CKEditorRendererTest extends AbstractTestCase
 
     public function testRenderWidgetWithoutAutoInline()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 CKEDITOR.disableAutoInline = true;
 CKEDITOR.replace("foo", []);
 EOF;
@@ -573,7 +518,7 @@ EOF;
 
     public function testRenderWidgetWithInputSync()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 var ivory_ckeditor_foo = CKEDITOR.replace("foo", []);
 ivory_ckeditor_foo.on('change', function() { ivory_ckeditor_foo.updateElement(); });
 EOF;
@@ -594,7 +539,7 @@ EOF;
      */
     public function testRenderPlugin($path, $asset, $url)
     {
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo($path))
@@ -622,11 +567,11 @@ EOF;
         $templates = array(
             array(
                 'title' => 'Template title',
-                'html' => '<p>Template content</p>',
+                'html'  => '<p>Template content</p>',
             ),
         );
 
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo($path))
@@ -660,19 +605,19 @@ EOF;
             ),
         );
 
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo($path))
             ->will($this->returnValue($asset));
 
-        $this->containerMock
+        $this->container
             ->expects($this->once())
             ->method('has')
             ->with($this->identicalTo('templating'))
             ->will($this->returnValue(false));
 
-        $this->twigMock
+        $this->twig
             ->expects($this->once())
             ->method('render')
             ->with($this->identicalTo($template), $this->identicalTo($templateParameters))
@@ -705,19 +650,19 @@ EOF;
             ),
         );
 
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->once())
             ->method('getUrl')
             ->with($this->equalTo($path))
             ->will($this->returnValue($asset));
 
-        $this->containerMock
+        $this->container
             ->expects($this->once())
             ->method('has')
             ->with($this->identicalTo('templating'))
             ->will($this->returnValue(true));
 
-        $this->templatingMock
+        $this->templating
             ->expects($this->once())
             ->method('render')
             ->with($this->identicalTo($template), $this->identicalTo(array()))
@@ -728,6 +673,59 @@ EOF;
         $this->assertSame(
             'CKEDITOR.addTemplates("foo", '.$json.');',
             $this->renderer->renderTemplate('foo', array('imagesPath' => $path, 'templates' => $templates))
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function languageProvider()
+    {
+        return array(
+            array('en', 'en'),
+            array('pt_BR', 'pt-br'),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function pathProvider()
+    {
+        return array(
+            array('path', 'url', 'url'),
+            array('path', 'url?v=2', 'url'),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function pathsProvider()
+    {
+        return array(
+            array(array('path'), array('url'), array('url')),
+            array(array('path'), array('url?v=2'), array('url')),
+            array(array('path1', 'path2'), array('url1', 'url2'), array('url1', 'url2')),
+            array(array('path1', 'path2'), array('url1?v=2', 'url2'), array('url1', 'url2')),
+            array(array('path1', 'path2'), array('url1', 'url2?v=2'), array('url1', 'url2')),
+            array(array('path1', 'path2'), array('url1?v=2', 'url2?v=2'), array('url1', 'url2')),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function filebrowserProvider()
+    {
+        return array(
+            array('Browse'),
+            array('FlashBrowse'),
+            array('ImageBrowse'),
+            array('ImageBrowseLink'),
+            array('Upload'),
+            array('FlashUpload'),
+            array('ImageUpload'),
         );
     }
 }

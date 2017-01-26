@@ -13,33 +13,26 @@ namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * Assets helper compiler pass test.
- *
- * @author Adam Misiorny <adam.misiorny@gmail.com>
  * @author GeLo <geloen.eric@gmail.com>
+ * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 class AssetsHelperCompilerPassTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass */
-    private $assetsHelperCompilerPass;
+    /**
+     * @var AssetsHelperCompilerPass
+     */
+    private $compilerPass;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->assetsHelperCompilerPass = new AssetsHelperCompilerPass();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->containerBuilderMock);
+        $this->compilerPass = new AssetsHelperCompilerPass();
     }
 
     public function testAssetsPackagesAliasWithTemplatingHelperAssets()
@@ -63,7 +56,7 @@ class AssetsHelperCompilerPassTest extends AbstractTestCase
                 $this->identicalTo($legacy)
             );
 
-        $this->assetsHelperCompilerPass->process($container);
+        $this->compilerPass->process($container);
     }
 
     public function testAssetsPackagesAliasWithoutTemplatingHelperAssets()
@@ -83,7 +76,7 @@ class AssetsHelperCompilerPassTest extends AbstractTestCase
             ->expects($this->never())
             ->method('setAlias');
 
-        $this->assetsHelperCompilerPass->process($container);
+        $this->compilerPass->process($container);
     }
 
     public function testAssetsPackagesAliasWithAssetsPackage()
@@ -97,13 +90,11 @@ class AssetsHelperCompilerPassTest extends AbstractTestCase
             ->expects($this->never())
             ->method('setAlias');
 
-        $this->assetsHelperCompilerPass->process($container);
+        $this->compilerPass->process($container);
     }
 
     /**
-     * Creates a container builder mock.
-     *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject
+     * @return ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject
      */
     private function createContainerBuilderMock()
     {

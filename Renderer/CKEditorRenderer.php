@@ -12,24 +12,31 @@
 namespace Ivory\CKEditorBundle\Renderer;
 
 use Ivory\JsonBuilder\JsonBuilder;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorRenderer implements CKEditorRendererInterface
 {
-    /** @var \Ivory\JsonBuilder\JsonBuilder */
+    /**
+     * @var JsonBuilder
+     */
     private $jsonBuilder;
 
-    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
-     * Creates a CKEditor renderer.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container The container.
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -163,11 +170,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Fixes the config language.
+     * @param array $config
      *
-     * @param array $config The config.
-     *
-     * @return array The fixed config.
+     * @return array
      */
     private function fixConfigLanguage(array $config)
     {
@@ -183,11 +188,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Fixes the config contents css.
+     * @param array $config
      *
-     * @param array $config The config.
-     *
-     * @return array The fixed config.
+     * @return array
      */
     private function fixConfigContentsCss(array $config)
     {
@@ -204,12 +207,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Fixes the config filebrowsers.
+     * @param array $config
+     * @param array $filebrowsers
      *
-     * @param array $config       The config.
-     * @param array $filebrowsers The filebrowsers.
-     *
-     * @return array The fixed config.
+     * @return array
      */
     private function fixConfigFilebrowsers(array $config, array $filebrowsers)
     {
@@ -251,9 +252,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Fixes the config escaped values and sets them on the json builder.
-     *
-     * @param array $config The config.
+     * @param array $config
      */
     private function fixConfigEscapedValues(array $config)
     {
@@ -276,11 +275,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Fixes the config constants.
+     * @param string $json
      *
-     * @param string $json The json config.
-     *
-     * @return string The fixed config.
+     * @return string
      */
     private function fixConfigConstants($json)
     {
@@ -288,11 +285,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Fixes a path.
+     * @param string $path
      *
-     * @param string $path The path.
-     *
-     * @return string The fixed path.
+     * @return string
      */
     private function fixPath($path)
     {
@@ -304,11 +299,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Fixes an url.
+     * @param string $url
      *
-     * @param string $url The url.
-     *
-     * @return string The fixed url.
+     * @return string
      */
     private function fixUrl($url)
     {
@@ -336,9 +329,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Gets the locale.
-     *
-     * @return string|null The locale.
+     * @return string|null
      */
     private function getLanguage()
     {
@@ -352,9 +343,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Gets the request.
-     *
-     * @return \Symfony\Component\HttpFoundation\Request|null The request.
+     * @return Request|null
      */
     private function getRequest()
     {
@@ -368,9 +357,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Gets the templating engine.
-     *
-     * @return \Symfony\Component\Templating\EngineInterface|\Twig_Environment The templating engine.
+     * @return EngineInterface|\Twig_Environment
      */
     private function getTemplating()
     {
@@ -380,9 +367,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Gets the assets helper.
-     *
-     * @return \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|null The assets helper.
+     * @return Packages|CoreAssetsHelper|null
      */
     private function getAssetsHelper()
     {
@@ -390,9 +375,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * Gets the router.
-     *
-     * @return \Symfony\Component\Routing\RouterInterface The router.
+     * @return RouterInterface
      */
     private function getRouter()
     {

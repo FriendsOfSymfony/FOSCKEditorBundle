@@ -14,16 +14,18 @@ namespace Ivory\CKEditorBundle\Tests\Template;
 use Ivory\CKEditorBundle\Twig\CKEditorExtension;
 
 /**
- * Twig template test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class TwigTemplateTest extends AbstractTemplateTest
 {
-    /** @var \Twig_Environment */
+    /**
+     * @var \Twig_Environment
+     */
     private $twig;
 
-    /** @var \Twig_Template */
+    /**
+     * @var \Twig_Template
+     */
     private $template;
 
     /**
@@ -42,17 +44,6 @@ class TwigTemplateTest extends AbstractTemplateTest
 
         $this->twig->addExtension(new CKEditorExtension($this->renderer));
         $this->template = $this->twig->loadTemplate('ckeditor');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        unset($this->template);
-        unset($this->twig);
     }
 
     /**

@@ -15,13 +15,13 @@ use Ivory\CKEditorBundle\Model\StylesSetManager;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
- * Styles set manager test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class StylesSetManagerTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Model\StylesSetManager */
+    /**
+     * @var StylesSetManager
+     */
     private $stylesSetManager;
 
     /**
@@ -30,14 +30,6 @@ class StylesSetManagerTest extends AbstractTestCase
     protected function setUp()
     {
         $this->stylesSetManager = new StylesSetManager();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->stylesSetManager);
     }
 
     public function testDefaultState()

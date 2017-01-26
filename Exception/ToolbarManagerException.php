@@ -12,18 +12,14 @@
 namespace Ivory\CKEditorBundle\Exception;
 
 /**
- * Toolbar manager exception.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ToolbarManagerException extends Exception
 {
     /**
-     * Gets the "ITEM DOES NOT EXIST" exception.
+     * @param string $name
      *
-     * @param string $name The invalid CKEditor item name.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\ToolbarManagerException The "ITEM DOES NOT EXIST" exception.
+     * @return ToolbarManagerException
      */
     public static function itemDoesNotExist($name)
     {
@@ -31,11 +27,9 @@ class ToolbarManagerException extends Exception
     }
 
     /**
-     * Gets the "TOOLBAR DOES NOT EXIST" exception.
+     * @param string $name
      *
-     * @param string $name The invalid CKEditor toolbar name.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\ToolbarManagerException The "TOOLBAR DOES NOT EXIST" exception.
+     * @return ToolbarManagerException
      */
     public static function toolbarDoesNotExist($name)
     {

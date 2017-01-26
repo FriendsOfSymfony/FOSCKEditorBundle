@@ -14,19 +14,17 @@ namespace Ivory\CKEditorBundle\Model;
 use Ivory\CKEditorBundle\Exception\StylesSetManagerException;
 
 /**
- * {@inheritdoc}
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class StylesSetManager implements StylesSetManagerInterface
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $stylesSets = array();
 
     /**
-     * Creates a styles set manager.
-     *
-     * @param array $stylesSets The styles sets.
+     * @param array $stylesSets
      */
     public function __construct(array $stylesSets = array())
     {

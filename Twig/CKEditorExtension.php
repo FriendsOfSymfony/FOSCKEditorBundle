@@ -14,19 +14,17 @@ namespace Ivory\CKEditorBundle\Twig;
 use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
 
 /**
- * CKEditor Twig extension.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorExtension extends \Twig_Extension implements CKEditorRendererInterface
 {
-    /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface */
+    /**
+     * @var CKEditorRendererInterface
+     */
     private $renderer;
 
     /**
-     * Creates a CKEditor Twig extension.
-     *
-     * @param \Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface $renderer The CKEditor renderer.
+     * @param CKEditorRendererInterface $renderer
      */
     public function __construct(CKEditorRendererInterface $renderer)
     {

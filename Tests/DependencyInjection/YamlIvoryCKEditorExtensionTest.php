@@ -16,8 +16,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
- * Yaml Ivory CKEditor extension test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class YamlIvoryCKEditorExtensionTest extends AbstractIvoryCKEditorExtensionTest

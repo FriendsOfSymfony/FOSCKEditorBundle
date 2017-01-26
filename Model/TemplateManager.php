@@ -14,19 +14,17 @@ namespace Ivory\CKEditorBundle\Model;
 use Ivory\CKEditorBundle\Exception\TemplateManagerException;
 
 /**
- * {@inheritdoc}
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class TemplateManager implements TemplateManagerInterface
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $templates = array();
 
     /**
-     * Creates a plugin manager.
-     *
-     * @param array $templates The CKEditor templates.
+     * @param array $templates
      */
     public function __construct(array $templates = array())
     {

@@ -13,79 +13,77 @@ namespace Ivory\CKEditorBundle\Tests\Template;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
- * Abstract template test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 abstract class AbstractTemplateTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRenderer */
+    /**
+     * @var CKEditorRenderer
+     */
     protected $renderer;
 
-    /** @var \Symfony\Component\DependencyInjection\ContainerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $containerMock;
+    /**
+     * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $container;
 
-    /** @var \Symfony\Component\Asset\Packages|\Symfony\Component\Templating\Helper\CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject */
-    private $assetsHelperMock;
+    /**
+     * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $packages;
 
-    /** @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $routerMock;
+    /**
+     * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $router;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->routerMock = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
 
         if (class_exists('Symfony\Component\Asset\Packages')) {
-            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Asset\Packages')
+            $this->packages = $this->getMockBuilder('Symfony\Component\Asset\Packages')
                 ->disableOriginalConstructor()
                 ->getMock();
         } else {
-            $this->assetsHelperMock = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
+            $this->packages = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
                 ->disableOriginalConstructor()
                 ->getMock();
         }
 
-        $this->assetsHelperMock
+        $this->packages
             ->expects($this->any())
             ->method('getUrl')
             ->will($this->returnArgument(0));
 
-        $this->containerMock = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->containerMock
+        $this->container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->container
             ->expects($this->any())
             ->method('get')
             ->will($this->returnValueMap(array(
                 array(
                     'assets.packages',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->assetsHelperMock,
+                    $this->packages,
                 ),
                 array(
                     'router',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->routerMock,
+                    $this->router,
                 ),
             )));
 
-        $this->renderer = new CKEditorRenderer($this->containerMock);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->routerMock);
-        unset($this->assetsHelperMock);
-        unset($this->containerMock);
-        unset($this->renderer);
+        $this->renderer = new CKEditorRenderer($this->container);
     }
 
     public function testDefaultState()
@@ -95,7 +93,7 @@ abstract class AbstractTemplateTest extends AbstractTestCase
 
     public function testRenderWithSimpleWidget()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 var CKEDITOR_BASEPATH = "base_path";
@@ -118,10 +116,10 @@ EOF;
     {
         $context = array(
             'auto_inline' => false,
-            'inline' => true,
-            'input_sync' => true,
-            'config' => array('foo' => 'bar'),
-            'plugins' => array(
+            'inline'      => true,
+            'input_sync'  => true,
+            'config'      => array('foo' => 'bar'),
+            'plugins'     => array(
                 'foo' => array('path' => 'path', 'filename' => 'filename'),
             ),
             'styles' => array(
@@ -132,10 +130,10 @@ EOF;
             'templates' => array(
                 'foo' => array(
                     'imagesPath' => 'path',
-                    'templates' => array(
+                    'templates'  => array(
                         array(
                             'title' => 'My Template',
-                            'html' => '<h1>Template</h1>',
+                            'html'  => '<h1>Template</h1>',
                         ),
                     ),
                 ),
@@ -168,7 +166,7 @@ EOF;
 
     public function testRenderWithJQuery()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 <textarea>&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 var CKEDITOR_BASEPATH="base_path";
@@ -191,7 +189,7 @@ EOF;
 
     public function testRenderWithRequireJs()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 <textarea>&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 var CKEDITOR_BASEPATH = "base_path";
@@ -213,7 +211,7 @@ EOF;
 
     public function testRenderWithNotAutoloadedWidget()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
 if (CKEDITOR.instances["id"]) {
@@ -230,7 +228,7 @@ EOF;
 
     public function testRenderWithDisableWidget()
     {
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 
 EOF;
@@ -239,18 +237,14 @@ EOF;
     }
 
     /**
-     * Renders a template.
+     * @param array $context
      *
-     * @param array $context The template context.
-     *
-     * @return string The template output.
+     * @return string
      */
     abstract protected function renderTemplate(array $context = array());
 
     /**
-     * Gets the context.
-     *
-     * @return array The context.
+     * @return array
      */
     private function getContext()
     {
@@ -278,10 +272,8 @@ EOF;
     }
 
     /**
-     * Asserts a template.
-     *
-     * @param string $expected The expected template.
-     * @param array  $context  The context.
+     * @param string $expected
+     * @param array  $context
      */
     private function assertTemplate($expected, array $context)
     {
@@ -289,11 +281,9 @@ EOF;
     }
 
     /**
-     * Normalizes the output by removing the heading whitespaces.
+     * @param string $output
      *
-     * @param string $output The output.
-     *
-     * @return string The normalized output.
+     * @return string
      */
     private function normalizeOutput($output)
     {

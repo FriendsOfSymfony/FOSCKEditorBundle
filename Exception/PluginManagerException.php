@@ -12,18 +12,14 @@
 namespace Ivory\CKEditorBundle\Exception;
 
 /**
- * Plugin manager exception.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class PluginManagerException extends Exception
 {
     /**
-     * Gets the "PLUGIN DOES NOT EXIST" exception.
+     * @param string $name
      *
-     * @param string $name The invalid CKEditor plugin name.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\PluginManagerException The "PLUGIN DOES NOT EXIST" exception.
+     * @return PluginManagerException
      */
     public static function pluginDoesNotExist($name)
     {

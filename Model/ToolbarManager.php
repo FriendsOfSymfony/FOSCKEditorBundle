@@ -14,13 +14,13 @@ namespace Ivory\CKEditorBundle\Model;
 use Ivory\CKEditorBundle\Exception\ToolbarManagerException;
 
 /**
- * {@inheritdoc}
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ToolbarManager implements ToolbarManagerInterface
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $items = array(
         'basic.about'           => array('About'),
         'basic.basic_styles'    => array('Bold', 'Italic'),
@@ -38,7 +38,7 @@ class ToolbarManager implements ToolbarManagerInterface
         'full.about'            => array('About'),
         'full.basic_styles'     => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'),
         'full.clipboard'        => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
-        'full.colors'           => array('TextColor','BGColor'),
+        'full.colors'           => array('TextColor', 'BGColor'),
         'full.document'         => array('Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'),
         'full.editing'          => array('Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'),
         'full.forms'            => array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'),
@@ -49,7 +49,9 @@ class ToolbarManager implements ToolbarManagerInterface
         'full.tools'            => array('Maximize', 'ShowBlocks'),
     );
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $toolbars = array(
         'basic' => array(
             '@basic.basic_styles',
@@ -88,10 +90,8 @@ class ToolbarManager implements ToolbarManagerInterface
     );
 
     /**
-     * Creates a toolbar manager.
-     *
-     * @param array $items    The CKEditor items.
-     * @param array $toolbars The CKEditor toolbars.
+     * @param array $items
+     * @param array $toolbars
      */
     public function __construct(array $items = array(), array $toolbars = array())
     {

@@ -15,13 +15,13 @@ use Ivory\CKEditorBundle\Model\ConfigManager;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
- * Config manager test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ConfigManagerTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Model\ConfigManager */
+    /**
+     * @var ConfigManager
+     */
     private $configManager;
 
     /**
@@ -30,14 +30,6 @@ class ConfigManagerTest extends AbstractTestCase
     protected function setUp()
     {
         $this->configManager = new ConfigManager();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->configManager);
     }
 
     public function testDefaultState()

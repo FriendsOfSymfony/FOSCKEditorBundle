@@ -14,23 +14,23 @@ namespace Ivory\CKEditorBundle\Model;
 use Ivory\CKEditorBundle\Exception\ConfigManagerException;
 
 /**
- * {@inheritdoc}
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ConfigManager implements ConfigManagerInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $defaultConfig;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $configs = array();
 
     /**
-     * Creates a CKEditor config manager.
-     *
-     * @param array       $configs       The CKEditor configs.
-     * @param string|null $defaultConfig The default config name.
+     * @param array       $configs
+     * @param string|null $defaultConfig
      */
     public function __construct(array $configs = array(), $defaultConfig = null)
     {

@@ -12,16 +12,17 @@
 namespace Ivory\CKEditorBundle\Tests;
 
 use Ivory\CKEditorBundle\IvoryCKEditorBundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Ivory CKEditor bundle test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 class IvoryCKEditorBundleTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\IvoryCKEditorBundle */
+    /**
+     * @var IvoryCKEditorBundle
+     */
     private $bundle;
 
     /**
@@ -30,14 +31,6 @@ class IvoryCKEditorBundleTest extends AbstractTestCase
     protected function setUp()
     {
         $this->bundle = new IvoryCKEditorBundle();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->bundle);
     }
 
     public function testBundle()
@@ -70,7 +63,7 @@ class IvoryCKEditorBundleTest extends AbstractTestCase
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject
+     * @return ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject
      */
     private function createContainerBuilderMock()
     {

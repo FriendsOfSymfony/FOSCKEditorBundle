@@ -12,18 +12,14 @@
 namespace Ivory\CKEditorBundle\Exception;
 
 /**
- * Template manager exception.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class TemplateManagerException extends Exception
 {
     /**
-     * Gets the "TEMPLATE DOES NOT EXIST" exception.
+     * @param string $name
      *
-     * @param string $name The invalid CKEditor template name.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\TemplateManagerException The "TEMPLATE DOES NOT EXIST" exception.
+     * @return TemplateManagerException
      */
     public static function templateDoesNotExist($name)
     {

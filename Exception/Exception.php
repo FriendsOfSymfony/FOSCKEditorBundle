@@ -14,10 +14,6 @@ namespace Ivory\CKEditorBundle\Exception;
 use Exception as BaseException;
 
 /**
- * Ivory CKEditor exception.
- *
- * All exceptions must extend this class.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class Exception extends BaseException

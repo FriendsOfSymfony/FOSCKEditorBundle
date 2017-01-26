@@ -15,20 +15,18 @@ use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Symfony\Component\Templating\Helper\Helper;
 
 /**
- * CKEditor helper.
- *
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 class CKEditorHelper extends Helper implements CKEditorRendererInterface
 {
-    /** @var \Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface */
+    /**
+     * @var CKEditorRendererInterface
+     */
     private $renderer;
 
     /**
-     * Creates a CKEditor template helper.
-     *
-     * @param \Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface $renderer The CKEditor renderer.
+     * @param CKEditorRendererInterface $renderer
      */
     public function __construct(CKEditorRendererInterface $renderer)
     {

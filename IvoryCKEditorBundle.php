@@ -14,14 +14,11 @@ namespace Ivory\CKEditorBundle;
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass;
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Ivory CKEditor bundle.
- *
  * @author GeLo <geloen.eric@gmail.com>
- * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
 class IvoryCKEditorBundle extends Bundle
 {

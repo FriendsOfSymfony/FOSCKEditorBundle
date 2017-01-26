@@ -18,79 +18,109 @@ use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
 use Ivory\CKEditorBundle\Model\ToolbarManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * CKEditor type.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorType extends AbstractType
 {
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $enable = true;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $async = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $autoload = true;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $autoInline = true;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $inline = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $jquery = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $requireJs = false;
 
-    /** @var boolean */
+    /**
+     * @var bool
+     */
     private $inputSync = false;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $filebrowsers = array();
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $basePath = 'bundles/ivoryckeditor/';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $jsPath = 'bundles/ivoryckeditor/ckeditor.js';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $jqueryPath = 'bundles/ivoryckeditor/adapters/jquery.js';
 
-    /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface */
+    /**
+     * @var ConfigManagerInterface
+     */
     private $configManager;
 
-    /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface */
+    /**
+     * @var PluginManagerInterface
+     */
     private $pluginManager;
 
-    /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface */
+    /**
+     * @var StylesSetManagerInterface
+     */
     private $stylesSetManager;
 
-    /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface */
+    /**
+     * @var TemplateManagerInterface
+     */
     private $templateManager;
 
-    /** @var \Ivory\CKEditorBundle\Model\ToolbarManagerInterface */
+    /**
+     * @var ToolbarManagerInterface
+     */
     private $toolbarManager;
 
     /**
-     * Creates a CKEditor type.
-     *
-     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface    $configManager    The config manager.
-     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface    $pluginManager    The plugin manager.
-     * @param \Ivory\CKEditorBundle\Model\StylesSetManagerInterface $stylesSetManager The styles set manager.
-     * @param \Ivory\CKEditorBundle\Model\TemplateManagerInterface  $templateManager  The template manager.
-     * @param \Ivory\CKEditorBundle\Model\ToolbarManagerInterface   $toolbarManager   The toolbar manager.
+     * @param ConfigManagerInterface    $configManager
+     * @param PluginManagerInterface    $pluginManager
+     * @param StylesSetManagerInterface $stylesSetManager
+     * @param TemplateManagerInterface  $templateManager
+     * @param ToolbarManagerInterface   $toolbarManager
      */
     public function __construct(
         ConfigManagerInterface $configManager,
@@ -107,11 +137,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets/Checks if the widget is enabled.
+     * @param bool|null $enable
      *
-     * @param boolean|null $enable TRUE if the widget is enabled else FALSE.
-     *
-     * @return boolean TRUE if the widget is enabled else FALSE.
+     * @return bool
      */
     public function isEnable($enable = null)
     {
@@ -123,11 +151,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets/Checks if the widget is async.
+     * @param bool|null $async
      *
-     * @param boolean|null $async TRUE if the widget is async else FALSE.
-     *
-     * @return boolean TRUE if the widget is async else FALSE.
+     * @return bool
      */
     public function isAsync($async = null)
     {
@@ -139,11 +165,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets/Checks if the widget is autoloaded.
+     * @param bool $autoload
      *
-     * @param boolean $autoload TRUE if the widget is autoloaded else FALSE.
-     *
-     * @return boolean TRUE if the widget is autoloaded else FALSE.
+     * @return bool
      */
     public function isAutoload($autoload = null)
     {
@@ -155,11 +179,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets/Checks if the widget is auto inlined.
+     * @param bool $autoInline
      *
-     * @param boolean $autoInline TRUE if the widget is auto inlined else FALSE.
-     *
-     * @return boolean TRUE if the widget is auto inlined else FALSE.
+     * @return bool
      */
     public function isAutoInline($autoInline = null)
     {
@@ -171,11 +193,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets/Checks if the widget is inlined.
+     * @param bool $inline
      *
-     * @param boolean $inline TRUE if the widget is inlined else FALSE.
-     *
-     * @return boolean TRUE if the widget is inlined else FALSE.
+     * @return bool
      */
     public function isInline($inline = null)
     {
@@ -187,11 +207,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Checks/Sets if the jquery adapter is loaded.
+     * @param bool $jquery
      *
-     * @param boolean $jquery TRUE if the jquery adapter is loaded else FALSE.
-     *
-     * @return boolean TRUE if the jquery adapter is loaded else FALSE.
+     * @return bool
      */
     public function useJquery($jquery = null)
     {
@@ -203,11 +221,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Checks/Sets if require js is used.
+     * @param bool $requireJs
      *
-     * @param boolean $requireJs TRUE if the requirejs is used else FALSE.
-     *
-     * @return boolean TRUE if the requirejs is used else FALSE.
+     * @return bool
      */
     public function useRequireJs($requireJs = null)
     {
@@ -219,11 +235,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets/Checks if the input is synchonized with the widget.
+     * @param bool $inputSync
      *
-     * @param boolean $inputSync TRUE if the input is synchronized with the widget else FALSE.
-     *
-     * @return boolean TRUE if the input is synchronized with the widget else FALSE.
+     * @return bool
      */
     public function isInputSync($inputSync = null)
     {
@@ -235,9 +249,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Checks if there are filebrowsers.
-     *
-     * @return boolean TRUE if there are filebrowsers else FALSE.
+     * @return bool
      */
     public function hasFilebrowsers()
     {
@@ -245,9 +257,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the filebrowsers.
-     *
-     * @return array The filebrowsers.
+     * @return array
      */
     public function getFilebrowsers()
     {
@@ -255,9 +265,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the filebrowsers.
-     *
-     * @param array $filebrowsers The filebrowsers.
+     * @param array $filebrowsers
      */
     public function setFilebrowsers(array $filebrowsers)
     {
@@ -267,11 +275,9 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Checks if there is the filebrowser.
+     * @param string $filebrowser
      *
-     * @param string $filebrowser The filebrowser.
-     *
-     * @return boolean TRUE if there is the filebrowser else FALSE.
+     * @return bool
      */
     public function hasFilebrowser($filebrowser)
     {
@@ -279,9 +285,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Adds a filebrowser.
-     *
-     * @param string $filebrowser The filebrowser.
+     * @param string $filebrowser
      */
     public function addFilebrowser($filebrowser)
     {
@@ -291,9 +295,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Removes a filebrowser.
-     *
-     * @param string $filebrowser The filebrowser.
+     * @param string $filebrowser
      */
     public function removeFilebrowser($filebrowser)
     {
@@ -301,9 +303,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the CKEditor base path.
-     *
-     * @return string The CKEditor base path.
+     * @return string
      */
     public function getBasePath()
     {
@@ -311,9 +311,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the CKEditor base path.
-     *
-     * @param string $basePath The CKEditor base path.
+     * @param string $basePath
      */
     public function setBasePath($basePath)
     {
@@ -321,9 +319,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the CKEditor JS path.
-     *
-     * @return string The CKEditor JS path.
+     * @return string
      */
     public function getJsPath()
     {
@@ -331,9 +327,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the CKEditor JS path.
-     *
-     * @param string $jsPath The CKEditor JS path.
+     * @param string $jsPath
      */
     public function setJsPath($jsPath)
     {
@@ -341,9 +335,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the jquery path.
-     *
-     * @return string The jquery path.
+     * @return string
      */
     public function getJqueryPath()
     {
@@ -351,9 +343,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the jquery path.
-     *
-     * @param string $jqueryPath The jquery path.
+     * @param string $jqueryPath
      */
     public function setJqueryPath($jqueryPath)
     {
@@ -361,9 +351,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the CKEditor config manager.
-     *
-     * @return \Ivory\CKEditorBundle\Model\ConfigManagerInterface The CKEditor config manager.
+     * @return ConfigManagerInterface
      */
     public function getConfigManager()
     {
@@ -371,9 +359,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the CKEditor config manager.
-     *
-     * @param \Ivory\CKEditorBundle\Model\ConfigManagerInterface $configManager The CKEditor config manager.
+     * @param ConfigManagerInterface $configManager
      */
     public function setConfigManager(ConfigManagerInterface $configManager)
     {
@@ -381,9 +367,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the CKEditor plugin manager.
-     *
-     * @return \Ivory\CKEditorBundle\Model\PluginManagerInterface The CKEditor plugin manager.
+     * @return PluginManagerInterface
      */
     public function getPluginManager()
     {
@@ -391,9 +375,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the CKEditor plugin manager.
-     *
-     * @param \Ivory\CKEditorBundle\Model\PluginManagerInterface $pluginManager The CKEditor plugin manager.
+     * @param PluginManagerInterface $pluginManager
      */
     public function setPluginManager(PluginManagerInterface $pluginManager)
     {
@@ -401,9 +383,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the styles set manager.
-     *
-     * @return \Ivory\CKEditorBundle\Model\StylesSetManagerInterface The styles set manager.
+     * @return StylesSetManagerInterface
      */
     public function getStylesSetManager()
     {
@@ -411,9 +391,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the styles set manager.
-     *
-     * @param \Ivory\CKEditorBundle\Model\StylesSetManagerInterface $stylesSetManager The styles set manager.
+     * @param StylesSetManagerInterface $stylesSetManager
      */
     public function setStylesSetManager(StylesSetManagerInterface $stylesSetManager)
     {
@@ -421,9 +399,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the CKEditor template manager.
-     *
-     * @return \Ivory\CKEditorBundle\Model\TemplateManagerInterface The CKEditor template manager.
+     * @return TemplateManagerInterface
      */
     public function getTemplateManager()
     {
@@ -431,9 +407,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the CKEditor template manager.
-     *
-     * @param \Ivory\CKEditorBundle\Model\TemplateManagerInterface $templateManager The CKEditor template manager.
+     * @param TemplateManagerInterface $templateManager
      */
     public function setTemplateManager(TemplateManagerInterface $templateManager)
     {
@@ -441,9 +415,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Gets the CKEditor toolbar manager.
-     *
-     * @return \Ivory\CKEditorBundle\Model\ToolbarManagerInterface The CKEditor toolbar manager.
+     * @return ToolbarManagerInterface
      */
     public function getToolbarManager()
     {
@@ -451,9 +423,7 @@ class CKEditorType extends AbstractType
     }
 
     /**
-     * Sets the CKEditor toolbar manager.
-     *
-     * @param \Ivory\CKEditorBundle\Model\ToolbarManagerInterface $toolbarManager The CKEditor toolbar manager.
+     * @param ToolbarManagerInterface $toolbarManager
      */
     public function setToolbarManager(ToolbarManagerInterface $toolbarManager)
     {

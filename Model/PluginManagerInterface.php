@@ -12,60 +12,42 @@
 namespace Ivory\CKEditorBundle\Model;
 
 /**
- * Ivory CKEditor plugin manager.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 interface PluginManagerInterface
 {
     /**
-     * Checks if the CKEditor plugins exists.
-     *
-     * @return boolean TRUE if the CKEditor plugins exists else FALSE.
+     * @return bool
      */
     public function hasPlugins();
 
     /**
-     * Gets the CKEditor plugins.
-     *
-     * @return array The CKEditor plugins.
+     * @return array
      */
     public function getPlugins();
 
     /**
-     * Sets the CKEditor plugins.
-     *
-     * @param array $plugins The CKEditor plugins.
-     *
-     * @return null No return value.
+     * @param array $plugins
      */
     public function setPlugins(array $plugins);
 
     /**
-     * Checks if a specific CKEditor plugin exists.
+     * @param string $name
      *
-     * @param string $name The CKEditor plugin name.
-     *
-     * @return boolean TRUE if the CKEditor plugin exists else FALSE.
+     * @return bool
      */
     public function hasPlugin($name);
 
     /**
-     * Gets a specific CKEditor plugin.
+     * @param string $name
      *
-     * @param string $name The CKEditor name.
-     *
-     * @return array The CKEditor plugin.
+     * @return array
      */
     public function getPlugin($name);
 
     /**
-     * Sets a CKEditor plugin.
-     *
-     * @param string $name   The CKEditor plugin name.
-     * @param array  $plugin The CKEditor plugin.
-     *
-     * @return null No return value.
+     * @param string $name
+     * @param array  $plugin
      */
     public function setPlugin($name, array $plugin);
 }

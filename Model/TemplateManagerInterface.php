@@ -12,60 +12,42 @@
 namespace Ivory\CKEditorBundle\Model;
 
 /**
- * Ivory CKEditor template manager.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 interface TemplateManagerInterface
 {
     /**
-     * Checks if the CKEditor templates exists.
-     *
-     * @return boolean TRUE if the CKEditor templates exists else FALSE.
+     * @return bool
      */
     public function hasTemplates();
 
     /**
-     * Gets the CKEditor templates.
-     *
-     * @return array The CKEditor templates.
+     * @return array
      */
     public function getTemplates();
 
     /**
-     * Sets the CKEditor templates.
-     *
-     * @param array $templates The CKEditor templates.
-     *
-     * @return null No return value.
+     * @param array $templates
      */
     public function setTemplates(array $templates);
 
     /**
-     * Checks if a specific CKEditor template exists.
+     * @param string $name
      *
-     * @param string $name The CKEditor template name.
-     *
-     * @return boolean TRUE if the CKEditor template exists else FALSE.
+     * @return bool
      */
     public function hasTemplate($name);
 
     /**
-     * Gets a specific CKEditor template.
+     * @param string $name
      *
-     * @param string $name The CKEditor name.
-     *
-     * @return array The CKEditor template.
+     * @return array
      */
     public function getTemplate($name);
 
     /**
-     * Sets a CKEditor template.
-     *
-     * @param string $name     The CKEditor template name.
-     * @param array  $template The CKEditor template.
-     *
-     * @return null No return value.
+     * @param string $name
+     * @param array  $template
      */
     public function setTemplate($name, array $template);
 }

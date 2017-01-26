@@ -14,24 +14,23 @@ namespace Ivory\CKEditorBundle\Model;
 use Ivory\CKEditorBundle\Exception\PluginManagerException;
 
 /**
- * {@inheritdoc}
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class PluginManager implements PluginManagerInterface
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $plugins = array();
 
     /**
-     * Creates a plugin manager.
-     *
-     * @param array $plugins The CKEditor plugins.
+     * @param array $plugins
      */
     public function __construct(array $plugins = array())
     {
         $this->setPlugins($plugins);
     }
+
     /**
      * {@inheritdoc}
      */

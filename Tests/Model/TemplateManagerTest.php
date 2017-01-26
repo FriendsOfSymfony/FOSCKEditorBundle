@@ -15,13 +15,13 @@ use Ivory\CKEditorBundle\Model\TemplateManager;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
- * Template manager test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class TemplateManagerTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Model\TemplateManager */
+    /**
+     * @var TemplateManager
+     */
     private $templateManager;
 
     /**
@@ -30,14 +30,6 @@ class TemplateManagerTest extends AbstractTestCase
     protected function setUp()
     {
         $this->templateManager = new TemplateManager();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->templateManager);
     }
 
     public function testDefaultState()

@@ -15,13 +15,13 @@ use Ivory\CKEditorBundle\Model\ToolbarManager;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
- * Toolbar manager test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ToolbarManagerTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Model\ToolbarManager */
+    /**
+     * @var ToolbarManager
+     */
     private $toolbarManager;
 
     /**
@@ -30,14 +30,6 @@ class ToolbarManagerTest extends AbstractTestCase
     protected function setUp()
     {
         $this->toolbarManager = new ToolbarManager();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->toolbarManager);
     }
 
     public function testDefaultState()

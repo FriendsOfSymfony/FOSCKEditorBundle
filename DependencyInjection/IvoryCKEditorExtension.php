@@ -19,8 +19,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * Ivory CKEditor extension.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class IvoryCKEditorExtension extends ConfigurableExtension
@@ -54,10 +52,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * Registers the CKEditor config.
-     *
-     * @param array                                                   $config    The CKEditor configuration
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     * @param array            $config
+     * @param ContainerBuilder $container
      */
     private function registerConfig(array $config, ContainerBuilder $container)
     {
@@ -109,12 +105,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * Registers the CKEditor configs.
+     * @param array            $config
+     * @param ContainerBuilder $container
      *
-     * @param array                                                   $config    The CKEditor configuration.
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
-     *
-     * @throws \Ivory\CKEditorBundle\Exception\DependencyInjectionException If the default config does not exist.
+     * @throws DependencyInjectionException
      */
     private function registerConfigs(array $config, ContainerBuilder $container)
     {
@@ -140,10 +134,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * Registers the CKEditor plugins.
-     *
-     * @param array                                                   $config    The CKEditor configuration.
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     * @param array            $config
+     * @param ContainerBuilder $container
      */
     private function registerPlugins(array $config, ContainerBuilder $container)
     {
@@ -155,10 +147,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * Registers the CKEditor styles set.
-     *
-     * @param array                                                   $config    The CKEditor configuration.
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     * @param array            $config
+     * @param ContainerBuilder $container
      */
     private function registerStylesSet(array $config, ContainerBuilder $container)
     {
@@ -180,10 +170,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * Registers the CKEditor templates.
-     *
-     * @param array                                                   $config    The CKEditor configuration.
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     * @param array            $config
+     * @param ContainerBuilder $container
      */
     private function registerTemplates(array $config, ContainerBuilder $container)
     {
@@ -195,10 +183,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * Registers the CKEditor toolbars.
-     *
-     * @param array                                                   $config    The CKEditor configuration.
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     * @param array            $config
+     * @param ContainerBuilder $container
      */
     private function registerToolbars(array $config, ContainerBuilder $container)
     {
@@ -214,10 +200,8 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * Registers the CKEditor filebrowsers.
-     *
-     * @param array                                                   $config    The CKEditor configuration.
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container The container.
+     * @param array            $config
+     * @param ContainerBuilder $container
      */
     private function registerFilebrowsers(array $config, ContainerBuilder $container)
     {

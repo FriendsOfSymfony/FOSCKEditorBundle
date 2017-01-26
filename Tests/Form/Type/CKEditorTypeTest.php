@@ -12,80 +12,85 @@
 namespace Ivory\CKEditorBundle\Tests\Form\Type;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Ivory\CKEditorBundle\Model\ConfigManagerInterface;
+use Ivory\CKEditorBundle\Model\PluginManagerInterface;
+use Ivory\CKEditorBundle\Model\StylesSetManagerInterface;
+use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
+use Ivory\CKEditorBundle\Model\ToolbarManagerInterface;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
 
 /**
- * CKEditor type test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorTypeTest extends AbstractTestCase
 {
-    /** @var \Symfony\Component\Form\FormFactoryInterface */
+    /**
+     * @var FormFactoryInterface
+     */
     private $factory;
 
-    /** @var \Ivory\CKEditorBundle\Form\Type\CKEditorType */
+    /**
+     * @var CKEditorType
+     */
     private $ckEditorType;
 
-    /** @var \Ivory\CKEditorBundle\Model\ConfigManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $configManagerMock;
-
-    /** @var string */
+    /**
+     * @var string
+     */
     private $formType;
 
-    /** @var \Ivory\CKEditorBundle\Model\PluginManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $pluginManagerMock;
-
-    /** @var \Ivory\CKEditorBundle\Model\StylesSetManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $stylesSetManagerMock;
-
-    /** @var \Ivory\CKEditorBundle\Model\TemplateManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $templateManagerMock;
-
-    /** @var \Ivory\CKEditorBundle\Model\ToolbarManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $toolbarManagerMock;
+    /**
+     * @var ConfigManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $configManager;
 
     /**
-     * {@inheritdooc}
+     * @var PluginManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $pluginManager;
+
+    /**
+     * @var StylesSetManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $stylesSetManager;
+
+    /**
+     * @var TemplateManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $templateManager;
+
+    /**
+     * @var ToolbarManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $toolbarManager;
+
+    /**
+     * {@inheritdooc}.
      */
     protected function setUp()
     {
-        $this->configManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
-        $this->pluginManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
-        $this->stylesSetManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\StylesSetManagerInterface');
-        $this->templateManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
-        $this->toolbarManagerMock = $this->createMock('Ivory\CKEditorBundle\Model\ToolbarManagerInterface');
+        $this->configManager = $this->createMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
+        $this->pluginManager = $this->createMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
+        $this->stylesSetManager = $this->createMock('Ivory\CKEditorBundle\Model\StylesSetManagerInterface');
+        $this->templateManager = $this->createMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
+        $this->toolbarManager = $this->createMock('Ivory\CKEditorBundle\Model\ToolbarManagerInterface');
 
         $this->ckEditorType = new CKEditorType(
-            $this->configManagerMock,
-            $this->pluginManagerMock,
-            $this->stylesSetManagerMock,
-            $this->templateManagerMock,
-            $this->toolbarManagerMock
+            $this->configManager,
+            $this->pluginManager,
+            $this->stylesSetManager,
+            $this->templateManager,
+            $this->toolbarManager
         );
 
         $this->factory = Forms::createFormFactoryBuilder()
             ->addType($this->ckEditorType)
             ->getFormFactory();
 
-        // The form type requires a FQCN in Symfony 3.0 (feature added in Symfony 2.8)
         $preferFQCN = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
         $this->formType = $preferFQCN ? 'Ivory\CKEditorBundle\Form\Type\CKEditorType' : 'ckeditor';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->configManagerMock);
-        unset($this->pluginManagerMock);
-        unset($this->stylesSetManagerMock);
-        unset($this->templateManagerMock);
-        unset($this->toolbarManagerMock);
-        unset($this->ckEditorType);
-        unset($this->factory);
     }
 
     public function testInitialState()
@@ -102,11 +107,11 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertSame('bundles/ivoryckeditor/', $this->ckEditorType->getBasePath());
         $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
         $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $this->ckEditorType->getJqueryPath());
-        $this->assertSame($this->configManagerMock, $this->ckEditorType->getConfigManager());
-        $this->assertSame($this->pluginManagerMock, $this->ckEditorType->getPluginManager());
-        $this->assertSame($this->stylesSetManagerMock, $this->ckEditorType->getStylesSetManager());
-        $this->assertSame($this->templateManagerMock, $this->ckEditorType->getTemplateManager());
-        $this->assertSame($this->toolbarManagerMock, $this->ckEditorType->getToolbarManager());
+        $this->assertSame($this->configManager, $this->ckEditorType->getConfigManager());
+        $this->assertSame($this->pluginManager, $this->ckEditorType->getPluginManager());
+        $this->assertSame($this->stylesSetManager, $this->ckEditorType->getStylesSetManager());
+        $this->assertSame($this->templateManager, $this->ckEditorType->getTemplateManager());
+        $this->assertSame($this->toolbarManager, $this->ckEditorType->getToolbarManager());
     }
 
     public function testSetFilebrowsers()
@@ -503,12 +508,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('setConfig')
             ->with($this->anything(), $this->equalTo($options['config']));
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('getConfig')
             ->with($this->anything())
@@ -528,18 +533,18 @@ class CKEditorTypeTest extends AbstractTestCase
             'uiColor' => '#ffffff',
         );
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('mergeConfig')
             ->with($this->equalTo('default'), $this->equalTo(array()));
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('getConfig')
             ->with($this->identicalTo('default'))
             ->will($this->returnValue($config));
 
-        $this->toolbarManagerMock
+        $this->toolbarManager
             ->expects($this->once())
             ->method('resolveToolbar')
             ->with($this->identicalTo('default'))
@@ -559,17 +564,17 @@ class CKEditorTypeTest extends AbstractTestCase
             'uiColor' => '#ffffff',
         );
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('getDefaultConfig')
             ->will($this->returnValue('config'));
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('mergeConfig')
             ->with($this->equalTo('config'), $this->equalTo(array()));
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('getConfig')
             ->with('config')
@@ -591,18 +596,18 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $explicitConfig = array('uiColor' => '#000000');
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('mergeConfig')
             ->with($this->equalTo('default'), $this->equalTo($explicitConfig));
 
-        $this->configManagerMock
+        $this->configManager
             ->expects($this->once())
             ->method('getConfig')
             ->with('default')
             ->will($this->returnValue(array_merge($configuredConfig, $explicitConfig)));
 
-        $this->toolbarManagerMock
+        $this->toolbarManager
             ->expects($this->once())
             ->method('resolveToolbar')
             ->with($this->identicalTo('default'))
@@ -638,12 +643,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->pluginManagerMock
+        $this->pluginManager
             ->expects($this->once())
             ->method('setPlugins')
             ->with($this->equalTo($plugins));
 
-        $this->pluginManagerMock
+        $this->pluginManager
             ->expects($this->once())
             ->method('getPlugins')
             ->will($this->returnValue($plugins));
@@ -665,7 +670,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->pluginManagerMock
+        $this->pluginManager
             ->expects($this->once())
             ->method('getPlugins')
             ->will($this->returnValue($plugins));
@@ -693,12 +698,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->pluginManagerMock
+        $this->pluginManager
             ->expects($this->once())
             ->method('setPlugins')
             ->with($this->equalTo($explicitPlugins));
 
-        $this->pluginManagerMock
+        $this->pluginManager
             ->expects($this->once())
             ->method('getPlugins')
             ->will($this->returnValue(array_merge($explicitPlugins, $configuredPlugins)));
@@ -727,12 +732,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->stylesSetManagerMock
+        $this->stylesSetManager
             ->expects($this->once())
             ->method('setStylesSets')
             ->with($this->equalTo($stylesSets));
 
-        $this->stylesSetManagerMock
+        $this->stylesSetManager
             ->expects($this->once())
             ->method('getStylesSets')
             ->will($this->returnValue($stylesSets));
@@ -753,7 +758,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->stylesSetManagerMock
+        $this->stylesSetManager
             ->expects($this->once())
             ->method('getStylesSets')
             ->will($this->returnValue($stylesSets));
@@ -778,12 +783,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->stylesSetManagerMock
+        $this->stylesSetManager
             ->expects($this->once())
             ->method('setStylesSets')
             ->with($this->equalTo($explicitStylesSets));
 
-        $this->stylesSetManagerMock
+        $this->stylesSetManager
             ->expects($this->once())
             ->method('getStylesSets')
             ->will($this->returnValue(array_merge($explicitStylesSets, $configuredStylesSets)));
@@ -816,12 +821,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->templateManagerMock
+        $this->templateManager
             ->expects($this->once())
             ->method('setTemplates')
             ->with($this->equalTo($templates));
 
-        $this->templateManagerMock
+        $this->templateManager
             ->expects($this->once())
             ->method('getTemplates')
             ->will($this->returnValue($templates));
@@ -847,7 +852,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->templateManagerMock
+        $this->templateManager
             ->expects($this->once())
             ->method('getTemplates')
             ->will($this->returnValue($templates));
@@ -883,12 +888,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ),
         );
 
-        $this->templateManagerMock
+        $this->templateManager
             ->expects($this->once())
             ->method('setTemplates')
             ->with($this->equalTo($explicitTemplates));
 
-        $this->templateManagerMock
+        $this->templateManager
             ->expects($this->once())
             ->method('getTemplates')
             ->will($this->returnValue(array_merge($explicitTemplates, $configuredTemplates)));

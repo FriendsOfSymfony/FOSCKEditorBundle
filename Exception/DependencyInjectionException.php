@@ -12,18 +12,14 @@
 namespace Ivory\CKEditorBundle\Exception;
 
 /**
- * Dependency injection exception.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class DependencyInjectionException extends Exception
 {
     /**
-     * Gets the "INVALID DEFAULT CONFIG" exception.
+     * @param string $name
      *
-     * @param string $name The default config name.
-     *
-     * @return \Ivory\CKEditorBundle\Exception\DependencyInjectionException The "INVALID DEFAULT CONFIG" exception.
+     * @return DependencyInjectionException
      */
     public static function invalidDefaultConfig($name)
     {

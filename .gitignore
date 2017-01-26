@@ -2,6 +2,9 @@
 /composer.lock
 /vendor
 
+# PHP CS Fixer
+/.php_cs.cache
+
 # PHPUnit
 /build
 /phpunit.xml

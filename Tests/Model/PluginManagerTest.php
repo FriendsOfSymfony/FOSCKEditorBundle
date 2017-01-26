@@ -15,13 +15,13 @@ use Ivory\CKEditorBundle\Model\PluginManager;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
- * Plugin manager test.
- *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class PluginManagerTest extends AbstractTestCase
 {
-    /** @var \Ivory\CKEditorBundle\Model\PluginManager */
+    /**
+     * @var PluginManager
+     */
     private $pluginManager;
 
     /**
@@ -30,14 +30,6 @@ class PluginManagerTest extends AbstractTestCase
     protected function setUp()
     {
         $this->pluginManager = new PluginManager();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->pluginManager);
     }
 
     public function testDefaultState()
