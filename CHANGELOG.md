@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * f32aee0 - [Composer] Refine PHP versions
  * dddc53f - Add PHP-CS-Fixer support
  * 71393af - [Travis] Only build master branch and PRs
  * 87f7834 - [Travis] Align all Symfony deps when building
