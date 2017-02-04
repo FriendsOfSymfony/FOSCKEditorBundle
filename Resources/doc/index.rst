@@ -6,6 +6,7 @@ Getting started with IvoryCKEditorBundle
 
     installation
     usage/index
+    docker
 
 Overview
 --------
@@ -54,6 +55,11 @@ Usage
 If you want to learn more, this documentation covers the following use cases:
 
 .. include:: usage/index.rst.inc
+
+Contributing
+------------
+
+To set up the bundle, please, read the :doc:`Docker documentation <docker>`.
 
 .. _`CKEditor`: http://ckeditor.com/
 .. _`Symfony`: http://symfony.com/

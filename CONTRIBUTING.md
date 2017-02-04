@@ -34,29 +34,12 @@ $ git clone git@github.com:your-name/IvoryCKEditorBundle.git
 $ git checkout -b bug-fix-description
 ```
 
-Then, install the dependencies through [Composer](https://getcomposer.org/):
-
-``` bash
-$ composer install
-```
+Then, we recommend to use [Docker](https://www.docker.com) and follow this [instructions](/Resources/doc/docker.rst) in
+order to set up the project.
 
 When you're on the new branch with the dependencies, code as much as you want and when the fix is ready, don't commit
 it immediately. Before, you will need to add tests and update the doc. For the tests, everything is tested with
 [PHPUnit](http://phpunit.de/) and the doc is in the markdown format under the `Resources/doc` directory.
-
-To run the tests, use the following command:
-
-``` bash
-$ vendor/bin/phpunit
-```
-
-As your patch should also be compatible with Symfony 3, the bundle integrates the `symfony/phpunit-bridge` component
-in order to detect if you're not using Symfony deprecated features. To detect them, configure the bridge in strict
-mode with the following command:
-
-``` bash
-$ SYMFONY_DEPRECATIONS_HELPER=strict vendor/bin/phpunit
-```
 
 Then, when you have fixed the bug, tested it and documented it, you can commit and push it with the following commands:
 
