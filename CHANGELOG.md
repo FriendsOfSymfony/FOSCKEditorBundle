@@ -2,6 +2,9 @@
 
 ### 5.0.0 (????-??-??)
 
+ * 9d19fe2 - [Travis] Fix bash conditions
+ * 6e82c3f - [Docker] Add hhvm container
+ * f89d56c - Add docker support
  * f32aee0 - [Composer] Refine PHP versions
  * dddc53f - Add PHP-CS-Fixer support
  * 71393af - [Travis] Only build master branch and PRs
