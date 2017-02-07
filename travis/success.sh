@@ -2,7 +2,7 @@
 
 set -e
 
-DOCKER_BUILD=${DOCKER_BUILD=false}
+DOCKER_BUILD=${DOCKER_BUILD-false}
 
 if [ "$DOCKER_BUILD" = false ]; then
     wget https://scrutinizer-ci.com/ocular.phar
