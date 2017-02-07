@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * 6897fa4 - [Travis] Fix default env
  * 9d19fe2 - [Travis] Fix bash conditions
  * 6e82c3f - [Docker] Add hhvm container
  * f89d56c - Add docker support
