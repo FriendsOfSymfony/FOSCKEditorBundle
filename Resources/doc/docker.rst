@@ -44,6 +44,12 @@ To run the test suite, you can use:
 
     $ docker-compose run --rm php vendor/bin/phpunit
 
+If you want to run the test suite against `HHVM`_, you can use:
+
+.. code-block:: bash
+
+    $ docker-compose run --rm hhvm vendor/bin/phpunit
+
 XDebug
 ------
 
@@ -56,3 +62,4 @@ If you want to use XDebug, make sure you have fully configured your `.env` file 
 .. _`Composer`: https://getcomposer.org/
 .. _`Docker`: https://www.docker.com
 .. _`Docker Compose`: https://docs.docker.com/compose/docker.rst
+.. _`HHVM`: http://hhvm.com/

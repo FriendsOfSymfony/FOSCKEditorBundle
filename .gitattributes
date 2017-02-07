@@ -1,4 +1,5 @@
 /docker export-ignore
+/travis export-ignore
 /Tests export-ignore
 .env.dist export-ignore
 .gitattributes export-ignore
