@@ -6,7 +6,7 @@ SYMFONY_VERSION=${SYMFONY_VERSION-2.3.*}
 COMPOSER_PREFER_LOWEST=${COMPOSER_PREFER_LOWEST-false}
 DOCKER_BUILD=${DOCKER_BUILD=false}
 
-if [ ${DOCKER_BUILD} = true ]; then
+if [ "$DOCKER_BUILD" = true ]; then
     cp .env.dist .env
 
     docker-compose build
@@ -35,4 +35,4 @@ if [[ "$SYMFONY_VERSION" = *dev* ]]; then
     sed -i "s/\"MIT\"/\"MIT\",\"minimum-stability\":\"dev\"/g" composer.json
 fi
 
-composer update --prefer-source `if [[ ${COMPOSER_PREFER_LOWEST} = true ]]; then echo "--prefer-lowest --prefer-stable"; fi`
+composer update --prefer-source `if [ "$COMPOSER_PREFER_LOWEST" = true ]; then echo "--prefer-lowest --prefer-stable"; fi`

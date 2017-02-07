@@ -7,7 +7,7 @@ USER_ID=${USER_ID-1000}
 XDEBUG=${XDEBUG-0}
 
 # Enable XDebug
-if [ ${XDEBUG} = 1 ]; then
+if [ "$XDEBUG" = 1 ]; then
     cat /var/www/xdebug.ini >> /etc/hhvm/php.ini
 fi
 
