@@ -32,7 +32,7 @@ fi
 composer remove --no-update --dev friendsofphp/php-cs-fixer
 
 if [[ "$SYMFONY_VERSION" = *dev* ]]; then
-    sed -i "s/\"MIT\"/\"MIT\",\"minimum-stability\":\"dev\"/g" composer.json
+    composer config minimum-stability dev
 fi
 
 composer update --prefer-source `if [ "$COMPOSER_PREFER_LOWEST" = true ]; then echo "--prefer-lowest --prefer-stable"; fi`
