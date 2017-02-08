@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * add1b7a - [Travis] Replace sed by conmposer config
  * 6897fa4 - [Travis] Fix default env
  * 9d19fe2 - [Travis] Fix bash conditions
  * 6e82c3f - [Docker] Add hhvm container
