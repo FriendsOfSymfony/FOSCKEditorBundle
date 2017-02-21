@@ -38,9 +38,9 @@ class TwigTemplateTest extends AbstractTemplateTest
         $symfonyTheme = '{% block widget_attributes %}{% endblock %}';
         $ckeditorTheme = file_get_contents(__DIR__.'/../../Resources/views/Form/ckeditor_widget.html.twig');
 
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Array(array(
+        $this->twig = new \Twig_Environment(new \Twig_Loader_Array([
             'ckeditor' => $symfonyTheme.$ckeditorTheme,
-        )));
+        ]));
 
         $this->twig->addExtension(new CKEditorExtension($this->renderer));
         $this->template = $this->twig->loadTemplate('ckeditor');
@@ -49,7 +49,7 @@ class TwigTemplateTest extends AbstractTemplateTest
     /**
      * {@inheritdoc}
      */
-    protected function renderTemplate(array $context = array())
+    protected function renderTemplate(array $context = [])
     {
         return $this->template->renderBlock('ckeditor_widget', $context);
     }

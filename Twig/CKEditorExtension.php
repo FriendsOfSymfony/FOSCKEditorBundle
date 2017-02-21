@@ -36,17 +36,17 @@ class CKEditorExtension extends \Twig_Extension implements CKEditorRendererInter
      */
     public function getFunctions()
     {
-        $options = array('is_safe' => array('html'));
+        $options = ['is_safe' => ['html']];
 
-        return array(
-            new \Twig_SimpleFunction('ckeditor_base_path', array($this, 'renderBasePath'), $options),
-            new \Twig_SimpleFunction('ckeditor_js_path', array($this, 'renderJsPath'), $options),
-            new \Twig_SimpleFunction('ckeditor_widget', array($this, 'renderWidget'), $options),
-            new \Twig_SimpleFunction('ckeditor_destroy', array($this, 'renderDestroy'), $options),
-            new \Twig_SimpleFunction('ckeditor_plugin', array($this, 'renderPlugin'), $options),
-            new \Twig_SimpleFunction('ckeditor_styles_set', array($this, 'renderStylesSet'), $options),
-            new \Twig_SimpleFunction('ckeditor_template', array($this, 'renderTemplate'), $options),
-        );
+        return [
+            new \Twig_SimpleFunction('ckeditor_base_path', [$this, 'renderBasePath'], $options),
+            new \Twig_SimpleFunction('ckeditor_js_path', [$this, 'renderJsPath'], $options),
+            new \Twig_SimpleFunction('ckeditor_widget', [$this, 'renderWidget'], $options),
+            new \Twig_SimpleFunction('ckeditor_destroy', [$this, 'renderDestroy'], $options),
+            new \Twig_SimpleFunction('ckeditor_plugin', [$this, 'renderPlugin'], $options),
+            new \Twig_SimpleFunction('ckeditor_styles_set', [$this, 'renderStylesSet'], $options),
+            new \Twig_SimpleFunction('ckeditor_template', [$this, 'renderTemplate'], $options),
+        ];
     }
 
     /**
@@ -68,7 +68,7 @@ class CKEditorExtension extends \Twig_Extension implements CKEditorRendererInter
     /**
      * {@inheritdoc}
      */
-    public function renderWidget($id, array $config, array $options = array())
+    public function renderWidget($id, array $config, array $options = [])
     {
         return $this->renderer->renderWidget($id, $config, $options);
     }

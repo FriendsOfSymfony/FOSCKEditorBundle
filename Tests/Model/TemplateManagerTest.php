@@ -35,22 +35,22 @@ class TemplateManagerTest extends AbstractTestCase
     public function testDefaultState()
     {
         $this->assertFalse($this->templateManager->hasTemplates());
-        $this->assertSame(array(), $this->templateManager->getTemplates());
+        $this->assertSame([], $this->templateManager->getTemplates());
     }
 
     public function testInitialState()
     {
-        $templates = array(
-            'default' => array(
+        $templates = [
+            'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title' => 'My Template',
                         'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         $this->templateManager = new TemplateManager($templates);
 
@@ -61,17 +61,17 @@ class TemplateManagerTest extends AbstractTestCase
 
     public function testTemplates()
     {
-        $templates = array(
-            'default' => array(
+        $templates = [
+            'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title' => 'My Template',
                         'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         $this->templateManager->setTemplates($templates);
 

@@ -18,6 +18,7 @@ use Ivory\CKEditorBundle\Model\StylesSetManagerInterface;
 use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
 use Ivory\CKEditorBundle\Model\ToolbarManagerInterface;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
 
@@ -71,11 +72,11 @@ class CKEditorTypeTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->configManager = $this->createMock('Ivory\CKEditorBundle\Model\ConfigManagerInterface');
-        $this->pluginManager = $this->createMock('Ivory\CKEditorBundle\Model\PluginManagerInterface');
-        $this->stylesSetManager = $this->createMock('Ivory\CKEditorBundle\Model\StylesSetManagerInterface');
-        $this->templateManager = $this->createMock('Ivory\CKEditorBundle\Model\TemplateManagerInterface');
-        $this->toolbarManager = $this->createMock('Ivory\CKEditorBundle\Model\ToolbarManagerInterface');
+        $this->configManager = $this->createMock(ConfigManagerInterface::class);
+        $this->pluginManager = $this->createMock(PluginManagerInterface::class);
+        $this->stylesSetManager = $this->createMock(StylesSetManagerInterface::class);
+        $this->templateManager = $this->createMock(TemplateManagerInterface::class);
+        $this->toolbarManager = $this->createMock(ToolbarManagerInterface::class);
 
         $this->ckEditorType = new CKEditorType(
             $this->configManager,
@@ -89,8 +90,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ->addType($this->ckEditorType)
             ->getFormFactory();
 
-        $preferFQCN = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
-        $this->formType = $preferFQCN ? 'Ivory\CKEditorBundle\Form\Type\CKEditorType' : 'ckeditor';
+        $this->formType = method_exists(AbstractType::class, 'getBlockPrefix') ? CKEditorType::class : 'ckeditor';
     }
 
     public function testInitialState()
@@ -116,10 +116,10 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testSetFilebrowsers()
     {
-        $this->ckEditorType->setFilebrowsers($filebrowsers = array(
+        $this->ckEditorType->setFilebrowsers($filebrowsers = [
             'VideoBrowse',
             'VideoUpload',
-        ));
+        ]);
 
         $this->assertTrue($this->ckEditorType->hasFilebrowsers());
         $this->assertSame($filebrowsers, $this->ckEditorType->getFilebrowsers());
@@ -134,7 +134,7 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->ckEditorType->addFilebrowser($filebrowser = 'VideoBrowse');
 
         $this->assertTrue($this->ckEditorType->hasFilebrowsers());
-        $this->assertSame(array($filebrowser), $this->ckEditorType->getFilebrowsers());
+        $this->assertSame([$filebrowser], $this->ckEditorType->getFilebrowsers());
         $this->assertTrue($this->ckEditorType->hasFilebrowser($filebrowser));
     }
 
@@ -170,7 +170,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testEnableWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('enable' => false));
+        $form = $this->factory->create($this->formType, null, ['enable' => false]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('enable', $view->vars);
@@ -199,7 +199,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testAsyncWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('async' => true));
+        $form = $this->factory->create($this->formType, null, ['async' => true]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('async', $view->vars);
@@ -228,7 +228,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testAutoloadWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('autoload' => false));
+        $form = $this->factory->create($this->formType, null, ['autoload' => false]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('autoload', $view->vars);
@@ -257,7 +257,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testAutoInlineWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('auto_inline' => false));
+        $form = $this->factory->create($this->formType, null, ['auto_inline' => false]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('auto_inline', $view->vars);
@@ -286,7 +286,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testInlineWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('inline' => true));
+        $form = $this->factory->create($this->formType, null, ['inline' => true]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('inline', $view->vars);
@@ -315,7 +315,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testJqueryWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('jquery' => true));
+        $form = $this->factory->create($this->formType, null, ['jquery' => true]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('jquery', $view->vars);
@@ -344,7 +344,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testInputSyncWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('input_sync' => true));
+        $form = $this->factory->create($this->formType, null, ['input_sync' => true]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('input_sync', $view->vars);
@@ -373,7 +373,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testRequireJsWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('require_js' => true));
+        $form = $this->factory->create($this->formType, null, ['require_js' => true]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('require_js', $view->vars);
@@ -391,10 +391,10 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testFilebrowsersWithConfiguredValue()
     {
-        $this->ckEditorType->setFilebrowsers($filebrowsers = array(
+        $this->ckEditorType->setFilebrowsers($filebrowsers = [
             'VideoBrowser',
             'VideoUpload',
-        ));
+        ]);
 
         $form = $this->factory->create($this->formType);
         $view = $form->createView();
@@ -405,10 +405,10 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testFilebrowsersWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('filebrowsers' => $filebrowsers = array(
+        $form = $this->factory->create($this->formType, null, ['filebrowsers' => $filebrowsers = [
             'VideoBrowse',
             'VideoUpload',
-        )));
+        ]]);
 
         $view = $form->createView();
 
@@ -447,10 +447,10 @@ class CKEditorTypeTest extends AbstractTestCase
         $form = $this->factory->create(
             $this->formType,
             null,
-            array(
+            [
                 'base_path' => 'foo',
                 'js_path'   => 'foo/ckeditor.js',
-            )
+            ]
         );
 
         $view = $form->createView();
@@ -483,7 +483,7 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testJqueryPathWithExplicitValue()
     {
-        $form = $this->factory->create($this->formType, null, array('jquery_path' => 'foo/jquery.js'));
+        $form = $this->factory->create($this->formType, null, ['jquery_path' => 'foo/jquery.js']);
         $view = $form->createView();
 
         $this->assertArrayHasKey('jquery_path', $view->vars);
@@ -501,12 +501,12 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testConfigWithExplicitConfig()
     {
-        $options = array(
-            'config' => array(
-                'toolbar' => array('foo' => 'bar'),
+        $options = [
+            'config' => [
+                'toolbar' => ['foo' => 'bar'],
                 'uiColor' => '#ffffff',
-            ),
-        );
+            ],
+        ];
 
         $this->configManager
             ->expects($this->once())
@@ -528,15 +528,15 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testConfigWithConfiguredConfig()
     {
-        $config = array(
+        $config = [
             'toolbar' => 'default',
             'uiColor' => '#ffffff',
-        );
+        ];
 
         $this->configManager
             ->expects($this->once())
             ->method('mergeConfig')
-            ->with($this->equalTo('default'), $this->equalTo(array()));
+            ->with($this->equalTo('default'), $this->equalTo([]));
 
         $this->configManager
             ->expects($this->once())
@@ -548,9 +548,9 @@ class CKEditorTypeTest extends AbstractTestCase
             ->expects($this->once())
             ->method('resolveToolbar')
             ->with($this->identicalTo('default'))
-            ->will($this->returnValue($config['toolbar'] = array('foo' => 'bar')));
+            ->will($this->returnValue($config['toolbar'] = ['foo' => 'bar']));
 
-        $form = $this->factory->create($this->formType, null, array('config_name' => 'default'));
+        $form = $this->factory->create($this->formType, null, ['config_name' => 'default']);
         $view = $form->createView();
 
         $this->assertArrayHasKey('config', $view->vars);
@@ -559,10 +559,10 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testConfigWithDefaultConfiguredConfig()
     {
-        $options = array(
-            'toolbar' => array('foo' => 'bar'),
+        $options = [
+            'toolbar' => ['foo' => 'bar'],
             'uiColor' => '#ffffff',
-        );
+        ];
 
         $this->configManager
             ->expects($this->once())
@@ -572,7 +572,7 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->configManager
             ->expects($this->once())
             ->method('mergeConfig')
-            ->with($this->equalTo('config'), $this->equalTo(array()));
+            ->with($this->equalTo('config'), $this->equalTo([]));
 
         $this->configManager
             ->expects($this->once())
@@ -589,12 +589,12 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testConfigWithExplicitAndConfiguredConfig()
     {
-        $configuredConfig = array(
+        $configuredConfig = [
             'toolbar' => 'default',
             'uiColor' => '#ffffff',
-        );
+        ];
 
-        $explicitConfig = array('uiColor' => '#000000');
+        $explicitConfig = ['uiColor' => '#000000'];
 
         $this->configManager
             ->expects($this->once())
@@ -611,12 +611,12 @@ class CKEditorTypeTest extends AbstractTestCase
             ->expects($this->once())
             ->method('resolveToolbar')
             ->with($this->identicalTo('default'))
-            ->will($this->returnValue($configuredConfig['toolbar'] = array('foo' => 'bar')));
+            ->will($this->returnValue($configuredConfig['toolbar'] = ['foo' => 'bar']));
 
         $form = $this->factory->create(
             $this->formType,
             null,
-            array('config_name' => 'default', 'config' => $explicitConfig)
+            ['config_name' => 'default', 'config' => $explicitConfig]
         );
 
         $view = $form->createView();
@@ -636,12 +636,12 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testPluginsWithExplicitPlugins()
     {
-        $plugins = array(
-            'wordcount' => array(
+        $plugins = [
+            'wordcount' => [
                 'path'     => '/my/path',
                 'filename' => 'plugin.js',
-            ),
-        );
+            ],
+        ];
 
         $this->pluginManager
             ->expects($this->once())
@@ -653,7 +653,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ->method('getPlugins')
             ->will($this->returnValue($plugins));
 
-        $form = $this->factory->create($this->formType, null, array('plugins' => $plugins));
+        $form = $this->factory->create($this->formType, null, ['plugins' => $plugins]);
 
         $view = $form->createView();
 
@@ -663,12 +663,12 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testPluginsWithConfiguredPlugins()
     {
-        $plugins = array(
-            'wordcount' => array(
+        $plugins = [
+            'wordcount' => [
                 'path'     => '/my/path',
                 'filename' => 'plugin.js',
-            ),
-        );
+            ],
+        ];
 
         $this->pluginManager
             ->expects($this->once())
@@ -684,19 +684,19 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testPluginsWithConfiguredAndExplicitPlugins()
     {
-        $configuredPlugins = array(
-            'wordcount' => array(
+        $configuredPlugins = [
+            'wordcount' => [
                 'path'     => '/my/explicit/path',
                 'filename' => 'plugin.js',
-            ),
-        );
+            ],
+        ];
 
-        $explicitPlugins = array(
-            'autogrow' => array(
+        $explicitPlugins = [
+            'autogrow' => [
                 'path'     => '/my/configured/path',
                 'filename' => 'plugin.js',
-            ),
-        );
+            ],
+        ];
 
         $this->pluginManager
             ->expects($this->once())
@@ -708,7 +708,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ->method('getPlugins')
             ->will($this->returnValue(array_merge($explicitPlugins, $configuredPlugins)));
 
-        $form = $this->factory->create($this->formType, null, array('plugins' => $explicitPlugins));
+        $form = $this->factory->create($this->formType, null, ['plugins' => $explicitPlugins]);
         $view = $form->createView();
 
         $this->assertArrayHasKey('plugins', $view->vars);
@@ -725,12 +725,12 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testPluginsWithExplicitStylesSet()
     {
-        $stylesSets = array(
-            'default' => array(
-                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
-            ),
-        );
+        $stylesSets = [
+            'default' => [
+                ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
+                ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
+            ],
+        ];
 
         $this->stylesSetManager
             ->expects($this->once())
@@ -742,7 +742,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ->method('getStylesSets')
             ->will($this->returnValue($stylesSets));
 
-        $form = $this->factory->create($this->formType, null, array('styles' => $stylesSets));
+        $form = $this->factory->create($this->formType, null, ['styles' => $stylesSets]);
 
         $view = $form->createView();
 
@@ -751,12 +751,12 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testPluginsWithConfiguredStylesSets()
     {
-        $stylesSets = array(
-            'default' => array(
-                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
-            ),
-        );
+        $stylesSets = [
+            'default' => [
+                ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
+                ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
+            ],
+        ];
 
         $this->stylesSetManager
             ->expects($this->once())
@@ -771,17 +771,17 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testPluginsWithConfiguredAndExplicitStylesSets()
     {
-        $configuredStylesSets = array(
-            'foo' => array(
-                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-            ),
-        );
+        $configuredStylesSets = [
+            'foo' => [
+                ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
+            ],
+        ];
 
-        $explicitStylesSets = array(
-            'bar' => array(
-                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
-            ),
-        );
+        $explicitStylesSets = [
+            'bar' => [
+                ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
+            ],
+        ];
 
         $this->stylesSetManager
             ->expects($this->once())
@@ -793,7 +793,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ->method('getStylesSets')
             ->will($this->returnValue(array_merge($explicitStylesSets, $configuredStylesSets)));
 
-        $form = $this->factory->create($this->formType, null, array('styles' => $explicitStylesSets));
+        $form = $this->factory->create($this->formType, null, ['styles' => $explicitStylesSets]);
         $view = $form->createView();
 
         $this->assertSame(array_merge($explicitStylesSets, $configuredStylesSets), $view->vars['styles']);
@@ -809,17 +809,17 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testTemplatesWithExplicitTemplates()
     {
-        $templates = array(
-            'default' => array(
+        $templates = [
+            'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title' => 'My Template',
                         'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         $this->templateManager
             ->expects($this->once())
@@ -831,7 +831,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ->method('getTemplates')
             ->will($this->returnValue($templates));
 
-        $form = $this->factory->create($this->formType, null, array('templates' => $templates));
+        $form = $this->factory->create($this->formType, null, ['templates' => $templates]);
 
         $view = $form->createView();
 
@@ -840,17 +840,17 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testTemplatesWithConfiguredTemplates()
     {
-        $templates = array(
-            'default' => array(
+        $templates = [
+            'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title' => 'My Template',
                         'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         $this->templateManager
             ->expects($this->once())
@@ -865,28 +865,28 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testTemplatesWithConfiguredAndExplicitTemplates()
     {
-        $configuredTemplates = array(
-            'default' => array(
+        $configuredTemplates = [
+            'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title' => 'My Template',
                         'html'  => '<h1>Template</h1><p>Type your text here.</p>',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
-        $explicitTemplates = array(
-            'extra' => array(
-                'templates'  => array(
-                    array(
+        $explicitTemplates = [
+            'extra' => [
+                'templates'  => [
+                    [
                         'title' => 'My Extra Template',
                         'html'  => '<h2>Template</h2><p>Type your text here.</p>',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         $this->templateManager
             ->expects($this->once())
@@ -898,7 +898,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ->method('getTemplates')
             ->will($this->returnValue(array_merge($explicitTemplates, $configuredTemplates)));
 
-        $form = $this->factory->create($this->formType, null, array('templates' => $explicitTemplates));
+        $form = $this->factory->create($this->formType, null, ['templates' => $explicitTemplates]);
         $view = $form->createView();
 
         $this->assertSame(array_merge($explicitTemplates, $configuredTemplates), $view->vars['templates']);
@@ -908,18 +908,18 @@ class CKEditorTypeTest extends AbstractTestCase
     {
         $this->ckEditorType->isEnable(false);
 
-        $options = array(
-            'config' => array(
-                'toolbar' => array('foo' => 'bar'),
+        $options = [
+            'config' => [
+                'toolbar' => ['foo' => 'bar'],
                 'uiColor' => '#ffffff',
-            ),
-            'plugins' => array(
-                'wordcount' => array(
+            ],
+            'plugins' => [
+                'wordcount' => [
                     'path'     => '/my/path',
                     'filename' => 'plugin.js',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $form = $this->factory->create($this->formType, null, $options);
         $view = $form->createView();
@@ -936,19 +936,19 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testExplicitDisable()
     {
-        $options = array(
+        $options = [
             'enable' => false,
-            'config' => array(
-                'toolbar' => array('foo' => 'bar'),
+            'config' => [
+                'toolbar' => ['foo' => 'bar'],
                 'uiColor' => '#ffffff',
-            ),
-            'plugins' => array(
-                'wordcount' => array(
+            ],
+            'plugins' => [
+                'wordcount' => [
                     'path'     => '/my/path',
                     'filename' => 'plugin.js',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $form = $this->factory->create($this->formType, null, $options);
         $view = $form->createView();

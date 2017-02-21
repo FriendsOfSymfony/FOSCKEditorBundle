@@ -1,9 +1,6 @@
 language: php
 
 php:
-    - 5.3
-    - 5.4
-    - 5.5
     - 5.6
     - 7.0
     - 7.1
@@ -16,8 +13,8 @@ env:
     global:
         - COMPOSER_PREFER_LOWEST=false
         - DOCKER_BUILD=false
-        - SYMFONY_DEPRECATIONS_HELPER=weak
-        - SYMFONY_VERSION=2.3.*
+        - SYMFONY_DEPRECATIONS_HELPER=strict
+        - SYMFONY_VERSION=2.7.*
 
 install: travis/install.sh
 script: travis/script.sh
@@ -29,31 +26,21 @@ matrix:
           services: [docker]
           env: DOCKER_BUILD=true
         - php: 5.6
-          env: SYMFONY_VERSION=2.2.* COMPOSER_PREFER_LOWEST=true
+          env: SYMFONY_VERSION=2.7.* COMPOSER_PREFER_LOWEST=true
         - php: 5.6
           env: SYMFONY_VERSION=3.0.* COMPOSER_PREFER_LOWEST=true
         - php: 5.6
-          env: SYMFONY_VERSION=2.3.*
+          env: SYMFONY_VERSION=2.8.*
         - php: 5.6
-          env: SYMFONY_VERSION=2.4.*
+          env: SYMFONY_VERSION=3.0.*
         - php: 5.6
-          env: SYMFONY_VERSION=2.5.*
+          env: SYMFONY_VERSION=3.1.*
         - php: 5.6
-          env: SYMFONY_VERSION=2.6.*
+          env: SYMFONY_VERSION=3.2.*
         - php: 5.6
-          env: SYMFONY_VERSION=2.7.* SYMFONY_DEPRECATIONS_HELPER=strict
-        - php: 5.6
-          env: SYMFONY_VERSION=2.8.* SYMFONY_DEPRECATIONS_HELPER=strict
-        - php: 5.6
-          env: SYMFONY_VERSION=3.0.* SYMFONY_DEPRECATIONS_HELPER=strict
-        - php: 5.6
-          env: SYMFONY_VERSION=3.1.* SYMFONY_DEPRECATIONS_HELPER=strict
-        - php: 5.6
-          env: SYMFONY_VERSION=3.2.* SYMFONY_DEPRECATIONS_HELPER=strict
-        - php: 5.6
-          env: SYMFONY_VERSION=3.3.*@dev SYMFONY_DEPRECATIONS_HELPER=strict
+          env: SYMFONY_VERSION=3.3.*@dev
     allow_failures:
-        - env: SYMFONY_VERSION=3.3.*@dev SYMFONY_DEPRECATIONS_HELPER=strict
+        - env: SYMFONY_VERSION=3.3.*@dev
 
 notifications:
     email: geloen.eric@gmail.com

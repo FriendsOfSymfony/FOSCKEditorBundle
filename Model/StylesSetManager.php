@@ -21,12 +21,12 @@ class StylesSetManager implements StylesSetManagerInterface
     /**
      * @var array
      */
-    private $stylesSets = array();
+    private $stylesSets = [];
 
     /**
      * @param array $stylesSets
      */
-    public function __construct(array $stylesSets = array())
+    public function __construct(array $stylesSets = [])
     {
         $this->setStylesSets($stylesSets);
     }

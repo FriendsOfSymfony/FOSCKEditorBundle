@@ -42,7 +42,7 @@ interface CKEditorRendererInterface
      *
      * @return string
      */
-    public function renderWidget($id, array $config, array $options = array());
+    public function renderWidget($id, array $config, array $options = []);
 
     /**
      * @param string $id

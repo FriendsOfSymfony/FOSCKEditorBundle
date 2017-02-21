@@ -35,17 +35,17 @@ class PluginManagerTest extends AbstractTestCase
     public function testDefaultState()
     {
         $this->assertFalse($this->pluginManager->hasPlugins());
-        $this->assertSame(array(), $this->pluginManager->getPlugins());
+        $this->assertSame([], $this->pluginManager->getPlugins());
     }
 
     public function testInitialState()
     {
-        $plugins = array(
-            'wordcount' => array(
+        $plugins = [
+            'wordcount' => [
                 'path'     => '/my/path',
                 'filename' => 'plugin.js',
-            ),
-        );
+            ],
+        ];
 
         $this->pluginManager = new PluginManager($plugins);
 
@@ -56,12 +56,12 @@ class PluginManagerTest extends AbstractTestCase
 
     public function testPlugins()
     {
-        $plugins = array(
-            'wordcount' => array(
+        $plugins = [
+            'wordcount' => [
                 'path'     => '/my/path',
                 'filename' => 'plugin.js',
-            ),
-        );
+            ],
+        ];
 
         $this->pluginManager->setPlugins($plugins);
 

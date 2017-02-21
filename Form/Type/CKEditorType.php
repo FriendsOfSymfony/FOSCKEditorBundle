@@ -17,13 +17,12 @@ use Ivory\CKEditorBundle\Model\StylesSetManagerInterface;
 use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
 use Ivory\CKEditorBundle\Model\ToolbarManagerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -73,7 +72,7 @@ class CKEditorType extends AbstractType
     /**
      * @var array
      */
-    private $filebrowsers = array();
+    private $filebrowsers = [];
 
     /**
      * @var string
@@ -437,48 +436,50 @@ class CKEditorType extends AbstractType
     {
         $builder->setAttribute('enable', $options['enable']);
 
-        if ($builder->getAttribute('enable')) {
-            $builder->setAttribute('async', $options['async']);
-            $builder->setAttribute('autoload', $options['autoload']);
-            $builder->setAttribute('auto_inline', $options['auto_inline']);
-            $builder->setAttribute('inline', $options['inline']);
-            $builder->setAttribute('jquery', $options['jquery']);
-            $builder->setAttribute('require_js', $options['require_js']);
-            $builder->setAttribute('input_sync', $options['input_sync']);
-            $builder->setAttribute('filebrowsers', $options['filebrowsers']);
-            $builder->setAttribute('base_path', $options['base_path']);
-            $builder->setAttribute('js_path', $options['js_path']);
-            $builder->setAttribute('jquery_path', $options['jquery_path']);
-
-            $configManager = clone $this->configManager;
-            $pluginManager = clone $this->pluginManager;
-            $stylesSetManager = clone $this->stylesSetManager;
-            $templateManager = clone $this->templateManager;
-
-            $config = $options['config'];
-
-            if ($options['config_name'] === null) {
-                $options['config_name'] = uniqid('ivory', true);
-                $configManager->setConfig($options['config_name'], $config);
-            } else {
-                $configManager->mergeConfig($options['config_name'], $config);
-            }
-
-            $pluginManager->setPlugins($options['plugins']);
-            $stylesSetManager->setStylesSets($options['styles']);
-            $templateManager->setTemplates($options['templates']);
-
-            $config = $configManager->getConfig($options['config_name']);
-
-            if (isset($config['toolbar']) && is_string($config['toolbar'])) {
-                $config['toolbar'] = $this->toolbarManager->resolveToolbar($config['toolbar']);
-            }
-
-            $builder->setAttribute('config', $config);
-            $builder->setAttribute('plugins', $pluginManager->getPlugins());
-            $builder->setAttribute('styles', $stylesSetManager->getStylesSets());
-            $builder->setAttribute('templates', $templateManager->getTemplates());
+        if (!$options['enable']) {
+            return;
         }
+
+        $builder->setAttribute('async', $options['async']);
+        $builder->setAttribute('autoload', $options['autoload']);
+        $builder->setAttribute('auto_inline', $options['auto_inline']);
+        $builder->setAttribute('inline', $options['inline']);
+        $builder->setAttribute('jquery', $options['jquery']);
+        $builder->setAttribute('require_js', $options['require_js']);
+        $builder->setAttribute('input_sync', $options['input_sync']);
+        $builder->setAttribute('filebrowsers', $options['filebrowsers']);
+        $builder->setAttribute('base_path', $options['base_path']);
+        $builder->setAttribute('js_path', $options['js_path']);
+        $builder->setAttribute('jquery_path', $options['jquery_path']);
+
+        $configManager = clone $this->configManager;
+        $pluginManager = clone $this->pluginManager;
+        $stylesSetManager = clone $this->stylesSetManager;
+        $templateManager = clone $this->templateManager;
+
+        $config = $options['config'];
+
+        if ($options['config_name'] === null) {
+            $options['config_name'] = uniqid('ivory', true);
+            $configManager->setConfig($options['config_name'], $config);
+        } else {
+            $configManager->mergeConfig($options['config_name'], $config);
+        }
+
+        $pluginManager->setPlugins($options['plugins']);
+        $stylesSetManager->setStylesSets($options['styles']);
+        $templateManager->setTemplates($options['templates']);
+
+        $config = $configManager->getConfig($options['config_name']);
+
+        if (isset($config['toolbar']) && is_string($config['toolbar'])) {
+            $config['toolbar'] = $this->toolbarManager->resolveToolbar($config['toolbar']);
+        }
+
+        $builder->setAttribute('config', $config);
+        $builder->setAttribute('plugins', $pluginManager->getPlugins());
+        $builder->setAttribute('styles', $stylesSetManager->getStylesSets());
+        $builder->setAttribute('templates', $templateManager->getTemplates());
     }
 
     /**
@@ -486,25 +487,28 @@ class CKEditorType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['enable'] = $form->getConfig()->getAttribute('enable');
+        $config = $form->getConfig();
+        $view->vars['enable'] = $config->getAttribute('enable');
 
-        if ($form->getConfig()->getAttribute('enable')) {
-            $view->vars['async'] = $form->getConfig()->getAttribute('async');
-            $view->vars['autoload'] = $form->getConfig()->getAttribute('autoload');
-            $view->vars['auto_inline'] = $form->getConfig()->getAttribute('auto_inline');
-            $view->vars['inline'] = $form->getConfig()->getAttribute('inline');
-            $view->vars['jquery'] = $form->getConfig()->getAttribute('jquery');
-            $view->vars['require_js'] = $form->getConfig()->getAttribute('require_js');
-            $view->vars['input_sync'] = $form->getConfig()->getAttribute('input_sync');
-            $view->vars['filebrowsers'] = $form->getConfig()->getAttribute('filebrowsers');
-            $view->vars['base_path'] = $form->getConfig()->getAttribute('base_path');
-            $view->vars['js_path'] = $form->getConfig()->getAttribute('js_path');
-            $view->vars['jquery_path'] = $form->getConfig()->getAttribute('jquery_path');
-            $view->vars['config'] = $form->getConfig()->getAttribute('config');
-            $view->vars['plugins'] = $form->getConfig()->getAttribute('plugins');
-            $view->vars['styles'] = $form->getConfig()->getAttribute('styles');
-            $view->vars['templates'] = $form->getConfig()->getAttribute('templates');
+        if (!$view->vars['enable']) {
+            return;
         }
+
+        $view->vars['async'] = $config->getAttribute('async');
+        $view->vars['autoload'] = $config->getAttribute('autoload');
+        $view->vars['auto_inline'] = $config->getAttribute('auto_inline');
+        $view->vars['inline'] = $config->getAttribute('inline');
+        $view->vars['jquery'] = $config->getAttribute('jquery');
+        $view->vars['require_js'] = $config->getAttribute('require_js');
+        $view->vars['input_sync'] = $config->getAttribute('input_sync');
+        $view->vars['filebrowsers'] = $config->getAttribute('filebrowsers');
+        $view->vars['base_path'] = $config->getAttribute('base_path');
+        $view->vars['js_path'] = $config->getAttribute('js_path');
+        $view->vars['jquery_path'] = $config->getAttribute('jquery_path');
+        $view->vars['config'] = $config->getAttribute('config');
+        $view->vars['plugins'] = $config->getAttribute('plugins');
+        $view->vars['styles'] = $config->getAttribute('styles');
+        $view->vars['templates'] = $config->getAttribute('templates');
     }
 
     /**
@@ -513,7 +517,7 @@ class CKEditorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'enable'       => $this->enable,
                 'async'        => $this->async,
                 'autoload'     => $this->autoload,
@@ -527,63 +531,35 @@ class CKEditorType extends AbstractType
                 'js_path'      => $this->jsPath,
                 'jquery_path'  => $this->jqueryPath,
                 'config_name'  => $this->configManager->getDefaultConfig(),
-                'config'       => array(),
-                'plugins'      => array(),
-                'styles'       => array(),
-                'templates'    => array(),
-            ));
-
-        $allowedTypesMap = array(
-            'enable'       => 'bool',
-            'async'        => 'bool',
-            'autoload'     => 'bool',
-            'auto_inline'  => 'bool',
-            'inline'       => 'bool',
-            'jquery'       => 'bool',
-            'require_js'   => 'bool',
-            'input_sync'   => 'bool',
-            'filebrowsers' => 'array',
-            'config_name'  => array('string', 'null'),
-            'base_path'    => 'string',
-            'js_path'      => 'string',
-            'jquery_path'  => 'string',
-            'config'       => 'array',
-            'plugins'      => 'array',
-            'styles'       => 'array',
-            'templates'    => 'array',
-        );
-
-        $normalizers = array(
-            'base_path' => function (Options $options, $value) {
+                'config'       => [],
+                'plugins'      => [],
+                'styles'       => [],
+                'templates'    => [],
+            ])
+            ->addAllowedTypes('enable', 'bool')
+            ->addAllowedTypes('async', 'bool')
+            ->addAllowedTypes('autoload', 'bool')
+            ->addAllowedTypes('auto_inline', 'bool')
+            ->addAllowedTypes('inline', 'bool')
+            ->addAllowedTypes('jquery', 'bool')
+            ->addAllowedTypes('require_js', 'bool')
+            ->addAllowedTypes('input_sync', 'bool')
+            ->addAllowedTypes('filebrowsers', 'array')
+            ->addAllowedTypes('config_name', ['string', 'null'])
+            ->addAllowedTypes('base_path', 'string')
+            ->addAllowedTypes('js_path', 'string')
+            ->addAllowedTypes('jquery_path', 'string')
+            ->addAllowedTypes('config', 'array')
+            ->addAllowedTypes('plugins', 'array')
+            ->addAllowedTypes('styles', 'array')
+            ->addAllowedTypes('templates', 'array')
+            ->setNormalizer('base_path', function (Options $options, $value) {
                 if (substr($value, -1) !== '/') {
                     $value .= '/';
                 }
 
                 return $value;
-            },
-        );
-
-        if (Kernel::VERSION_ID >= 20600) {
-            foreach ($allowedTypesMap as $option => $allowedTypes) {
-                $resolver->addAllowedTypes($option, $allowedTypes);
-            }
-
-            foreach ($normalizers as $option => $normalizer) {
-                $resolver->setNormalizer($option, $normalizer);
-            }
-        } else {
-            $resolver
-                ->addAllowedTypes($allowedTypesMap)
-                ->setNormalizers($normalizers);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
+            });
     }
 
     /**
@@ -591,9 +567,7 @@ class CKEditorType extends AbstractType
      */
     public function getParent()
     {
-        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
-            : 'textarea';
+        return method_exists(AbstractType::class, 'getBlockPrefix') ? TextareaType::class : 'textarea';
     }
 
     /**

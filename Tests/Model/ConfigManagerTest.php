@@ -36,15 +36,15 @@ class ConfigManagerTest extends AbstractTestCase
     {
         $this->assertNull($this->configManager->getDefaultConfig());
         $this->assertFalse($this->configManager->hasConfigs());
-        $this->assertSame(array(), $this->configManager->getConfigs());
+        $this->assertSame([], $this->configManager->getConfigs());
     }
 
     public function testInitialState()
     {
-        $configs = array(
-            'foo' => array('foo'),
-            'bar' => array('bar'),
-        );
+        $configs = [
+            'foo' => ['foo'],
+            'bar' => ['bar'],
+        ];
 
         $this->configManager = new ConfigManager($configs, 'foo');
 
@@ -55,23 +55,23 @@ class ConfigManagerTest extends AbstractTestCase
 
     public function testSetConfig()
     {
-        $this->configManager->setConfig('foo', array('foo' => 'bar'));
-        $this->configManager->setConfig('foo', $config = array('foo' => 'baz'));
+        $this->configManager->setConfig('foo', ['foo' => 'bar']);
+        $this->configManager->setConfig('foo', $config = ['foo' => 'baz']);
 
         $this->assertSame($config, $this->configManager->getConfig('foo'));
     }
 
     public function testMergeConfig()
     {
-        $this->configManager->setConfig('foo', $config1 = array('foo' => 'bar', 'bar' => 'foo'));
-        $this->configManager->mergeConfig('foo', $config2 = array('foo' => 'baz'));
+        $this->configManager->setConfig('foo', $config1 = ['foo' => 'bar', 'bar' => 'foo']);
+        $this->configManager->mergeConfig('foo', $config2 = ['foo' => 'baz']);
 
         $this->assertSame(array_merge($config1, $config2), $this->configManager->getConfig('foo'));
     }
 
-    public function testDefaultCOnfig()
+    public function testDefaultConfig()
     {
-        $this->configManager->setConfig('foo', array('foo' => 'bar'));
+        $this->configManager->setConfig('foo', ['foo' => 'bar']);
         $this->configManager->setDefaultConfig('foo');
     }
 
@@ -99,6 +99,6 @@ class ConfigManagerTest extends AbstractTestCase
      */
     public function testMergeConfigWithInvalidName()
     {
-        $this->configManager->mergeConfig('foo', array('foo' => 'bar'));
+        $this->configManager->mergeConfig('foo', ['foo' => 'bar']);
     }
 }

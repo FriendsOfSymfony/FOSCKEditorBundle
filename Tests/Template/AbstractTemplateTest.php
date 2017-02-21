@@ -12,11 +12,13 @@
 namespace Ivory\CKEditorBundle\Tests\Template;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
+use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,9 +37,14 @@ abstract class AbstractTemplateTest extends AbstractTestCase
     private $container;
 
     /**
-     * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
      */
     private $packages;
+
+    /**
+     * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $requestStack;
 
     /**
      * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -49,46 +56,45 @@ abstract class AbstractTemplateTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
-
-        if (class_exists('Symfony\Component\Asset\Packages')) {
-            $this->packages = $this->getMockBuilder('Symfony\Component\Asset\Packages')
-                ->disableOriginalConstructor()
-                ->getMock();
-        } else {
-            $this->packages = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
-                ->disableOriginalConstructor()
-                ->getMock();
-        }
+        $this->requestStack = $this->createMock(RequestStack::class);
+        $this->router = $this->createMock(RouterInterface::class);
+        $this->packages = $this->getMockBuilder(Packages::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->packages
             ->expects($this->any())
             ->method('getUrl')
             ->will($this->returnArgument(0));
 
-        $this->container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->container = $this->createMock(ContainerInterface::class);
         $this->container
             ->expects($this->any())
             ->method('get')
-            ->will($this->returnValueMap(array(
-                array(
+            ->will($this->returnValueMap([
+                [
                     'assets.packages',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
                     $this->packages,
-                ),
-                array(
+                ],
+                [
+                    'request_stack',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->requestStack,
+                ],
+                [
                     'router',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
                     $this->router,
-                ),
-            )));
+                ],
+            ]));
 
         $this->renderer = new CKEditorRenderer($this->container);
     }
 
     public function testDefaultState()
     {
-        $this->assertInstanceOf('Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface', $this->renderer);
+        $this->assertInstanceOf(CKEditorRendererInterface::class, $this->renderer);
     }
 
     public function testRenderWithSimpleWidget()
@@ -114,31 +120,31 @@ EOF;
 
     public function testRenderWithFullWidget()
     {
-        $context = array(
+        $context = [
             'auto_inline' => false,
             'inline'      => true,
             'input_sync'  => true,
-            'config'      => array('foo' => 'bar'),
-            'plugins'     => array(
-                'foo' => array('path' => 'path', 'filename' => 'filename'),
-            ),
-            'styles' => array(
-                'default' => array(
-                    array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-                ),
-            ),
-            'templates' => array(
-                'foo' => array(
+            'config'      => ['foo' => 'bar'],
+            'plugins'     => [
+                'foo' => ['path' => 'path', 'filename' => 'filename'],
+            ],
+            'styles' => [
+                'default' => [
+                    ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
+                ],
+            ],
+            'templates' => [
+                'foo' => [
                     'imagesPath' => 'path',
-                    'templates'  => array(
-                        array(
+                    'templates'  => [
+                        [
                             'title' => 'My Template',
                             'html'  => '<h1>Template</h1>',
-                        ),
-                    ),
-                ),
-            ),
-        );
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
         $expected = <<<EOF
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
@@ -184,7 +190,7 @@ CKEDITOR.replace("id",[]);
 </script>
 EOF;
 
-        $this->assertTemplate($expected, array_merge($this->getContext(), array('jquery' => true)));
+        $this->assertTemplate($expected, array_merge($this->getContext(), ['jquery' => true]));
     }
 
     public function testRenderWithRequireJs()
@@ -206,7 +212,7 @@ CKEDITOR.replace("id",[]);
 </script>
 EOF;
 
-        $this->assertTemplate($expected, array_merge($this->getContext(), array('require_js' => true)));
+        $this->assertTemplate($expected, array_merge($this->getContext(), ['require_js' => true]));
     }
 
     public function testRenderWithNotAutoloadedWidget()
@@ -223,7 +229,7 @@ CKEDITOR.replace("id", []);
 
 EOF;
 
-        $this->assertTemplate($expected, array_merge($this->getContext(), array('autoload' => false)));
+        $this->assertTemplate($expected, array_merge($this->getContext(), ['autoload' => false]));
     }
 
     public function testRenderWithDisableWidget()
@@ -233,7 +239,7 @@ EOF;
 
 EOF;
 
-        $this->assertTemplate($expected, array_merge($this->getContext(), array('enable' => false)));
+        $this->assertTemplate($expected, array_merge($this->getContext(), ['enable' => false]));
     }
 
     /**
@@ -241,15 +247,15 @@ EOF;
      *
      * @return string
      */
-    abstract protected function renderTemplate(array $context = array());
+    abstract protected function renderTemplate(array $context = []);
 
     /**
      * @return array
      */
     private function getContext()
     {
-        return array(
-            'form'         => $this->createMock('Symfony\Component\Form\FormView'),
+        return [
+            'form'         => $this->createMock(FormView::class),
             'id'           => 'id',
             'value'        => '<p>value</p>',
             'enable'       => true,
@@ -263,12 +269,12 @@ EOF;
             'base_path'    => 'base_path',
             'js_path'      => 'js_path',
             'jquery_path'  => 'jquery_path',
-            'filebrowsers' => array(),
-            'config'       => array(),
-            'plugins'      => array(),
-            'styles'       => array(),
-            'templates'    => array(),
-        );
+            'filebrowsers' => [],
+            'config'       => [],
+            'plugins'      => [],
+            'styles'       => [],
+            'templates'    => [],
+        ];
     }
 
     /**

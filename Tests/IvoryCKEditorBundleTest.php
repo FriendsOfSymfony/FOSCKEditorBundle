@@ -11,8 +11,11 @@
 
 namespace Ivory\CKEditorBundle\Tests;
 
+use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
+use Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
 use Ivory\CKEditorBundle\IvoryCKEditorBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,7 +38,7 @@ class IvoryCKEditorBundleTest extends AbstractTestCase
 
     public function testBundle()
     {
-        $this->assertInstanceOf('Symfony\Component\HttpKernel\Bundle\Bundle', $this->bundle);
+        $this->assertInstanceOf(Bundle::class, $this->bundle);
     }
 
     public function testCompilerPasses()
@@ -44,19 +47,13 @@ class IvoryCKEditorBundleTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->at(0))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\AssetsHelperCompilerPass'))
+            ->with($this->isInstanceOf(ResourceCompilerPass::class))
             ->will($this->returnSelf());
 
         $containerBuilder
             ->expects($this->at(1))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass'))
-            ->will($this->returnSelf());
-
-        $containerBuilder
-            ->expects($this->at(2))
-            ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass'))
+            ->with($this->isInstanceOf(TemplatingCompilerPass::class))
             ->will($this->returnSelf());
 
         $this->bundle->build($containerBuilder);
@@ -67,9 +64,9 @@ class IvoryCKEditorBundleTest extends AbstractTestCase
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+        return $this->getMockBuilder(ContainerBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('addCompilerPass'))
+            ->setMethods(['addCompilerPass'])
             ->getMock();
     }
 }

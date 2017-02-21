@@ -35,12 +35,12 @@
     <?php echo $view['ivory_ckeditor']->renderWidget(
         $id,
         $config,
-        array(
+        [
             'auto_inline'  => $auto_inline,
             'inline'       => $inline,
             'input_sync'   => $input_sync,
             'filebrowsers' => $filebrowsers,
-        )
+        ]
     ); ?>
 
     <?php if ($require_js) : ?>

@@ -26,13 +26,13 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * @var array
      */
-    private $configs = array();
+    private $configs = [];
 
     /**
      * @param array       $configs
      * @param string|null $defaultConfig
      */
-    public function __construct(array $configs = array(), $defaultConfig = null)
+    public function __construct(array $configs = [], $defaultConfig = null)
     {
         $this->setConfigs($configs);
 

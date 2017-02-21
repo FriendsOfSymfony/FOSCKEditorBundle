@@ -12,11 +12,13 @@
 namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
 
 use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Ivory\CKEditorBundle\IvoryCKEditorBundle;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormRendererInterface;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
@@ -51,18 +53,11 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        if (class_exists('Symfony\Component\Asset\Packages')) {
-            $this->packages = $this->getMockBuilder('Symfony\Component\Asset\Packages')
-                ->disableOriginalConstructor()
-                ->getMock();
-        } else {
-            $this->packages = $this->getMockBuilder('Symfony\Component\Templating\Helper\CoreAssetsHelper')
-                ->disableOriginalConstructor()
-                ->getMock();
-        }
-
-        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
-        $this->formRenderer = $this->createMock('Symfony\Component\Form\FormRendererInterface');
+        $this->router = $this->createMock(RouterInterface::class);
+        $this->formRenderer = $this->createMock(FormRendererInterface::class);
+        $this->packages = $this->getMockBuilder(Packages::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->container = new ContainerBuilder();
 
@@ -73,6 +68,8 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $this->container->registerExtension($extension = new IvoryCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());
+
+        (new IvoryCKEditorBundle())->build($this->container);
     }
 
     /**
@@ -87,7 +84,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $type = $this->container->get('ivory_ck_editor.form.type');
 
-        $this->assertInstanceOf('Ivory\CKEditorBundle\Form\Type\CKEditorType', $type);
+        $this->assertInstanceOf(CKEditorType::class, $type);
         $this->assertTrue($type->isEnable());
         $this->assertTrue($type->isAutoload());
         $this->assertTrue($type->isAutoInline());
@@ -111,10 +108,10 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $tag = $this->container->getDefinition('ivory_ck_editor.form.type')->getTag('form.type');
 
-        if (Kernel::VERSION_ID < 30000) {
-            $this->assertSame(array(array('alias' => 'ckeditor')), $tag);
+        if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
+            $this->assertSame([['alias' => 'ckeditor']], $tag);
         } else {
-            $this->assertSame(array(array()), $tag);
+            $this->assertSame([[]], $tag);
         }
     }
 
@@ -207,7 +204,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->container->compile();
 
         $this->assertSame(
-            array('VideoBrowse', 'VideoUpload'),
+            ['VideoBrowse', 'VideoUpload'],
             $this->container->get('ivory_ck_editor.form.type')->getFilebrowsers()
         );
     }
@@ -219,12 +216,12 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $configManager = $this->container->get('ivory_ck_editor.config_manager');
 
-        $expected = array(
-            'default' => array(
+        $expected = [
+            'default' => [
                 'toolbar' => 'default',
                 'uiColor' => '#000000',
-            ),
-        );
+            ],
+        ];
 
         $this->assertSame('default', $configManager->getDefaultConfig());
         $this->assertSame($expected, $configManager->getConfigs());
@@ -237,16 +234,16 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $configManager = $this->container->get('ivory_ck_editor.config_manager');
 
-        $expected = array(
-            'default' => array(
+        $expected = [
+            'default' => [
                 'toolbar' => 'default',
                 'uiColor' => '#000000',
-            ),
-            'custom' => array(
+            ],
+            'custom' => [
                 'toolbar' => 'custom',
                 'uiColor' => '#ffffff',
-            ),
-        );
+            ],
+        ];
 
         $this->assertSame('default', $configManager->getDefaultConfig());
         $this->assertSame($expected, $configManager->getConfigs());
@@ -259,10 +256,10 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $configManager = $this->container->get('ivory_ck_editor.config_manager');
 
-        $expected = array(
-            'default' => array('uiColor' => '#000000'),
-            'custom'  => array('uiColor' => '#ffffff'),
-        );
+        $expected = [
+            'default' => ['uiColor' => '#000000'],
+            'custom'  => ['uiColor' => '#ffffff'],
+        ];
 
         $this->assertSame('default', $configManager->getDefaultConfig());
         $this->assertSame($expected, $configManager->getConfigs());
@@ -273,10 +270,10 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'plugins');
         $this->container->compile();
 
-        $expected = array('plugin-name' => array(
+        $expected = ['plugin-name' => [
             'path'     => '/my/path',
             'filename' => 'plugin.js',
-        ));
+        ]];
 
         $this->assertSame($expected, $this->container->get('ivory_ck_editor.plugin_manager')->getPlugins());
     }
@@ -286,31 +283,31 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'styles_sets');
         $this->container->compile();
 
-        $expected = array(
-            'styles-set-name' => array(
-                array(
+        $expected = [
+            'styles-set-name' => [
+                [
                     'name'    => 'Blue Title',
                     'element' => 'h2',
-                    'styles'  => array('text-decoration' => 'underline'),
-                ),
-                array(
+                    'styles'  => ['text-decoration' => 'underline'],
+                ],
+                [
                     'name'       => 'CSS Style',
                     'element'    => 'span',
-                    'attributes' => array('data-class' => 'my-style'),
-                ),
-                array(
+                    'attributes' => ['data-class' => 'my-style'],
+                ],
+                [
                     'name'       => 'Widget Style',
                     'type'       => 'widget',
                     'widget'     => 'my-widget',
-                    'attributes' => array('data-class' => 'my-style'),
-                ),
-                array(
+                    'attributes' => ['data-class' => 'my-style'],
+                ],
+                [
                     'name'       => 'Multiple Elements Style',
-                    'element'    => array('span', 'p', 'h3'),
-                    'attributes' => array('data-class' => 'my-style'),
-                ),
-            ),
-        );
+                    'element'    => ['span', 'p', 'h3'],
+                    'attributes' => ['data-class' => 'my-style'],
+                ],
+            ],
+        ];
 
         $this->assertSame($expected, $this->container->get('ivory_ck_editor.styles_set_manager')->getStylesSets());
     }
@@ -320,21 +317,21 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'templates');
         $this->container->compile();
 
-        $expected = array(
-            'template-name' => array(
+        $expected = [
+            'template-name' => [
                 'imagesPath' => '/my/path',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title'               => 'My Template',
                         'image'               => 'image.jpg',
                         'description'         => 'My awesome description',
                         'html'                => '<h1>Template</h1><p>Type your text here.</p>',
                         'template'            => 'AppBundle:CKEditor:template.html.twig',
-                        'template_parameters' => array('foo' => 'bar'),
-                    ),
-                ),
-            ),
-        );
+                        'template_parameters' => ['foo' => 'bar'],
+                    ],
+                ],
+            ],
+        ];
 
         $this->assertSame($expected, $this->container->get('ivory_ck_editor.template_manager')->getTemplates());
     }
@@ -347,29 +344,29 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $toolbarManager = $this->container->get('ivory_ck_editor.toolbar_manager');
 
         $this->assertSame(
-            array(
-                'document' => array('Source', '-', 'Save'),
-                'tools'    => array('Maximize'),
-            ),
-            array_intersect_key($toolbarManager->getItems(), array('document' => true, 'tools' => true))
+            [
+                'document' => ['Source', '-', 'Save'],
+                'tools'    => ['Maximize'],
+            ],
+            array_intersect_key($toolbarManager->getItems(), ['document' => true, 'tools' => true])
         );
 
         $this->assertSame(
-            array(
-                'default' => array(
+            [
+                'default' => [
                     '@document',
                     '/',
-                    array('Anchor'),
+                    ['Anchor'],
                     '/',
                     '@tools',
-                ),
-                'custom' => array(
+                ],
+                'custom' => [
                     '@document',
                     '/',
-                    array('Anchor'),
-                ),
-            ),
-            array_intersect_key($toolbarManager->getToolbars(), array('default' => true, 'custom' => true))
+                    ['Anchor'],
+                ],
+            ],
+            array_intersect_key($toolbarManager->getToolbars(), ['default' => true, 'custom' => true])
         );
     }
 

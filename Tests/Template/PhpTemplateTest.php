@@ -45,29 +45,29 @@ class PhpTemplateTest extends AbstractTemplateTest
     {
         parent::setUp();
 
-        $this->formHelper = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper')
+        $this->formHelper = $this->getMockBuilder(FormHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->slotsHelper = $this->getMockBuilder('Symfony\Component\Templating\Helper\SlotsHelper')
+        $this->slotsHelper = $this->getMockBuilder(SlotsHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->phpEngine = new PhpEngine(
             new TemplateNameParser(),
-            new FilesystemLoader(array(__DIR__.'/../../Resources/views/Form/%name%')),
-            array(
+            new FilesystemLoader([__DIR__.'/../../Resources/views/Form/%name%']),
+            [
                 'form'  => $this->formHelper,
                 'slots' => $this->slotsHelper,
                 new CKEditorHelper($this->renderer),
-            )
+            ]
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function renderTemplate(array $context = array())
+    protected function renderTemplate(array $context = [])
     {
         return $this->phpEngine->render('ckeditor_widget.html.php', $context);
     }

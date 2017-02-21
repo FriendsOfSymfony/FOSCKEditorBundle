@@ -21,12 +21,12 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @var array
      */
-    private $templates = array();
+    private $templates = [];
 
     /**
      * @param array $templates
      */
-    public function __construct(array $templates = array())
+    public function __construct(array $templates = [])
     {
         $this->setTemplates($templates);
     }

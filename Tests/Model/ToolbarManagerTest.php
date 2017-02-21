@@ -43,15 +43,15 @@ class ToolbarManagerTest extends AbstractTestCase
 
     public function testInitialState()
     {
-        $items = array(
-            'document' => array('Source', '-', 'Save'),
-            'tools'    => array('Maximize'),
-        );
+        $items = [
+            'document' => ['Source', '-', 'Save'],
+            'tools'    => ['Maximize'],
+        ];
 
-        $toolbars = array(
-            'default' => array('@document', '/', array('Anchor'), '/', '@tools'),
-            'custom'  => array('@document', '/', array('Anchor')),
-        );
+        $toolbars = [
+            'default' => ['@document', '/', ['Anchor'], '/', '@tools'],
+            'custom'  => ['@document', '/', ['Anchor']],
+        ];
 
         $this->toolbarManager = new ToolbarManager($items, $toolbars);
 
@@ -105,41 +105,41 @@ class ToolbarManagerTest extends AbstractTestCase
      */
     public function toolbarProvider()
     {
-        return array(
-            'basic' => array('basic', array(
-                array('Bold', 'Italic'),
-                array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'),
-                array('Link', 'Unlink'),
-                array('About'),
-            )),
-            'standard' => array('standard', array(
-                array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
-                array('Scayt'),
-                array('Link', 'Unlink', 'Anchor'),
-                array('Image', 'Table', 'HorizontalRule', 'SpecialChar'),
-                array('Maximize'),
-                array('Source'),
+        return [
+            'basic' => ['basic', [
+                ['Bold', 'Italic'],
+                ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+                ['Link', 'Unlink'],
+                ['About'],
+            ]],
+            'standard' => ['standard', [
+                ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+                ['Scayt'],
+                ['Link', 'Unlink', 'Anchor'],
+                ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+                ['Maximize'],
+                ['Source'],
                 '/',
-                array('Bold', 'Italic', 'Strike', '-', 'RemoveFormat'),
-                array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'),
-                array('Styles', 'Format', 'About'),
-            )),
-            'full' => array('full', array(
-                array('Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'),
-                array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
-                array('Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'),
-                array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'),
+                ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'],
+                ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'],
+                ['Styles', 'Format', 'About'],
+            ]],
+            'full' => ['full', [
+                ['Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'],
+                ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+                ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'],
+                ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'],
                 '/',
-                array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'),
-                array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'),
-                array('Link', 'Unlink', 'Anchor'),
-                array('Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'),
+                ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+                ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'],
+                ['Link', 'Unlink', 'Anchor'],
+                ['Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'],
                 '/',
-                array('Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'),
-                array('TextColor', 'BGColor'),
-                array('Maximize', 'ShowBlocks'),
-                array('About'),
-            )),
-        );
+                ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'],
+                ['TextColor', 'BGColor'],
+                ['Maximize', 'ShowBlocks'],
+                ['About'],
+            ]],
+        ];
     }
 }

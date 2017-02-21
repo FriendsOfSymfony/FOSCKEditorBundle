@@ -2,6 +2,9 @@
 
 ### 4.0 to 5.0
 
+The `filebrowser*RouteAbsolute` parameter/option has been renamed to `filebrowser*RouteType` in order to match the 
+Symfony naming.
+
 The `Ivory\CKEditorBundle\Form\Type\CKEditorType` constructor now requires an `Ivory\CKEditorBundle\Model\ToolbarManagerInterface`
 as 5th arguments.
  

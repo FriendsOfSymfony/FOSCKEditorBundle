@@ -15,8 +15,8 @@ use Ivory\CKEditorBundle\Exception\DependencyInjectionException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -29,7 +29,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        foreach (array('form', 'renderer', 'templating', 'twig') as $service) {
+        foreach (['form', 'renderer', 'templating', 'twig'] as $service) {
             $loader->load($service.'.xml');
         }
 
@@ -44,10 +44,10 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $this->registerFilebrowsers($config, $container);
         }
 
-        if (Kernel::VERSION_ID < 30000) {
+        if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
             $container->getDefinition('ivory_ck_editor.form.type')
                 ->clearTag('form.type')
-                ->addTag('form.type', array('alias' => 'ckeditor'));
+                ->addTag('form.type', ['alias' => 'ckeditor']);
         }
     }
 
@@ -60,47 +60,47 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         $formType = $container->getDefinition('ivory_ck_editor.form.type');
 
         if (isset($config['enable'])) {
-            $formType->addMethodCall('isEnable', array($config['enable']));
+            $formType->addMethodCall('isEnable', [$config['enable']]);
         }
 
         if (isset($config['async'])) {
-            $formType->addMethodCall('isAsync', array($config['async']));
+            $formType->addMethodCall('isAsync', [$config['async']]);
         }
 
         if (isset($config['auto_inline'])) {
-            $formType->addMethodCall('isAutoInline', array($config['auto_inline']));
+            $formType->addMethodCall('isAutoInline', [$config['auto_inline']]);
         }
 
         if (isset($config['inline'])) {
-            $formType->addMethodCall('isInline', array($config['inline']));
+            $formType->addMethodCall('isInline', [$config['inline']]);
         }
 
         if (isset($config['autoload'])) {
-            $formType->addMethodCall('isAutoload', array($config['autoload']));
+            $formType->addMethodCall('isAutoload', [$config['autoload']]);
         }
 
         if (isset($config['jquery'])) {
-            $formType->addMethodCall('useJquery', array($config['jquery']));
+            $formType->addMethodCall('useJquery', [$config['jquery']]);
         }
 
         if (isset($config['require_js'])) {
-            $formType->addMethodCall('useRequireJs', array($config['require_js']));
+            $formType->addMethodCall('useRequireJs', [$config['require_js']]);
         }
 
         if (isset($config['input_sync'])) {
-            $formType->addMethodCall('isInputSync', array($config['input_sync']));
+            $formType->addMethodCall('isInputSync', [$config['input_sync']]);
         }
 
         if (isset($config['base_path'])) {
-            $formType->addMethodCall('setBasePath', array($config['base_path']));
+            $formType->addMethodCall('setBasePath', [$config['base_path']]);
         }
 
         if (isset($config['js_path'])) {
-            $formType->addMethodCall('setJsPath', array($config['js_path']));
+            $formType->addMethodCall('setJsPath', [$config['js_path']]);
         }
 
         if (isset($config['jquery_path'])) {
-            $formType->addMethodCall('setJqueryPath', array($config['jquery_path']));
+            $formType->addMethodCall('setJqueryPath', [$config['jquery_path']]);
         }
     }
 
@@ -117,7 +117,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         }
 
         $definition = $container->getDefinition('ivory_ck_editor.config_manager');
-        $definition->addMethodCall('setConfigs', array($config['configs']));
+        $definition->addMethodCall('setConfigs', [$config['configs']]);
 
         if (!isset($config['default_config']) && !empty($config['configs'])) {
             reset($config['configs']);
@@ -129,7 +129,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
                 throw DependencyInjectionException::invalidDefaultConfig($config['default_config']);
             }
 
-            $definition->addMethodCall('setDefaultConfig', array($config['default_config']));
+            $definition->addMethodCall('setDefaultConfig', [$config['default_config']]);
         }
     }
 
@@ -142,7 +142,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         if (!empty($config['plugins'])) {
             $container
                 ->getDefinition('ivory_ck_editor.plugin_manager')
-                ->addMethodCall('setPlugins', array($config['plugins']));
+                ->addMethodCall('setPlugins', [$config['plugins']]);
         }
     }
 
@@ -166,7 +166,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
 
         $container
             ->getDefinition('ivory_ck_editor.styles_set_manager')
-            ->addMethodCall('setStylesSets', array($stylesSets));
+            ->addMethodCall('setStylesSets', [$stylesSets]);
     }
 
     /**
@@ -178,7 +178,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         if (!empty($config['templates'])) {
             $container
                 ->getDefinition('ivory_ck_editor.template_manager')
-                ->addMethodCall('setTemplates', array($config['templates']));
+                ->addMethodCall('setTemplates', [$config['templates']]);
         }
     }
 
@@ -191,11 +191,11 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         $definition = $container->getDefinition('ivory_ck_editor.toolbar_manager');
 
         if (!empty($config['toolbars']['items'])) {
-            $definition->addMethodCall('setItems', array($config['toolbars']['items']));
+            $definition->addMethodCall('setItems', [$config['toolbars']['items']]);
         }
 
         if (!empty($config['toolbars']['configs'])) {
-            $definition->addMethodCall('setToolbars', array($config['toolbars']['configs']));
+            $definition->addMethodCall('setToolbars', [$config['toolbars']['configs']]);
         }
     }
 
@@ -208,7 +208,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
         if (!empty($config['filebrowsers'])) {
             $container
                 ->getDefinition('ivory_ck_editor.form.type')
-                ->addMethodCall('setFilebrowsers', array($config['filebrowsers']));
+                ->addMethodCall('setFilebrowsers', [$config['filebrowsers']]);
         }
     }
 }

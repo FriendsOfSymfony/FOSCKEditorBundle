@@ -52,7 +52,7 @@ class CKEditorHelper extends Helper implements CKEditorRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function renderWidget($id, array $config, array $options = array())
+    public function renderWidget($id, array $config, array $options = [])
     {
         return $this->renderer->renderWidget($id, $config, $options);
     }

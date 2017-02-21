@@ -35,17 +35,17 @@ class StylesSetManagerTest extends AbstractTestCase
     public function testDefaultState()
     {
         $this->assertFalse($this->stylesSetManager->hasStylesSets());
-        $this->assertSame(array(), $this->stylesSetManager->getStylesSets());
+        $this->assertSame([], $this->stylesSetManager->getStylesSets());
     }
 
     public function testInitialState()
     {
-        $stylesSets = array(
-            'default' => array(
-                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
-            ),
-        );
+        $stylesSets = [
+            'default' => [
+                ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
+                ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
+            ],
+        ];
 
         $this->stylesSetManager = new StylesSetManager($stylesSets);
 
@@ -56,12 +56,12 @@ class StylesSetManagerTest extends AbstractTestCase
 
     public function testTemplates()
     {
-        $stylesSets = array(
-            'default' => array(
-                array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-                array('name' => 'CSS Style', 'element' => 'span', 'attributes' => array('class' => 'my_style')),
-            ),
-        );
+        $stylesSets = [
+            'default' => [
+                ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
+                ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
+            ],
+        ];
 
         $this->stylesSetManager->setStylesSets($stylesSets);
 

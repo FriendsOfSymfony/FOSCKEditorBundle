@@ -11,7 +11,7 @@
 
 namespace Ivory\CKEditorBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -53,13 +53,11 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return NodeDefinition
+     * @return ArrayNodeDefinition
      */
     private function createConfigsNode()
     {
-        return $this->createNode('configs')
-            ->normalizeKeys(false)
-            ->useAttributeAsKey('name')
+        return $this->createPrototypeNode('configs')
             ->prototype('array')
                 ->normalizeKeys(false)
                 ->useAttributeAsKey('name')
@@ -68,13 +66,11 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return NodeDefinition
+     * @return ArrayNodeDefinition
      */
     private function createPluginsNode()
     {
-        return $this->createNode('plugins')
-            ->normalizeKeys(false)
-            ->useAttributeAsKey('name')
+        return $this->createPrototypeNode('plugins')
             ->prototype('array')
                 ->children()
                     ->scalarNode('path')->end()
@@ -84,13 +80,11 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return NodeDefinition
+     * @return ArrayNodeDefinition
      */
     private function createStylesNode()
     {
-        return $this->createNode('styles')
-            ->normalizeKeys(false)
-            ->useAttributeAsKey('name')
+        return $this->createPrototypeNode('styles')
             ->prototype('array')
                 ->prototype('array')
                     ->children()
@@ -98,29 +92,19 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('type')->end()
                         ->scalarNode('widget')->end()
                         ->variableNode('element')->end()
-                        ->arrayNode('styles')
-                            ->normalizeKeys(false)
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
-                        ->end()
-                        ->arrayNode('attributes')
-                            ->normalizeKeys(false)
-                            ->useAttributeAsKey('name')
-                            ->prototype('scalar')->end()
-                        ->end()
+                        ->append($this->createPrototypeNode('styles')->prototype('scalar')->end())
+                        ->append($this->createPrototypeNode('attributes')->prototype('scalar')->end())
                     ->end()
                 ->end()
             ->end();
     }
 
     /**
-     * @return NodeDefinition
+     * @return ArrayNodeDefinition
      */
     private function createTemplatesNode()
     {
-        return $this->createNode('templates')
-            ->normalizeKeys(false)
-            ->useAttributeAsKey('name')
+        return $this->createPrototypeNode('templates')
             ->prototype('array')
                 ->children()
                     ->scalarNode('imagesPath')->end()
@@ -132,11 +116,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('description')->end()
                                 ->scalarNode('html')->end()
                                 ->scalarNode('template')->end()
-                                ->arrayNode('template_parameters')
-                                    ->normalizeKeys(false)
-                                    ->useAttributeAsKey('name')
-                                    ->prototype('scalar')->end()
-                                ->end()
+                                ->append($this->createPrototypeNode('template_parameters')->prototype('scalar')->end())
                             ->end()
                         ->end()
                     ->end()
@@ -145,7 +125,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return NodeDefinition
+     * @return ArrayNodeDefinition
      */
     private function createFilebrowsersNode()
     {
@@ -156,7 +136,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return NodeDefinition
+     * @return ArrayNodeDefinition
      */
     private function createToolbarsNode()
     {
@@ -181,7 +161,19 @@ class Configuration implements ConfigurationInterface
     /**
      * @param string $name
      *
-     * @return NodeDefinition
+     * @return ArrayNodeDefinition
+     */
+    private function createPrototypeNode($name)
+    {
+        return $this->createNode($name)
+            ->normalizeKeys(false)
+            ->useAttributeAsKey('name');
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return ArrayNodeDefinition
      */
     private function createNode($name)
     {

@@ -21,12 +21,12 @@ class PluginManager implements PluginManagerInterface
     /**
      * @var array
      */
-    private $plugins = array();
+    private $plugins = [];
 
     /**
      * @param array $plugins
      */
-    public function __construct(array $plugins = array())
+    public function __construct(array $plugins = [])
     {
         $this->setPlugins($plugins);
     }

@@ -21,45 +21,45 @@ class ToolbarManager implements ToolbarManagerInterface
     /**
      * @var array
      */
-    private $items = array(
-        'basic.about'           => array('About'),
-        'basic.basic_styles'    => array('Bold', 'Italic'),
-        'basic.links'           => array('Link', 'Unlink'),
-        'basic.paragraph'       => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'),
-        'standard.about'        => array('Styles', 'Format', 'About'),
-        'standard.basic_styles' => array('Bold', 'Italic', 'Strike', '-', 'RemoveFormat'),
-        'standard.clipboard'    => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
-        'standard.document'     => array('Source'),
-        'standard.editing'      => array('Scayt'),
-        'standard.links'        => array('Link', 'Unlink', 'Anchor'),
-        'standard.insert'       => array('Image', 'Table', 'HorizontalRule', 'SpecialChar'),
-        'standard.paragraph'    => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'),
-        'standard.tools'        => array('Maximize'),
-        'full.about'            => array('About'),
-        'full.basic_styles'     => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'),
-        'full.clipboard'        => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
-        'full.colors'           => array('TextColor', 'BGColor'),
-        'full.document'         => array('Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'),
-        'full.editing'          => array('Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'),
-        'full.forms'            => array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'),
-        'full.insert'           => array('Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'),
-        'full.links'            => array('Link', 'Unlink', 'Anchor'),
-        'full.paragraph'        => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'),
-        'full.styles'           => array('Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'),
-        'full.tools'            => array('Maximize', 'ShowBlocks'),
-    );
+    private $items = [
+        'basic.about'           => ['About'],
+        'basic.basic_styles'    => ['Bold', 'Italic'],
+        'basic.links'           => ['Link', 'Unlink'],
+        'basic.paragraph'       => ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+        'standard.about'        => ['Styles', 'Format', 'About'],
+        'standard.basic_styles' => ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'],
+        'standard.clipboard'    => ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+        'standard.document'     => ['Source'],
+        'standard.editing'      => ['Scayt'],
+        'standard.links'        => ['Link', 'Unlink', 'Anchor'],
+        'standard.insert'       => ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+        'standard.paragraph'    => ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'],
+        'standard.tools'        => ['Maximize'],
+        'full.about'            => ['About'],
+        'full.basic_styles'     => ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+        'full.clipboard'        => ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+        'full.colors'           => ['TextColor', 'BGColor'],
+        'full.document'         => ['Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'],
+        'full.editing'          => ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'],
+        'full.forms'            => ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'],
+        'full.insert'           => ['Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'],
+        'full.links'            => ['Link', 'Unlink', 'Anchor'],
+        'full.paragraph'        => ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'],
+        'full.styles'           => ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'],
+        'full.tools'            => ['Maximize', 'ShowBlocks'],
+    ];
 
     /**
      * @var array
      */
-    private $toolbars = array(
-        'basic' => array(
+    private $toolbars = [
+        'basic' => [
             '@basic.basic_styles',
             '@basic.paragraph',
             '@basic.links',
             '@basic.about',
-        ),
-        'standard' => array(
+        ],
+        'standard' => [
             '@standard.clipboard',
             '@standard.editing',
             '@standard.links',
@@ -70,8 +70,8 @@ class ToolbarManager implements ToolbarManagerInterface
             '@standard.basic_styles',
             '@standard.paragraph',
             '@standard.about',
-        ),
-        'full' => array(
+        ],
+        'full' => [
             '@full.document',
             '@full.clipboard',
             '@full.editing',
@@ -86,14 +86,14 @@ class ToolbarManager implements ToolbarManagerInterface
             '@full.colors',
             '@full.tools',
             '@full.about',
-        ),
-    );
+        ],
+    ];
 
     /**
      * @param array $items
      * @param array $toolbars
      */
-    public function __construct(array $items = array(), array $toolbars = array())
+    public function __construct(array $items = [], array $toolbars = [])
     {
         $this->setItems($items);
         $this->setToolbars($toolbars);
@@ -212,7 +212,7 @@ class ToolbarManager implements ToolbarManagerInterface
      */
     public function resolveToolbar($name)
     {
-        $toolbars = array();
+        $toolbars = [];
 
         foreach ($this->getToolbar($name) as $name => $item) {
             $toolbars[] = is_string($item) && substr($item, 0, 1) === '@'

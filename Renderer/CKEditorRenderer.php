@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -63,13 +62,13 @@ class CKEditorRenderer implements CKEditorRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function renderWidget($id, array $config, array $options = array())
+    public function renderWidget($id, array $config, array $options = [])
     {
         $config = $this->fixConfigLanguage($config);
         $config = $this->fixConfigContentsCss($config);
         $config = $this->fixConfigFilebrowsers(
             $config,
-            isset($options['filebrowsers']) ? $options['filebrowsers'] : array()
+            isset($options['filebrowsers']) ? $options['filebrowsers'] : []
         );
 
         $this->jsonBuilder
@@ -105,7 +104,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
     public function renderDestroy($id)
     {
         return sprintf(
-            'if (CKEDITOR.instances["%1$s"]) { CKEDITOR.instances["%1$s"].destroy(true); delete CKEDITOR.instances["%1$s"]; }',
+            'if (CKEDITOR.instances["%1$s"]) { '.
+            'CKEDITOR.instances["%1$s"].destroy(true); '.
+            'delete CKEDITOR.instances["%1$s"]; '.
+            '}',
             $id
         );
     }
@@ -133,7 +135,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
             ->setValues($stylesSet);
 
         return sprintf(
-            'if (CKEDITOR.stylesSet.get("%1$s") === null) { CKEDITOR.stylesSet.add("%1$s", %2$s); }',
+            'if (CKEDITOR.stylesSet.get("%1$s") === null) { '.
+            'CKEDITOR.stylesSet.add("%1$s", %2$s); '.
+            '}',
             $name,
             $this->jsonBuilder->build()
         );
@@ -153,7 +157,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
                 if (isset($rawTemplate['template'])) {
                     $rawTemplate['html'] = $this->getTemplating()->render(
                         $rawTemplate['template'],
-                        isset($rawTemplate['template_parameters']) ? $rawTemplate['template_parameters'] : array()
+                        isset($rawTemplate['template_parameters']) ? $rawTemplate['template_parameters'] : []
                     );
                 }
 
@@ -197,7 +201,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         if (isset($config['contentsCss'])) {
             $cssContents = (array) $config['contentsCss'];
 
-            $config['contentsCss'] = array();
+            $config['contentsCss'] = [];
             foreach ($cssContents as $cssContent) {
                 $config['contentsCss'][] = $this->fixPath($this->fixUrl($cssContent));
             }
@@ -214,7 +218,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixConfigFilebrowsers(array $config, array $filebrowsers)
     {
-        $filebrowsers = array_unique(array_merge(array(
+        $filebrowsers = array_unique(array_merge([
             'Browse',
             'FlashBrowse',
             'ImageBrowse',
@@ -222,7 +226,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
             'Upload',
             'FlashUpload',
             'ImageUpload',
-        ), $filebrowsers));
+        ], $filebrowsers));
 
         foreach ($filebrowsers as $filebrowser) {
             $fileBrowserKey = 'filebrowser'.$filebrowser;
@@ -230,22 +234,22 @@ class CKEditorRenderer implements CKEditorRendererInterface
             $url = $fileBrowserKey.'Url';
             $route = $fileBrowserKey.'Route';
             $routeParameters = $fileBrowserKey.'RouteParameters';
-            $routeAbsolute = $fileBrowserKey.'RouteAbsolute';
+            $routeType = $fileBrowserKey.'RouteType';
 
             if (isset($config[$handler])) {
                 $config[$url] = $config[$handler]($this->getRouter());
             } elseif (isset($config[$route])) {
                 $config[$url] = $this->getRouter()->generate(
                     $config[$route],
-                    isset($config[$routeParameters]) ? $config[$routeParameters] : array(),
-                    $this->fixRoutePath(!isset($config[$routeAbsolute]) || $config[$routeAbsolute])
+                    isset($config[$routeParameters]) ? $config[$routeParameters] : [],
+                    isset($config[$routeType]) ? $config[$routeType] : UrlGeneratorInterface::ABSOLUTE_PATH
                 );
             }
 
             unset($config[$handler]);
             unset($config[$route]);
             unset($config[$routeParameters]);
-            unset($config[$routeAbsolute]);
+            unset($config[$routeType]);
         }
 
         return $config;
@@ -262,10 +266,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
             }
         }
 
-        $escapedValueKeys = array(
+        $escapedValueKeys = [
             'stylesheetParser_skipSelectors',
             'stylesheetParser_validSelectors',
-        );
+        ];
 
         foreach ($escapedValueKeys as $escapedValueKey) {
             if (isset($config[$escapedValueKey])) {
@@ -305,27 +309,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixUrl($url)
     {
-        $assetsHelper = $this->getAssetsHelper();
+        $assetsHelper = $this->getAssets();
 
         return $assetsHelper !== null ? $assetsHelper->getUrl($url) : $url;
-    }
-
-    /**
-     * @param bool $routePath
-     *
-     * @return int|bool
-     */
-    private function fixRoutePath($routePath)
-    {
-        if ($routePath) {
-            return defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_PATH')
-                ? UrlGeneratorInterface::ABSOLUTE_PATH
-                : true;
-        }
-
-        return defined('Symfony\Component\Routing\Generator\UrlGeneratorInterface::RELATIVE_PATH')
-            ? UrlGeneratorInterface::RELATIVE_PATH
-            : false;
     }
 
     /**
@@ -347,29 +333,23 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function getRequest()
     {
-        if ($this->container->has($service = 'request_stack')) {
-            return $this->container->get($service)->getMasterRequest();
-        }
-
-        if ($this->container->has($service = 'request')) {
-            return $this->container->get($service);
-        }
+        return $this->container->get('request_stack')->getMasterRequest();
     }
 
     /**
-     * @return EngineInterface|\Twig_Environment
+     * @return \Twig_Environment|EngineInterface
      */
     private function getTemplating()
     {
-        return $this->container->has($templating = 'templating')
+        return $this->container->has($templating = 'twig')
             ? $this->container->get($templating)
-            : $this->container->get('twig');
+            : $this->container->get('templating');
     }
 
     /**
-     * @return Packages|CoreAssetsHelper|null
+     * @return Packages|null
      */
-    private function getAssetsHelper()
+    private function getAssets()
     {
         return $this->container->get('assets.packages', ContainerInterface::NULL_ON_INVALID_REFERENCE);
     }

@@ -39,10 +39,10 @@ class TemplatingCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->exactly(2))
             ->method('hasDefinition')
-            ->will($this->returnValueMap(array(
-                array('templating.engine.php', false),
-                array('twig', true),
-            )));
+            ->will($this->returnValueMap([
+                ['templating.engine.php', false],
+                ['twig', true],
+            ]));
 
         $containerBuilder
             ->expects($this->once())
@@ -58,10 +58,10 @@ class TemplatingCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->exactly(2))
             ->method('hasDefinition')
-            ->will($this->returnValueMap(array(
-                array('templating.engine.php', true),
-                array('twig', false),
-            )));
+            ->will($this->returnValueMap([
+                ['templating.engine.php', true],
+                ['twig', false],
+            ]));
 
         $containerBuilder
             ->expects($this->once())
@@ -76,9 +76,9 @@ class TemplatingCompilerPassTest extends AbstractTestCase
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+        return $this->getMockBuilder(ContainerBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('hasDefinition', 'removeDefinition'))
+            ->setMethods(['hasDefinition', 'removeDefinition'])
             ->getMock();
     }
 }

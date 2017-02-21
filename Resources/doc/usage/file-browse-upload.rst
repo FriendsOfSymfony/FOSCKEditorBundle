@@ -65,7 +65,7 @@ three new options:
 
 * filebrowserBrowseRoute
 * filebrowserBrowseRouteParameters
-* filebrowserBrowseRouteAbsolute
+* filebrowserBrowseRouteType
 
 Static Routing
 ~~~~~~~~~~~~~~
@@ -82,7 +82,7 @@ configuration:
             my_config:
                 filebrowserBrowseRoute:           "my_route"
                 filebrowserBrowseRouteParameters: { slug: "my-slug" }
-                filebrowserBrowseRouteAbsolute:   true
+                filebrowserBrowseRouteType:       0
 
 Or you can configure it your widget:
 
@@ -92,7 +92,7 @@ Or you can configure it your widget:
         'config' => array(
             'filebrowserBrowseRoute'           => 'my_route',
             'filebrowserBrowseRouteParameters' => array('slug' => 'my-slug'),
-            'filebrowserBrowseRouteAbsolute'   => true,
+            'filebrowserBrowseRouteType'       => UrlGeneratorInterface::ABSOLUTE_URL,
         ),
     ));
 
@@ -111,7 +111,11 @@ but much more powerful closure and so make it aware of your dependencies:
     $builder->add('field', 'ckeditor', array(
         'config' => array(
             'filebrowserBrowseHandler' => function (RouterInterface $router) use ($post) {
-                return $router->generate('my_route', array('slug' => $post->getSlug(), true);
+                return $router->generate(
+                    'my_route',
+                    array('slug' => $post->getSlug()),
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                );
             },
         ),
     ));
