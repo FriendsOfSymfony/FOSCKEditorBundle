@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -39,7 +38,7 @@ class CKEditorRendererTest extends AbstractTestCase
     private $container;
 
     /**
-     * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
      */
     private $packages;
 
@@ -426,13 +425,8 @@ class CKEditorRendererTest extends AbstractTestCase
 
     public function testRenderWidgetWithoutAutoInline()
     {
-        $expected = <<<'EOF'
-CKEDITOR.disableAutoInline = true;
-CKEDITOR.replace("foo", []);
-EOF;
-
         $this->assertSame(
-            $expected,
+            'CKEDITOR.disableAutoInline = true;'."\n".'CKEDITOR.replace("foo", []);',
             $this->renderer->renderWidget('foo', [], ['auto_inline' => false])
         );
     }
@@ -447,12 +441,11 @@ EOF;
 
     public function testRenderWidgetWithInputSync()
     {
-        $expected = <<<'EOF'
-var ivory_ckeditor_foo = CKEDITOR.replace("foo", []);
-ivory_ckeditor_foo.on('change', function() { ivory_ckeditor_foo.updateElement(); });
-EOF;
-
-        $this->assertSame($expected, $this->renderer->renderWidget('foo', [], ['input_sync' => true]));
+        $this->assertSame(
+            'var ivory_ckeditor_foo = CKEDITOR.replace("foo", []);'."\n".
+            'ivory_ckeditor_foo.on(\'change\', function() { ivory_ckeditor_foo.updateElement(); });',
+            $this->renderer->renderWidget('foo', [], ['input_sync' => true])
+        );
     }
 
     public function testRenderDestroy()

@@ -78,7 +78,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         $this->fixConfigEscapedValues($config);
 
         $autoInline = isset($options['auto_inline']) && !$options['auto_inline']
-            ? 'CKEDITOR.disableAutoInline = true;'.PHP_EOL
+            ? 'CKEDITOR.disableAutoInline = true;'."\n"
             : null;
 
         $widget = sprintf(
@@ -90,7 +90,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
 
         if (isset($options['input_sync']) && $options['input_sync']) {
             $variable = 'ivory_ckeditor_'.$id;
-            $widget = 'var '.$variable.' = '.$widget.PHP_EOL;
+            $widget = 'var '.$variable.' = '.$widget."\n";
 
             return $autoInline.$widget.$variable.'.on(\'change\', function() { '.$variable.'.updateElement(); });';
         }

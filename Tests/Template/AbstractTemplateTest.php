@@ -102,15 +102,16 @@ abstract class AbstractTemplateTest extends AbstractTestCase
         $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
-var CKEDITOR_BASEPATH = "base_path";
+    var CKEDITOR_BASEPATH = "base_path";
 </script>
 <script type="text/javascript" src="js_path"></script>
 <script type="text/javascript">
-if (CKEDITOR.instances["id"]) {
-CKEDITOR.instances["id"].destroy(true);
-delete CKEDITOR.instances["id"];
-}
-CKEDITOR.replace("id", []);
+    if (CKEDITOR.instances["id"]) {
+        CKEDITOR.instances["id"].destroy(true);
+        delete CKEDITOR.instances["id"];
+    }
+
+    CKEDITOR.replace("id", []);
 </script>
 
 EOF;
@@ -118,6 +119,9 @@ EOF;
         $this->assertTemplate($expected, $this->getContext());
     }
 
+    /**
+     * @group wip
+     */
     public function testRenderWithFullWidget()
     {
         $context = [
@@ -149,22 +153,43 @@ EOF;
         $expected = <<<EOF
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
-var CKEDITOR_BASEPATH = "base_path";
+    var CKEDITOR_BASEPATH = "base_path";
 </script>
 <script type="text/javascript" src="js_path"></script>
 <script type="text/javascript">
-if (CKEDITOR.instances["id"]) {
-CKEDITOR.instances["id"].destroy(true);
-delete CKEDITOR.instances["id"];
-}
-CKEDITOR.plugins.addExternal("foo", "path", "filename");
-if (CKEDITOR.stylesSet.get("default") === null) { CKEDITOR.stylesSet.add("default", [{"name":"Blue Title","element":"h2","styles":{"color":"Blue"}}]); }
-CKEDITOR.addTemplates("foo", {"imagesPath":"path","templates":[{"title":"My Template","html":"<h1>Template<\/h1>"}]});
-CKEDITOR.disableAutoInline = true;
-var ivory_ckeditor_id = CKEDITOR.inline("id", {"foo":"bar"});
-ivory_ckeditor_id.on('change', function(){ ivory_ckeditor_id.updateElement(); });
-</script>
+    if (CKEDITOR.instances["id"]) {
+        CKEDITOR.instances["id"].destroy(true);
+        delete CKEDITOR.instances["id"];
+    }
 
+    CKEDITOR.plugins.addExternal("foo", "path", "filename");
+
+    if (CKEDITOR.stylesSet.get("default") === null) {
+        CKEDITOR.stylesSet.add("default", [{
+            "name": "Blue Title",
+            "element": "h2",
+            "styles": {
+                "color": "Blue"
+            }
+        }]);
+    }
+
+    CKEDITOR.addTemplates("foo", {
+        "imagesPath": "path",
+        "templates": [{
+            "title": "My Template",
+            "html": "<h1>Template<\/h1>"
+        }]
+    });
+
+    CKEDITOR.disableAutoInline = true;
+
+    var ivory_ckeditor_id = CKEDITOR.inline("id", {"foo": "bar"});
+
+    ivory_ckeditor_id.on('change', function() {
+        ivory_ckeditor_id.updateElement();
+    });
+</script>
 EOF;
 
         $this->assertTemplate($expected, array_merge($this->getContext(), $context));
@@ -173,20 +198,21 @@ EOF;
     public function testRenderWithJQuery()
     {
         $expected = <<<'EOF'
-<textarea>&lt;p&gt;value&lt;/p&gt;</textarea>
+<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
-var CKEDITOR_BASEPATH="base_path";
+    var CKEDITOR_BASEPATH = "base_path";
 </script>
 <script type="text/javascript" src="js_path"></script>
 <script type="text/javascript" src="jquery_path"></script>
 <script type="text/javascript">
-$(function() {
-if (CKEDITOR.instances["id"]) {
-CKEDITOR.instances["id"].destroy(true);
-deleteCKEDITOR.instances["id"];
-}
-CKEDITOR.replace("id",[]);
-});
+    $(function () {
+        if (CKEDITOR.instances["id"]) {
+            CKEDITOR.instances["id"].destroy(true);
+            delete CKEDITOR.instances["id"];
+        }
+
+        CKEDITOR.replace("id", []);
+    });
 </script>
 EOF;
 
@@ -196,19 +222,20 @@ EOF;
     public function testRenderWithRequireJs()
     {
         $expected = <<<'EOF'
-<textarea>&lt;p&gt;value&lt;/p&gt;</textarea>
+<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
-var CKEDITOR_BASEPATH = "base_path";
+    var CKEDITOR_BASEPATH = "base_path";
 </script>
 <script type="text/javascript" src="js_path"></script>
 <script type="text/javascript">
-require(['ckeditor'], function() {
-if (CKEDITOR.instances["id"]) {
-CKEDITOR.instances["id"].destroy(true);
-deleteCKEDITOR.instances["id"];
-}
-CKEDITOR.replace("id",[]);
-});
+    require(['ckeditor'], function() {
+        if (CKEDITOR.instances["id"]) {
+            CKEDITOR.instances["id"].destroy(true);
+            delete CKEDITOR.instances["id"];
+        }
+
+        CKEDITOR.replace("id", []);
+    });
 </script>
 EOF;
 
@@ -220,13 +247,13 @@ EOF;
         $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
 <script type="text/javascript">
-if (CKEDITOR.instances["id"]) {
-CKEDITOR.instances["id"].destroy(true);
-delete CKEDITOR.instances["id"];
-}
-CKEDITOR.replace("id", []);
-</script>
+    if (CKEDITOR.instances["id"]) {
+        CKEDITOR.instances["id"].destroy(true);
+        delete CKEDITOR.instances["id"];
+    }
 
+    CKEDITOR.replace("id", []);
+</script>
 EOF;
 
         $this->assertTemplate($expected, array_merge($this->getContext(), ['autoload' => false]));
@@ -234,12 +261,10 @@ EOF;
 
     public function testRenderWithDisableWidget()
     {
-        $expected = <<<'EOF'
-<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
-
-EOF;
-
-        $this->assertTemplate($expected, array_merge($this->getContext(), ['enable' => false]));
+        $this->assertTemplate(
+            '<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>',
+            array_merge($this->getContext(), ['enable' => false])
+        );
     }
 
     /**
@@ -293,6 +318,14 @@ EOF;
      */
     private function normalizeOutput($output)
     {
-        return str_replace(PHP_EOL, '', str_replace(' ', '', $output));
+        $mapping = [
+            "\n" => '',
+            '  ' => '',
+            '{ ' => '{',
+            ': ' => ':',
+            '; ' => ';',
+        ];
+
+        return str_replace(array_keys($mapping), array_values($mapping), $output);
     }
 }
