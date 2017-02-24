@@ -2,6 +2,8 @@
 
 ### 5.0.0 (????-??-??)
 
+ * bd5e0a1 - Add AppVeyor support + Fix tests on windows
+ * d713876 - [Composer] Bump Symfony to 2.7 + PHP to 5.6
  * add1b7a - [Travis] Replace sed by conmposer config
  * 6897fa4 - [Travis] Fix default env
  * 9d19fe2 - [Travis] Fix bash conditions
