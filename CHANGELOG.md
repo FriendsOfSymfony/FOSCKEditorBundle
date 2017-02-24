@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * e7fe834 - [README] Fix AppVeyor link
  * d75be36 - [AppVeyor] Only build master branch
  * 22a1baa - Add appveyor.yml to gitattributes
  * bd5e0a1 - Add AppVeyor support + Fix tests on windows
