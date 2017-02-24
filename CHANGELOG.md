@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * 22a1baa - Add appveyor.yml to gitattributes
  * bd5e0a1 - Add AppVeyor support + Fix tests on windows
  * d713876 - [Composer] Bump Symfony to 2.7 + PHP to 5.6
  * add1b7a - [Travis] Replace sed by conmposer config
