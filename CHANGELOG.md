@@ -2,6 +2,7 @@
 
 ### 5.0.0 (????-??-??)
 
+ * d75be36 - [AppVeyor] Only build master branch
  * 22a1baa - Add appveyor.yml to gitattributes
  * bd5e0a1 - Add AppVeyor support + Fix tests on windows
  * d713876 - [Composer] Bump Symfony to 2.7 + PHP to 5.6
