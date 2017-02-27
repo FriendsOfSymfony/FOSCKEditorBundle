@@ -14,6 +14,7 @@ namespace Ivory\CKEditorBundle\Tests\Template;
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
 use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormView;
@@ -76,6 +77,11 @@ abstract class AbstractTemplateTest extends AbstractTestCase
                     'assets.packages',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
                     $this->packages,
+                ],
+                [
+                    'ivory_ck_editor.renderer.json_builder',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    new JsonBuilder(),
                 ],
                 [
                     'request_stack',

@@ -25,11 +25,6 @@ use Symfony\Component\Templating\EngineInterface;
 class CKEditorRenderer implements CKEditorRendererInterface
 {
     /**
-     * @var JsonBuilder
-     */
-    private $jsonBuilder;
-
-    /**
      * @var ContainerInterface
      */
     private $container;
@@ -39,7 +34,6 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->jsonBuilder = new JsonBuilder();
         $this->container = $container;
     }
 
@@ -71,21 +65,18 @@ class CKEditorRenderer implements CKEditorRendererInterface
             isset($options['filebrowsers']) ? $options['filebrowsers'] : []
         );
 
-        $this->jsonBuilder
-            ->reset()
-            ->setValues($config);
-
-        $this->fixConfigEscapedValues($config);
-
         $autoInline = isset($options['auto_inline']) && !$options['auto_inline']
             ? 'CKEDITOR.disableAutoInline = true;'."\n"
             : null;
+
+        $builder = $this->getJsonBuilder()->reset()->setValues($config);
+        $this->fixConfigEscapedValues($builder, $config);
 
         $widget = sprintf(
             'CKEDITOR.%s("%s", %s);',
             isset($options['inline']) && $options['inline'] ? 'inline' : 'replace',
             $id,
-            $this->fixConfigConstants($this->jsonBuilder->build())
+            $this->fixConfigConstants($builder->build())
         );
 
         if (isset($options['input_sync']) && $options['input_sync']) {
@@ -130,16 +121,12 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     public function renderStylesSet($name, array $stylesSet)
     {
-        $this->jsonBuilder
-            ->reset()
-            ->setValues($stylesSet);
-
         return sprintf(
             'if (CKEDITOR.stylesSet.get("%1$s") === null) { '.
             'CKEDITOR.stylesSet.add("%1$s", %2$s); '.
             '}',
             $name,
-            $this->jsonBuilder->build()
+            $this->getJsonBuilder()->reset()->setValues($stylesSet)->build()
         );
     }
 
@@ -166,11 +153,11 @@ class CKEditorRenderer implements CKEditorRendererInterface
             }
         }
 
-        $this->jsonBuilder
-            ->reset()
-            ->setValues($template);
-
-        return sprintf('CKEDITOR.addTemplates("%s", %s);', $name, $this->jsonBuilder->build());
+        return sprintf(
+            'CKEDITOR.addTemplates("%s", %s);',
+            $name,
+            $this->getJsonBuilder()->reset()->setValues($template)->build()
+        );
     }
 
     /**
@@ -256,13 +243,14 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * @param array $config
+     * @param JsonBuilder $builder
+     * @param array       $config
      */
-    private function fixConfigEscapedValues(array $config)
+    private function fixConfigEscapedValues(JsonBuilder $builder, array $config)
     {
         if (isset($config['protectedSource'])) {
             foreach ($config['protectedSource'] as $key => $value) {
-                $this->jsonBuilder->setValue(sprintf('[protectedSource][%s]', $key), $value, false);
+                $builder->setValue(sprintf('[protectedSource][%s]', $key), $value, false);
             }
         }
 
@@ -273,7 +261,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
 
         foreach ($escapedValueKeys as $escapedValueKey) {
             if (isset($config[$escapedValueKey])) {
-                $this->jsonBuilder->setValue(sprintf('[%s]', $escapedValueKey), $config[$escapedValueKey], false);
+                $builder->setValue(sprintf('[%s]', $escapedValueKey), $config[$escapedValueKey], false);
             }
         }
     }
@@ -309,9 +297,15 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixUrl($url)
     {
-        $assetsHelper = $this->getAssets();
+        return ($assetsHelper = $this->getAssets()) !== null ? $assetsHelper->getUrl($url) : $url;
+    }
 
-        return $assetsHelper !== null ? $assetsHelper->getUrl($url) : $url;
+    /**
+     * @return JsonBuilder
+     */
+    private function getJsonBuilder()
+    {
+        return $this->container->get('ivory_ck_editor.renderer.json_builder');
     }
 
     /**
