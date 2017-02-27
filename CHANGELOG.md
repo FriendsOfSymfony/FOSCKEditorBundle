@@ -2,6 +2,8 @@
 
 ### 5.0.0 (????-??-??)
 
+ * 5a665e9 - [UPGRADE] Notify about PHP and Symfony bump
+ * 9f0491e - Bump egeloen/json-builder to 3.0
  * e7fe834 - [README] Fix AppVeyor link
  * d75be36 - [AppVeyor] Only build master branch
  * 22a1baa - Add appveyor.yml to gitattributes
