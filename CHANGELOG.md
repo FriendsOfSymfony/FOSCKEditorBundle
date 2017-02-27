@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 5.0.0 (????-??-??)
+### 5.0.0 (2017-02-27)
 
  * 5a665e9 - [UPGRADE] Notify about PHP and Symfony bump
  * 9f0491e - Bump egeloen/json-builder to 3.0
