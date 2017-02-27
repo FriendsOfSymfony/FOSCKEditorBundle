@@ -2,6 +2,8 @@
 
 ### 4.0 to 5.0
 
+PHP has been bumped to 5.6 and Symfony to 2.7.
+
 The `filebrowser*RouteAbsolute` parameter/option has been renamed to `filebrowser*RouteType` in order to match the 
 Symfony naming.
 
