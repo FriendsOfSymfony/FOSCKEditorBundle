@@ -4,7 +4,6 @@ FROM php:latest
 RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     git \
-    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP extensions

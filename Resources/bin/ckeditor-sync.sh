@@ -14,6 +14,3 @@ rm -rf $ckeditorPath/.git
 
 # Remove CKEditor samples
 rm -rf $ckeditorPath/samples
-
-# Convert windows EOL to unix one
-find $ckeditorPath -type f -exec dos2unix {} \;
