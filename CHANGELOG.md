@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 5.0.1 (????-??-??)
+### 5.0.1 (2017-03-01)
 
  * ec4b1e7 - [CKEditor] Don't alter sources
 
