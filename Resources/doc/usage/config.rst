@@ -25,6 +25,11 @@ Define a configuration
                 extraPlugins:           "wordcount"
                 # ...
 
+.. tip::
+
+    The config node is a variable node meaning you can put any CKEditor
+    configuration options in it.
+
 .. note::
 
     The first configuration defined will be used as default configuration
