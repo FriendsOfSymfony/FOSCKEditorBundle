@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 5.0.2 (????-??-??)
+
+ * af9c05f - [Doc] Improve config documentation
+ 
 ### 5.0.1 (2017-03-01)
 
  * ec4b1e7 - [CKEditor] Don't alter sources
