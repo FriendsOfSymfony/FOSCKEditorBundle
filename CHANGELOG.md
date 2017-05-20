@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 5.0.2 (????-??-??)
+### 5.0.2 (2017-05-20)
 
  * 88445d2 - Only strip assets version when the path is a directory
  * af9c05f - [Doc] Improve config documentation
