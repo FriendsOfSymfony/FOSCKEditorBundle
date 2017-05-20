@@ -2,6 +2,7 @@
 
 ### 5.0.2 (????-??-??)
 
+ * 88445d2 - Only strip assets version when the path is a directory
  * af9c05f - [Doc] Improve config documentation
  
 ### 5.0.1 (2017-03-01)
