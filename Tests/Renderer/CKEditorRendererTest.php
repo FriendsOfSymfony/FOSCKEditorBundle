@@ -135,7 +135,7 @@ class CKEditorRendererTest extends AbstractTestCase
      * @param string $asset
      * @param string $url
      *
-     * @dataProvider pathProvider
+     * @dataProvider directoryAssetProvider
      */
     public function testRenderBasePath($path, $asset, $url)
     {
@@ -242,7 +242,7 @@ class CKEditorRendererTest extends AbstractTestCase
      * @param string $asset
      * @param string $url
      *
-     * @dataProvider pathProvider
+     * @dataProvider fileAssetProvider
      */
     public function testRenderWidgetWithStringContentsCss($path, $asset, $url)
     {
@@ -253,7 +253,7 @@ class CKEditorRendererTest extends AbstractTestCase
             ->will($this->returnValue($asset));
 
         $this->assertSame(
-            'CKEDITOR.replace("foo", {"contentsCss":['.json_encode($url).']});',
+            'CKEDITOR.replace("foo", {"contentsCss":["'.$url.'"]});',
             $this->renderer->renderWidget('foo', ['contentsCss' => $path])
         );
     }
@@ -263,7 +263,7 @@ class CKEditorRendererTest extends AbstractTestCase
      * @param string[] $assets
      * @param string[] $urls
      *
-     * @dataProvider pathsProvider
+     * @dataProvider filesAssetProvider
      */
     public function testRenderWidgetWithArrayContentsCss(array $paths, array $assets, array $urls)
     {
@@ -470,7 +470,7 @@ class CKEditorRendererTest extends AbstractTestCase
      * @param string $asset
      * @param string $url
      *
-     * @dataProvider pathProvider
+     * @dataProvider directoryAssetProvider
      */
     public function testRenderPlugin($path, $asset, $url)
     {
@@ -481,7 +481,7 @@ class CKEditorRendererTest extends AbstractTestCase
             ->will($this->returnValue($asset));
 
         $this->assertSame(
-            'CKEDITOR.plugins.addExternal("foo", '.json_encode($url).', "bat");',
+            'CKEDITOR.plugins.addExternal("foo", "'.$url.'", "bat");',
             $this->renderer->renderPlugin('foo', ['path' => $path, 'filename' => 'bat'])
         );
     }
@@ -499,7 +499,7 @@ class CKEditorRendererTest extends AbstractTestCase
      * @param string $asset
      * @param string $url
      *
-     * @dataProvider pathProvider
+     * @dataProvider directoryAssetProvider
      */
     public function testRenderTemplate($path, $asset, $url)
     {
@@ -529,7 +529,7 @@ class CKEditorRendererTest extends AbstractTestCase
      * @param string $asset
      * @param string $url
      *
-     * @dataProvider pathProvider
+     * @dataProvider directoryAssetProvider
      */
     public function testRenderTemplateWithTwigTemplating($path, $asset, $url)
     {
@@ -579,7 +579,7 @@ class CKEditorRendererTest extends AbstractTestCase
      * @param string $asset
      * @param string $url
      *
-     * @dataProvider pathProvider
+     * @dataProvider directoryAssetProvider
      */
     public function testRenderTemplateWithPhpTemplating($path, $asset, $url)
     {
@@ -637,26 +637,37 @@ class CKEditorRendererTest extends AbstractTestCase
     /**
      * @return array
      */
-    public function pathProvider()
+    public function directoryAssetProvider()
     {
         return [
-            ['path', 'url', 'url'],
-            ['path', 'url?v=2', 'url'],
+            ['directory/', 'url/', 'url/'],
+            ['directory/', 'url/?v=2', 'url/'],
         ];
     }
 
     /**
      * @return array
      */
-    public function pathsProvider()
+    public function fileAssetProvider()
     {
         return [
-            [['path'], ['url'], ['url']],
-            [['path'], ['url?v=2'], ['url']],
-            [['path1', 'path2'], ['url1', 'url2'], ['url1', 'url2']],
-            [['path1', 'path2'], ['url1?v=2', 'url2'], ['url1', 'url2']],
-            [['path1', 'path2'], ['url1', 'url2?v=2'], ['url1', 'url2']],
-            [['path1', 'path2'], ['url1?v=2', 'url2?v=2'], ['url1', 'url2']],
+            ['file.js', 'url.js', 'url.js'],
+            ['file.js', 'url.js?v=2', 'url.js?v=2'],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function filesAssetProvider()
+    {
+        return [
+            [['file'], ['url'], ['url']],
+            [['file'], ['url?v=2'], ['url?v=2']],
+            [['file1', 'file2'], ['url1', 'url2'], ['url1', 'url2']],
+            [['file1', 'file2'], ['url1?v=2', 'url2'], ['url1?v=2', 'url2']],
+            [['file1', 'file2'], ['url1', 'url2?v=2'], ['url1', 'url2?v=2']],
+            [['file1', 'file2'], ['url1?v=2', 'url2?v=2'], ['url1?v=2', 'url2?v=2']],
         ];
     }
 

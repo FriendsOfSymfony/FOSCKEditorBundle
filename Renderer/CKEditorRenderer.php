@@ -42,7 +42,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     public function renderBasePath($basePath)
     {
-        return $this->fixPath($this->fixUrl($basePath));
+        return $this->fixPath($basePath);
     }
 
     /**
@@ -50,7 +50,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     public function renderJsPath($jsPath)
     {
-        return $this->fixUrl($jsPath);
+        return $this->fixPath($jsPath);
     }
 
     /**
@@ -111,7 +111,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         return sprintf(
             'CKEDITOR.plugins.addExternal("%s", "%s", "%s");',
             $name,
-            $this->fixPath($this->fixUrl($plugin['path'])),
+            $this->fixPath($plugin['path']),
             $plugin['filename']
         );
     }
@@ -136,7 +136,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     public function renderTemplate($name, array $template)
     {
         if (isset($template['imagesPath'])) {
-            $template['imagesPath'] = $this->fixPath($this->fixUrl($template['imagesPath']));
+            $template['imagesPath'] = $this->fixPath($template['imagesPath']);
         }
 
         if (isset($template['templates'])) {
@@ -190,7 +190,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
 
             $config['contentsCss'] = [];
             foreach ($cssContents as $cssContent) {
-                $config['contentsCss'][] = $this->fixPath($this->fixUrl($cssContent));
+                $config['contentsCss'][] = $this->fixPath($cssContent);
             }
         }
 
@@ -283,21 +283,19 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixPath($path)
     {
-        if (($position = strpos($path, '?')) !== false) {
-            return substr($path, 0, $position);
+        $helper = $this->getAssets();
+
+        if ($helper === null) {
+            return $path;
         }
 
-        return $path;
-    }
+        $url = $helper->getUrl($path);
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
-    private function fixUrl($url)
-    {
-        return ($assetsHelper = $this->getAssets()) !== null ? $assetsHelper->getUrl($url) : $url;
+        if (substr($path, -1) === '/' && ($position = strpos($url, '?')) !== false) {
+            $url = substr($url, 0, $position);
+        }
+
+        return $url;
     }
 
     /**
