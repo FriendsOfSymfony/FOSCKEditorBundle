@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 5.0.3 (????-??-??)
+
+ * 7de0c4a - [Travis] Rely on trusty dist to make hhvm installable
+
 ### 5.0.2 (2017-05-20)
 
  * 88445d2 - Only strip assets version when the path is a directory
