@@ -38,7 +38,7 @@ class ResourceCompilerPass implements CompilerPassInterface
             $container->setParameter(
                 $parameter,
                 array_merge(
-                    ['IvoryCKEditorBundle:Form:ckeditor_widget.html.twig'],
+                    ['@IvoryCKEditor/Form/ckeditor_widget.html.twig'],
                     $container->getParameter($parameter)
                 )
             );

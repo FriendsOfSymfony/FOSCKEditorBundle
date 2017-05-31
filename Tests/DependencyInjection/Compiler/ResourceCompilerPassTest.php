@@ -56,7 +56,7 @@ class ResourceCompilerPassTest extends AbstractTestCase
             ->with(
                 $this->identicalTo($parameter),
                 $this->identicalTo([
-                    'IvoryCKEditorBundle:Form:ckeditor_widget.html.twig',
+                    '@IvoryCKEditor/Form/ckeditor_widget.html.twig',
                     $template,
                 ])
             );
