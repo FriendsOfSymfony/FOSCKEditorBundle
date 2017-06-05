@@ -2,6 +2,7 @@
 
 ### 5.0.3 (????-??-??)
 
+ * 1515ca4 - Symfony Flex compatibility (namespaced syntax)
  * 7de0c4a - [Travis] Rely on trusty dist to make hhvm installable
 
 ### 5.0.2 (2017-05-20)
