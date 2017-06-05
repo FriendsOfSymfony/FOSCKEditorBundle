@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 5.0.3 (????-??-??)
+### 5.0.3 (2017-06-05)
 
  * 1515ca4 - Symfony Flex compatibility (namespaced syntax)
  * 7de0c4a - [Travis] Rely on trusty dist to make hhvm installable
