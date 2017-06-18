@@ -18,6 +18,7 @@ fi
 composer self-update
 
 composer require --no-update --dev symfony/asset:${SYMFONY_VERSION}
+composer require --no-update --dev symfony/console:${SYMFONY_VERSION}
 composer require --no-update symfony/framework-bundle:${SYMFONY_VERSION}
 composer require --no-update symfony/form:${SYMFONY_VERSION}
 composer require --no-update --dev symfony/templating:${SYMFONY_VERSION}

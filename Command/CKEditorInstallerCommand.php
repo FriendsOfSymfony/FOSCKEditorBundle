@@ -1,0 +1,361 @@
+<?php
+
+/*
+ * This file is part of the Ivory CKEditor package.
+ *
+ * (c) Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Ivory\CKEditorBundle\Command;
+
+use Ivory\CKEditorBundle\Installer\CKEditorInstaller;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\ProgressHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+
+/**
+ * @author GeLo <geloen.eric@gmail.com>
+ */
+class CKEditorInstallerCommand extends Command
+{
+    /**
+     * @var CKEditorInstaller
+     */
+    private $installer;
+
+    /**
+     * @param CKEditorInstaller|null $installer
+     */
+    public function __construct(CKEditorInstaller $installer = null)
+    {
+        parent::__construct();
+
+        $this->installer = $installer ?: new CKEditorInstaller();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
+    {
+        $this
+            ->setName('ckeditor:install')
+            ->setDescription('Install CKEditor')
+            ->addArgument('path', InputArgument::OPTIONAL, 'Where to install CKEditor')
+            ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'CKEditor release (basic, standard or full)')
+            ->addOption('tag', null, InputOption::VALUE_OPTIONAL, 'CKEditor tag (x.y.z or latest)')
+            ->addOption(
+                'clear',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'How to clear previous CKEditor installation (drop, keep or abort)'
+            )
+            ->addOption(
+                'exclude',
+                null,
+                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
+                'Path to exclude when extracting CKEditor'
+            )
+            ->setHelp(<<<'EOF'
+The <info>%command.name%</info> command install CKEditor in your application:
+
+  <info>php %command.full_name%</info>
+  
+You can install it at a specific path (absolute):
+
+  <info>php %command.full_name% path</info>
+  
+You can install a specific release (basic, standard or full):
+
+  <info>php %command.full_name% --release=full</info>
+  
+You can install a specific version:
+
+  <info>php %command.full_name% --tag=4.7.0</info>
+
+If there is a previous CKEditor installation detected, 
+you can control how it should be handled in non-interactive mode:
+
+  <info>php %command.full_name% --clear=drop</info>
+  <info>php %command.full_name% --clear=keep</info>
+  <info>php %command.full_name% --clear=abort</info>
+  
+You can exclude path(s) when extracting CKEditor:
+
+  <info>php %command.full_name% --exclude=samples --exclude=adapters</info>
+EOF
+            );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->title($output);
+
+        $success = $this->installer->install($this->createOptions($input, $output));
+
+        if ($success) {
+            $this->success('CKEditor has been successfully installed...', $output);
+        }
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return mixed[]
+     */
+    private function createOptions(InputInterface $input, OutputInterface $output)
+    {
+        $options = ['notifier' => $this->createNotifier($input, $output)];
+
+        if ($input->hasArgument('path')) {
+            $options['path'] = $input->getArgument('path');
+        }
+
+        if ($input->hasOption('release')) {
+            $options['release'] = $input->getOption('release');
+        }
+
+        if ($input->hasOption('tag')) {
+            $options['version'] = $input->getOption('tag');
+        }
+
+        if ($input->hasOption('exclude')) {
+            $options['excludes'] = $input->getOption('exclude');
+        }
+
+        if ($input->hasOption('clear')) {
+            $options['clear'] = $input->getOption('clear');
+        }
+
+        return $options;
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return \Closure
+     */
+    private function createNotifier(InputInterface $input, OutputInterface $output)
+    {
+        $clear = $this->createProgressBar($output);
+        $download = $this->createProgressBar($output);
+        $extract = $this->createProgressBar($output);
+
+        return function ($type, $data) use ($input, $output, $clear, $download, $extract) {
+            switch ($type) {
+                case CKEditorInstaller::NOTIFY_CLEAR:
+                    $result = $this->choice(
+                        [
+                            sprintf('CKEditor is already installed in "%s"...', $data),
+                            '',
+                            'What do you want to do?',
+                        ],
+                        $choices = [
+                            CKEditorInstaller::CLEAR_DROP  => 'Drop the directory & reinstall CKEditor',
+                            CKEditorInstaller::CLEAR_KEEP  => 'Keep the directory & reinstall CKEditor by overriding files',
+                            CKEditorInstaller::CLEAR_ABORT => 'Abort installation',
+                        ],
+                        CKEditorInstaller::CLEAR_DROP,
+                        $input,
+                        $output
+                    );
+
+                    if (($key = array_search($result, $choices, true)) !== false) {
+                        $result = $key;
+                    }
+
+                    if ($result === CKEditorInstaller::CLEAR_DROP) {
+                        $this->comment(sprintf('Dropping CKEditor from "%s"', $data), $output);
+                    }
+
+                    return $result;
+
+                case CKEditorInstaller::NOTIFY_CLEAR_ARCHIVE:
+                    $this->comment(sprintf('Dropping CKEditor ZIP archive "%s"', $data), $output);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_CLEAR_COMPLETE:
+                    $this->finishProgressBar($clear, $output);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_CLEAR_PROGRESS:
+                    $clear->advance();
+                    break;
+
+                case CKEditorInstaller::NOTIFY_CLEAR_SIZE:
+                    $this->startProgressBar($clear, $output, $data);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_DOWNLOAD:
+                    $this->comment(sprintf('Downloading CKEditor ZIP archive from "%s"', $data), $output);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_DOWNLOAD_COMPLETE:
+                    $this->finishProgressBar($download, $output);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_DOWNLOAD_PROGRESS:
+                    $this->advanceProgressBar($download, $data);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_DOWNLOAD_SIZE:
+                    $this->startProgressBar($download, $output, $data);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_EXTRACT:
+                    $this->comment(sprintf('Extracting CKEditor ZIP archive to "%s"', $data), $output);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_EXTRACT_COMPLETE:
+                    $this->finishProgressBar($extract, $output);
+                    break;
+
+                case CKEditorInstaller::NOTIFY_EXTRACT_PROGRESS:
+                    $extract->advance();
+                    break;
+
+                case CKEditorInstaller::NOTIFY_EXTRACT_SIZE:
+                    $this->startProgressBar($extract, $output, $data);
+                    break;
+            }
+        };
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    private function title(OutputInterface $output)
+    {
+        $output->writeln([
+            '----------------------',
+            '| CKEditor Installer |',
+            '----------------------',
+            '',
+        ]);
+    }
+
+    /**
+     * @param string|string[] $message
+     * @param OutputInterface $output
+     */
+    private function comment($message, OutputInterface $output)
+    {
+        $output->writeln(' // '.$message);
+        $output->writeln('');
+    }
+
+    /**
+     * @param string          $message
+     * @param OutputInterface $output
+     */
+    private function success($message, OutputInterface $output)
+    {
+        $this->block('[OK] - '.$message, $output, 'green', 'black');
+    }
+
+    /**
+     * @param string          $message
+     * @param OutputInterface $output
+     * @param string          $background
+     * @param string          $font
+     */
+    private function block($message, OutputInterface $output, $background = null, $font = null)
+    {
+        $options = [];
+
+        if ($background !== null) {
+            $options[] = 'bg='.$background;
+        }
+
+        if ($font !== null) {
+            $options[] = 'fg='.$font;
+        }
+
+        $pattern = ' %s ';
+
+        if (!empty($options)) {
+            $pattern = '<'.implode(';', $options).'>'.$pattern.'</>';
+        }
+
+        $output->writeln($block = sprintf($pattern, str_repeat(' ', strlen($message))));
+        $output->writeln(sprintf($pattern, $message));
+        $output->writeln($block);
+    }
+
+    /**
+     * @param string|string[] $question
+     * @param string[]        $choices
+     * @param string          $default
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return string|null
+     */
+    private function choice($question, array $choices, $default, InputInterface $input, OutputInterface $output)
+    {
+        $helper = new QuestionHelper();
+
+        $result = $helper->ask($input, $output, new ChoiceQuestion(
+            $question,
+            $choices,
+            $choices[$default]
+        ));
+
+        $output->writeln('');
+
+        return $result;
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return ProgressBar|ProgressHelper
+     */
+    private function createProgressBar(OutputInterface $output)
+    {
+        return class_exists(ProgressBar::class) ? new ProgressBar($output) : new ProgressHelper();
+    }
+
+    /**
+     * @param ProgressBar|ProgressHelper $progress
+     * @param OutputInterface            $output
+     * @param int|null                   $max
+     */
+    private function startProgressBar($progress, OutputInterface $output, $max = null)
+    {
+        class_exists(ProgressBar::class) ? $progress->start($max) : $progress->start($output, $max);
+    }
+
+    /**
+     * @param ProgressBar|ProgressHelper $progress
+     * @param int                        $current
+     */
+    private function advanceProgressBar($progress, $current)
+    {
+        class_exists(ProgressBar::class) ? $progress->setProgress($current) : $progress->setCurrent($current);
+    }
+
+    /**
+     * @param ProgressBar|ProgressHelper $progress
+     * @param OutputInterface            $output
+     */
+    private function finishProgressBar($progress, OutputInterface $output)
+    {
+        $progress->finish();
+        $output->writeln(['', '']);
+    }
+}

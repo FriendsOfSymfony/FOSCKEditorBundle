@@ -7,6 +7,7 @@ Here, you can find all bundle features:
 .. toctree::
     :hidden:
 
+    ckeditor
     config
     toolbar
     loading

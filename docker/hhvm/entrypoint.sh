@@ -22,5 +22,5 @@ usermod -u ${USER_ID} www-data
 if [ "$1" = "bash" ]; then
     su www-data
 else
-    su www-data -c "$*"
+    su www-data -c "ulimit -n 1048576;$*"
 fi

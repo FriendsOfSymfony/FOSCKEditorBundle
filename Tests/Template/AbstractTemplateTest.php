@@ -125,9 +125,6 @@ EOF;
         $this->assertTemplate($expected, $this->getContext());
     }
 
-    /**
-     * @group wip
-     */
     public function testRenderWithFullWidget()
     {
         $context = [

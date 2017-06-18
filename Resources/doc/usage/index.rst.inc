@@ -1,9 +1,12 @@
+* :doc:`/usage/ckeditor`
 * :doc:`/usage/config`
 * :doc:`/usage/toolbar`
 * :doc:`/usage/loading`
 * :doc:`/usage/language`
 * :doc:`/usage/file-browse-upload`
 * :doc:`/usage/jquery`
+* :doc:`/usage/requirejs`
+* :doc:`/usage/append-javascript`
 * :doc:`/usage/textarea-sync`
 * :doc:`/usage/textarea-fallback`
 * :doc:`/usage/autoinline`

@@ -28,11 +28,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
      */
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        foreach (['form', 'renderer', 'templating', 'twig'] as $service) {
-            $loader->load($service.'.xml');
-        }
-
+        $this->loadResources($container);
         $this->registerConfig($config, $container);
 
         if (!isset($config['enable']) || $config['enable']) {
@@ -48,6 +44,27 @@ class IvoryCKEditorExtension extends ConfigurableExtension
             $container->getDefinition('ivory_ck_editor.form.type')
                 ->clearTag('form.type')
                 ->addTag('form.type', ['alias' => 'ckeditor']);
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function loadResources(ContainerBuilder $container)
+    {
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
+        $resources = [
+            'command',
+            'form',
+            'installer',
+            'renderer',
+            'templating',
+            'twig',
+        ];
+
+        foreach ($resources as $resource) {
+            $loader->load($resource.'.xml');
         }
     }
 
