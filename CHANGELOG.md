@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 6.0.0 (????-??-??)
+
+ * c86a147 - [License] Remove CKEditor source + Introduce a command to download/install it 
+ 
 ### 5.0.3 (2017-06-05)
 
  * 1515ca4 - Symfony Flex compatibility (namespaced syntax)
