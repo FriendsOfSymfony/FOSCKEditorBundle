@@ -2,6 +2,7 @@
 
 ### 6.0.0 (????-??-??)
 
+ * c9dfbcc - [Doc] Fix link to requirejs
  * c86a147 - [License] Remove CKEditor source + Introduce a command to download/install it 
  
 ### 5.0.3 (2017-06-05)
