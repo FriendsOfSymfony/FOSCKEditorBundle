@@ -2,6 +2,8 @@
 
 ### 6.0.0 (????-??-??)
 
+ * 6c3cea4 - [Doc] Fix code block
+ * 83c5250 - [Doc] Fix CKEditor installation command link
  * c9dfbcc - [Doc] Fix link to requirejs
  * c86a147 - [License] Remove CKEditor source + Introduce a command to download/install it 
  
