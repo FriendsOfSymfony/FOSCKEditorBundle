@@ -87,6 +87,7 @@ how to handle such case:
     $ php bin/console ckeditor:install --clear=keep
     $ php bin/console ckeditor:install --clear=abort
 
+
  - ``drop``: Drop the previous installation & install.
  - ``keep``: Keep the previous installation & install by overriding files.
  - ``abort``: Keep the previous installation & abort install.
