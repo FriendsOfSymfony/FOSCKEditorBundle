@@ -47,7 +47,7 @@ If you're using Symfony >= 3.0:
 
     $ php bin/console ckeditor:install
 
-If you want to learn more about this command, you can read :doc:`its documentation <usage/command>`..
+If you want to learn more about this command, you can read :doc:`its documentation <usage/ckeditor>`.
 
 Install the Assets
 ------------------
