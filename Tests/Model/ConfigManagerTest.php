@@ -72,7 +72,9 @@ class ConfigManagerTest extends AbstractTestCase
     public function testDefaultConfig()
     {
         $this->configManager->setConfig('foo', ['foo' => 'bar']);
-        $this->configManager->setDefaultConfig('foo');
+        $this->configManager->setDefaultConfig($default = 'foo');
+
+        $this->assertSame($default, $this->configManager->getDefaultConfig());
     }
 
     /**

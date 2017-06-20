@@ -11,10 +11,12 @@
 
 namespace Ivory\CKEditorBundle\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * @param string $originalClassName

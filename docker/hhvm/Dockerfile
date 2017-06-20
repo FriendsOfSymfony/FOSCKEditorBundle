@@ -3,6 +3,7 @@ FROM hhvm/hhvm:latest
 # APT packages
 RUN apt-get update && apt-get install -y \
     curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # HHVM configuration

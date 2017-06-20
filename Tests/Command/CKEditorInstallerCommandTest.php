@@ -13,13 +13,14 @@ namespace Ivory\CKEditorBundle\Tests\Command;
 
 use Ivory\CKEditorBundle\Command\CKEditorInstallerCommand;
 use Ivory\CKEditorBundle\Installer\CKEditorInstaller;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorInstallerCommandTest extends \PHPUnit_Framework_TestCase
+class CKEditorInstallerCommandTest extends AbstractTestCase
 {
     /**
      * @var Application

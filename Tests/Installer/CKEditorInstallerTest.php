@@ -12,11 +12,12 @@
 namespace Ivory\CKEditorBundle\Tests\Installer;
 
 use Ivory\CKEditorBundle\Installer\CKEditorInstaller;
+use Ivory\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorInstallerTest extends \PHPUnit_Framework_TestCase
+class CKEditorInstallerTest extends AbstractTestCase
 {
     /**
      * @var CKEditorInstaller
