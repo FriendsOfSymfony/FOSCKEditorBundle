@@ -2,6 +2,9 @@
 
 ### 6.0.0 (????-??-??)
 
+ * 4bffdb9 - [Travis] Update docker UID
+ * 9d542f6 - [Travis] Add missing Symfony versions
+ * cbed42d - [Tests] Bump PHPUnit to 6.x
  * 6c3cea4 - [Doc] Fix code block
  * 83c5250 - [Doc] Fix CKEditor installation command link
  * c9dfbcc - [Doc] Fix link to requirejs
