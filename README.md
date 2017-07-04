@@ -11,7 +11,7 @@
 [![Total Downloads](https://poser.pugx.org/egeloen/ckeditor-bundle/downloads.svg)](https://packagist.org/packages/egeloen/ckeditor-bundle)
 [![License](https://poser.pugx.org/egeloen/ckeditor-bundle/license.svg)](https://packagist.org/packages/egeloen/ckeditor-bundle)
 
-The bundle provides a [CKEditor](http://ckeditor.com/) integration for your Symfony2 Project. It automatically registers
+The bundle provides a [CKEditor](http://ckeditor.com/) integration for your Symfony Project. It automatically registers
 the new `ckeditor` form type which can be easily as well as highly configured.
 
 ## Documentation
