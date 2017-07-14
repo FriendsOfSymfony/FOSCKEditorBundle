@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 6.0.0 (????-??-??)
+### 6.0.0 (2017-07-14)
 
  * a9fe512 - [UPGRADE] Add note about CKEditor source removing
  * 4d59b54 - [Composer] Add a script handler installing CKEditor source
