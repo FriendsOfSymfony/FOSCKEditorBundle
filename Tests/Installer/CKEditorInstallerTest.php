@@ -117,10 +117,10 @@ class CKEditorInstallerTest extends AbstractTestCase
         $this->assertInstall($options);
     }
 
-    public function testReinstallWithClearAbort()
+    public function testReinstallWithClearSkip()
     {
         $this->installer->install($options = ['version' => '4.6.0']);
-        $this->installer->install(['clear' => CKEditorInstaller::CLEAR_ABORT]);
+        $this->installer->install(['clear' => CKEditorInstaller::CLEAR_SKIP]);
 
         $this->assertInstall($options);
     }

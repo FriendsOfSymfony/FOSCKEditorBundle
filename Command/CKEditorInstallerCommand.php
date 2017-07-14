@@ -57,7 +57,7 @@ class CKEditorInstallerCommand extends Command
                 'clear',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'How to clear previous CKEditor installation (drop, keep or abort)'
+                'How to clear previous CKEditor installation (drop, keep or skip)'
             )
             ->addOption(
                 'exclude',
@@ -87,7 +87,7 @@ you can control how it should be handled in non-interactive mode:
 
   <info>php %command.full_name% --clear=drop</info>
   <info>php %command.full_name% --clear=keep</info>
-  <info>php %command.full_name% --clear=abort</info>
+  <info>php %command.full_name% --clear=skip</info>
   
 You can exclude path(s) when extracting CKEditor:
 
@@ -107,6 +107,8 @@ EOF
 
         if ($success) {
             $this->success('CKEditor has been successfully installed...', $output);
+        } else {
+            $this->info('CKEditor installation has been skipped...', $output);
         }
     }
 
@@ -165,9 +167,9 @@ EOF
                             'What do you want to do?',
                         ],
                         $choices = [
-                            CKEditorInstaller::CLEAR_DROP  => 'Drop the directory & reinstall CKEditor',
-                            CKEditorInstaller::CLEAR_KEEP  => 'Keep the directory & reinstall CKEditor by overriding files',
-                            CKEditorInstaller::CLEAR_ABORT => 'Abort installation',
+                            CKEditorInstaller::CLEAR_DROP => 'Drop the directory & reinstall CKEditor',
+                            CKEditorInstaller::CLEAR_KEEP => 'Keep the directory & reinstall CKEditor by overriding files',
+                            CKEditorInstaller::CLEAR_SKIP => 'Skip installation',
                         ],
                         CKEditorInstaller::CLEAR_DROP,
                         $input,
@@ -265,6 +267,15 @@ EOF
     private function success($message, OutputInterface $output)
     {
         $this->block('[OK] - '.$message, $output, 'green', 'black');
+    }
+
+    /**
+     * @param string          $message
+     * @param OutputInterface $output
+     */
+    private function info($message, OutputInterface $output)
+    {
+        $this->block('[INFO] - '.$message, $output, 'orange', 'black');
     }
 
     /**

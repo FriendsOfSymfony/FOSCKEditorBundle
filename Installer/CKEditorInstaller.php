@@ -24,7 +24,7 @@ class CKEditorInstaller
 
     const CLEAR_DROP = 'drop';
     const CLEAR_KEEP = 'keep';
-    const CLEAR_ABORT = 'abort';
+    const CLEAR_SKIP = 'skip';
 
     const NOTIFY_CLEAR = 'clear';
     const NOTIFY_CLEAR_ARCHIVE = 'clear-archive';
@@ -90,7 +90,7 @@ class CKEditorInstaller
         $this->path = $path ?: dirname(__DIR__).'/Resources/public';
         $this->release = $release ?: self::RELEASE_FULL;
         $this->version = $version ?: self::VERSION_LATEST;
-        $this->clear = $clear ?: self::CLEAR_DROP;
+        $this->clear = $clear ?: self::CLEAR_SKIP;
         $this->excludes = $excludes;
     }
 
@@ -105,7 +105,7 @@ class CKEditorInstaller
         $clear = isset($options['clear']) ? $options['clear'] : null;
         $notifier = isset($options['notifier']) ? $options['notifier'] : null;
 
-        if ($this->clear($path, $clear, $notifier) === self::CLEAR_ABORT) {
+        if ($this->clear($path, $clear, $notifier) === self::CLEAR_SKIP) {
             return false;
         }
 
