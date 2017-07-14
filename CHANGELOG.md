@@ -2,6 +2,9 @@
 
 ### 6.0.0 (????-??-??)
 
+ * a9fe512 - [UPGRADE] Add note about CKEditor source removing
+ * 4d59b54 - [Composer] Add a script handler installing CKEditor source
+ * 6a4fa8b - [README] Removing Symfony version
  * 4bffdb9 - [Travis] Update docker UID
  * 9d542f6 - [Travis] Add missing Symfony versions
  * cbed42d - [Tests] Bump PHPUnit to 6.x
