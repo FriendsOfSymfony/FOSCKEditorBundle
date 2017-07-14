@@ -1,5 +1,10 @@
 # UPGRADE
 
+### 5.0 to 6.0
+
+The CKEditor source has been removed from the bundle due to license mismatch. You must install it by yourself via the 
+Symfony command or the Composer script handler. 
+
 ### 4.0 to 5.0
 
 PHP has been bumped to 5.6 and Symfony to 2.7.
