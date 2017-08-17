@@ -275,7 +275,7 @@ EOF
      */
     private function info($message, OutputInterface $output)
     {
-        $this->block('[INFO] - '.$message, $output, 'orange', 'black');
+        $this->block('[INFO] - '.$message, $output, 'yellow', 'black');
     }
 
     /**
