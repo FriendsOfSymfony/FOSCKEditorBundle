@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 6.0.1 (????-??-??)
+
+ * bdd7adc - Fixed CKEditorScriptHandler::install error
+ 
 ### 6.0.0 (2017-07-14)
 
  * a9fe512 - [UPGRADE] Add note about CKEditor source removing
