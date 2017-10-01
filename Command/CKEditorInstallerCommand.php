@@ -142,7 +142,7 @@ EOF
             $options['clear'] = $input->getOption('clear');
         }
 
-        return $options;
+        return array_filter($options);
     }
 
     /**

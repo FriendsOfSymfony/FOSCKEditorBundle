@@ -11,6 +11,9 @@
 
 namespace Ivory\CKEditorBundle\Installer;
 
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -49,49 +52,33 @@ class CKEditorInstaller
     private static $archive = 'https://github.com/ckeditor/ckeditor-releases/archive/%s/%s.zip';
 
     /**
-     * @var string
+     * @var OptionsResolver
      */
-    private $path;
+    private $resolver;
 
     /**
-     * @var string
+     * @param mixed[] $options
      */
-    private $release;
-
-    /**
-     * @var string
-     */
-    private $version;
-
-    /**
-     * @var string
-     */
-    private $clear;
-
-    /**
-     * @var string[]
-     */
-    private $excludes;
-
-    /**
-     * @param string|null $path
-     * @param string|null $release
-     * @param string|null $version
-     * @param string|null $clear
-     * @param string[]    $excludes
-     */
-    public function __construct(
-        $path = null,
-        $release = null,
-        $version = null,
-        $clear = null,
-        array $excludes = ['samples']
-    ) {
-        $this->path = $path ?: dirname(__DIR__).'/Resources/public';
-        $this->release = $release ?: self::RELEASE_FULL;
-        $this->version = $version ?: self::VERSION_LATEST;
-        $this->clear = $clear ?: self::CLEAR_SKIP;
-        $this->excludes = $excludes;
+    public function __construct(array $options = [])
+    {
+        $this->resolver = (new OptionsResolver())
+            ->setDefaults(array_merge([
+                'clear'    => null,
+                'excludes' => ['samples'],
+                'notifier' => null,
+                'path'     => dirname(__DIR__).'/Resources/public',
+                'release'  => self::RELEASE_FULL,
+                'version'  => self::VERSION_LATEST,
+            ], $options))
+            ->setAllowedTypes('excludes', 'array')
+            ->setAllowedTypes('notifier', ['null', 'callable'])
+            ->setAllowedTypes('path', 'string')
+            ->setAllowedTypes('version', 'string')
+            ->setAllowedValues('clear', [self::CLEAR_DROP, self::CLEAR_KEEP, self::CLEAR_SKIP, null])
+            ->setAllowedValues('release', [self::RELEASE_BASIC, self::RELEASE_FULL, self::RELEASE_STANDARD])
+            ->setNormalizer('path', function (Options $options, $path) {
+                return rtrim($path, '/');
+            });
     }
 
     /**
@@ -101,56 +88,47 @@ class CKEditorInstaller
      */
     public function install(array $options = [])
     {
-        $path = rtrim(isset($options['path']) ? $options['path'] : $this->path, '/');
-        $clear = isset($options['clear']) ? $options['clear'] : null;
-        $notifier = isset($options['notifier']) ? $options['notifier'] : null;
+        $options = $this->resolver->resolve($options);
 
-        if ($this->clear($path, $clear, $notifier) === self::CLEAR_SKIP) {
+        if ($this->clear($options) === self::CLEAR_SKIP) {
             return false;
         }
 
-        $release = isset($options['release']) ? $options['release'] : $this->release;
-        $version = isset($options['version']) ? $options['version'] : $this->version;
-        $excludes = isset($options['excludes']) ? $options['excludes'] : $this->excludes;
-
-        $zip = $this->download($release, $version, $notifier);
-        $this->extract($zip, $path, $release, $version, $excludes, $notifier);
+        $this->extract($this->download($options), $options);
 
         return true;
     }
 
     /**
-     * @param string        $path
-     * @param int|null      $clear
-     * @param callable|null $notifier
+     * @param mixed[] $options
      *
      * @return int
      */
-    private function clear($path, $clear = null, callable $notifier = null)
+    private function clear(array $options)
     {
-        if (!file_exists($path.'/ckeditor.js')) {
+        if (!file_exists($options['path'].'/ckeditor.js')) {
             return self::CLEAR_DROP;
         }
 
-        if ($clear === null) {
-            $clear = $this->notify($notifier, self::NOTIFY_CLEAR, $path);
+        if ($options['clear'] === null && $options['notifier'] !== null) {
+            $options['clear'] = $this->notify($options['notifier'], self::NOTIFY_CLEAR, $options['path']);
         }
 
-        if ($clear === null) {
-            $clear = $this->clear;
+        if ($options['clear'] === null) {
+            $options['clear'] = self::CLEAR_SKIP;
         }
 
-        if ($clear === self::CLEAR_DROP) {
+        if ($options['clear'] === self::CLEAR_DROP) {
             $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS),
+                new \RecursiveDirectoryIterator($options['path'], \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
             );
 
-            $this->notify($notifier, self::NOTIFY_CLEAR_SIZE, iterator_count($files));
+            $this->notify($options['notifier'], self::NOTIFY_CLEAR_SIZE, iterator_count($files));
 
             foreach ($files as $file) {
                 $filePath = $file->getRealPath();
-                $this->notify($notifier, self::NOTIFY_CLEAR_PROGRESS, $filePath);
+                $this->notify($options['notifier'], self::NOTIFY_CLEAR_PROGRESS, $filePath);
 
                 if ($dir = $file->isDir()) {
                     $success = @rmdir($filePath);
@@ -167,37 +145,35 @@ class CKEditorInstaller
                 }
             }
 
-            $this->notify($notifier, self::NOTIFY_CLEAR_COMPLETE);
+            $this->notify($options['notifier'], self::NOTIFY_CLEAR_COMPLETE);
         }
 
-        return $clear;
+        return $options['clear'];
     }
 
     /**
-     * @param string        $release
-     * @param string        $version
-     * @param callable|null $notifier
+     * @param mixed[] $options
      *
      * @return string
      */
-    private function download($release, $version, callable $notifier = null)
+    private function download(array $options)
     {
-        $url = sprintf(self::$archive, $release, $version);
-        $this->notify($notifier, self::NOTIFY_DOWNLOAD, $url);
+        $url = sprintf(self::$archive, $options['release'], $options['version']);
+        $this->notify($options['notifier'], self::NOTIFY_DOWNLOAD, $url);
 
-        $zip = @file_get_contents($url, false, $this->createStreamContext($notifier));
+        $zip = @file_get_contents($url, false, $this->createStreamContext($options['notifier']));
 
         if ($zip === false) {
             throw $this->createException(sprintf('Unable to download CKEditor ZIP archive from "%s".', $url));
         }
 
-        $path = tempnam(sys_get_temp_dir(), sprintf('ckeditor-%s-%s-', $release, $version)).'.zip';
+        $path = tempnam(sys_get_temp_dir(), 'ckeditor-'.$options['release'].'-'.$options['version'].'.zip');
 
         if (!@file_put_contents($path, $zip)) {
             throw $this->createException(sprintf('Unable to write CKEditor ZIP archive to "%s".', $path));
         }
 
-        $this->notify($notifier, self::NOTIFY_DOWNLOAD_COMPLETE, $path);
+        $this->notify($options['notifier'], self::NOTIFY_DOWNLOAD_COMPLETE, $path);
 
         return $path;
     }
@@ -209,7 +185,15 @@ class CKEditorInstaller
      */
     private function createStreamContext(callable $notifier = null)
     {
-        return stream_context_create([], [
+        $context = [];
+        $proxy = getenv('https_proxy') ?: getenv('http_proxy');
+
+        if ($proxy) {
+            $context['proxy'] = $proxy;
+            $context['request_fulluri'] = (bool) getenv('https_proxy_request_fulluri') ?: getenv('http_proxy_request_fulluri');
+        }
+
+        return stream_context_create($context, [
             'notification' => function (
                 $code,
                 $severity,
@@ -236,61 +220,53 @@ class CKEditorInstaller
     }
 
     /**
-     * @param string        $origin
-     * @param string        $destination
-     * @param string        $release
-     * @param string        $version
-     * @param string[]      $excludes
-     * @param callable|null $notifier
+     * @param string  $path
+     * @param mixed[] $options
      */
-    private function extract($origin, $destination, $release, $version, array $excludes, callable $notifier = null)
+    private function extract($path, array $options)
     {
-        $this->notify($notifier, self::NOTIFY_EXTRACT, $destination);
+        $this->notify($options['notifier'], self::NOTIFY_EXTRACT, $options['path']);
 
         $zip = new \ZipArchive();
-        $zip->open($origin);
+        $zip->open($path);
 
-        $this->notify($notifier, self::NOTIFY_EXTRACT_SIZE, $zip->numFiles);
+        $this->notify($options['notifier'], self::NOTIFY_EXTRACT_SIZE, $zip->numFiles);
 
-        $offset = 20 + strlen($release) + strlen($version);
+        $offset = 20 + strlen($options['release']) + strlen($options['version']);
 
         for ($i = 0; $i < $zip->numFiles; ++$i) {
             $this->extractFile(
                 $file = $zip->getNameIndex($i),
                 substr($file, $offset),
-                $origin,
-                $destination,
-                $excludes,
-                $notifier
+                $path,
+                $options
             );
         }
 
         $zip->close();
 
-        $this->notify($notifier, self::NOTIFY_EXTRACT_COMPLETE);
-        $this->notify($notifier, self::NOTIFY_CLEAR_ARCHIVE, $origin);
+        $this->notify($options['notifier'], self::NOTIFY_EXTRACT_COMPLETE);
+        $this->notify($options['notifier'], self::NOTIFY_CLEAR_ARCHIVE, $path);
 
-        if (!@unlink($origin)) {
-            throw $this->createException(sprintf('Unable to remove the CKEditor ZIP archive "%s".', $origin));
+        if (!@unlink($path)) {
+            throw $this->createException(sprintf('Unable to remove the CKEditor ZIP archive "%s".', $path));
         }
     }
 
     /**
-     * @param string        $file
-     * @param string        $rewrite
-     * @param string        $origin
-     * @param string        $destination
-     * @param string[]      $excludes
-     * @param callable|null $notifier
+     * @param string  $file
+     * @param string  $rewrite
+     * @param string  $origin
+     * @param mixed[] $options
      */
-    private function extractFile($file, $rewrite, $origin, $destination, array $excludes, callable $notifier = null)
+    private function extractFile($file, $rewrite, $origin, array $options)
     {
-        $this->notify($notifier, self::NOTIFY_EXTRACT_PROGRESS, $rewrite);
+        $this->notify($options['notifier'], self::NOTIFY_EXTRACT_PROGRESS, $rewrite);
 
         $from = 'zip://'.$origin.'#'.$file;
-        $to = $destination.'/'.$rewrite;
+        $to = $options['path'].'/'.$rewrite;
 
-        foreach ($excludes as $exclude) {
+        foreach ($options['excludes'] as $exclude) {
             if (strpos($rewrite, $exclude) === 0) {
                 return;
             }

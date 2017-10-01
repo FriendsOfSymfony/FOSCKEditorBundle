@@ -144,6 +144,23 @@ such as samples, adapters, whatever:
 
     $ php bin/console ckeditor:install --exclude=samples --exclude=adapters
 
+Proxy
+~~~~~
+
+If you're using a proxy, you can use the following environment variables:
+
+.. code-block:: bash
+
+    $ export HTTP_PROXY=http://127.0.0.1:8080
+    $ export HTTPS_PROXY=http://127.0.0.1:8080
+
+You can also define if the request URI should be full with:
+
+.. code-block:: bash
+
+    $ export HTTP_PROXY_REQUEST_FULLURI=true
+    $ export HTTPS_PROXY_REQUEST_FULLURI=true
+
 Reminder
 ~~~~~~~~
 

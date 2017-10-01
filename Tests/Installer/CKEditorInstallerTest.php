@@ -30,12 +30,18 @@ class CKEditorInstallerTest extends AbstractTestCase
     private $path;
 
     /**
+     * @var string
+     */
+    private $proxy;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->installer = new CKEditorInstaller();
         $this->path = __DIR__.'/../../Resources/public';
+        $this->proxy = 'http://178.32.218.91:80';
 
         $this->tearDown();
     }
@@ -84,6 +90,50 @@ class CKEditorInstallerTest extends AbstractTestCase
         $this->installer->install($options = ['excludes' => ['adapters', 'samples']]);
 
         $this->assertInstall($options);
+    }
+
+    public function testInstallWithHttpProxy()
+    {
+        putenv('http_proxy='.$this->proxy);
+        $this->installer->install();
+        putenv('http_proxy');
+
+        $this->assertInstall();
+    }
+
+    public function testInstallWithHttpsProxy()
+    {
+        putenv('https_proxy='.$this->proxy);
+        $this->installer->install();
+        putenv('https_proxy');
+
+        $this->assertInstall();
+    }
+
+    public function testInstallWithHttpProxyRequestFullUri()
+    {
+        putenv('http_proxy='.$this->proxy);
+        putenv('http_proxy_request_fulluri=true');
+
+        $this->installer->install();
+
+        putenv('http_proxy');
+        putenv('http_proxy_request_fulluri');
+
+        $this->assertInstall();
+    }
+
+    public function testInstallWithHttpsProxyRequestFullUri()
+    {
+        putenv('https_proxy='.$this->proxy);
+        putenv('https_proxy_request_fulluri=true');
+
+        $this->installer->install();
+
+        putenv('https_proxy');
+        putenv('https_proxy_request_fulluri');
+
+        $this->assertInstall();
     }
 
     public function testReinstall()
