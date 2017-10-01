@@ -3,7 +3,7 @@
 ### 6.0.2 (????-??-??)
 
  * aea715f - Fix CS
- * 70739bf - [Installer] Add proxy support + Rely on options resolver (#318)
+ * 70739bf - [Installer] Add proxy support + Rely on options resolver
  * b7ffdb0 - Typo fixed in installation guide
 
 ### 6.0.1 (2017-08-18)
