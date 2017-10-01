@@ -1,7 +1,7 @@
 CKEditor Installation
 =====================
 
-The CKEditor source are not shipped with the bundle due to license restriction
+The CKEditor source is not shipped with the bundle due to license restriction
 (GPL, LGPL and MPL) whereas the bundle relies on the MIT one which are not
 compatible together. To install CKEditor source, you can use the Composer script
 via the built-in Symfony command.
