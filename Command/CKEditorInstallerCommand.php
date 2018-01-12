@@ -65,7 +65,8 @@ class CKEditorInstallerCommand extends Command
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
                 'Path to exclude when extracting CKEditor'
             )
-            ->setHelp(<<<'EOF'
+            ->setHelp(
+                <<<'EOF'
 The <info>%command.name%</info> command install CKEditor in your application:
 
   <info>php %command.full_name%</info>
@@ -242,12 +243,14 @@ EOF
      */
     private function title(OutputInterface $output)
     {
-        $output->writeln([
-            '----------------------',
-            '| CKEditor Installer |',
-            '----------------------',
-            '',
-        ]);
+        $output->writeln(
+            [
+                '----------------------',
+                '| CKEditor Installer |',
+                '----------------------',
+                '',
+            ]
+        );
     }
 
     /**
@@ -320,11 +323,15 @@ EOF
     {
         $helper = new QuestionHelper();
 
-        $result = $helper->ask($input, $output, new ChoiceQuestion(
-            $question,
-            $choices,
-            $choices[$default]
-        ));
+        if (is_array($question)) {
+            $question = implode("\n", $question);
+        }
+
+        $result = $helper->ask(
+            $input,
+            $output,
+            new ChoiceQuestion($question, $choices, $choices[$default])
+        );
 
         $output->writeln('');
 

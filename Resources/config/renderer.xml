@@ -6,7 +6,11 @@
 >
     <services>
         <service id="ivory_ck_editor.renderer" class="Ivory\CKEditorBundle\Renderer\CKEditorRenderer">
-            <argument type="service" id="service_container" />
+            <argument type="service" id="ivory_ck_editor.renderer.json_builder"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="assets.packages" />
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="templating" />
         </service>
 
         <service id="ivory_ck_editor.renderer.json_builder" class="Ivory\JsonBuilder\JsonBuilder">
