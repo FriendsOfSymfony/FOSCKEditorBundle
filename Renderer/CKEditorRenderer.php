@@ -13,6 +13,7 @@ namespace Ivory\CKEditorBundle\Renderer;
 
 use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -49,14 +50,36 @@ class CKEditorRenderer implements CKEditorRendererInterface
     private $requestStack;
 
     /**
-     * @param JsonBuilder     $jsonBuilder
-     * @param RouterInterface $router
-     * @param Packages        $packages
-     * @param RequestStack    $requestStack
-     * @param EngineInterface $templating
+     * @param JsonBuilder|ContainerInterface $containerOrJsonBuilder
+     * @param RouterInterface                $router
+     * @param Packages                       $packages
+     * @param RequestStack                   $requestStack
+     * @param EngineInterface                $templating
      */
-    public function __construct(JsonBuilder $jsonBuilder, RouterInterface $router, Packages $packages, RequestStack $requestStack, EngineInterface $templating)
+    public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null, EngineInterface $templating = null)
     {
+        if ($containerOrJsonBuilder instanceof ContainerInterface) {
+            @trigger_error(sprintf('Passing a %s as %s first argument is deprecated since IvoryCKEditor 6.1, and will be removed in 7.0. Use %s instead.', ContainerInterface::class, __METHOD__, JsonBuilder::class), E_USER_DEPRECATED);
+            $jsonBuilder = $containerOrJsonBuilder->get('ivory_ck_editor.renderer.json_builder');
+            $router = $containerOrJsonBuilder->get('router');
+            $packages = $containerOrJsonBuilder->get('assets.packages');
+            $requestStack = $containerOrJsonBuilder->get('request_stack');
+            $templating = $containerOrJsonBuilder->get('templating');
+        } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
+            $jsonBuilder = $containerOrJsonBuilder;
+            if ($router === null) {
+                throw new \InvalidArgumentException(sprintf('%s 2nd argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            } elseif ($packages === null) {
+                throw new \InvalidArgumentException(sprintf('%s 3rd argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            } elseif ($requestStack === null) {
+                throw new \InvalidArgumentException(sprintf('%s 4th argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            } elseif ($templating === null) {
+                throw new \InvalidArgumentException(sprintf('%s 5th argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            }
+        } else {
+            throw new \InvalidArgumentException(sprintf('%s first argument must be an instance of %s or %s (%s given).', __METHOD__, ContainerInterface::class, JsonBuilder::class, is_object($containerOrJsonBuilder) ? get_class($containerOrJsonBuilder) : gettype($containerOrJsonBuilder)));
+        }
+
         $this->jsonBuilder = $jsonBuilder;
         $this->router = $router;
         $this->assetsPackages = $packages;
