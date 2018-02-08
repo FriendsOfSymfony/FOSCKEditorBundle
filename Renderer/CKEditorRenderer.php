@@ -50,13 +50,20 @@ class CKEditorRenderer implements CKEditorRendererInterface
     private $requestStack;
 
     /**
-     * @param JsonBuilder|ContainerInterface $containerOrJsonBuilder
-     * @param RouterInterface                $router
-     * @param Packages                       $packages
-     * @param RequestStack                   $requestStack
-     * @param EngineInterface                $templating
+     * @var null|string
      */
-    public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null, EngineInterface $templating = null)
+    private $locale;
+
+    /**
+     * @param JsonBuilder|ContainerInterface $containerOrJsonBuilder
+     * @param RouterInterface $router
+     * @param Packages $packages
+     * @param RequestStack $requestStack
+     * @param EngineInterface $templating
+     * @param null|string $locale
+     */
+    public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null, EngineInterface
+    $templating = null, $locale = null)
     {
         if ($containerOrJsonBuilder instanceof ContainerInterface) {
             @trigger_error(sprintf('Passing a %s as %s first argument is deprecated since IvoryCKEditor 6.1, and will be removed in 7.0. Use %s instead.', ContainerInterface::class, __METHOD__, JsonBuilder::class), E_USER_DEPRECATED);
@@ -85,6 +92,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         $this->assetsPackages = $packages;
         $this->templating = $templating;
         $this->requestStack = $requestStack;
+        $this->locale = $locale;
     }
 
     /**
@@ -217,7 +225,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixConfigLanguage(array $config)
     {
-        if (!isset($config['language']) && ($language = $this->requestStack->getCurrentRequest()->getLocale()) !== null) {
+        if (!isset($config['language']) && ($language = $this->getLanguage()) !== null) {
             $config['language'] = $language;
         }
 
@@ -344,5 +352,18 @@ class CKEditorRenderer implements CKEditorRendererInterface
         }
 
         return $url;
+    }
+
+    /**
+     * @return null|string
+     */
+    private function getLanguage()
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request !== null) {
+            return $request->getLocale();
+        }
+
+        return $this->locale;
     }
 }

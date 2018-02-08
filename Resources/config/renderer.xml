@@ -8,9 +8,10 @@
         <service id="ivory_ck_editor.renderer" class="Ivory\CKEditorBundle\Renderer\CKEditorRenderer">
             <argument type="service" id="ivory_ck_editor.renderer.json_builder"/>
             <argument type="service" id="router"/>
-            <argument type="service" id="assets.packages" />
+            <argument type="service" id="assets.packages" on-invalid="null"/>
             <argument type="service" id="request_stack"/>
-            <argument type="service" id="templating" />
+            <argument type="service" id="templating" on-invalid="null"/>
+            <argument on-invalid="null">%locale%</argument>
         </service>
 
         <service id="ivory_ck_editor.renderer.json_builder" class="Ivory\JsonBuilder\JsonBuilder">

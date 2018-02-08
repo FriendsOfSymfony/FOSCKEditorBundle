@@ -53,10 +53,12 @@ abstract class AbstractTemplateTest extends AbstractTestCase
      * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $router;
+
     /**
      * @var EngineInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $templating;
+
     /**
      * @var Request|\PHPUnit_Framework_MockObject_MockObject
      */
