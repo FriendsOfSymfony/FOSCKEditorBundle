@@ -15,7 +15,8 @@
         "egeloen/json-builder": "^2.0|^3.0",
         "symfony/dependency-injection": "^2.0|^3.0|^4.0",
         "symfony/form": "^2.7|^3.0|^4.0",
-        "symfony/framework-bundle": "^2.7|^3.0|^4.0"
+        "symfony/framework-bundle": "^2.7|^3.0|^4.0",
+        "symfony/expression-language": "^2.7|^3.0|^4.0"
     },
     "require-dev": {
         "composer/composer": "^1.0",
