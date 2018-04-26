@@ -58,7 +58,7 @@ $ git rebase -i HEAD~3
 If your branch conflicts with the master branch, you will need to rebase and repush it with the following commands:
 
 ``` bash
-$ git remote add upstream git@github.com:egeloen/IvoryCKEditorBundle.git
+$ git remote add upstream git@github.com:FriendsOfSymfony/FOSCKEditorBundle.git
 $ git pull --rebase upstream master
 $ git push origin bug-fix-description -f
 ```
