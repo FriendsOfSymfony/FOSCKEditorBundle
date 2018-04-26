@@ -36,7 +36,7 @@ class TwigTemplateTest extends AbstractTemplateTest
         parent::setUp();
 
         $symfonyTheme = '{% block widget_attributes %}{% endblock %}';
-        $ckeditorTheme = file_get_contents(__DIR__.'/../../Resources/views/Form/ckeditor_widget.html.twig');
+        $ckeditorTheme = file_get_contents(__DIR__.'/../../src/Resources/views/Form/ckeditor_widget.html.twig');
 
         $this->twig = new \Twig_Environment(new \Twig_Loader_Array([
             'ckeditor' => $symfonyTheme.$ckeditorTheme,

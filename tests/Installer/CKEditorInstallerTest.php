@@ -40,7 +40,7 @@ class CKEditorInstallerTest extends AbstractTestCase
     protected function setUp()
     {
         $this->installer = new CKEditorInstaller();
-        $this->path = __DIR__.'/../../Resources/public';
+        $this->path = __DIR__.'/../../src/Resources/public';
         $this->proxy = 'http://178.32.218.91:80';
 
         $this->tearDown();
