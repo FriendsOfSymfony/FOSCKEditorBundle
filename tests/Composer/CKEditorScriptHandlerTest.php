@@ -36,7 +36,7 @@ class CKEditorScriptHandlerTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->path = __DIR__.'/../../Resources/public';
+        $this->path = __DIR__.'/../../src/Resources/public';
 
         $this->tearDown();
     }

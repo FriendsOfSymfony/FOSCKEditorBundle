@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit colors="true" bootstrap="Tests/autoload.php">
+<phpunit colors="true" bootstrap="tests/autoload.php">
     <testsuites>
         <testsuite name="IvoryCKEditorBundle Test Suite">
-            <directory>./Tests</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <directory>./</directory>
             <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
+                <directory>./src/Resources</directory>
+                <directory>./tests</directory>
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>

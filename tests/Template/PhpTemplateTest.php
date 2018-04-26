@@ -55,7 +55,7 @@ class PhpTemplateTest extends AbstractTemplateTest
 
         $this->phpEngine = new PhpEngine(
             new TemplateNameParser(),
-            new FilesystemLoader([__DIR__.'/../../Resources/views/Form/%name%']),
+            new FilesystemLoader([__DIR__.'/../../src/Resources/views/Form/%name%']),
             [
                 'form'  => $this->formHelper,
                 'slots' => $this->slotsHelper,

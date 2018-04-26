@@ -52,7 +52,7 @@ class IvoryCKEditorExtension extends ConfigurableExtension
      */
     private function loadResources(ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $resources = [
             'command',
