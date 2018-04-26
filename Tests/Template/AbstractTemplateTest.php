@@ -18,8 +18,10 @@ use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -53,49 +55,32 @@ abstract class AbstractTemplateTest extends AbstractTestCase
     private $router;
 
     /**
+     * @var EngineInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $templating;
+
+    /**
+     * @var Request|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $request;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->requestStack = $this->createMock(RequestStack::class);
+        $this->request = $this->createMock(Request::class);
+        $this->requestStack->expects($this->any())->method('getCurrentRequest')->will($this->returnValue($this->request));
         $this->router = $this->createMock(RouterInterface::class);
-        $this->packages = $this->getMockBuilder(Packages::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $this->packages = $this->createMock(Packages::class);
         $this->packages
             ->expects($this->any())
             ->method('getUrl')
             ->will($this->returnArgument(0));
+        $this->templating = $this->createMock(EngineInterface::class);
 
-        $this->container = $this->createMock(ContainerInterface::class);
-        $this->container
-            ->expects($this->any())
-            ->method('get')
-            ->will($this->returnValueMap([
-                [
-                    'assets.packages',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->packages,
-                ],
-                [
-                    'ivory_ck_editor.renderer.json_builder',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    new JsonBuilder(),
-                ],
-                [
-                    'request_stack',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->requestStack,
-                ],
-                [
-                    'router',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->router,
-                ],
-            ]));
-
-        $this->renderer = new CKEditorRenderer($this->container);
+        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->templating);
     }
 
     public function testDefaultState()

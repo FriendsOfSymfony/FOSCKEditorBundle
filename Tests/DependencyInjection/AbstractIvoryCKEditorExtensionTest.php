@@ -15,11 +15,15 @@ use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Ivory\CKEditorBundle\IvoryCKEditorBundle;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler\TestContainerPass;
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormRendererInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
@@ -32,21 +36,26 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
      * @var ContainerBuilder
      */
     private $container;
-
     /**
      * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
      */
     private $packages;
-
     /**
      * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $router;
-
     /**
      * @var FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $formRenderer;
+    /**
+     * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $requestStack;
+    /**
+     * @var EngineInterface
+     */
+    private $templating;
 
     /**
      * {@inheritdoc}
@@ -58,17 +67,29 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->packages = $this->getMockBuilder(Packages::class)
             ->disableOriginalConstructor()
             ->getMock();
-
+        $this->requestStack = $this->createMock(RequestStack::class);
         $this->container = new ContainerBuilder();
+        $this->templating = $this->createMock(EngineInterface::class);
 
         $this->container->set('assets.packages', $this->packages);
         $this->container->set('router', $this->router);
         $this->container->set('templating.form.renderer', $this->formRenderer);
         $this->container->set('twig.form.renderer', $this->formRenderer);
+        $this->container->set('request_stack', $this->requestStack);
+        $this->container->set('templating', $this->templating);
 
         $this->container->registerExtension($extension = new IvoryCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());
 
+        $toBePublic = [
+            'ivory_ck_editor.template_manager',
+            'ivory_ck_editor.form.type',
+            'ivory_ck_editor.config_manager',
+            'ivory_ck_editor.plugin_manager',
+            'ivory_ck_editor.styles_set_manager',
+            'ivory_ck_editor.toolbar_manager',
+        ];
+        $this->container->addCompilerPass(new TestContainerPass($toBePublic), PassConfig::TYPE_OPTIMIZE);
         (new IvoryCKEditorBundle())->build($this->container);
     }
 
@@ -270,10 +291,12 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'plugins');
         $this->container->compile();
 
-        $expected = ['plugin-name' => [
-            'path'     => '/my/path',
-            'filename' => 'plugin.js',
-        ]];
+        $expected = [
+            'plugin-name' => [
+                'path'     => '/my/path',
+                'filename' => 'plugin.js',
+            ],
+        ];
 
         $this->assertSame($expected, $this->container->get('ivory_ck_editor.plugin_manager')->getPlugins());
     }

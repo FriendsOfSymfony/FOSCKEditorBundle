@@ -80,54 +80,45 @@ class CKEditorRendererTest extends AbstractTestCase
             ->getMock();
 
         $this->requestStack = $this->createMock(RequestStack::class);
+        $this->requestStack->expects($this->any())->method('getCurrentRequest')->will($this->returnValue($this->request));
         $this->templating = $this->createMock(EngineInterface::class);
         $this->twig = $this->getMockBuilder(\Twig_Environment::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->container = $this->createMock(ContainerInterface::class);
-        $this->container
-            ->expects($this->any())
-            ->method('get')
-            ->will($this->returnValueMap([
-                [
-                    'assets.packages',
-                    ContainerInterface::NULL_ON_INVALID_REFERENCE,
-                    $this->packages,
-                ],
-                [
-                    'ivory_ck_editor.renderer.json_builder',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    new JsonBuilder(),
-                ],
-                [
-                    'request_stack',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->requestStack,
-                ],
-                [
-                    'router',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->router,
-                ],
-                [
-                    'templating',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->templating,
-                ],
-                [
-                    'twig',
-                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
-                    $this->twig,
-                ],
-            ]));
-
-        $this->renderer = new CKEditorRenderer($this->container);
+        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->templating);
     }
 
     public function testDefaultState()
     {
         $this->assertInstanceOf(CKEditorRendererInterface::class, $this->renderer);
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Passing a %s as %s first argument is deprecated since %s, and will be removed in %s. Use %s instead.
+     */
+    public function testLegacyContstructor()
+    {
+        $container = $this->createMock(ContainerInterface::class);
+        $container->expects($this->exactly(5))
+            ->method('get')
+            ->withConsecutive(
+                ['ivory_ck_editor.renderer.json_builder'],
+                ['router'],
+                ['assets.packages'],
+                ['request_stack'],
+                ['templating']
+            )
+            ->willReturnMap([
+                ['ivory_ck_editor.renderer.json_builder', new JsonBuilder()],
+                ['router', $this->router],
+                ['assets.packages', $this->packages],
+                ['request_stack', $this->requestStack],
+                ['templating', $this->templating],
+            ]);
+
+        new CKEditorRenderer($container);
     }
 
     /**
@@ -167,11 +158,6 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithLocaleRequest($symfonyLocale, $ckEditorLocale)
     {
-        $this->requestStack
-            ->expects($this->once())
-            ->method('getMasterRequest')
-            ->will($this->returnValue($this->request));
-
         $this->request
             ->expects($this->once())
             ->method('getLocale')
@@ -191,18 +177,7 @@ class CKEditorRendererTest extends AbstractTestCase
      */
     public function testRenderWidgetWithLocaleParameter($symfonyLocale, $ckEditorLocale)
     {
-        $this->container
-            ->expects($this->once())
-            ->method('hasParameter')
-            ->with($this->identicalTo('locale'))
-            ->will($this->returnValue(true));
-
-        $this->container
-            ->expects($this->once())
-            ->method('getParameter')
-            ->with($this->identicalTo('locale'))
-            ->will($this->returnValue($symfonyLocale));
-
+        $this->request->expects($this->once())->method('getLocale')->will($this->returnValue($symfonyLocale));
         $this->assertSame(
             'CKEDITOR.replace("foo", {"language":"'.$ckEditorLocale.'"});',
             $this->renderer->renderWidget('foo', [])
@@ -225,11 +200,10 @@ class CKEditorRendererTest extends AbstractTestCase
 
     public function testRenderWidgetWithoutLocale()
     {
-        $this->container
+        $this->request
             ->expects($this->once())
-            ->method('hasParameter')
-            ->with($this->identicalTo('locale'))
-            ->will($this->returnValue(false));
+            ->method('getLocale')
+            ->will($this->returnValue(null));
 
         $this->assertSame(
             'CKEDITOR.replace("foo", []);',
@@ -531,7 +505,7 @@ class CKEditorRendererTest extends AbstractTestCase
      *
      * @dataProvider directoryAssetProvider
      */
-    public function testRenderTemplateWithTwigTemplating($path, $asset, $url)
+    public function testRenderTemplateWithEngineInteface($path, $asset, $url)
     {
         $templates = [
             [
@@ -554,65 +528,10 @@ class CKEditorRendererTest extends AbstractTestCase
             ->with($this->equalTo($path))
             ->will($this->returnValue($asset));
 
-        $this->container
-            ->expects($this->once())
-            ->method('has')
-            ->with($this->identicalTo('twig'))
-            ->will($this->returnValue(true));
-
-        $this->twig
-            ->expects($this->once())
-            ->method('render')
-            ->with($this->identicalTo($template), $this->identicalTo($templateParameters))
-            ->will($this->returnValue($html));
-
-        $json = json_encode(['imagesPath' => $url, 'templates'  => $processedTemplates]);
-
-        $this->assertSame(
-            'CKEDITOR.addTemplates("foo", '.$json.');',
-            $this->renderer->renderTemplate('foo', ['imagesPath' => $path, 'templates' => $templates])
-        );
-    }
-
-    /**
-     * @param string $path
-     * @param string $asset
-     * @param string $url
-     *
-     * @dataProvider directoryAssetProvider
-     */
-    public function testRenderTemplateWithPhpTemplating($path, $asset, $url)
-    {
-        $templates = [
-            [
-                'title'    => 'Template title',
-                'template' => $template = 'template_name',
-            ],
-        ];
-
-        $processedTemplates = [
-            [
-                'title' => 'Template title',
-                'html'  => $html = '<p>Template content</p>',
-            ],
-        ];
-
-        $this->packages
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with($this->equalTo($path))
-            ->will($this->returnValue($asset));
-
-        $this->container
-            ->expects($this->once())
-            ->method('has')
-            ->with($this->identicalTo('twig'))
-            ->will($this->returnValue(false));
-
         $this->templating
             ->expects($this->once())
             ->method('render')
-            ->with($this->identicalTo($template), $this->identicalTo([]))
+            ->with($this->identicalTo($template), $this->identicalTo($templateParameters))
             ->will($this->returnValue($html));
 
         $json = json_encode(['imagesPath' => $url, 'templates'  => $processedTemplates]);

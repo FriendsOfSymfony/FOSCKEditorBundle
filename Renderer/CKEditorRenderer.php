@@ -14,7 +14,7 @@ namespace Ivory\CKEditorBundle\Renderer;
 use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
@@ -25,16 +25,74 @@ use Symfony\Component\Templating\EngineInterface;
 class CKEditorRenderer implements CKEditorRendererInterface
 {
     /**
-     * @var ContainerInterface
+     * @var JsonBuilder
      */
-    private $container;
+    private $jsonBuilder;
 
     /**
-     * @param ContainerInterface $container
+     * @var RouterInterface
      */
-    public function __construct(ContainerInterface $container)
+    private $router;
+
+    /**
+     * @var Packages
+     */
+    private $assetsPackages;
+
+    /**
+     * @var EngineInterface
+     */
+    private $templating;
+
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
+     * @var null|string
+     */
+    private $locale;
+
+    /**
+     * @param JsonBuilder|ContainerInterface $containerOrJsonBuilder
+     * @param RouterInterface $router
+     * @param Packages $packages
+     * @param RequestStack $requestStack
+     * @param EngineInterface $templating
+     * @param null|string $locale
+     */
+    public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null, EngineInterface
+    $templating = null, $locale = null)
     {
-        $this->container = $container;
+        if ($containerOrJsonBuilder instanceof ContainerInterface) {
+            @trigger_error(sprintf('Passing a %s as %s first argument is deprecated since IvoryCKEditor 6.1, and will be removed in 7.0. Use %s instead.', ContainerInterface::class, __METHOD__, JsonBuilder::class), E_USER_DEPRECATED);
+            $jsonBuilder = $containerOrJsonBuilder->get('ivory_ck_editor.renderer.json_builder');
+            $router = $containerOrJsonBuilder->get('router');
+            $packages = $containerOrJsonBuilder->get('assets.packages');
+            $requestStack = $containerOrJsonBuilder->get('request_stack');
+            $templating = $containerOrJsonBuilder->get('templating');
+        } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
+            $jsonBuilder = $containerOrJsonBuilder;
+            if ($router === null) {
+                throw new \InvalidArgumentException(sprintf('%s 2nd argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            } elseif ($packages === null) {
+                throw new \InvalidArgumentException(sprintf('%s 3rd argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            } elseif ($requestStack === null) {
+                throw new \InvalidArgumentException(sprintf('%s 4th argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            } elseif ($templating === null) {
+                throw new \InvalidArgumentException(sprintf('%s 5th argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+            }
+        } else {
+            throw new \InvalidArgumentException(sprintf('%s first argument must be an instance of %s or %s (%s given).', __METHOD__, ContainerInterface::class, JsonBuilder::class, is_object($containerOrJsonBuilder) ? get_class($containerOrJsonBuilder) : gettype($containerOrJsonBuilder)));
+        }
+
+        $this->jsonBuilder = $jsonBuilder;
+        $this->router = $router;
+        $this->assetsPackages = $packages;
+        $this->templating = $templating;
+        $this->requestStack = $requestStack;
+        $this->locale = $locale;
     }
 
     /**
@@ -69,7 +127,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
             ? 'CKEDITOR.disableAutoInline = true;'."\n"
             : null;
 
-        $builder = $this->getJsonBuilder()->reset()->setValues($config);
+        $builder = $this->jsonBuilder->reset()->setValues($config);
         $this->fixConfigEscapedValues($builder, $config);
 
         $widget = sprintf(
@@ -126,7 +184,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
             'CKEDITOR.stylesSet.add("%1$s", %2$s); '.
             '}',
             $name,
-            $this->getJsonBuilder()->reset()->setValues($stylesSet)->build()
+            $this->jsonBuilder->reset()->setValues($stylesSet)->build()
         );
     }
 
@@ -142,7 +200,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         if (isset($template['templates'])) {
             foreach ($template['templates'] as &$rawTemplate) {
                 if (isset($rawTemplate['template'])) {
-                    $rawTemplate['html'] = $this->getTemplating()->render(
+                    $rawTemplate['html'] = $this->templating->render(
                         $rawTemplate['template'],
                         isset($rawTemplate['template_parameters']) ? $rawTemplate['template_parameters'] : []
                     );
@@ -156,7 +214,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         return sprintf(
             'CKEDITOR.addTemplates("%s", %s);',
             $name,
-            $this->getJsonBuilder()->reset()->setValues($template)->build()
+            $this->jsonBuilder->reset()->setValues($template)->build()
         );
     }
 
@@ -224,9 +282,9 @@ class CKEditorRenderer implements CKEditorRendererInterface
             $routeType = $fileBrowserKey.'RouteType';
 
             if (isset($config[$handler])) {
-                $config[$url] = $config[$handler]($this->getRouter());
+                $config[$url] = $config[$handler]($this->router);
             } elseif (isset($config[$route])) {
-                $config[$url] = $this->getRouter()->generate(
+                $config[$url] = $this->router->generate(
                     $config[$route],
                     isset($config[$routeParameters]) ? $config[$routeParameters] : [],
                     isset($config[$routeType]) ? $config[$routeType] : UrlGeneratorInterface::ABSOLUTE_PATH
@@ -283,13 +341,11 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixPath($path)
     {
-        $helper = $this->getAssets();
-
-        if ($helper === null) {
+        if ($this->assetsPackages === null) {
             return $path;
         }
 
-        $url = $helper->getUrl($path);
+        $url = $this->assetsPackages->getUrl($path);
 
         if (substr($path, -1) === '/' && ($position = strpos($url, '?')) !== false) {
             $url = substr($url, 0, $position);
@@ -299,58 +355,15 @@ class CKEditorRenderer implements CKEditorRendererInterface
     }
 
     /**
-     * @return JsonBuilder
-     */
-    private function getJsonBuilder()
-    {
-        return $this->container->get('ivory_ck_editor.renderer.json_builder');
-    }
-
-    /**
-     * @return string|null
+     * @return null|string
      */
     private function getLanguage()
     {
-        if (($request = $this->getRequest()) !== null) {
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request !== null) {
             return $request->getLocale();
         }
 
-        if ($this->container->hasParameter($parameter = 'locale')) {
-            return $this->container->getParameter($parameter);
-        }
-    }
-
-    /**
-     * @return Request|null
-     */
-    private function getRequest()
-    {
-        return $this->container->get('request_stack')->getMasterRequest();
-    }
-
-    /**
-     * @return \Twig_Environment|EngineInterface
-     */
-    private function getTemplating()
-    {
-        return $this->container->has($templating = 'twig')
-            ? $this->container->get($templating)
-            : $this->container->get('templating');
-    }
-
-    /**
-     * @return Packages|null
-     */
-    private function getAssets()
-    {
-        return $this->container->get('assets.packages', ContainerInterface::NULL_ON_INVALID_REFERENCE);
-    }
-
-    /**
-     * @return RouterInterface
-     */
-    private function getRouter()
-    {
-        return $this->container->get('router');
+        return $this->locale;
     }
 }

@@ -6,7 +6,12 @@
 >
     <services>
         <service id="ivory_ck_editor.renderer" class="Ivory\CKEditorBundle\Renderer\CKEditorRenderer">
-            <argument type="service" id="service_container" />
+            <argument type="service" id="ivory_ck_editor.renderer.json_builder"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="assets.packages" on-invalid="null"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="templating" on-invalid="null"/>
+            <argument type="expression">container.hasParameter('locale') ? parameter('locale') : null</argument>
         </service>
 
         <service id="ivory_ck_editor.renderer.json_builder" class="Ivory\JsonBuilder\JsonBuilder">
