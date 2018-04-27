@@ -48,6 +48,9 @@ class CKEditorInstallerCommandTest extends AbstractTestCase
         }
     }
 
+    /**
+     * @group installation
+     */
     public function testInstall()
     {
         $command = $this->application->find('ckeditor:install');
@@ -58,6 +61,9 @@ class CKEditorInstallerCommandTest extends AbstractTestCase
         $this->assertInstall($tester);
     }
 
+    /**
+     * @group installation
+     */
     public function testReinstall()
     {
         if (!method_exists(CommandTester::class, 'setInputs')) {
