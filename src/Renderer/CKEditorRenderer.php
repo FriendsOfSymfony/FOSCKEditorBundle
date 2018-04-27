@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Renderer;
+namespace FOS\CKEditorBundle\Renderer;
 
 use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
@@ -66,7 +66,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     $templating = null, $locale = null)
     {
         if ($containerOrJsonBuilder instanceof ContainerInterface) {
-            @trigger_error(sprintf('Passing a %s as %s first argument is deprecated since IvoryCKEditor 6.1, and will be removed in 7.0. Use %s instead.', ContainerInterface::class, __METHOD__, JsonBuilder::class), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing a %s as %s first argument is deprecated since FOSCKEditor 6.1, and will be removed in 7.0. Use %s instead.', ContainerInterface::class, __METHOD__, JsonBuilder::class), E_USER_DEPRECATED);
             $jsonBuilder = $containerOrJsonBuilder->get('ivory_ck_editor.renderer.json_builder');
             $router = $containerOrJsonBuilder->get('router');
             $packages = $containerOrJsonBuilder->get('assets.packages');

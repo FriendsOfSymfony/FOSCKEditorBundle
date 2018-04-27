@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Twig;
+namespace FOS\CKEditorBundle\Twig;
 
-use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

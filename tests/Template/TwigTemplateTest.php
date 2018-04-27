@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Template;
+namespace FOS\CKEditorBundle\Tests\Template;
 
-use Ivory\CKEditorBundle\Twig\CKEditorExtension;
+use FOS\CKEditorBundle\Twig\CKEditorExtension;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

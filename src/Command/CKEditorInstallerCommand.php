@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Command;
+namespace FOS\CKEditorBundle\Command;
 
-use Ivory\CKEditorBundle\Installer\CKEditorInstaller;
+use FOS\CKEditorBundle\Installer\CKEditorInstaller;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\ProgressHelper;

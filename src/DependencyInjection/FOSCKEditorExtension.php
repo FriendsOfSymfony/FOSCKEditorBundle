@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\DependencyInjection;
+namespace FOS\CKEditorBundle\DependencyInjection;
 
-use Ivory\CKEditorBundle\Exception\DependencyInjectionException;
+use FOS\CKEditorBundle\Exception\DependencyInjectionException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class IvoryCKEditorExtension extends ConfigurableExtension
+class FOSCKEditorExtension extends ConfigurableExtension
 {
     /**
      * {@inheritdoc}

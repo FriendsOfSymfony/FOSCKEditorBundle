@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle;
+namespace FOS\CKEditorBundle;
 
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
+use FOS\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
+use FOS\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class IvoryCKEditorBundle extends Bundle
+class FOSCKEditorBundle extends Bundle
 {
     /**
      * {@inheritdoc}

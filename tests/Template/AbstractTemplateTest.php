@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Template;
+namespace FOS\CKEditorBundle\Tests\Template;
 
-use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
-use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
+use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;

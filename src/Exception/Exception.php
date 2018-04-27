@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Exception;
+namespace FOS\CKEditorBundle\Exception;
 
 use Exception as BaseException;
 

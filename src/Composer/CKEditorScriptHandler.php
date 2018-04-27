@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Composer;
+namespace FOS\CKEditorBundle\Composer;
 
 use Composer\Script\CommandEvent;
 use Composer\Script\Event;

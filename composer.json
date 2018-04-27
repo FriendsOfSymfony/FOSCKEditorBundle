@@ -53,12 +53,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Ivory\\CKEditorBundle\\": "src/"
+            "FOS\\CKEditorBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ivory\\CKEditorBundle\\Tests\\": "tests/"
+            "FOS\\CKEditorBundle\\Tests\\": "tests/"
         }
     }
 }

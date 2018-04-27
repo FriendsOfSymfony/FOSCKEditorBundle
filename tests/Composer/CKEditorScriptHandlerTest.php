@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Composer;
+namespace FOS\CKEditorBundle\Tests\Composer;
 
 use Composer\Composer;
 use Composer\Config;
@@ -17,9 +17,9 @@ use Composer\IO\IOInterface;
 use Composer\Package\Package;
 use Composer\Script\CommandEvent;
 use Composer\Script\Event;
-use Ivory\CKEditorBundle\Composer\CKEditorScriptHandler;
-use Ivory\CKEditorBundle\Installer\CKEditorInstaller;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Composer\CKEditorScriptHandler;
+use FOS\CKEditorBundle\Installer\CKEditorInstaller;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

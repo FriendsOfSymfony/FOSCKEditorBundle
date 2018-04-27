@@ -104,4 +104,4 @@ you want to just override one part of a configuration, just override it:
 .. note::
 
     If you want the full list of built-in items, check the
-    `Ivory\CKEditorBundle\Model\ToolbarManager` class.
+    `FOS\CKEditorBundle\Model\ToolbarManager` class.

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
+namespace FOS\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -56,7 +56,7 @@ class ResourceCompilerPassTest extends AbstractTestCase
             ->with(
                 $this->identicalTo($parameter),
                 $this->identicalTo([
-                    '@IvoryCKEditor/Form/ckeditor_widget.html.twig',
+                    '@FOSCKEditor/Form/ckeditor_widget.html.twig',
                     $template,
                 ])
             );
@@ -86,7 +86,7 @@ class ResourceCompilerPassTest extends AbstractTestCase
             ->method('setParameter')
             ->with(
                 $this->identicalTo($parameter),
-                $this->identicalTo(['IvoryCKEditorBundle:Form', $template])
+                $this->identicalTo(['FOSCKEditorBundle:Form', $template])
             );
 
         $this->compilerPass->process($containerBuilder);

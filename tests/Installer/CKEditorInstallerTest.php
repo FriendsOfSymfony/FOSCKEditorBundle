@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Installer;
+namespace FOS\CKEditorBundle\Tests\Installer;
 
-use Ivory\CKEditorBundle\Installer\CKEditorInstaller;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Installer\CKEditorInstaller;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

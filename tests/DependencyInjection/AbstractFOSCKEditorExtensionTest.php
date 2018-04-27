@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
+namespace FOS\CKEditorBundle\Tests\DependencyInjection;
 
-use Ivory\CKEditorBundle\DependencyInjection\IvoryCKEditorExtension;
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use Ivory\CKEditorBundle\IvoryCKEditorBundle;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
-use Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler\TestContainerPass;
+use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use FOS\CKEditorBundle\FOSCKEditorBundle;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Tests\DependencyInjection\Compiler\TestContainerPass;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -30,7 +30,7 @@ use Symfony\Component\Templating\Helper\CoreAssetsHelper;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
+abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
 {
     /**
      * @var ContainerBuilder
@@ -78,7 +78,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->container->set('request_stack', $this->requestStack);
         $this->container->set('templating', $this->templating);
 
-        $this->container->registerExtension($extension = new IvoryCKEditorExtension());
+        $this->container->registerExtension($extension = new FOSCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());
 
         $toBePublic = [
@@ -90,7 +90,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
             'ivory_ck_editor.toolbar_manager',
         ];
         $this->container->addCompilerPass(new TestContainerPass($toBePublic), PassConfig::TYPE_OPTIMIZE);
-        (new IvoryCKEditorBundle())->build($this->container);
+        (new FOSCKEditorBundle())->build($this->container);
     }
 
     /**
@@ -114,9 +114,9 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->assertFalse($type->isInputSync());
         $this->assertFalse($type->useRequireJs());
         $this->assertFalse($type->hasFilebrowsers());
-        $this->assertSame('bundles/ivoryckeditor/', $type->getBasePath());
-        $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $type->getJsPath());
-        $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $type->getJqueryPath());
+        $this->assertSame('bundles/fosckeditor/', $type->getBasePath());
+        $this->assertSame('bundles/fosckeditor/ckeditor.js', $type->getJsPath());
+        $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $type->getJqueryPath());
         $this->assertSame($this->container->get('ivory_ck_editor.config_manager'), $type->getConfigManager());
         $this->assertSame($this->container->get('ivory_ck_editor.plugin_manager'), $type->getPluginManager());
         $this->assertSame($this->container->get('ivory_ck_editor.styles_set_manager'), $type->getStylesSetManager());
@@ -394,7 +394,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\DependencyInjectionException
+     * @expectedException \FOS\CKEditorBundle\Exception\DependencyInjectionException
      * @expectedExceptionMessage The default config "bar" does not exist.
      */
     public function testInvalidDefaultConfig()

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\DependencyInjection;
+namespace FOS\CKEditorBundle\Tests\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class YamlIvoryCKEditorExtensionTest extends AbstractIvoryCKEditorExtensionTest
+class YamlFOSCKEditorExtensionTest extends AbstractFOSCKEditorExtensionTest
 {
     /**
      * {@inheritdoc}

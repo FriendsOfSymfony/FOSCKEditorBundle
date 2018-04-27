@@ -15,7 +15,7 @@ CKEditor is located. For that, you can use the following snippet:
 
     {
         paths: {
-            'ckeditor': '{{ asset("bundles/ivoryckeditor/ckeditor") }}'
+            'ckeditor': '{{ asset("bundles/fosckeditor/ckeditor") }}'
         },
         shim: {
             'ckeditor': {

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\DependencyInjection\Compiler;
+namespace FOS\CKEditorBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,7 +28,7 @@ class ResourceCompilerPass implements CompilerPassInterface
             $container->setParameter(
                 $parameter,
                 array_merge(
-                    ['IvoryCKEditorBundle:Form'],
+                    ['FOSCKEditorBundle:Form'],
                     $container->getParameter($parameter)
                 )
             );
@@ -38,7 +38,7 @@ class ResourceCompilerPass implements CompilerPassInterface
             $container->setParameter(
                 $parameter,
                 array_merge(
-                    ['@IvoryCKEditor/Form/ckeditor_widget.html.twig'],
+                    ['@FOSCKEditor/Form/ckeditor_widget.html.twig'],
                     $container->getParameter($parameter)
                 )
             );

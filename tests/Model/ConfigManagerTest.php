@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Model;
+namespace FOS\CKEditorBundle\Tests\Model;
 
-use Ivory\CKEditorBundle\Model\ConfigManager;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Model\ConfigManager;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -78,7 +78,7 @@ class ConfigManagerTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\ConfigManagerException
+     * @expectedException \FOS\CKEditorBundle\Exception\ConfigManagerException
      * @expectedExceptionMessage The CKEditor config "foo" does not exist.
      */
     public function testDefaultConfigWithInvalidValue()
@@ -87,7 +87,7 @@ class ConfigManagerTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\ConfigManagerException
+     * @expectedException \FOS\CKEditorBundle\Exception\ConfigManagerException
      * @expectedExceptionMessage The CKEditor config "foo" does not exist.
      */
     public function testGetConfigWithInvalidName()
@@ -96,7 +96,7 @@ class ConfigManagerTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\ConfigManagerException
+     * @expectedException \FOS\CKEditorBundle\Exception\ConfigManagerException
      * @expectedExceptionMessage The CKEditor config "foo" does not exist.
      */
     public function testMergeConfigWithInvalidName()

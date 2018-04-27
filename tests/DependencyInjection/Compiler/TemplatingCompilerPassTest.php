@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
+namespace FOS\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
