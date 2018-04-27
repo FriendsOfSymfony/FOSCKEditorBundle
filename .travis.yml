@@ -10,7 +10,6 @@ env:
     global:
         - PHPUNIT_FLAGS="-v --exclude-group installation"
         - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
-        -  WAIT=false
 
 matrix:
     fast_finish: true
@@ -25,8 +24,7 @@ matrix:
         - php: 7.0
         - php: 7.1
         - php: 7.2
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --debug --coverage-clover build/clover.xml"
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover build/clover.xml"
+          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover build/clover.xml  --exclude-group installation"
 
           # Test LTS versions. This makes sure we do not use Symfony packages with version greater
           # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
