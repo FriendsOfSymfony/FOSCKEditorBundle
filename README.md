@@ -8,13 +8,13 @@ FOSCKEditorBundle
 Introduction
 ------------
 
-The bundle provides a [CKEditor](http://ckeditor.com/) integration for your Symfony Project. It automatically registers
+The bundle provides a [CKEditor](https://ckeditor.com/) integration for your Symfony Project. It automatically registers
 the new `ckeditor` form type which can be easily as well as highly configured.
 
 Documentation
 -------------
 
-Please, read the [official documentation](http://symfony.com/doc/master/bundles/FOSCKEditorBundle/index.html).
+Please, read the [official documentation](https://symfony.com/doc/master/bundles/FOSCKEditorBundle/index.html).
 
 License
 -------
@@ -25,7 +25,7 @@ This bundle is released under the MIT license. See the included
 ## Testing
 ----------
 
-The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**. To
+The bundle is fully unit tested by [PHPUnit](https://www.phpunit.de/) with a code coverage close to **100%**. To
 execute the test suite, check the travis [configuration](/.travis.yml).
 
 ## Contribute
