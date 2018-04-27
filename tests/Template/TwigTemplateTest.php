@@ -19,12 +19,12 @@ use Ivory\CKEditorBundle\Twig\CKEditorExtension;
 class TwigTemplateTest extends AbstractTemplateTest
 {
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     private $twig;
 
     /**
-     * @var \Twig_Template
+     * @var \Twig\Template
      */
     private $template;
 
