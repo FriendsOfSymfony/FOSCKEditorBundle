@@ -22,22 +22,26 @@ class JsonBuilderTest extends AbstractTestCase
     {
         $this->jsonBuilder = new JsonBuilder();
     }
+
     public function testDefaultState()
     {
         $this->assertDefaultState();
     }
+
     public function testValues()
     {
         $this->jsonBuilder->setValues(['foo' => 'bar']);
         $this->assertTrue($this->jsonBuilder->hasValues());
         $this->assertSame(['[foo]' => 'bar'], $this->jsonBuilder->getValues());
     }
+
     public function testValueWithEscape()
     {
         $this->jsonBuilder->setValue('[foo]', 'bar');
         $this->assertTrue($this->jsonBuilder->hasValues());
         $this->assertSame(['[foo]' => 'bar'], $this->jsonBuilder->getValues());
     }
+
     public function testValueWithoutEscape()
     {
         $this->jsonBuilder->setValue('[foo]', 'bar', false);
@@ -46,6 +50,7 @@ class JsonBuilderTest extends AbstractTestCase
         $this->assertArrayHasKey('[foo]', $values);
         $this->assertNotSame('bar', $values['[foo]']);
     }
+
     public function testRemoveValue()
     {
         $this->jsonBuilder
@@ -53,6 +58,7 @@ class JsonBuilderTest extends AbstractTestCase
             ->removeValue('[foo]');
         $this->assertFalse($this->jsonBuilder->hasValues());
     }
+
     public function testReset()
     {
         $this->jsonBuilder
@@ -60,16 +66,19 @@ class JsonBuilderTest extends AbstractTestCase
             ->reset();
         $this->assertDefaultState();
     }
+
     public function testBuildWithoutValues()
     {
         $this->assertSame('[]', $this->jsonBuilder->build());
     }
+
     public function testBuildWithJsonEncodeOptions()
     {
         $this->jsonBuilder->setJsonEncodeOptions(JSON_FORCE_OBJECT);
         $this->assertSame(JSON_FORCE_OBJECT, $this->jsonBuilder->getJsonEncodeOptions());
         $this->assertSame('{}', $this->jsonBuilder->build());
     }
+
     /**
      * @param string $expected
      * @param array  $values
@@ -80,6 +89,7 @@ class JsonBuilderTest extends AbstractTestCase
     {
         $this->assertSame($expected, $this->jsonBuilder->setValues($values)->build());
     }
+
     /**
      * @param string $expected
      * @param array  $values
@@ -93,6 +103,7 @@ class JsonBuilderTest extends AbstractTestCase
         }
         $this->assertSame($expected, $this->jsonBuilder->build());
     }
+
     /**
      * @return array
      */
@@ -112,6 +123,7 @@ class JsonBuilderTest extends AbstractTestCase
             ['{"foo":"bar","baz":["bat","ban"]}', ['foo' => 'bar', 'baz' => ['bat', 'ban']]],
         ];
     }
+
     /**
      * @return array
      */
@@ -129,7 +141,7 @@ class JsonBuilderTest extends AbstractTestCase
                 '[0][0]' => ['value' => 'foo', 'escape' => false],
                 '[0][1]' => ['value' => 'bar', 'escape' => true],
                 '[1][0]' => ['value' => 'baz', 'escape' => false],
-                '[2]'    => ['value' => 'bat', 'escape' => false],
+                '[2]' => ['value' => 'bat', 'escape' => false],
             ]],
             // Objects
             ['{"foo":bar}', ['[foo]' => ['value' => 'bar', 'escape' => false]]],
@@ -139,23 +151,24 @@ class JsonBuilderTest extends AbstractTestCase
                 '[ban]' => ['value' => 'boo', 'escape' => false],
             ]],
             ['{"foo":"bar","baz":{"bat":ban}}', [
-                '[foo]'      => ['value' => 'bar', 'escape' => true],
+                '[foo]' => ['value' => 'bar', 'escape' => true],
                 '[baz][bat]' => ['value' => 'ban', 'escape' => false],
             ]],
             // Mixed
             ['["foo",{"bar":baz},bat,"ban"]', [
-                '[0]'      => ['value' => 'foo', 'escape' => true],
+                '[0]' => ['value' => 'foo', 'escape' => true],
                 '[1][bar]' => ['value' => 'baz', 'escape' => false],
-                '[2]'      => ['value' => 'bat', 'escape' => false],
-                '[3]'      => ['value' => 'ban', 'escape' => true],
+                '[2]' => ['value' => 'bat', 'escape' => false],
+                '[3]' => ['value' => 'ban', 'escape' => true],
             ]],
             ['{"foo":bar,"baz":[bat,"ban"]}', [
-                '[foo]'    => ['value' => 'bar', 'escape' => false],
+                '[foo]' => ['value' => 'bar', 'escape' => false],
                 '[baz][0]' => ['value' => 'bat', 'escape' => false],
                 '[baz][1]' => ['value' => 'ban', 'escape' => true],
             ]],
         ];
     }
+
     private function assertDefaultState()
     {
         $this->assertSame(0, $this->jsonBuilder->getJsonEncodeOptions());

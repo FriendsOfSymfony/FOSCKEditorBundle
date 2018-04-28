@@ -104,14 +104,14 @@ class CKEditorRendererTest extends AbstractTestCase
         $container->expects($this->exactly(5))
             ->method('get')
             ->withConsecutive(
-                ['fos_ck_editor.renderer.json_builder'],
+                ['ivory_ck_editor.renderer.json_builder'],
                 ['router'],
                 ['assets.packages'],
                 ['request_stack'],
                 ['templating']
             )
             ->willReturnMap([
-                ['fos_ck_editor.renderer.json_builder', new JsonBuilder()],
+                ['ivory_ck_editor.renderer.json_builder', new JsonBuilder()],
                 ['router', $this->router],
                 ['assets.packages', $this->packages],
                 ['request_stack', $this->requestStack],
