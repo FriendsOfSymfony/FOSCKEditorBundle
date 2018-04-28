@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Renderer;
+namespace FOS\CKEditorBundle\Renderer;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

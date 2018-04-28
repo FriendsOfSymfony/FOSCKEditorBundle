@@ -21,7 +21,7 @@ assets installation).
                 "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
                 "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
                 "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-                "Ivory\\CKEditorBundle\\Composer\\CKEditorScriptHandler::install",
+                "FOS\\CKEditorBundle\\Composer\\CKEditorScriptHandler::install",
                 "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
                 "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
                 "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"

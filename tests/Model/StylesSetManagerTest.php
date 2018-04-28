@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Model;
+namespace FOS\CKEditorBundle\Tests\Model;
 
-use Ivory\CKEditorBundle\Model\StylesSetManager;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Model\StylesSetManager;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -71,7 +71,7 @@ class StylesSetManagerTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\StylesSetManagerException
+     * @expectedException \FOS\CKEditorBundle\Exception\StylesSetManagerException
      * @expectedExceptionMessage The CKEditor styles set "foo" does not exist.
      */
     public function testGetStylesSetWithInvalidValue()

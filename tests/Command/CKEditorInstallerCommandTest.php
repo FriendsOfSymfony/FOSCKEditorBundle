@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Command;
+namespace FOS\CKEditorBundle\Tests\Command;
 
-use Ivory\CKEditorBundle\Command\CKEditorInstallerCommand;
-use Ivory\CKEditorBundle\Installer\CKEditorInstaller;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Command\CKEditorInstallerCommand;
+use FOS\CKEditorBundle\Installer\CKEditorInstaller;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

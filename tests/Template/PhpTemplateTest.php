@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Template;
+namespace FOS\CKEditorBundle\Tests\Template;
 
-use Ivory\CKEditorBundle\Templating\CKEditorHelper;
+use FOS\CKEditorBundle\Templating\CKEditorHelper;
 use Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper;
 use Symfony\Component\Templating\Helper\SlotsHelper;
 use Symfony\Component\Templating\Loader\FilesystemLoader;

@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-use Ivory\CKEditorBundle\Command\CKEditorInstallerCommand;
+use FOS\CKEditorBundle\Command\CKEditorInstallerCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 

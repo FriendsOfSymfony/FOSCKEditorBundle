@@ -22,7 +22,7 @@ Then, update your ``app/AppKernel.php``:
         public function registerBundles()
         {
             $bundles = array(
-                new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+                new FOS\CKEditorBundle\FOSCKEditorBundle(),
                 // ...
             );
 

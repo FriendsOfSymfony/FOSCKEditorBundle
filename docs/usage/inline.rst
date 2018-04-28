@@ -8,7 +8,7 @@ By default, the bundle uses a `Classic Editing`_ which relies on
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fos_ck_editor:
         inline: true
 
 Or you can configure it in your widget:

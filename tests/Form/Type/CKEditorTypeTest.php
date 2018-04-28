@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Form\Type;
+namespace FOS\CKEditorBundle\Tests\Form\Type;
 
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use Ivory\CKEditorBundle\Model\ConfigManagerInterface;
-use Ivory\CKEditorBundle\Model\PluginManagerInterface;
-use Ivory\CKEditorBundle\Model\StylesSetManagerInterface;
-use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
-use Ivory\CKEditorBundle\Model\ToolbarManagerInterface;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use FOS\CKEditorBundle\Model\ConfigManagerInterface;
+use FOS\CKEditorBundle\Model\PluginManagerInterface;
+use FOS\CKEditorBundle\Model\StylesSetManagerInterface;
+use FOS\CKEditorBundle\Model\TemplateManagerInterface;
+use FOS\CKEditorBundle\Model\ToolbarManagerInterface;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
@@ -104,9 +104,9 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertFalse($this->ckEditorType->isInputSync());
         $this->assertFalse($this->ckEditorType->useRequireJs());
         $this->assertFalse($this->ckEditorType->hasFilebrowsers());
-        $this->assertSame('bundles/ivoryckeditor/', $this->ckEditorType->getBasePath());
-        $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
-        $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $this->ckEditorType->getJqueryPath());
+        $this->assertSame('bundles/fosckeditor/', $this->ckEditorType->getBasePath());
+        $this->assertSame('bundles/fosckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
+        $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $this->ckEditorType->getJqueryPath());
         $this->assertSame($this->configManager, $this->ckEditorType->getConfigManager());
         $this->assertSame($this->pluginManager, $this->ckEditorType->getPluginManager());
         $this->assertSame($this->stylesSetManager, $this->ckEditorType->getStylesSetManager());
@@ -422,10 +422,10 @@ class CKEditorTypeTest extends AbstractTestCase
         $view = $form->createView();
 
         $this->assertArrayHasKey('base_path', $view->vars);
-        $this->assertSame('bundles/ivoryckeditor/', $view->vars['base_path']);
+        $this->assertSame('bundles/fosckeditor/', $view->vars['base_path']);
 
         $this->assertArrayHasKey('js_path', $view->vars);
-        $this->assertSame('bundles/ivoryckeditor/ckeditor.js', $view->vars['js_path']);
+        $this->assertSame('bundles/fosckeditor/ckeditor.js', $view->vars['js_path']);
     }
 
     public function testBaseAndJsPathWithConfiguredValues()
@@ -468,7 +468,7 @@ class CKEditorTypeTest extends AbstractTestCase
         $view = $form->createView();
 
         $this->assertArrayHasKey('jquery_path', $view->vars);
-        $this->assertSame('bundles/ivoryckeditor/adapters/jquery.js', $view->vars['jquery_path']);
+        $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $view->vars['jquery_path']);
     }
 
     public function testJqueryPathWithConfiguredValue()

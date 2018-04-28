@@ -9,7 +9,7 @@ parent widget (textarea), you can disable it globally in your configuration:
 .. code-block:: yaml
 
     # app/config/config_test.yml
-    ivory_ck_editor:
+    fos_ck_editor:
         enable: false
 
 Or you can disable it in your widget:

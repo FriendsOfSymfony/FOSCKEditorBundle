@@ -5,8 +5,8 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="ivory_ck_editor.renderer" class="Ivory\CKEditorBundle\Renderer\CKEditorRenderer">
-            <argument type="service" id="ivory_ck_editor.renderer.json_builder"/>
+        <service id="fos_ck_editor.renderer" class="FOS\CKEditorBundle\Renderer\CKEditorRenderer">
+            <argument type="service" id="fos_ck_editor.renderer.json_builder"/>
             <argument type="service" id="router"/>
             <argument type="service" id="assets.packages" on-invalid="null"/>
             <argument type="service" id="request_stack"/>
@@ -14,7 +14,7 @@
             <argument type="expression">container.hasParameter('locale') ? parameter('locale') : null</argument>
         </service>
 
-        <service id="ivory_ck_editor.renderer.json_builder" class="Ivory\JsonBuilder\JsonBuilder">
+        <service id="fos_ck_editor.renderer.json_builder" class="FOS\JsonBuilder\JsonBuilder">
             <argument type="service" id="property_accessor" on-invalid="null" />
         </service>
     </services>

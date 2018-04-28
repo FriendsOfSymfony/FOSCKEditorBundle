@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Model;
+namespace FOS\CKEditorBundle\Tests\Model;
 
-use Ivory\CKEditorBundle\Model\PluginManager;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Model\PluginManager;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -71,7 +71,7 @@ class PluginManagerTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\PluginManagerException
+     * @expectedException \FOS\CKEditorBundle\Exception\PluginManagerException
      * @expectedExceptionMessage The CKEditor plugin "foo" does not exist.
      */
     public function testGetPluginWithInvalidValue()

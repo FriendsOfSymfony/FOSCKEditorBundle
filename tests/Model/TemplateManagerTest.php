@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Model;
+namespace FOS\CKEditorBundle\Tests\Model;
 
-use Ivory\CKEditorBundle\Model\TemplateManager;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Model\TemplateManager;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -81,7 +81,7 @@ class TemplateManagerTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \Ivory\CKEditorBundle\Exception\TemplateManagerException
+     * @expectedException \FOS\CKEditorBundle\Exception\TemplateManagerException
      * @expectedExceptionMessage The CKEditor template "foo" does not exist.
      */
     public function testGetTemplateWithInvalidValue()

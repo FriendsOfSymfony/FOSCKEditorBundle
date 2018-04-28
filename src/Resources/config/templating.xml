@@ -5,8 +5,8 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="ivory_ck_editor.templating.helper" class="Ivory\CKEditorBundle\Templating\CKEditorHelper">
-            <argument type="service" id="ivory_ck_editor.renderer" />
+        <service id="fos_ck_editor.templating.helper" class="FOS\CKEditorBundle\Templating\CKEditorHelper">
+            <argument type="service" id="fos_ck_editor.renderer" />
             <tag name="templating.helper" alias="ivory_ckeditor" />
         </service>
     </services>

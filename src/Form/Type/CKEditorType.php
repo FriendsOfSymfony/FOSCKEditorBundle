@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Form\Type;
+namespace FOS\CKEditorBundle\Form\Type;
 
-use Ivory\CKEditorBundle\Model\ConfigManagerInterface;
-use Ivory\CKEditorBundle\Model\PluginManagerInterface;
-use Ivory\CKEditorBundle\Model\StylesSetManagerInterface;
-use Ivory\CKEditorBundle\Model\TemplateManagerInterface;
-use Ivory\CKEditorBundle\Model\ToolbarManagerInterface;
+use FOS\CKEditorBundle\Model\ConfigManagerInterface;
+use FOS\CKEditorBundle\Model\PluginManagerInterface;
+use FOS\CKEditorBundle\Model\StylesSetManagerInterface;
+use FOS\CKEditorBundle\Model\TemplateManagerInterface;
+use FOS\CKEditorBundle\Model\ToolbarManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -77,17 +77,17 @@ class CKEditorType extends AbstractType
     /**
      * @var string
      */
-    private $basePath = 'bundles/ivoryckeditor/';
+    private $basePath = 'bundles/fosckeditor/';
 
     /**
      * @var string
      */
-    private $jsPath = 'bundles/ivoryckeditor/ckeditor.js';
+    private $jsPath = 'bundles/fosckeditor/ckeditor.js';
 
     /**
      * @var string
      */
-    private $jqueryPath = 'bundles/ivoryckeditor/adapters/jquery.js';
+    private $jqueryPath = 'bundles/fosckeditor/adapters/jquery.js';
 
     /**
      * @var ConfigManagerInterface
@@ -460,7 +460,7 @@ class CKEditorType extends AbstractType
         $config = $options['config'];
 
         if ($options['config_name'] === null) {
-            $options['config_name'] = uniqid('ivory', true);
+            $options['config_name'] = uniqid('fos', true);
             $configManager->setConfig($options['config_name'], $config);
         } else {
             $configManager->mergeConfig($options['config_name'], $config);

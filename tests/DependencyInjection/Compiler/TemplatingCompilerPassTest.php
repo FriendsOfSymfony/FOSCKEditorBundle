@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\DependencyInjection\Compiler;
+namespace FOS\CKEditorBundle\Tests\DependencyInjection\Compiler;
 
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -47,7 +47,7 @@ class TemplatingCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->once())
             ->method('removeDefinition')
-            ->with($this->identicalTo('ivory_ck_editor.templating.helper'));
+            ->with($this->identicalTo('fos_ck_editor.templating.helper'));
 
         $this->compilerPass->process($containerBuilder);
     }
@@ -66,7 +66,7 @@ class TemplatingCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->once())
             ->method('removeDefinition')
-            ->with($this->identicalTo('ivory_ck_editor.twig_extension'));
+            ->with($this->identicalTo('fos_ck_editor.twig_extension'));
 
         $this->compilerPass->process($containerBuilder);
     }

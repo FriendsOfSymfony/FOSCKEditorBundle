@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests\Renderer;
+namespace FOS\CKEditorBundle\Tests\Renderer;
 
-use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
-use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
+use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -104,14 +104,14 @@ class CKEditorRendererTest extends AbstractTestCase
         $container->expects($this->exactly(5))
             ->method('get')
             ->withConsecutive(
-                ['ivory_ck_editor.renderer.json_builder'],
+                ['fos_ck_editor.renderer.json_builder'],
                 ['router'],
                 ['assets.packages'],
                 ['request_stack'],
                 ['templating']
             )
             ->willReturnMap([
-                ['ivory_ck_editor.renderer.json_builder', new JsonBuilder()],
+                ['fos_ck_editor.renderer.json_builder', new JsonBuilder()],
                 ['router', $this->router],
                 ['assets.packages', $this->packages],
                 ['request_stack', $this->requestStack],

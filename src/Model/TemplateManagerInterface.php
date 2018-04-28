@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Model;
+namespace FOS\CKEditorBundle\Model;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

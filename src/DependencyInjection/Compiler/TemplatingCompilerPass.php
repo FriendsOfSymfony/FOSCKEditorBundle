@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\DependencyInjection\Compiler;
+namespace FOS\CKEditorBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,11 +25,11 @@ class TemplatingCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('templating.engine.php')) {
-            $container->removeDefinition('ivory_ck_editor.templating.helper');
+            $container->removeDefinition('fos_ck_editor.templating.helper');
         }
 
         if (!$container->hasDefinition('twig')) {
-            $container->removeDefinition('ivory_ck_editor.twig_extension');
+            $container->removeDefinition('fos_ck_editor.twig_extension');
         }
     }
 }

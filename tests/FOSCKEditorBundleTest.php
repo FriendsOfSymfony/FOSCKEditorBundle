@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Ivory\CKEditorBundle\Tests;
+namespace FOS\CKEditorBundle\Tests;
 
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
-use Ivory\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
-use Ivory\CKEditorBundle\IvoryCKEditorBundle;
+use FOS\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
+use FOS\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
+use FOS\CKEditorBundle\FOSCKEditorBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -21,10 +21,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-class IvoryCKEditorBundleTest extends AbstractTestCase
+class FOSCKEditorBundleTest extends AbstractTestCase
 {
     /**
-     * @var IvoryCKEditorBundle
+     * @var FOSCKEditorBundle
      */
     private $bundle;
 
@@ -33,7 +33,7 @@ class IvoryCKEditorBundleTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->bundle = new IvoryCKEditorBundle();
+        $this->bundle = new FOSCKEditorBundle();
     }
 
     public function testBundle()

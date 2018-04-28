@@ -15,7 +15,7 @@ CKEditor is located. For that, you can use the following snippet:
 
     {
         paths: {
-            'ckeditor': '{{ asset("bundles/ivoryckeditor/ckeditor") }}'
+            'ckeditor': '{{ asset("bundles/fosckeditor/ckeditor") }}'
         },
         shim: {
             'ckeditor': {
@@ -34,7 +34,7 @@ configure it globally in you configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fos_ck_editor:
         require_js: true
 
 Or you can configure it in your widget:
