@@ -10,7 +10,7 @@ globally in your configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         input_sync: true
 
 Or you can do it in your widget:

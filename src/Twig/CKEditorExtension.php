@@ -11,9 +11,9 @@
 
 namespace FOS\CKEditorBundle\Twig;
 
+use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

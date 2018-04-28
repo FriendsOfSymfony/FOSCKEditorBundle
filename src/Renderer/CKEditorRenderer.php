@@ -67,7 +67,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     {
         if ($containerOrJsonBuilder instanceof ContainerInterface) {
             @trigger_error(sprintf('Passing a %s as %s first argument is deprecated since FOSCKEditor 6.1, and will be removed in 7.0. Use %s instead.', ContainerInterface::class, __METHOD__, JsonBuilder::class), E_USER_DEPRECATED);
-            $jsonBuilder = $containerOrJsonBuilder->get('ivory_ck_editor.renderer.json_builder');
+            $jsonBuilder = $containerOrJsonBuilder->get('fosck_editor.renderer.json_builder');
             $router = $containerOrJsonBuilder->get('router');
             $packages = $containerOrJsonBuilder->get('assets.packages');
             $requestStack = $containerOrJsonBuilder->get('request_stack');

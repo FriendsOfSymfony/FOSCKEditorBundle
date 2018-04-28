@@ -16,7 +16,7 @@ your configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         jquery: true
 
 Or you can do it in your widget:
@@ -35,7 +35,7 @@ your own, you can configure it globally in your configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         jquery_path: your/own/jquery.js
 
 Or you can configure it in your widget:

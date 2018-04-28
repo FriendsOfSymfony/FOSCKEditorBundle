@@ -5,19 +5,19 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="ivory_ck_editor.form.type" class="FOS\CKEditorBundle\Form\Type\CKEditorType">
-            <argument type="service" id="ivory_ck_editor.config_manager" />
-            <argument type="service" id="ivory_ck_editor.plugin_manager" />
-            <argument type="service" id="ivory_ck_editor.styles_set_manager" />
-            <argument type="service" id="ivory_ck_editor.template_manager" />
-            <argument type="service" id="ivory_ck_editor.toolbar_manager" />
+        <service id="fosck_editor.form.type" class="FOS\CKEditorBundle\Form\Type\CKEditorType">
+            <argument type="service" id="fosck_editor.config_manager" />
+            <argument type="service" id="fosck_editor.plugin_manager" />
+            <argument type="service" id="fosck_editor.styles_set_manager" />
+            <argument type="service" id="fosck_editor.template_manager" />
+            <argument type="service" id="fosck_editor.toolbar_manager" />
             <tag name="form.type" />
         </service>
 
-        <service id="ivory_ck_editor.config_manager" class="FOS\CKEditorBundle\Model\ConfigManager" />
-        <service id="ivory_ck_editor.plugin_manager" class="FOS\CKEditorBundle\Model\PluginManager" />
-        <service id="ivory_ck_editor.styles_set_manager" class="FOS\CKEditorBundle\Model\StylesSetManager" />
-        <service id="ivory_ck_editor.template_manager" class="FOS\CKEditorBundle\Model\TemplateManager" />
-        <service id="ivory_ck_editor.toolbar_manager" class="FOS\CKEditorBundle\Model\ToolbarManager" />
+        <service id="fosck_editor.config_manager" class="FOS\CKEditorBundle\Model\ConfigManager" />
+        <service id="fosck_editor.plugin_manager" class="FOS\CKEditorBundle\Model\PluginManager" />
+        <service id="fosck_editor.styles_set_manager" class="FOS\CKEditorBundle\Model\StylesSetManager" />
+        <service id="fosck_editor.template_manager" class="FOS\CKEditorBundle\Model\TemplateManager" />
+        <service id="fosck_editor.toolbar_manager" class="FOS\CKEditorBundle\Model\ToolbarManager" />
     </services>
 </container>

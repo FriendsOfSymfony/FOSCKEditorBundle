@@ -16,7 +16,7 @@ Define a configuration
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         configs:
             my_config:
                 toolbar: [ ["Source", "-", "Save"], "/", ["Anchor"], "/", ["Maximize"] ]
@@ -69,7 +69,7 @@ node:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         default_config: my_config
         configs:
             my_config:

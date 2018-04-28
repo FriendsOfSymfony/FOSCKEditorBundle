@@ -19,7 +19,7 @@ Then, to use your skin, just need to register it globally in your configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         default_config: my_config
         configs:
             my_config:

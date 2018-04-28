@@ -20,7 +20,7 @@ configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         configs:
             my_config:
                 language: fr

@@ -12,7 +12,7 @@ easily switch the toolbar configuration by using the ``full``, ``standard`` or
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         configs:
             my_config:
                 toolbar: full
@@ -38,7 +38,7 @@ only available in your configuration.
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         configs:
             my_config_1:
                 toolbar: "my_toolbar_1"
@@ -68,7 +68,7 @@ by prefixing them with a ``@``.
 
 .. code-block:: yaml
 
-    ivory_ck_editor:
+    fosck_editor:
         configs:
             my_config_1:
                 toolbar: "my_toolbar_1"
@@ -92,7 +92,7 @@ you want to just override one part of a configuration, just override it:
 
 .. code-block:: yaml
 
-    ivory_ck_editor:
+    fosck_editor:
         configs:
             my_config:
                 toolbar: "full"

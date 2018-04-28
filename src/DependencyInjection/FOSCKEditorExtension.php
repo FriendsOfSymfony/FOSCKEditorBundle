@@ -41,7 +41,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
         }
 
         if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
-            $container->getDefinition('ivory_ck_editor.form.type')
+            $container->getDefinition('fosck_editor.form.type')
                 ->clearTag('form.type')
                 ->addTag('form.type', ['alias' => 'ckeditor']);
         }
@@ -74,7 +74,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
      */
     private function registerConfig(array $config, ContainerBuilder $container)
     {
-        $formType = $container->getDefinition('ivory_ck_editor.form.type');
+        $formType = $container->getDefinition('fosck_editor.form.type');
 
         if (isset($config['enable'])) {
             $formType->addMethodCall('isEnable', [$config['enable']]);
@@ -133,7 +133,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
             return;
         }
 
-        $definition = $container->getDefinition('ivory_ck_editor.config_manager');
+        $definition = $container->getDefinition('fosck_editor.config_manager');
         $definition->addMethodCall('setConfigs', [$config['configs']]);
 
         if (!isset($config['default_config']) && !empty($config['configs'])) {
@@ -158,7 +158,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
     {
         if (!empty($config['plugins'])) {
             $container
-                ->getDefinition('ivory_ck_editor.plugin_manager')
+                ->getDefinition('fosck_editor.plugin_manager')
                 ->addMethodCall('setPlugins', [$config['plugins']]);
         }
     }
@@ -182,7 +182,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
         }
 
         $container
-            ->getDefinition('ivory_ck_editor.styles_set_manager')
+            ->getDefinition('fosck_editor.styles_set_manager')
             ->addMethodCall('setStylesSets', [$stylesSets]);
     }
 
@@ -194,7 +194,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
     {
         if (!empty($config['templates'])) {
             $container
-                ->getDefinition('ivory_ck_editor.template_manager')
+                ->getDefinition('fosck_editor.template_manager')
                 ->addMethodCall('setTemplates', [$config['templates']]);
         }
     }
@@ -205,7 +205,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
      */
     private function registerToolbars(array $config, ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('ivory_ck_editor.toolbar_manager');
+        $definition = $container->getDefinition('fosck_editor.toolbar_manager');
 
         if (!empty($config['toolbars']['items'])) {
             $definition->addMethodCall('setItems', [$config['toolbars']['items']]);
@@ -224,7 +224,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
     {
         if (!empty($config['filebrowsers'])) {
             $container
-                ->getDefinition('ivory_ck_editor.form.type')
+                ->getDefinition('fosck_editor.form.type')
                 ->addMethodCall('setFilebrowsers', [$config['filebrowsers']]);
         }
     }

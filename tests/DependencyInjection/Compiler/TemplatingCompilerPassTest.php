@@ -47,7 +47,7 @@ class TemplatingCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->once())
             ->method('removeDefinition')
-            ->with($this->identicalTo('ivory_ck_editor.templating.helper'));
+            ->with($this->identicalTo('fosck_editor.templating.helper'));
 
         $this->compilerPass->process($containerBuilder);
     }
@@ -66,7 +66,7 @@ class TemplatingCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->once())
             ->method('removeDefinition')
-            ->with($this->identicalTo('ivory_ck_editor.twig_extension'));
+            ->with($this->identicalTo('fosck_editor.twig_extension'));
 
         $this->compilerPass->process($containerBuilder);
     }

@@ -24,7 +24,7 @@ in your configuration or in your widget:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         base_path: "ckeditor"
         js_path:   "ckeditor/ckeditor.js"
 

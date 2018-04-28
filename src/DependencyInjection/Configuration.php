@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = $this->createTreeBuilder();
         $treeBuilder
-            ->root('ivory_ck_editor')
+            ->root('fos`_ck_editor')
             ->children()
                 ->booleanNode('enable')->end()
                 ->booleanNode('async')->end()

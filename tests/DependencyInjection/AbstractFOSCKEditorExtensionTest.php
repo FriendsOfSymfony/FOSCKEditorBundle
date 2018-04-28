@@ -82,12 +82,12 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->container->loadFromExtension($extension->getAlias());
 
         $toBePublic = [
-            'ivory_ck_editor.template_manager',
-            'ivory_ck_editor.form.type',
-            'ivory_ck_editor.config_manager',
-            'ivory_ck_editor.plugin_manager',
-            'ivory_ck_editor.styles_set_manager',
-            'ivory_ck_editor.toolbar_manager',
+            'fosck_editor.template_manager',
+            'fosck_editor.form.type',
+            'fosck_editor.config_manager',
+            'fosck_editor.plugin_manager',
+            'fosck_editor.styles_set_manager',
+            'fosck_editor.toolbar_manager',
         ];
         $this->container->addCompilerPass(new TestContainerPass($toBePublic), PassConfig::TYPE_OPTIMIZE);
         (new FOSCKEditorBundle())->build($this->container);
@@ -103,7 +103,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     {
         $this->container->compile();
 
-        $type = $this->container->get('ivory_ck_editor.form.type');
+        $type = $this->container->get('fosck_editor.form.type');
 
         $this->assertInstanceOf(CKEditorType::class, $type);
         $this->assertTrue($type->isEnable());
@@ -117,17 +117,17 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame('bundles/fosckeditor/', $type->getBasePath());
         $this->assertSame('bundles/fosckeditor/ckeditor.js', $type->getJsPath());
         $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $type->getJqueryPath());
-        $this->assertSame($this->container->get('ivory_ck_editor.config_manager'), $type->getConfigManager());
-        $this->assertSame($this->container->get('ivory_ck_editor.plugin_manager'), $type->getPluginManager());
-        $this->assertSame($this->container->get('ivory_ck_editor.styles_set_manager'), $type->getStylesSetManager());
-        $this->assertSame($this->container->get('ivory_ck_editor.template_manager'), $type->getTemplateManager());
+        $this->assertSame($this->container->get('fosck_editor.config_manager'), $type->getConfigManager());
+        $this->assertSame($this->container->get('fosck_editor.plugin_manager'), $type->getPluginManager());
+        $this->assertSame($this->container->get('fosck_editor.styles_set_manager'), $type->getStylesSetManager());
+        $this->assertSame($this->container->get('fosck_editor.template_manager'), $type->getTemplateManager());
     }
 
     public function testFormTag()
     {
         $this->container->compile();
 
-        $tag = $this->container->getDefinition('ivory_ck_editor.form.type')->getTag('form.type');
+        $tag = $this->container->getDefinition('fosck_editor.form.type')->getTag('form.type');
 
         if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
             $this->assertSame([['alias' => 'ckeditor']], $tag);
@@ -141,7 +141,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'disable');
         $this->container->compile();
 
-        $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isEnable());
+        $this->assertFalse($this->container->get('fosck_editor.form.type')->isEnable());
     }
 
     public function testAsync()
@@ -149,7 +149,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'async');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->isAsync());
+        $this->assertTrue($this->container->get('fosck_editor.form.type')->isAsync());
     }
 
     public function testAutoload()
@@ -157,7 +157,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'autoload');
         $this->container->compile();
 
-        $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isAutoload());
+        $this->assertFalse($this->container->get('fosck_editor.form.type')->isAutoload());
     }
 
     public function testAutoInline()
@@ -165,7 +165,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'auto_inline');
         $this->container->compile();
 
-        $this->assertFalse($this->container->get('ivory_ck_editor.form.type')->isAutoInline());
+        $this->assertFalse($this->container->get('fosck_editor.form.type')->isAutoInline());
     }
 
     public function testInline()
@@ -173,7 +173,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'inline');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->isInline());
+        $this->assertTrue($this->container->get('fosck_editor.form.type')->isInline());
     }
 
     public function testInputSync()
@@ -181,7 +181,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'input_sync');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->isInputSync());
+        $this->assertTrue($this->container->get('fosck_editor.form.type')->isInputSync());
     }
 
     public function testRequireJs()
@@ -189,7 +189,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'require_js');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->useRequireJs());
+        $this->assertTrue($this->container->get('fosck_editor.form.type')->useRequireJs());
     }
 
     public function testJquery()
@@ -197,7 +197,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'jquery');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('ivory_ck_editor.form.type')->useJquery());
+        $this->assertTrue($this->container->get('fosck_editor.form.type')->useJquery());
     }
 
     public function testJqueryPath()
@@ -205,7 +205,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'jquery_path');
         $this->container->compile();
 
-        $this->assertSame('foo/jquery.js', $this->container->get('ivory_ck_editor.form.type')->getJqueryPath());
+        $this->assertSame('foo/jquery.js', $this->container->get('fosck_editor.form.type')->getJqueryPath());
     }
 
     public function testCustomPaths()
@@ -213,7 +213,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'custom_paths');
         $this->container->compile();
 
-        $ckEditorType = $this->container->get('ivory_ck_editor.form.type');
+        $ckEditorType = $this->container->get('fosck_editor.form.type');
 
         $this->assertSame('foo/', $ckEditorType->getBasePath());
         $this->assertSame('foo/ckeditor.js', $ckEditorType->getJsPath());
@@ -226,7 +226,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
 
         $this->assertSame(
             ['VideoBrowse', 'VideoUpload'],
-            $this->container->get('ivory_ck_editor.form.type')->getFilebrowsers()
+            $this->container->get('fosck_editor.form.type')->getFilebrowsers()
         );
     }
 
@@ -235,7 +235,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'single_configuration');
         $this->container->compile();
 
-        $configManager = $this->container->get('ivory_ck_editor.config_manager');
+        $configManager = $this->container->get('fosck_editor.config_manager');
 
         $expected = [
             'default' => [
@@ -253,7 +253,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'multiple_configuration');
         $this->container->compile();
 
-        $configManager = $this->container->get('ivory_ck_editor.config_manager');
+        $configManager = $this->container->get('fosck_editor.config_manager');
 
         $expected = [
             'default' => [
@@ -275,7 +275,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'default_configuration');
         $this->container->compile();
 
-        $configManager = $this->container->get('ivory_ck_editor.config_manager');
+        $configManager = $this->container->get('fosck_editor.config_manager');
 
         $expected = [
             'default' => ['uiColor' => '#000000'],
@@ -298,7 +298,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
             ],
         ];
 
-        $this->assertSame($expected, $this->container->get('ivory_ck_editor.plugin_manager')->getPlugins());
+        $this->assertSame($expected, $this->container->get('fosck_editor.plugin_manager')->getPlugins());
     }
 
     public function testStylesSets()
@@ -332,7 +332,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
             ],
         ];
 
-        $this->assertSame($expected, $this->container->get('ivory_ck_editor.styles_set_manager')->getStylesSets());
+        $this->assertSame($expected, $this->container->get('fosck_editor.styles_set_manager')->getStylesSets());
     }
 
     public function testTemplates()
@@ -356,7 +356,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
             ],
         ];
 
-        $this->assertSame($expected, $this->container->get('ivory_ck_editor.template_manager')->getTemplates());
+        $this->assertSame($expected, $this->container->get('fosck_editor.template_manager')->getTemplates());
     }
 
     public function testToolbars()
@@ -364,7 +364,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'toolbars');
         $this->container->compile();
 
-        $toolbarManager = $this->container->get('ivory_ck_editor.toolbar_manager');
+        $toolbarManager = $this->container->get('fosck_editor.toolbar_manager');
 
         $this->assertSame(
             [

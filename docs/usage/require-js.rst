@@ -34,7 +34,7 @@ configure it globally in you configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    ivory_ck_editor:
+    fosck_editor:
         require_js: true
 
 Or you can configure it in your widget:
