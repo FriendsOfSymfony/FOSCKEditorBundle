@@ -1,7 +1,7 @@
 filter:
     excluded_paths:
         - vendor/*
-        - Tests/*
+        - tests/*
 
 checks:
     php:
