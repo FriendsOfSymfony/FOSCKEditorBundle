@@ -422,8 +422,8 @@ class CKEditorRendererTest extends AbstractTestCase
     public function testRenderWidgetWithInputSync()
     {
         $this->assertSame(
-            'var fos_ckeditor_foo = CKEDITOR.replace("foo", []);'."\n".
-            'fos_ckeditor_foo.on(\'change\', function() { fos_ckeditor_foo.updateElement(); });',
+            'var ivory__ckeditor_foo = CKEDITOR.replace("foo", []);'."\n".
+            'ivory__ckeditor_foo.on(\'change\', function() { ivory__ckeditor_foo.updateElement(); });',
             $this->renderer->renderWidget('foo', [], ['input_sync' => true])
         );
     }
