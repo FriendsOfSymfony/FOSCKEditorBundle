@@ -14,7 +14,7 @@
             <argument type="expression">container.hasParameter('locale') ? parameter('locale') : null</argument>
         </service>
 
-        <service id="fox_ck_editor.renderer.json_builder" class="FOS\CKEditorBundle\Builder\JsonBuilder">
+        <service id="fos_ck_editor.renderer.json_builder" class="FOS\CKEditorBundle\Builder\JsonBuilder">
             <argument type="service" id="property_accessor" on-invalid="null" />
         </service>
     </services>
