@@ -12,11 +12,13 @@
 namespace Ivory\CKEditorBundle\Twig;
 
 use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorExtension extends \Twig_Extension implements CKEditorRendererInterface
+class CKEditorExtension extends AbstractExtension implements CKEditorRendererInterface
 {
     /**
      * @var CKEditorRendererInterface
@@ -39,13 +41,13 @@ class CKEditorExtension extends \Twig_Extension implements CKEditorRendererInter
         $options = ['is_safe' => ['html']];
 
         return [
-            new \Twig_SimpleFunction('ckeditor_base_path', [$this, 'renderBasePath'], $options),
-            new \Twig_SimpleFunction('ckeditor_js_path', [$this, 'renderJsPath'], $options),
-            new \Twig_SimpleFunction('ckeditor_widget', [$this, 'renderWidget'], $options),
-            new \Twig_SimpleFunction('ckeditor_destroy', [$this, 'renderDestroy'], $options),
-            new \Twig_SimpleFunction('ckeditor_plugin', [$this, 'renderPlugin'], $options),
-            new \Twig_SimpleFunction('ckeditor_styles_set', [$this, 'renderStylesSet'], $options),
-            new \Twig_SimpleFunction('ckeditor_template', [$this, 'renderTemplate'], $options),
+            new TwigFunction('ckeditor_base_path', [$this, 'renderBasePath'], $options),
+            new TwigFunction('ckeditor_js_path', [$this, 'renderJsPath'], $options),
+            new TwigFunction('ckeditor_widget', [$this, 'renderWidget'], $options),
+            new TwigFunction('ckeditor_destroy', [$this, 'renderDestroy'], $options),
+            new TwigFunction('ckeditor_plugin', [$this, 'renderPlugin'], $options),
+            new TwigFunction('ckeditor_styles_set', [$this, 'renderStylesSet'], $options),
+            new TwigFunction('ckeditor_template', [$this, 'renderTemplate'], $options),
         ];
     }
 

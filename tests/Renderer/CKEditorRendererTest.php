@@ -64,7 +64,7 @@ class CKEditorRendererTest extends AbstractTestCase
     private $templating;
 
     /**
-     * @var \Twig_Environment|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Twig\Environment|\PHPUnit_Framework_MockObject_MockObject
      */
     private $twig;
 
