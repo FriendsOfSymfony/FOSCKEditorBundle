@@ -11,7 +11,7 @@
 
 namespace Ivory\CKEditorBundle\Renderer;
 
-use Ivory\JsonBuilder\JsonBuilder;
+use Ivory\CKEditorBundle\Builder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

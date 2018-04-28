@@ -14,7 +14,7 @@ namespace Ivory\CKEditorBundle\Tests\Renderer;
 use Ivory\CKEditorBundle\Renderer\CKEditorRenderer;
 use Ivory\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
-use Ivory\JsonBuilder\JsonBuilder;
+use Ivory\CKEditorBundle\Builder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
