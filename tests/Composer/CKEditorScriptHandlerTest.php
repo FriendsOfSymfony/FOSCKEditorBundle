@@ -88,7 +88,7 @@ class CKEditorScriptHandlerTest extends AbstractTestCase
             ->expects($this->any())
             ->method('getExtra')
             ->will($this->returnValue([
-                'ckeditor-clear'  => CKEditorInstaller::CLEAR_DROP,
+                'ckeditor-clear' => CKEditorInstaller::CLEAR_DROP,
                 'symfony-bin-dir' => __DIR__.'/../Fixtures',
                 'symfony-var-dir' => __DIR__.'/../Fixtures',
             ]));

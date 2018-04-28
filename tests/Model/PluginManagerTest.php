@@ -42,7 +42,7 @@ class PluginManagerTest extends AbstractTestCase
     {
         $plugins = [
             'wordcount' => [
-                'path'     => '/my/path',
+                'path' => '/my/path',
                 'filename' => 'plugin.js',
             ],
         ];
@@ -58,7 +58,7 @@ class PluginManagerTest extends AbstractTestCase
     {
         $plugins = [
             'wordcount' => [
-                'path'     => '/my/path',
+                'path' => '/my/path',
                 'filename' => 'plugin.js',
             ],
         ];

@@ -279,7 +279,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $expected = [
             'default' => ['uiColor' => '#000000'],
-            'custom'  => ['uiColor' => '#ffffff'],
+            'custom' => ['uiColor' => '#ffffff'],
         ];
 
         $this->assertSame('default', $configManager->getDefaultConfig());
@@ -293,7 +293,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
 
         $expected = [
             'plugin-name' => [
-                'path'     => '/my/path',
+                'path' => '/my/path',
                 'filename' => 'plugin.js',
             ],
         ];
@@ -309,24 +309,24 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $expected = [
             'styles-set-name' => [
                 [
-                    'name'    => 'Blue Title',
+                    'name' => 'Blue Title',
                     'element' => 'h2',
-                    'styles'  => ['text-decoration' => 'underline'],
+                    'styles' => ['text-decoration' => 'underline'],
                 ],
                 [
-                    'name'       => 'CSS Style',
-                    'element'    => 'span',
+                    'name' => 'CSS Style',
+                    'element' => 'span',
                     'attributes' => ['data-class' => 'my-style'],
                 ],
                 [
-                    'name'       => 'Widget Style',
-                    'type'       => 'widget',
-                    'widget'     => 'my-widget',
+                    'name' => 'Widget Style',
+                    'type' => 'widget',
+                    'widget' => 'my-widget',
                     'attributes' => ['data-class' => 'my-style'],
                 ],
                 [
-                    'name'       => 'Multiple Elements Style',
-                    'element'    => ['span', 'p', 'h3'],
+                    'name' => 'Multiple Elements Style',
+                    'element' => ['span', 'p', 'h3'],
                     'attributes' => ['data-class' => 'my-style'],
                 ],
             ],
@@ -343,13 +343,13 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $expected = [
             'template-name' => [
                 'imagesPath' => '/my/path',
-                'templates'  => [
+                'templates' => [
                     [
-                        'title'               => 'My Template',
-                        'image'               => 'image.jpg',
-                        'description'         => 'My awesome description',
-                        'html'                => '<h1>Template</h1><p>Type your text here.</p>',
-                        'template'            => 'AppBundle:CKEditor:template.html.twig',
+                        'title' => 'My Template',
+                        'image' => 'image.jpg',
+                        'description' => 'My awesome description',
+                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
+                        'template' => 'AppBundle:CKEditor:template.html.twig',
                         'template_parameters' => ['foo' => 'bar'],
                     ],
                 ],
@@ -369,7 +369,7 @@ abstract class AbstractIvoryCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame(
             [
                 'document' => ['Source', '-', 'Save'],
-                'tools'    => ['Maximize'],
+                'tools' => ['Maximize'],
             ],
             array_intersect_key($toolbarManager->getItems(), ['document' => true, 'tools' => true])
         );

@@ -149,7 +149,7 @@ class CKEditorInstallerTest extends AbstractTestCase
         $this->installer->install();
         $this->installer->install($options = [
             'release' => CKEditorInstaller::RELEASE_BASIC,
-            'clear'   => CKEditorInstaller::CLEAR_DROP,
+            'clear' => CKEditorInstaller::CLEAR_DROP,
         ]);
 
         $this->assertInstall($options);
@@ -161,7 +161,7 @@ class CKEditorInstallerTest extends AbstractTestCase
         $this->installer->install($options = [
             'version' => '4.6.0',
             'release' => CKEditorInstaller::RELEASE_FULL,
-            'clear'   => CKEditorInstaller::CLEAR_KEEP,
+            'clear' => CKEditorInstaller::CLEAR_KEEP,
         ]);
 
         $this->assertInstall($options);

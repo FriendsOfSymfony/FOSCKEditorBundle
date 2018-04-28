@@ -63,12 +63,12 @@ class CKEditorInstaller
     {
         $this->resolver = (new OptionsResolver())
             ->setDefaults(array_merge([
-                'clear'    => null,
+                'clear' => null,
                 'excludes' => ['samples'],
                 'notifier' => null,
-                'path'     => dirname(__DIR__).'/Resources/public',
-                'release'  => self::RELEASE_FULL,
-                'version'  => self::VERSION_LATEST,
+                'path' => dirname(__DIR__).'/Resources/public',
+                'release' => self::RELEASE_FULL,
+                'version' => self::VERSION_LATEST,
             ], $options))
             ->setAllowedTypes('excludes', 'array')
             ->setAllowedTypes('notifier', ['null', 'callable'])
