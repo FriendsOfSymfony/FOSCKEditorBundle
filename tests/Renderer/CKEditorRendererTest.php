@@ -11,10 +11,10 @@
 
 namespace FOS\CKEditorBundle\Tests\Renderer;
 
+use FOS\CKEditorBundle\Builder\JsonBuilder;
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
-use FOS\CKEditorBundle\Builder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
