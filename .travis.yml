@@ -60,7 +60,7 @@ script:
     # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
     - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
 
-success:
+after_success:
     - if [[ $COVERAGE == true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
     - if [[ $COVERAGE == true ]]; then php ocular.phar code-coverage:upload --format=php-clover build/clover.xml; fi
 
