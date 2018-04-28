@@ -36,9 +36,9 @@
         $id,
         $config,
         [
-            'auto_inline'  => $auto_inline,
-            'inline'       => $inline,
-            'input_sync'   => $input_sync,
+            'auto_inline' => $auto_inline,
+            'inline' => $inline,
+            'input_sync' => $input_sync,
             'filebrowsers' => $filebrowsers,
         ]
     ); ?>

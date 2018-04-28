@@ -56,11 +56,11 @@ class CKEditorRenderer implements CKEditorRendererInterface
 
     /**
      * @param JsonBuilder|ContainerInterface $containerOrJsonBuilder
-     * @param RouterInterface $router
-     * @param Packages $packages
-     * @param RequestStack $requestStack
-     * @param EngineInterface $templating
-     * @param null|string $locale
+     * @param RouterInterface                $router
+     * @param Packages                       $packages
+     * @param RequestStack                   $requestStack
+     * @param EngineInterface                $templating
+     * @param null|string                    $locale
      */
     public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null, EngineInterface
     $templating = null, $locale = null)

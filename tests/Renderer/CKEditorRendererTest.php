@@ -275,7 +275,7 @@ class CKEditorRendererTest extends AbstractTestCase
             $this->renderer->renderWidget(
                 'foo',
                 ['filebrowser'.$filebrowser.'Url' => $url],
-                ['filebrowsers'                   => [$filebrowser]]
+                ['filebrowsers' => [$filebrowser]]
             )
         );
     }
@@ -323,9 +323,9 @@ class CKEditorRendererTest extends AbstractTestCase
         $this->assertSame(
             'CKEDITOR.replace("foo", {"filebrowser'.$filebrowser.'Url":"browse_url"});',
             $this->renderer->renderWidget('foo', [
-                'filebrowser'.$filebrowser.'Route'           => $route,
+                'filebrowser'.$filebrowser.'Route' => $route,
                 'filebrowser'.$filebrowser.'RouteParameters' => $routeParameters,
-                'filebrowser'.$filebrowser.'RouteType'       => $routeType,
+                'filebrowser'.$filebrowser.'RouteType' => $routeType,
             ])
         );
     }
@@ -396,7 +396,7 @@ class CKEditorRendererTest extends AbstractTestCase
             'CKEDITOR.replace("foo", {"config":{"enterMode":CKEDITOR.ENTER_BR,"shiftEnterMode":CKEDITOR.ENTER_BR}});',
             $this->renderer->renderWidget('foo', [
                 'config' => [
-                    'enterMode'      => 'CKEDITOR.ENTER_BR',
+                    'enterMode' => 'CKEDITOR.ENTER_BR',
                     'shiftEnterMode' => 'CKEDITOR.ENTER_BR',
                 ],
             ])
@@ -480,7 +480,7 @@ class CKEditorRendererTest extends AbstractTestCase
         $templates = [
             [
                 'title' => 'Template title',
-                'html'  => '<p>Template content</p>',
+                'html' => '<p>Template content</p>',
             ],
         ];
 
@@ -509,8 +509,8 @@ class CKEditorRendererTest extends AbstractTestCase
     {
         $templates = [
             [
-                'title'               => 'Template title',
-                'template'            => $template = 'template_name',
+                'title' => 'Template title',
+                'template' => $template = 'template_name',
                 'template_parameters' => $templateParameters = ['foo' => 'bar'],
             ],
         ];
@@ -518,7 +518,7 @@ class CKEditorRendererTest extends AbstractTestCase
         $processedTemplates = [
             [
                 'title' => 'Template title',
-                'html'  => $html = '<p>Template content</p>',
+                'html' => $html = '<p>Template content</p>',
             ],
         ];
 
@@ -534,7 +534,7 @@ class CKEditorRendererTest extends AbstractTestCase
             ->with($this->identicalTo($template), $this->identicalTo($templateParameters))
             ->will($this->returnValue($html));
 
-        $json = json_encode(['imagesPath' => $url, 'templates'  => $processedTemplates]);
+        $json = json_encode(['imagesPath' => $url, 'templates' => $processedTemplates]);
 
         $this->assertSame(
             'CKEDITOR.addTemplates("foo", '.$json.');',

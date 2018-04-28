@@ -114,10 +114,10 @@ EOF;
     {
         $context = [
             'auto_inline' => false,
-            'inline'      => true,
-            'input_sync'  => true,
-            'config'      => ['foo' => 'bar'],
-            'plugins'     => [
+            'inline' => true,
+            'input_sync' => true,
+            'config' => ['foo' => 'bar'],
+            'plugins' => [
                 'foo' => ['path' => 'path', 'filename' => 'filename'],
             ],
             'styles' => [
@@ -128,10 +128,10 @@ EOF;
             'templates' => [
                 'foo' => [
                     'imagesPath' => 'path',
-                    'templates'  => [
+                    'templates' => [
                         [
                             'title' => 'My Template',
-                            'html'  => '<h1>Template</h1>',
+                            'html' => '<h1>Template</h1>',
                         ],
                     ],
                 ],
@@ -268,25 +268,25 @@ EOF;
     private function getContext()
     {
         return [
-            'form'         => $this->createMock(FormView::class),
-            'id'           => 'id',
-            'value'        => '<p>value</p>',
-            'enable'       => true,
-            'async'        => false,
-            'autoload'     => true,
-            'auto_inline'  => true,
-            'inline'       => false,
-            'jquery'       => false,
-            'input_sync'   => false,
-            'require_js'   => false,
-            'base_path'    => 'base_path',
-            'js_path'      => 'js_path',
-            'jquery_path'  => 'jquery_path',
+            'form' => $this->createMock(FormView::class),
+            'id' => 'id',
+            'value' => '<p>value</p>',
+            'enable' => true,
+            'async' => false,
+            'autoload' => true,
+            'auto_inline' => true,
+            'inline' => false,
+            'jquery' => false,
+            'input_sync' => false,
+            'require_js' => false,
+            'base_path' => 'base_path',
+            'js_path' => 'js_path',
+            'jquery_path' => 'jquery_path',
             'filebrowsers' => [],
-            'config'       => [],
-            'plugins'      => [],
-            'styles'       => [],
-            'templates'    => [],
+            'config' => [],
+            'plugins' => [],
+            'styles' => [],
+            'templates' => [],
         ];
     }
 
