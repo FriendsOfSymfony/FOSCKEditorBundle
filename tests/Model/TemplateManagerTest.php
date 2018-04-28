@@ -43,10 +43,10 @@ class TemplateManagerTest extends AbstractTestCase
         $templates = [
             'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => [
+                'templates' => [
                     [
                         'title' => 'My Template',
-                        'html'  => '<h1>Template</h1><p>Type your text here.</p>',
+                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
                     ],
                 ],
             ],
@@ -64,10 +64,10 @@ class TemplateManagerTest extends AbstractTestCase
         $templates = [
             'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => [
+                'templates' => [
                     [
                         'title' => 'My Template',
-                        'html'  => '<h1>Template</h1><p>Type your text here.</p>',
+                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
                     ],
                 ],
             ],

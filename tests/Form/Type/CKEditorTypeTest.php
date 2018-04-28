@@ -449,7 +449,7 @@ class CKEditorTypeTest extends AbstractTestCase
             null,
             [
                 'base_path' => 'foo',
-                'js_path'   => 'foo/ckeditor.js',
+                'js_path' => 'foo/ckeditor.js',
             ]
         );
 
@@ -638,7 +638,7 @@ class CKEditorTypeTest extends AbstractTestCase
     {
         $plugins = [
             'wordcount' => [
-                'path'     => '/my/path',
+                'path' => '/my/path',
                 'filename' => 'plugin.js',
             ],
         ];
@@ -665,7 +665,7 @@ class CKEditorTypeTest extends AbstractTestCase
     {
         $plugins = [
             'wordcount' => [
-                'path'     => '/my/path',
+                'path' => '/my/path',
                 'filename' => 'plugin.js',
             ],
         ];
@@ -686,14 +686,14 @@ class CKEditorTypeTest extends AbstractTestCase
     {
         $configuredPlugins = [
             'wordcount' => [
-                'path'     => '/my/explicit/path',
+                'path' => '/my/explicit/path',
                 'filename' => 'plugin.js',
             ],
         ];
 
         $explicitPlugins = [
             'autogrow' => [
-                'path'     => '/my/configured/path',
+                'path' => '/my/configured/path',
                 'filename' => 'plugin.js',
             ],
         ];
@@ -812,10 +812,10 @@ class CKEditorTypeTest extends AbstractTestCase
         $templates = [
             'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => [
+                'templates' => [
                     [
                         'title' => 'My Template',
-                        'html'  => '<h1>Template</h1><p>Type your text here.</p>',
+                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
                     ],
                 ],
             ],
@@ -843,10 +843,10 @@ class CKEditorTypeTest extends AbstractTestCase
         $templates = [
             'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => [
+                'templates' => [
                     [
                         'title' => 'My Template',
-                        'html'  => '<h1>Template</h1><p>Type your text here.</p>',
+                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
                     ],
                 ],
             ],
@@ -868,10 +868,10 @@ class CKEditorTypeTest extends AbstractTestCase
         $configuredTemplates = [
             'default' => [
                 'imagesPath' => '/my/path',
-                'templates'  => [
+                'templates' => [
                     [
                         'title' => 'My Template',
-                        'html'  => '<h1>Template</h1><p>Type your text here.</p>',
+                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
                     ],
                 ],
             ],
@@ -879,10 +879,10 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $explicitTemplates = [
             'extra' => [
-                'templates'  => [
+                'templates' => [
                     [
                         'title' => 'My Extra Template',
-                        'html'  => '<h2>Template</h2><p>Type your text here.</p>',
+                        'html' => '<h2>Template</h2><p>Type your text here.</p>',
                     ],
                 ],
             ],
@@ -915,7 +915,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ],
             'plugins' => [
                 'wordcount' => [
-                    'path'     => '/my/path',
+                    'path' => '/my/path',
                     'filename' => 'plugin.js',
                 ],
             ],
@@ -944,7 +944,7 @@ class CKEditorTypeTest extends AbstractTestCase
             ],
             'plugins' => [
                 'wordcount' => [
-                    'path'     => '/my/path',
+                    'path' => '/my/path',
                     'filename' => 'plugin.js',
                 ],
             ],

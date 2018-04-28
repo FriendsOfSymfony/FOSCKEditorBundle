@@ -57,7 +57,7 @@ class PhpTemplateTest extends AbstractTemplateTest
             new TemplateNameParser(),
             new FilesystemLoader([__DIR__.'/../../src/Resources/views/Form/%name%']),
             [
-                'form'  => $this->formHelper,
+                'form' => $this->formHelper,
                 'slots' => $this->slotsHelper,
                 new CKEditorHelper($this->renderer),
             ]

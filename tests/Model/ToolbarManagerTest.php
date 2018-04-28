@@ -45,12 +45,12 @@ class ToolbarManagerTest extends AbstractTestCase
     {
         $items = [
             'document' => ['Source', '-', 'Save'],
-            'tools'    => ['Maximize'],
+            'tools' => ['Maximize'],
         ];
 
         $toolbars = [
             'default' => ['@document', '/', ['Anchor'], '/', '@tools'],
-            'custom'  => ['@document', '/', ['Anchor']],
+            'custom' => ['@document', '/', ['Anchor']],
         ];
 
         $this->toolbarManager = new ToolbarManager($items, $toolbars);
