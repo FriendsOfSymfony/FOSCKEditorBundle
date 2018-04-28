@@ -2,7 +2,7 @@
 
 <phpunit colors="true" bootstrap="tests/autoload.php">
     <testsuites>
-        <testsuite name="FOSCKEditorBundle Test Suite">
+        <testsuite name="IvoryCKEditorBundle Test Suite">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
