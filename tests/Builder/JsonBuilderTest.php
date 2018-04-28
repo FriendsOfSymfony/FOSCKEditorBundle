@@ -1,6 +1,6 @@
 <?php
 
-namespace Ivory\CKEditorBundle\Tests\Builder;
+namespace FOS\CKEditorBundle\Tests\Builder;
 
 use Ivory\CKEditorBundle\Builder\JsonBuilder;
 use Ivory\CKEditorBundle\Tests\AbstractTestCase;
