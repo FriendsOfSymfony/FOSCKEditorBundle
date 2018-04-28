@@ -2,8 +2,8 @@
 
 namespace FOS\CKEditorBundle\Tests\Builder;
 
-use Ivory\CKEditorBundle\Builder\JsonBuilder;
-use Ivory\CKEditorBundle\Tests\AbstractTestCase;
+use FOS\CKEditorBundle\Builder\JsonBuilder;
+use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>

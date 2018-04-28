@@ -14,7 +14,7 @@ namespace FOS\CKEditorBundle\Tests\Renderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
-use Ivory\JsonBuilder\JsonBuilder;
+use FOS\CKEditorBundle\Builder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,14 +104,14 @@ class CKEditorRendererTest extends AbstractTestCase
         $container->expects($this->exactly(5))
             ->method('get')
             ->withConsecutive(
-                ['ivory_ck_editor.renderer.json_builder'],
+                ['fos_ck_editor.renderer.json_builder'],
                 ['router'],
                 ['assets.packages'],
                 ['request_stack'],
                 ['templating']
             )
             ->willReturnMap([
-                ['ivory_ck_editor.renderer.json_builder', new JsonBuilder()],
+                ['fos_ck_editor.renderer.json_builder', new JsonBuilder()],
                 ['router', $this->router],
                 ['assets.packages', $this->packages],
                 ['request_stack', $this->requestStack],
@@ -422,8 +422,8 @@ class CKEditorRendererTest extends AbstractTestCase
     public function testRenderWidgetWithInputSync()
     {
         $this->assertSame(
-            'var ivory_ckeditor_foo = CKEDITOR.replace("foo", []);'."\n".
-            'ivory_ckeditor_foo.on(\'change\', function() { ivory_ckeditor_foo.updateElement(); });',
+            'var fos_ckeditor_foo = CKEDITOR.replace("foo", []);'."\n".
+            'fos_ckeditor_foo.on(\'change\', function() { fos_ckeditor_foo.updateElement(); });',
             $this->renderer->renderWidget('foo', [], ['input_sync' => true])
         );
     }

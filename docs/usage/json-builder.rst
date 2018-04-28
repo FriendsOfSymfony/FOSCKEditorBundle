@@ -10,7 +10,7 @@ JsonBuilder
 Overview
 --------
 
-The Ivory JSON builder allows you to build your JSON through the Symfony2 `PropertyAccess Component`_ while keeping the
+The JSON builder allows you to build your JSON through the Symfony2 `PropertyAccess Component`_ while keeping the
 control of the value escaping.
 
 Create a builder
@@ -19,7 +19,7 @@ Create a builder
 To build some JSON, you will need to instanciate a builder:
 
 .. code-block:: php
-    use Ivory\JsonBuilder\JsonBuilder;
+    use FOS\CKEditorBundle\Builder\JsonBuilder;
 
     $builder = new JsonBuilder();
 
@@ -96,7 +96,7 @@ Example
 If you still don't understand, a concrete example :)
 
 .. code-block:: php
-    use Ivory\JsonBuilder\JsonBuilder;
+    use FOS\CKEditorBundle\Builder\JsonBuilder;
 
     $builder = new JsonBuilder();
 
