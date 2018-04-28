@@ -61,8 +61,8 @@ script:
     - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
 
 success:
-    - if [[ $COVERAGE != true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-    - if [[ $COVERAGE != true ]]; then php ocular.phar code-coverage:upload --format=php-clover build/clover.xml; fi
+    - if [[ $COVERAGE == true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+    - if [[ $COVERAGE == true ]]; then php ocular.phar code-coverage:upload --format=php-clover build/clover.xml; fi
 
 branches:
     only: master
