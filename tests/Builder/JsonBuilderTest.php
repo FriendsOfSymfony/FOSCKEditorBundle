@@ -21,7 +21,7 @@ class JsonBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->propertyAccessor = $this->createMock(PropertyAccessorInterface::class)
-        $this->builder = new JsonBuilder();
+        $this->propertyAccessor = $this->createMock(PropertyAccessorInterface::class);
+        $this->builder = new JsonBuilder($this->propertyAccessor);
     }
 }
