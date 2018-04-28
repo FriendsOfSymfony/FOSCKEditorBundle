@@ -14,6 +14,7 @@ Here, you can find all bundle features:
     language
     file-browse-upload
     jquery
+    json-builder
     require-js
     append-javascript
     textarea-sync

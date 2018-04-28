@@ -11,10 +11,10 @@
 
 namespace FOS\CKEditorBundle\Tests\Template;
 
+use FOS\CKEditorBundle\Builder\JsonBuilder;
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
-use Ivory\JsonBuilder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormView;
