@@ -2,7 +2,8 @@ FOSCKEditorBundle
 ==================
 [![Build Status](https://travis-ci.org/FriendsOfSymfony/FOSCKEditorBundle.svg?branch=master)](https://travis-ci.org/FriendsOfSymfony/FOSCKEditorBundle)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/coverage.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
+[![Scrutinizer Build](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/quality-score.png?b=master)
+[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/friendsofsymfony/ckeditor-bundle/v/stable.svg)](https://packagist.org/packages/friendsofsymfony/ckeditor-bundle)
 
 Introduction
