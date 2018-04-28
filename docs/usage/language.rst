@@ -20,7 +20,7 @@ configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    fosck_editor:
+    fos_ck_editor:
         configs:
             my_config:
                 language: fr

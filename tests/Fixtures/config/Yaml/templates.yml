@@ -1,4 +1,4 @@
-fosck_editor:
+fos_ck_editor:
     templates:
         template-name:
             imagesPath: "/my/path"

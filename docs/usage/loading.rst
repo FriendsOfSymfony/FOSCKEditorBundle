@@ -16,7 +16,7 @@ CKEditor library loading, you can do it globally in your configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    fosck_editor:
+    fos_ck_editor:
         autoload: false
 
 Or you can disable it in your widget:
@@ -46,7 +46,7 @@ configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    fosck_editor:
+    fos_ck_editor:
         autoload: false
         async: true
 

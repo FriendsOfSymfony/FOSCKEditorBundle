@@ -9,7 +9,7 @@ in your configuration:
 .. code-block:: yaml
 
     # app/config/config.yml
-    fosck_editor:
+    fos_ck_editor:
         auto_inline: false
 
 Or you can disable it for a specific widget:

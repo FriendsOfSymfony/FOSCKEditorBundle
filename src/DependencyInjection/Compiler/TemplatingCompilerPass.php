@@ -25,11 +25,11 @@ class TemplatingCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('templating.engine.php')) {
-            $container->removeDefinition('fosck_editor.templating.helper');
+            $container->removeDefinition('fos_ck_editor.templating.helper');
         }
 
         if (!$container->hasDefinition('twig')) {
-            $container->removeDefinition('fosck_editor.twig_extension');
+            $container->removeDefinition('fos_ck_editor.twig_extension');
         }
     }
 }
