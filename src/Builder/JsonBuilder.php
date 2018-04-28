@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Ivory Json Builder package.
+ * This file is part of the Ivory CKEditor package.
  *
  * (c) Eric GELOEN <geloen.eric@gmail.com>
  *
