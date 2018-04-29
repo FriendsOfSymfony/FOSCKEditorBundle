@@ -2,6 +2,7 @@ filter:
     excluded_paths:
         - vendor/*
         - tests/*
+        - docs/*
 
 checks:
     php:
@@ -12,3 +13,11 @@ tools:
     external_code_coverage:
         timeout: 800
         runs: 2
+
+
+build:
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
