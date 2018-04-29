@@ -5,6 +5,7 @@ Getting started with FOSCKEditorBundle
     :hidden:
 
     installation
+    migration
     usage/index
 
 Overview
