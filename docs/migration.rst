@@ -160,12 +160,37 @@ The main thing that changed is the namespace, so you will have to find
 all occurrences of ``Ivory\CKEditorBundle\*`` in your application and
 replace them with ``FOS\CKEditorBundle\*``.
 
+Before::
+
+    <?php
+
+    use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+
+    $form->add('body',  CKEditorType::Class)
+
+After::
+
+    <?php
+
+    use FOS\CKEditorBundle\Form\Type\CKEditorType;
+
+    $form->add('body',  CKEditorType::Class)
+
 Update service definition
 -------------------------
 
 If you are fetching any of the services directly from the container you
 will have to find all occurrences of ``ivory_ck_editor.*`` in your application
 and replace them with ``fos_ck_editor.*``.
+
+Instead of doing::
+
+    $this->get('ivory_ck_editor.form.type');
+
+You would do::
+
+    $this-get('fos_ck_editor.form.type');
+
 
 Regenerate assets again
 ---------------------
