@@ -20,3 +20,8 @@ build:
             tests:
                 override:
                     - php-scrutinizer-run
+                    -
+                         command: 'vendor/bin/simple-phpunit -v --coverage-clover build/clover.xml  --exclude-group installation'
+                         coverage:
+                              file: 'build/clover.xml'
+                              format: 'clover'
