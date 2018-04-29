@@ -13,6 +13,12 @@ Introduction
 The bundle provides a [CKEditor](https://ckeditor.com/) integration for your Symfony Project. It automatically registers
 the new `ckeditor` form type which can be easily as well as highly configured.
 
+Migration from IvoryCKEditorBundle to FOSCKEditorBundle
+-------------------------------------------------------
+
+As IvoryCKEditorBundle was abandoned, FriendsOfSymfony took this bundle over, to help
+you easily migrate [just follow our guide.](/docs/migration.rst).
+
 Documentation
 -------------
 
