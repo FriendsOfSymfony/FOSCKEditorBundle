@@ -1,7 +1,7 @@
 Migration from IvoryCKEditorBundle to FOSCKEditorBundle
 =======================================================
 
-Here we will explain process of migration.
+Here we will explain the process of migration.
 
 TL;DR: Check how we migrated [SonataFormatterBundle](https://github.com/sonata-project/SonataFormatterBundle/pull/331)
 
@@ -13,8 +13,8 @@ Replace:
 .. code-block:: json
 
     {
-     "require": {
-        "egeloen/ckeditor-bundle": "*"
+        "require": {
+            "egeloen/ckeditor-bundle": "*"
         }
     }
 
@@ -23,8 +23,8 @@ With:
 .. code-block:: json
 
     {
-     "require": {
-        "friendsofsymfony/ckeditor-bundle": "^1.0"
+        "require": {
+            "friendsofsymfony/ckeditor-bundle": "^1.0"
         }
     }
 
@@ -92,7 +92,7 @@ With::
 Update configuration root key
 ------------------------------
 
-Only the root key of configuration is changed.
+Only the root key of the configuration is changed.
 
 Replace:
 
@@ -124,7 +124,7 @@ With:
                 extraPlugins:           "wordcount"
                 # ...
 
-If you are not using Symfony Flex, then replace root key in ``app/config/config.yml``.
+If you are not using Symfony Flex, then replace the root key in ``app/config/config.yml``.
 
 Replace:
 
@@ -163,8 +163,8 @@ replace them with ``FOS\CKEditorBundle\*``.
 Update service definition
 -------------------------
 
-If you are fetching any of the services directly for container you will
-have to find all occurrences of ``ivory_ck_editor.*`` in your application
+If you are fetching any of the services directly from the container you
+will have to find all occurrences of ``ivory_ck_editor.*`` in your application
 and replace them with ``fos_ck_editor.*``.
 
 Regenerate assets again
