@@ -20,15 +20,9 @@ matrix:
         - php: 7.0
           env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
-          # Test the latest stable release
-        - php: 7.0
-        - php: 7.1
-        - php: 7.2
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover build/clover.xml  --exclude-group installation"
-
           # Test LTS versions. This makes sure we do not use Symfony packages with version greater
           # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
-        - php: 7.2
+        - php: 7.1
           env: DEPENDENCIES="symfony/lts:^2"  PHPUNIT_FLAGS="-v"
         - php: 7.2
           env: DEPENDENCIES="symfony/lts:^3"
@@ -42,7 +36,6 @@ matrix:
         - env: STABILITY="dev"
 
 before_install:
-    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
     - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
 
@@ -59,10 +52,6 @@ script:
     # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
     # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
     - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
-
-after_success:
-    - if [[ $COVERAGE == true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-    - if [[ $COVERAGE == true ]]; then php ocular.phar code-coverage:upload --format=php-clover build/clover.xml; fi
 
 branches:
     only: master
