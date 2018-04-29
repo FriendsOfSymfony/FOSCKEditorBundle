@@ -14,7 +14,6 @@ tools:
         timeout: 800
         runs: 2
 
-
 build:
     nodes:
         analysis:
