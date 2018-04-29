@@ -2,6 +2,7 @@ language: php
 sudo: false
 dist: trusty
 cache:
+    pip: true
     directories:
         - $HOME/.composer/cache/files
         - $HOME/symfony-bridge/.phpunit
@@ -30,6 +31,10 @@ matrix:
           # Latest commit to master
         - php: 7.2
           env: STABILITY="dev"
+
+          #docs
+        - php: '7.2'
+          env: TARGET=docs
 
     allow_failures:
           # Dev-master is allowed to fail.
