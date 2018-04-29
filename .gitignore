@@ -11,3 +11,6 @@
 # PHPUnit
 /build
 /phpunit.xml
+
+# Documentation
+/docs/_build/*
