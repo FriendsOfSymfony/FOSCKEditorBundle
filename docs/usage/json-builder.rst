@@ -85,7 +85,7 @@ need to reset it if you want to restart a json build::
 Example
 ~~~~~~~
 
-If you still don't understand, here is a concrete example::
+.. code-block:: php
 
     use FOS\CKEditorBundle\Builder\JsonBuilder;
 
