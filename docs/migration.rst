@@ -158,19 +158,19 @@ Update namespace
 
 The main thing that changed is the namespace, so you will have to find
 all occurrences of ``Ivory\CKEditorBundle\*`` in your application and
-replace it with ``FOS\CKEditorBundle\*``.
+replace them with ``FOS\CKEditorBundle\*``.
 
 Update service definition
 -------------------------
 
 If you are fetching any of the services directly for container you will
 have to find all occurrences of ``ivory_ck_editor.*`` in your application
-and replace it with ``fos_ck_editor.*``.
+and replace them with ``fos_ck_editor.*``.
 
 Regenerate assets again
 ---------------------
 
-You will have to regenerate your assets again, just run:
+You will have to regenerate your assets, just run:
 
 .. code-block:: bash
 
