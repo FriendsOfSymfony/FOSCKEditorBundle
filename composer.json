@@ -10,6 +10,10 @@
         {
             "name": "Eric GELOEN",
             "email": "geloen.eric@gmail.com"
+        },
+        {
+            "name": "FriendsOfSymfony Community",
+            "homepage": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle/graphs/contributors"
         }
     ],
     "require": {
@@ -48,7 +52,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.x-dev"
         }
     },
     "autoload": {
