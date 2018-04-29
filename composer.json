@@ -14,7 +14,7 @@
         {
             "name": "FriendsOfSymfony Community",
             "homepage": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle/graphs/contributors"
-         }
+        }
     ],
     "require": {
         "php": "^5.6 || ^7.0",
