@@ -4,7 +4,6 @@ namespace FOS\CKEditorBundle\Tests\Builder;
 
 use FOS\CKEditorBundle\Builder\JsonBuilder;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
