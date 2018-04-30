@@ -28,6 +28,12 @@ With:
         }
     }
 
+And then install package:
+
+.. code-block:: bash
+
+    composer install
+
 Update bundle definition
 ------------------------
 
@@ -193,10 +199,16 @@ You would do::
     $this-get('fos_ck_editor.form.type');
 
 
-Regenerate assets again
------------------------
+Regenerate assets
+-----------------
 
-You will have to regenerate your assets, just run:
+First fetch ckeditor assets:
+
+.. code-block:: bash
+
+    bin/console ckeditor:install
+
+and then regenerate Symfony assets:
 
 .. code-block:: bash
 
