@@ -1,11 +1,19 @@
 FOSCKEditorBundle
 ==================
+General: 
 [![Build Status](https://travis-ci.org/FriendsOfSymfony/FOSCKEditorBundle.svg?branch=master)](https://travis-ci.org/FriendsOfSymfony/FOSCKEditorBundle)
+[![Latest Stable Version](https://poser.pugx.org/friendsofsymfony/ckeditor-bundle/v/stable.svg)](https://packagist.org/packages/friendsofsymfony/ckeditor-bundle)
+
+Quality: 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
 [![Scrutinizer Build](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/quality-score.png?b=master)
 [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
 [![Scrutinizer Code Intelligence](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/friendsofsymfony/ckeditor-bundle/v/stable.svg)](https://packagist.org/packages/friendsofsymfony/ckeditor-bundle)
+
+Numbers: 
+[![Total Downloads](https://poser.pugx.org/friendsofsymfony/ckeditor-bundle/downloads)](https://packagist.org/packages/friendsofsymfony/ckeditor-bundle)
+[![Monthly Downloads](https://poser.pugx.org/friendsofsymfony/ckeditor-bundle/d/monthly)](https://packagist.org/packages/friendsofsymfony/ckeditor-bundle)
+[![Daily Downloads](https://poser.pugx.org/friendsofsymfony/ckeditor-bundle/d/daily)](https://packagist.org/packages/friendsofsymfony/ckeditor-bundle)
 
 Introduction
 ------------
