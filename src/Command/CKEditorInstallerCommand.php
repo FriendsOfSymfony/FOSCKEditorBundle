@@ -51,7 +51,12 @@ class CKEditorInstallerCommand extends Command
             ->setName('ckeditor:install')
             ->setDescription('Install CKEditor')
             ->addArgument('path', InputArgument::OPTIONAL, 'Where to install CKEditor')
-            ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'CKEditor release (basic, standard or full)')
+            ->addOption(
+                'release',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'CKEditor release (basic, standard or full)'
+            )
             ->addOption('tag', null, InputOption::VALUE_OPTIONAL, 'CKEditor tag (x.y.z or latest)')
             ->addOption(
                 'clear',

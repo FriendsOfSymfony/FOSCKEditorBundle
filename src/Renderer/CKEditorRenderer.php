@@ -39,9 +39,6 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private $assetsPackages;
 
-    /**
-     * @var EngineInterface
-     */
     private $templating;
 
     /**
@@ -62,29 +59,66 @@ class CKEditorRenderer implements CKEditorRendererInterface
      * @param EngineInterface                $templating
      * @param null|string                    $locale
      */
-    public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null,
-    $templating = null, $locale = null)
-    {
+    public function __construct(
+        $containerOrJsonBuilder,
+        RouterInterface $router = null,
+        Packages $packages = null,
+        RequestStack $requestStack = null,
+        $templating = null,
+        $locale = null
+    ) {
         if ($containerOrJsonBuilder instanceof ContainerInterface) {
-            @trigger_error(sprintf('Passing a %s as %s first argument is deprecated since FOSCKEditor 1.0, and will be removed in 2.0. Use %s instead.', ContainerInterface::class, __METHOD__, JsonBuilder::class), E_USER_DEPRECATED);
+            @trigger_error(sprintf(
+                'Passing a %s as %s first argument is deprecated since FOSCKEditor 1.0, and will be removed in 2.0.'
+                .' Use %s instead.',
+                ContainerInterface::class,
+                __METHOD__,
+                JsonBuilder::class
+            ), E_USER_DEPRECATED);
             $jsonBuilder = $containerOrJsonBuilder->get('fos_ck_editor.renderer.json_builder');
             $router = $containerOrJsonBuilder->get('router');
             $packages = $containerOrJsonBuilder->get('assets.packages');
             $requestStack = $containerOrJsonBuilder->get('request_stack');
-            $templating = $containerOrJsonBuilder->has('twig') ? $containerOrJsonBuilder->get('twig') : $containerOrJsonBuilder->get('templating');
+            $templating = $containerOrJsonBuilder->has('twig')
+                ? $containerOrJsonBuilder->get('twig')
+                : $containerOrJsonBuilder->get('templating');
         } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
             $jsonBuilder = $containerOrJsonBuilder;
             if ($router === null) {
-                throw new \InvalidArgumentException(sprintf('%s 2nd argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+                throw new \InvalidArgumentException(sprintf(
+                    '%s 2nd argument must not be null when using %s as first argument',
+                    __METHOD__,
+                    JsonBuilder::class
+                ));
             } elseif ($packages === null) {
-                throw new \InvalidArgumentException(sprintf('%s 3rd argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+                throw new \InvalidArgumentException(sprintf(
+                    '%s 3rd argument must not be null when using %s as first argument',
+                    __METHOD__,
+                    JsonBuilder::class
+                ));
             } elseif ($requestStack === null) {
-                throw new \InvalidArgumentException(sprintf('%s 4th argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+                throw new \InvalidArgumentException(sprintf(
+                    '%s 4th argument must not be null when using %s as first argument',
+                    __METHOD__,
+                    JsonBuilder::class
+                ));
             } elseif ($templating === null) {
-                throw new \InvalidArgumentException(sprintf('%s 5th argument must not be null when using %s as first argument', __METHOD__, JsonBuilder::class));
+                throw new \InvalidArgumentException(sprintf(
+                    '%s 5th argument must not be null when using %s as first argument',
+                    __METHOD__,
+                    JsonBuilder::class
+                ));
             }
         } else {
-            throw new \InvalidArgumentException(sprintf('%s first argument must be an instance of %s or %s (%s given).', __METHOD__, ContainerInterface::class, JsonBuilder::class, is_object($containerOrJsonBuilder) ? get_class($containerOrJsonBuilder) : gettype($containerOrJsonBuilder)));
+            throw new \InvalidArgumentException(sprintf(
+                '%s first argument must be an instance of %s or %s (%s given).',
+                __METHOD__,
+                ContainerInterface::class,
+                JsonBuilder::class,
+                is_object($containerOrJsonBuilder)
+                    ? get_class($containerOrJsonBuilder)
+                    : gettype($containerOrJsonBuilder)
+            ));
         }
 
         $this->jsonBuilder = $jsonBuilder;

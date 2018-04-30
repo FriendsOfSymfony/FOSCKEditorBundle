@@ -55,6 +55,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $resources = [
+            'builder',
             'command',
             'form',
             'installer',

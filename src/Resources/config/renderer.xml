@@ -6,16 +6,12 @@
 >
     <services>
         <service id="fos_ck_editor.renderer" class="FOS\CKEditorBundle\Renderer\CKEditorRenderer">
-            <argument type="service" id="fos_ck_editor.renderer.json_builder"/>
+            <argument type="service" id="fos_ck_editor.builder.json_builder"/>
             <argument type="service" id="router"/>
             <argument type="service" id="assets.packages" on-invalid="null"/>
             <argument type="service" id="request_stack"/>
             <argument type="expression">container.has('twig') ? container.get('twig') : container.get('templating')</argument>
             <argument type="expression">container.hasParameter('locale') ? parameter('locale') : null</argument>
-        </service>
-
-        <service id="fos_ck_editor.renderer.json_builder" class="FOS\CKEditorBundle\Builder\JsonBuilder">
-            <argument type="service" id="property_accessor" on-invalid="null" />
         </service>
     </services>
 </container>
