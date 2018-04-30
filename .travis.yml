@@ -33,9 +33,9 @@ matrix:
         - php: 7.2
           env: STABILITY="dev"
 
-          #docs
+          #doc
         - php: '7.2'
-          env: TARGET=docs
+          env: TARGET=doc
 
     allow_failures:
           # Dev-master is allowed to fail.
