@@ -1,4 +1,0 @@
-services:
-  phpcsfixer:
-    config_path: .php_cs
-  composernormalize: true
