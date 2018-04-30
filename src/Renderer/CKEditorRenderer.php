@@ -84,25 +84,25 @@ class CKEditorRenderer implements CKEditorRendererInterface
                 : $containerOrJsonBuilder->get('templating');
         } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
             $jsonBuilder = $containerOrJsonBuilder;
-            if ($router === null) {
+            if (null === $router) {
                 throw new \InvalidArgumentException(sprintf(
                     '%s 2nd argument must not be null when using %s as first argument',
                     __METHOD__,
                     JsonBuilder::class
                 ));
-            } elseif ($packages === null) {
+            } elseif (null === $packages) {
                 throw new \InvalidArgumentException(sprintf(
                     '%s 3rd argument must not be null when using %s as first argument',
                     __METHOD__,
                     JsonBuilder::class
                 ));
-            } elseif ($requestStack === null) {
+            } elseif (null === $requestStack) {
                 throw new \InvalidArgumentException(sprintf(
                     '%s 4th argument must not be null when using %s as first argument',
                     __METHOD__,
                     JsonBuilder::class
                 ));
-            } elseif ($templating === null) {
+            } elseif (null === $templating) {
                 throw new \InvalidArgumentException(sprintf(
                     '%s 5th argument must not be null when using %s as first argument',
                     __METHOD__,
@@ -240,8 +240,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
                     );
                 }
 
-                unset($rawTemplate['template']);
-                unset($rawTemplate['template_parameters']);
+                unset($rawTemplate['template'], $rawTemplate['template_parameters']);
             }
         }
 
@@ -259,7 +258,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixConfigLanguage(array $config)
     {
-        if (!isset($config['language']) && ($language = $this->getLanguage()) !== null) {
+        if (!isset($config['language']) && null !== ($language = $this->getLanguage())) {
             $config['language'] = $language;
         }
 
@@ -325,10 +324,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
                 );
             }
 
-            unset($config[$handler]);
-            unset($config[$route]);
-            unset($config[$routeParameters]);
-            unset($config[$routeType]);
+            unset($config[$handler], $config[$route], $config[$routeParameters], $config[$routeType]);
         }
 
         return $config;
@@ -375,13 +371,13 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private function fixPath($path)
     {
-        if ($this->assetsPackages === null) {
+        if (null === $this->assetsPackages) {
             return $path;
         }
 
         $url = $this->assetsPackages->getUrl($path);
 
-        if (substr($path, -1) === '/' && ($position = strpos($url, '?')) !== false) {
+        if ('/' === substr($path, -1) && false !== ($position = strpos($url, '?'))) {
             $url = substr($url, 0, $position);
         }
 
@@ -394,7 +390,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
     private function getLanguage()
     {
         $request = $this->requestStack->getCurrentRequest();
-        if ($request !== null) {
+        if (null !== $request) {
             return $request->getLocale();
         }
 

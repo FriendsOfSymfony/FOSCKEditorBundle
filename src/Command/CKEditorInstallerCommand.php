@@ -182,11 +182,11 @@ EOF
                         $output
                     );
 
-                    if (($key = array_search($result, $choices, true)) !== false) {
+                    if (false !== ($key = array_search($result, $choices, true))) {
                         $result = $key;
                     }
 
-                    if ($result === CKEditorInstaller::CLEAR_DROP) {
+                    if (CKEditorInstaller::CLEAR_DROP === $result) {
                         $this->comment(sprintf('Dropping CKEditor from "%s"', $data), $output);
                     }
 
@@ -194,50 +194,62 @@ EOF
 
                 case CKEditorInstaller::NOTIFY_CLEAR_ARCHIVE:
                     $this->comment(sprintf('Dropping CKEditor ZIP archive "%s"', $data), $output);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_CLEAR_COMPLETE:
                     $this->finishProgressBar($clear, $output);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_CLEAR_PROGRESS:
                     $clear->advance();
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_CLEAR_SIZE:
                     $this->startProgressBar($clear, $output, $data);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD:
                     $this->comment(sprintf('Downloading CKEditor ZIP archive from "%s"', $data), $output);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_COMPLETE:
                     $this->finishProgressBar($download, $output);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_PROGRESS:
                     $this->advanceProgressBar($download, $data);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_SIZE:
                     $this->startProgressBar($download, $output, $data);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_EXTRACT:
                     $this->comment(sprintf('Extracting CKEditor ZIP archive to "%s"', $data), $output);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_EXTRACT_COMPLETE:
                     $this->finishProgressBar($extract, $output);
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_EXTRACT_PROGRESS:
                     $extract->advance();
+
                     break;
 
                 case CKEditorInstaller::NOTIFY_EXTRACT_SIZE:
                     $this->startProgressBar($extract, $output, $data);
+
                     break;
             }
         };
@@ -296,11 +308,11 @@ EOF
     {
         $options = [];
 
-        if ($background !== null) {
+        if (null !== $background) {
             $options[] = 'bg='.$background;
         }
 
-        if ($font !== null) {
+        if (null !== $font) {
             $options[] = 'fg='.$font;
         }
 

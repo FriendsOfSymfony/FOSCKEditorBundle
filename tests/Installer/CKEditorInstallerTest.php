@@ -205,16 +205,19 @@ class CKEditorInstallerTest extends AbstractTestCase
         switch ($release) {
             case CKEditorInstaller::RELEASE_FULL:
                 $this->assertFileExists($this->path.'/plugins/copyformatting');
+
                 break;
 
             case CKEditorInstaller::RELEASE_BASIC:
                 $this->assertFileExists($this->path.'/plugins/link');
                 $this->assertFileNotExists($this->path.'/plugins/image');
+
                 break;
 
             case CKEditorInstaller::RELEASE_STANDARD:
                 $this->assertFileExists($this->path.'/plugins/image');
                 $this->assertFileNotExists($this->path.'/plugins/copyformatting');
+
                 break;
         }
     }

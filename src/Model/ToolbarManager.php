@@ -251,7 +251,7 @@ class ToolbarManager implements ToolbarManagerInterface
         $toolbars = [];
 
         foreach ($this->getToolbar($name) as $name => $item) {
-            $toolbars[] = is_string($item) && substr($item, 0, 1) === '@'
+            $toolbars[] = is_string($item) && '@' === substr($item, 0, 1)
                 ? $this->getItem(substr($item, 1))
                 : $item;
         }

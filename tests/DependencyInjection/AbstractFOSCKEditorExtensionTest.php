@@ -36,22 +36,27 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
      * @var ContainerBuilder
      */
     private $container;
+
     /**
      * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
      */
     private $packages;
+
     /**
      * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $router;
+
     /**
      * @var FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $formRenderer;
+
     /**
      * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
      */
     private $requestStack;
+
     /**
      * @var EngineInterface
      */
