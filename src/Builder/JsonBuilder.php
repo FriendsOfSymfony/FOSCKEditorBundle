@@ -134,8 +134,7 @@ class JsonBuilder
      */
     public function removeValue($path)
     {
-        unset($this->values[$path]);
-        unset($this->escapes[$path]);
+        unset($this->values[$path], $this->escapes[$path]);
 
         return $this;
     }

@@ -142,7 +142,7 @@ class CKEditorType extends AbstractType
      */
     public function isEnable($enable = null)
     {
-        if ($enable !== null) {
+        if (null !== $enable) {
             $this->enable = (bool) $enable;
         }
 
@@ -156,7 +156,7 @@ class CKEditorType extends AbstractType
      */
     public function isAsync($async = null)
     {
-        if ($async !== null) {
+        if (null !== $async) {
             $this->async = (bool) $async;
         }
 
@@ -170,7 +170,7 @@ class CKEditorType extends AbstractType
      */
     public function isAutoload($autoload = null)
     {
-        if ($autoload !== null) {
+        if (null !== $autoload) {
             $this->autoload = (bool) $autoload;
         }
 
@@ -184,7 +184,7 @@ class CKEditorType extends AbstractType
      */
     public function isAutoInline($autoInline = null)
     {
-        if ($autoInline !== null) {
+        if (null !== $autoInline) {
             $this->autoInline = (bool) $autoInline;
         }
 
@@ -198,7 +198,7 @@ class CKEditorType extends AbstractType
      */
     public function isInline($inline = null)
     {
-        if ($inline !== null) {
+        if (null !== $inline) {
             $this->inline = (bool) $inline;
         }
 
@@ -212,7 +212,7 @@ class CKEditorType extends AbstractType
      */
     public function useJquery($jquery = null)
     {
-        if ($jquery !== null) {
+        if (null !== $jquery) {
             $this->jquery = (bool) $jquery;
         }
 
@@ -226,7 +226,7 @@ class CKEditorType extends AbstractType
      */
     public function useRequireJs($requireJs = null)
     {
-        if ($requireJs !== null) {
+        if (null !== $requireJs) {
             $this->requireJs = (bool) $requireJs;
         }
 
@@ -240,7 +240,7 @@ class CKEditorType extends AbstractType
      */
     public function isInputSync($inputSync = null)
     {
-        if ($inputSync !== null) {
+        if (null !== $inputSync) {
             $this->inputSync = (bool) $inputSync;
         }
 
@@ -459,7 +459,7 @@ class CKEditorType extends AbstractType
 
         $config = $options['config'];
 
-        if ($options['config_name'] === null) {
+        if (null === $options['config_name']) {
             $options['config_name'] = uniqid('fos', true);
             $configManager->setConfig($options['config_name'], $config);
         } else {
@@ -554,7 +554,7 @@ class CKEditorType extends AbstractType
             ->addAllowedTypes('styles', 'array')
             ->addAllowedTypes('templates', 'array')
             ->setNormalizer('base_path', function (Options $options, $value) {
-                if (substr($value, -1) !== '/') {
+                if ('/' !== substr($value, -1)) {
                     $value .= '/';
                 }
 

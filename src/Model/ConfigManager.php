@@ -36,7 +36,7 @@ class ConfigManager implements ConfigManagerInterface
     {
         $this->setConfigs($configs);
 
-        if ($defaultConfig !== null) {
+        if (null !== $defaultConfig) {
             $this->setDefaultConfig($defaultConfig);
         }
     }

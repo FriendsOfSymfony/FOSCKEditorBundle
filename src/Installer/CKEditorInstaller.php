@@ -20,30 +20,45 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CKEditorInstaller
 {
     const RELEASE_BASIC = 'basic';
+
     const RELEASE_FULL = 'full';
+
     const RELEASE_STANDARD = 'standard';
 
     const VERSION_LATEST = 'latest';
 
     const CLEAR_DROP = 'drop';
+
     const CLEAR_KEEP = 'keep';
+
     const CLEAR_SKIP = 'skip';
 
     const NOTIFY_CLEAR = 'clear';
+
     const NOTIFY_CLEAR_ARCHIVE = 'clear-archive';
+
     const NOTIFY_CLEAR_COMPLETE = 'clear-complete';
+
     const NOTIFY_CLEAR_PROGRESS = 'clear-progress';
+
     const NOTIFY_CLEAR_QUESTION = 'clear-question';
+
     const NOTIFY_CLEAR_SIZE = 'clear-size';
 
     const NOTIFY_DOWNLOAD = 'download';
+
     const NOTIFY_DOWNLOAD_COMPLETE = 'download-complete';
+
     const NOTIFY_DOWNLOAD_PROGRESS = 'download-progress';
+
     const NOTIFY_DOWNLOAD_SIZE = 'download-size';
 
     const NOTIFY_EXTRACT = 'extract';
+
     const NOTIFY_EXTRACT_COMPLETE = 'extract-complete';
+
     const NOTIFY_EXTRACT_PROGRESS = 'extract-progress';
+
     const NOTIFY_EXTRACT_SIZE = 'extract-size';
 
     /**
@@ -90,7 +105,7 @@ class CKEditorInstaller
     {
         $options = $this->resolver->resolve($options);
 
-        if ($this->clear($options) === self::CLEAR_SKIP) {
+        if (self::CLEAR_SKIP === $this->clear($options)) {
             return false;
         }
 
@@ -110,15 +125,15 @@ class CKEditorInstaller
             return self::CLEAR_DROP;
         }
 
-        if ($options['clear'] === null && $options['notifier'] !== null) {
+        if (null === $options['clear'] && null !== $options['notifier']) {
             $options['clear'] = $this->notify($options['notifier'], self::NOTIFY_CLEAR, $options['path']);
         }
 
-        if ($options['clear'] === null) {
+        if (null === $options['clear']) {
             $options['clear'] = self::CLEAR_SKIP;
         }
 
-        if ($options['clear'] === self::CLEAR_DROP) {
+        if (self::CLEAR_DROP === $options['clear']) {
             $files = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($options['path'], \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
@@ -163,7 +178,7 @@ class CKEditorInstaller
 
         $zip = @file_get_contents($url, false, $this->createStreamContext($options['notifier']));
 
-        if ($zip === false) {
+        if (false === $zip) {
             throw $this->createException(sprintf('Unable to download CKEditor ZIP archive from "%s".', $url));
         }
 
@@ -203,17 +218,19 @@ class CKEditorInstaller
                 $transferred,
                 $size
             ) use ($notifier) {
-                if ($notifier === null) {
+                if (null === $notifier) {
                     return;
                 }
 
                 switch ($code) {
                     case STREAM_NOTIFY_FILE_SIZE_IS:
                         $this->notify($notifier, self::NOTIFY_DOWNLOAD_SIZE, $size);
+
                         break;
 
                     case STREAM_NOTIFY_PROGRESS:
                         $this->notify($notifier, self::NOTIFY_DOWNLOAD_PROGRESS, $transferred);
+
                         break;
                 }
             },
@@ -268,12 +285,12 @@ class CKEditorInstaller
         $to = $options['path'].'/'.$rewrite;
 
         foreach ($options['excludes'] as $exclude) {
-            if (strpos($rewrite, $exclude) === 0) {
+            if (0 === strpos($rewrite, $exclude)) {
                 return;
             }
         }
 
-        if (substr($from, -1) === '/') {
+        if ('/' === substr($from, -1)) {
             if (!is_dir($to) && !@mkdir($to)) {
                 throw $this->createException(sprintf('Unable to create the directory "%s".', $to));
             }
@@ -295,7 +312,7 @@ class CKEditorInstaller
      */
     private function notify(callable $notifier = null, $type, $data = null)
     {
-        if ($notifier !== null) {
+        if (null !== $notifier) {
             return $notifier($type, $data);
         }
     }
