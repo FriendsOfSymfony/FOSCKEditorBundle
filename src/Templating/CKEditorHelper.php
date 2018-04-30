@@ -94,6 +94,6 @@ class CKEditorHelper extends Helper implements CKEditorRendererInterface
      */
     public function getName()
     {
-        return 'ivory_ckeditor';
+        return 'fos_ckeditor';
     }
 }
