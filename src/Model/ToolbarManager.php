@@ -44,7 +44,7 @@ class ToolbarManager implements ToolbarManagerInterface
             'Subscript',
             'Superscript',
             '-',
-            'RemoveFormat'
+            'RemoveFormat',
         ],
         'full.clipboard' => ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
         'full.colors' => ['TextColor', 'BGColor'],
@@ -59,7 +59,7 @@ class ToolbarManager implements ToolbarManagerInterface
             'SelectField',
             'Button',
             'ImageButton',
-            'HiddenField'
+            'HiddenField',
         ],
         'full.insert' => ['Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'],
         'full.links' => ['Link', 'Unlink', 'Anchor'],
@@ -79,7 +79,7 @@ class ToolbarManager implements ToolbarManagerInterface
             'JustifyBlock',
             '-',
             'BidiLtr',
-            'BidiRtl'
+            'BidiRtl',
         ],
         'full.styles' => ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'],
         'full.tools' => ['Maximize', 'ShowBlocks'],

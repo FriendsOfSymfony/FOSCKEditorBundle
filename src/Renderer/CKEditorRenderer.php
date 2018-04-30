@@ -70,7 +70,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         if ($containerOrJsonBuilder instanceof ContainerInterface) {
             @trigger_error(sprintf(
                 'Passing a %s as %s first argument is deprecated since FOSCKEditor 6.1, and will be removed in 7.0.'
-                . ' Use %s instead.',
+                .' Use %s instead.',
                 ContainerInterface::class,
                 __METHOD__,
                 JsonBuilder::class
