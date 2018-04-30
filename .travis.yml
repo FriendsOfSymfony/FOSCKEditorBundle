@@ -10,6 +10,7 @@ env:
     global:
         - PHPUNIT_FLAGS="-v --exclude-group installation"
         - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+        - TARGET=test
 
 matrix:
     fast_finish: true
@@ -40,18 +41,10 @@ before_install:
     - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
 
 install:
-    # moved from former install script
-    - composer remove --no-update --dev friendsofphp/php-cs-fixer
-    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
-    - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-    - ./vendor/bin/simple-phpunit install
+    - if [ -x .travis/install_${TARGET}.sh ]; then .travis/install_${TARGET}.sh; fi;
 
 script:
-    - composer validate --strict --no-check-lock
-    # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
-    # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
-    - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
+    - if [ -x .travis/script_${TARGET}.sh ]; then .travis/script_${TARGET}.sh; fi;
 
 branches:
     only: master
