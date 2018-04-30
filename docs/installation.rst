@@ -8,7 +8,7 @@ Require the bundle in your ``composer.json`` file:
 
 .. code-block:: bash
 
-    $ composer require egeloen/ckeditor-bundle
+    $ composer require friendsofsymfony/ckeditor-bundle
 
 Register the Bundle
 -------------------
