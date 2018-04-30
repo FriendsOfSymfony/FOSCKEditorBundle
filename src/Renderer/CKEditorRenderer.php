@@ -62,7 +62,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
      * @param EngineInterface                $templating
      * @param null|string                    $locale
      */
-    public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null, EngineInterface
+    public function __construct($containerOrJsonBuilder, RouterInterface $router = null, Packages $packages = null, RequestStack $requestStack = null,
     $templating = null, $locale = null)
     {
         if ($containerOrJsonBuilder instanceof ContainerInterface) {
@@ -71,7 +71,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
             $router = $containerOrJsonBuilder->get('router');
             $packages = $containerOrJsonBuilder->get('assets.packages');
             $requestStack = $containerOrJsonBuilder->get('request_stack');
-            $templating = $containerOrJsonBuilder->get('templating');
+            $templating = $containerOrJsonBuilder->has('twig') ? $containerOrJsonBuilder->get('twig') : $containerOrJsonBuilder->get('templating');
         } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
             $jsonBuilder = $containerOrJsonBuilder;
             if ($router === null) {
