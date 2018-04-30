@@ -172,10 +172,10 @@ EOF;
 
     CKEDITOR.disableAutoInline = true;
 
-    var ivory_ckeditor_id = CKEDITOR.inline("id", {"foo": "bar"});
+    var fos_ckeditor_id = CKEDITOR.inline("id", {"foo": "bar"});
 
-    ivory_ckeditor_id.on('change', function() {
-        ivory_ckeditor_id.updateElement();
+    fos_ckeditor_id.on('change', function() {
+        fos_ckeditor_id.updateElement();
     });
 </script>
 EOF;

@@ -138,7 +138,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         );
 
         if (isset($options['input_sync']) && $options['input_sync']) {
-            $variable = 'ivory_ckeditor_'.$id;
+            $variable = 'fos_ckeditor_'.$id;
             $widget = 'var '.$variable.' = '.$widget."\n";
 
             return $autoInline.$widget.$variable.'.on(\'change\', function() { '.$variable.'.updateElement(); });';

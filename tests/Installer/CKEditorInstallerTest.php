@@ -65,7 +65,7 @@ class CKEditorInstallerTest extends AbstractTestCase
 
     public function testInstallWithPath()
     {
-        $this->path = sys_get_temp_dir().'/ivory-ckeditor-installer-test';
+        $this->path = sys_get_temp_dir().'/fos-ckeditor-installer-test';
         $this->installer->install(['path' => $this->path]);
 
         $this->assertInstall();
