@@ -7,7 +7,7 @@
     <services>
         <service id="fos_ck_editor.templating.helper" class="FOS\CKEditorBundle\Templating\CKEditorHelper">
             <argument type="service" id="fos_ck_editor.renderer" />
-            <tag name="templating.helper" alias="ivory_ckeditor" />
+            <tag name="templating.helper" alias="fos_ckeditor" />
         </service>
     </services>
 </container>

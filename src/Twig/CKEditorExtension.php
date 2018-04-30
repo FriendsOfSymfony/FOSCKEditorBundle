@@ -112,6 +112,6 @@ class CKEditorExtension extends AbstractExtension implements CKEditorRendererInt
      */
     public function getName()
     {
-        return 'ivory_ckeditor';
+        return 'fos_ckeditor';
     }
 }
