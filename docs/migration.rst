@@ -3,7 +3,7 @@ Migration from IvoryCKEditorBundle to FOSCKEditorBundle
 
 Here we will explain the process of migration.
 
-TL;DR: Check how we migrated [SonataFormatterBundle](https://github.com/sonata-project/SonataFormatterBundle/pull/331)
+TL;DR: Check how we migrated `SonataFormatterBundle`_
 
 Update composer.json
 --------------------
@@ -27,6 +27,12 @@ With:
             "friendsofsymfony/ckeditor-bundle": "^1.0"
         }
     }
+
+And then install package:
+
+.. code-block:: bash
+
+    composer install
 
 Update bundle definition
 ------------------------
@@ -139,6 +145,7 @@ Replace:
                 filebrowserUploadRoute: "my_route"
                 extraPlugins:           "wordcount"
                 # ...
+
 With:
 
 .. code-block:: yaml
@@ -192,11 +199,19 @@ You would do::
     $this-get('fos_ck_editor.form.type');
 
 
-Regenerate assets again
----------------------
+Regenerate assets
+-----------------
 
-You will have to regenerate your assets, just run:
+First fetch ckeditor assets:
+
+.. code-block:: bash
+
+    bin/console ckeditor:install
+
+and then regenerate Symfony assets:
 
 .. code-block:: bash
 
     bin/console assets:install
+
+.. _`SonataFormatterBundle`: https://github.com/sonata-project/SonataFormatterBundle/pull/331
