@@ -6,7 +6,7 @@
 >
     <services>
         <service id="fos_ck_editor.builder.json_builder" class="FOS\CKEditorBundle\Builder\JsonBuilder">
-            <argument type="service" id="property_accessor"/>
+            <argument type="service" id="property_accessor" on-invalid="null"/>
         </service>
     </services>
 </container>

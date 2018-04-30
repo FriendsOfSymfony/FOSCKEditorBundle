@@ -21,7 +21,7 @@ class JsonBuilderTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->jsonBuilder = new JsonBuilder(new PropertyAccessor());
+        $this->jsonBuilder = new JsonBuilder();
     }
 
     public function testDefaultState()

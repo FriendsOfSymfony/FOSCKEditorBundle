@@ -11,6 +11,7 @@
 
 namespace FOS\CKEditorBundle\Builder;
 
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
@@ -38,9 +39,12 @@ class JsonBuilder
      */
     private $jsonEncodeOptions;
 
-    public function __construct(PropertyAccessorInterface $propertyAccessor)
+    /**
+     * @param PropertyAccessorInterface|null $propertyAccessor
+     */
+    public function __construct(PropertyAccessorInterface $propertyAccessor = null)
     {
-        $this->accessor = $propertyAccessor;
+        $this->accessor = $propertyAccessor ?: new PropertyAccessor();
 
         $this->reset();
     }
