@@ -13,4 +13,4 @@
 /phpunit.xml
 
 # Documentation
-/docs/_build/*
+/doc/_build/*
