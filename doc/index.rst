@@ -70,4 +70,4 @@ Contributing
 .. _`Form Component`: http://symfony.com/doc/current/book/forms.html
 .. _`textarea`: http://symfony.com/doc/current/reference/forms/types/textarea.html
 .. _`CKEditor config`: http://docs.ckeditor.com/#!/api/CKEDITOR.config
-.. _`just follow our guide`: /docs/migration.rst
+.. _`just follow our guide`: /doc/migration.rst

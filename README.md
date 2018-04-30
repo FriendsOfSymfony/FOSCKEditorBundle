@@ -25,7 +25,7 @@ Migration from IvoryCKEditorBundle to FOSCKEditorBundle
 -------------------------------------------------------
 
 As IvoryCKEditorBundle was abandoned, FriendsOfSymfony took this bundle over, to help
-you easily migrate [just follow our guide](/docs/migration.rst).
+you easily migrate [just follow our guide](/doc/migration.rst).
 
 Documentation
 -------------
