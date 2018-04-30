@@ -3,7 +3,7 @@ Migration from IvoryCKEditorBundle to FOSCKEditorBundle
 
 Here we will explain the process of migration.
 
-TL;DR: Check how we migrated [SonataFormatterBundle](https://github.com/sonata-project/SonataFormatterBundle/pull/331)
+TL;DR: Check how we migrated `SonataFormatterBundle`_
 
 Update composer.json
 --------------------
@@ -139,6 +139,7 @@ Replace:
                 filebrowserUploadRoute: "my_route"
                 extraPlugins:           "wordcount"
                 # ...
+
 With:
 
 .. code-block:: yaml
@@ -193,10 +194,12 @@ You would do::
 
 
 Regenerate assets again
----------------------
+-----------------------
 
 You will have to regenerate your assets, just run:
 
 .. code-block:: bash
 
     bin/console assets:install
+
+.. _`SonataFormatterBundle`: https://github.com/sonata-project/SonataFormatterBundle/pull/331
