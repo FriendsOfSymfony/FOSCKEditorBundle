@@ -28,7 +28,7 @@
     "require-dev": {
         "composer/composer": "^1.0",
         "friendsofphp/php-cs-fixer": "^2.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^1.0 | ^2.0",
         "phpunit/phpunit": "^5.0 || ^6.0",
         "sensio/distribution-bundle": "^3.0.12 || ^4.0 || ^5.0",
         "symfony/asset": "^2.7 || ^3.0 || ^4.0",
