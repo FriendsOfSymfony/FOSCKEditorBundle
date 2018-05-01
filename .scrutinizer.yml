@@ -22,6 +22,7 @@ build:
                     - php-scrutinizer-run
                     -
                          command: 'vendor/bin/simple-phpunit -v --coverage-clover build/clover.xml  --exclude-group installation'
+                         environment: { SYMFONY_PHPUNIT_VERSION: '6.5' }
                          coverage:
                               file: 'build/clover.xml'
                               format: 'clover'
