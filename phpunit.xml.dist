@@ -11,6 +11,13 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+
+    <groups>
+        <exclude>
+            <group>installation</group>
+        </exclude>
+    </groups>
+
     <filter>
         <whitelist>
             <directory>./</directory>
@@ -18,6 +25,7 @@
                 <directory>./src/Resources</directory>
                 <directory>./tests</directory>
                 <directory>./vendor</directory>
+                <group>installation</group>
             </exclude>
         </whitelist>
     </filter>
