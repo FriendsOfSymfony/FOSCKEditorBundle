@@ -49,7 +49,7 @@
         "twig/twig": "^1.34 || ^2.0"
     },
     "suggest": {
-        "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously",
+        "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously"
     },
     "extra": {
         "branch-alias": {
