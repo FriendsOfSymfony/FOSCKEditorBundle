@@ -22,14 +22,17 @@ matrix:
         - php: 7.0
           env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
+          # Coverage
+        - php: 7.1
+          env:
+            - PHPUNIT_FLAGS="-v --coverage-clover build/logs/clover.xml"
+            - SYMFONY_PHPUNIT_VERSION="6.5"
+            - COVERAGE=true
+
           # Test LTS versions. This makes sure we do not use Symfony packages with version greater
           # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
         - php: 7.1
-          env:
-            - DEPENDENCIES="symfony/lts:^2"
-            - PHPUNIT_FLAGS="-v --coverage-clover build/logs/clover.xml  --exclude-group installation"
-            - SYMFONY_PHPUNIT_VERSION="6.5"
-            - COVERAGE=true
+          env: DEPENDENCIES="symfony/lts:^2"
 
         - php: 7.2
           env: DEPENDENCIES="symfony/lts:^3"

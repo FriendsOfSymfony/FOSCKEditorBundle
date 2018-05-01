@@ -7,7 +7,7 @@ General:
 Quality: 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
 [![Scrutinizer Build](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/quality-score.png?b=master)
-[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/FriendsOfSymfony/FOSCKEditorBundle/badge.svg)](https://coveralls.io/github/FriendsOfSymfony/FOSCKEditorBundle)
 [![Scrutinizer Code Intelligence](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/g/FriendsOfSymfony/FOSCKEditorBundle/?branch=master)
 
 Numbers: 
