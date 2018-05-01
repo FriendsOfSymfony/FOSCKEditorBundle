@@ -53,7 +53,7 @@ Migration from IvoryCKEditorBundle to FOSCKEditorBundle
 -------------------------------------------------------
 
 As IvoryCKEditorBundle was abandoned, FriendsOfSymfony took this bundle over, to help
-you easily migrate `just follow our guide`_.
+you easily migrate :doc:`just follow our guide <migration>`.
 
 Usage
 -----
@@ -70,4 +70,3 @@ Contributing
 .. _`Form Component`: http://symfony.com/doc/current/book/forms.html
 .. _`textarea`: http://symfony.com/doc/current/reference/forms/types/textarea.html
 .. _`CKEditor config`: http://docs.ckeditor.com/#!/api/CKEDITOR.config
-.. _`just follow our guide`: /doc/migration.rst
