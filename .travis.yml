@@ -9,7 +9,6 @@ cache:
 
 env:
     global:
-        - SYMFONY_PHPUNIT_VERSION=6.5
         - PHPUNIT_FLAGS="-v --exclude-group installation"
         - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
         - TARGET=test
