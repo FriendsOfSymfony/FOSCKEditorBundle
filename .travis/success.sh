@@ -5,6 +5,9 @@ set -e
 COVERAGE=${COVERAGE-false}
 
 if [ "${COVERAGE}" == true ]; then
-    wget https://scrutinizer-ci.com/ocular.phar
-    php ocular.phar code-coverage:upload --format=php-clover build/clover.xml
+    # Coveralls client install
+    wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar --output-document="${HOME}/bin/coveralls"
+    chmod u+x "${HOME}/bin/coveralls"
+
+    coveralls -v
 fi;
