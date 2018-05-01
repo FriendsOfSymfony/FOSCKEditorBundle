@@ -31,7 +31,6 @@
         "symfony/routing": "^2.7 || ^3.0 || ^4.0"
     },
     "conflict": {
-        "egeloen/ckeditor-bundle": "*",
         "sebastian/environment": "<1.3.4",
         "sebastian/exporter": "<2.0.0"
     },
@@ -51,11 +50,6 @@
     },
     "suggest": {
         "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously",
-        "sensio/distribution-bundle": "Allows to install CKEditor via a script handler",
-        "symfony/asset": "Allows to rewrite/version assets",
-        "symfony/templating": "Allows to use PHP templates",
-        "symfony/twig-bridge": "Allows to use Twig templates",
-        "twig/twig": "Allows to use Twig templates"
     },
     "extra": {
         "branch-alias": {
