@@ -11,17 +11,5 @@ checks:
 
 tools:
     external_code_coverage:
-        timeout: 800
+        timeout: 1200
         runs: 2
-
-build:
-    nodes:
-        analysis:
-            tests:
-                override:
-                    - php-scrutinizer-run
-                    -
-                         command: 'vendor/bin/simple-phpunit -v --coverage-clover build/clover.xml  --exclude-group installation'
-                         coverage:
-                              file: 'build/clover.xml'
-                              format: 'clover'
