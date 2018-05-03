@@ -5,6 +5,7 @@
 * :doc:`/usage/language`
 * :doc:`/usage/file-browse-upload`
 * :doc:`/usage/jquery`
+* :doc:`/usage/json-builder`
 * :doc:`/usage/require-js`
 * :doc:`/usage/append-javascript`
 * :doc:`/usage/textarea-sync`
