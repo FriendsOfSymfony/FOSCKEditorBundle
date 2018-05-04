@@ -28,11 +28,11 @@ With:
         }
     }
 
-And then install package:
+And then update packages:
 
 .. code-block:: bash
 
-    composer install
+    composer update
 
 Update bundle definition
 ------------------------
