@@ -48,6 +48,9 @@
         "symfony/yaml": "^2.7 || ^3.0 || ^4.0",
         "twig/twig": "^1.34 || ^2.0"
     },
+    "replace": {
+        "egeloen/ckeditor-bundle": "^6.0"
+    },
     "suggest": {
         "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously"
     },
