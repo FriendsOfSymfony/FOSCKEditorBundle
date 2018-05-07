@@ -51,7 +51,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
 
         if (isset($bundles['IvoryCKEditorBundle'])) {
             @trigger_error(
-                'IvoryCKEditorBundle is abandoned and should be replaced with FOSCKEditorBundle.',
+                "IvoryCKEditorBundle isn't maintained anymore and should be replaced with FOSCKEditorBundle.",
                 E_USER_DEPRECATED
             );
         }
