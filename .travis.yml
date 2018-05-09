@@ -63,7 +63,7 @@ install:
     - if [ -x .travis/install_${TARGET}.sh ]; then .travis/install_${TARGET}.sh; fi;
 
 script:
-    - if [ -x .travis/script_${TARGET}.sh ]; then if [ ${TARGET} == "phpstan" ]; then .travis/script_${TARGET}.sh ${LEVEL}; else .travis/script_${TARGET}.sh; fi fi;
+    - if [ -x .travis/script_${TARGET}.sh ]; then if [ ${TARGET} == "phpstan" ] then .travis/script_${TARGET}.sh ${LEVEL}; else .travis/script_${TARGET}.sh; fi fi;
 
 after_success: .travis/success.sh
 
