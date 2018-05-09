@@ -63,8 +63,7 @@ install:
     - if [ -x .travis/install_${TARGET}.sh ]; then .travis/install_${TARGET}.sh; fi;
 
 script:
-    - ARGUMENTS=${LEVEL-null}
-    - if [ -x .travis/script_${TARGET}.sh ]; then .travis/script_${TARGET}.sh ${ARGUMENTS}; fi;
+    - if [ -x .travis/script_${TARGET}.sh ]; then .travis/script_${TARGET}.sh; fi;
 
 after_success: .travis/success.sh
 
