@@ -49,6 +49,12 @@ matrix:
           # Dev-master is allowed to fail.
         - env: STABILITY="dev"
 
+        - php: '7.2'
+          env: TARGET=phpstan LEVEL=0
+
+        - php: '7.2'
+          env: TARGET=phpstan LEVEL=8
+
 before_install:
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
     - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
@@ -57,7 +63,7 @@ install:
     - if [ -x .travis/install_${TARGET}.sh ]; then .travis/install_${TARGET}.sh; fi;
 
 script:
-    - if [ -x .travis/script_${TARGET}.sh ]; then .travis/script_${TARGET}.sh; fi;
+    - if [ -x .travis/script_${TARGET}.sh ]; then if [ ${TARGET} == "phpstan" ]; then .travis/script_${TARGET}.sh ${LEVEL}; else .travis/script_${TARGET}.sh; fi fi;
 
 after_success: .travis/success.sh
 
