@@ -37,23 +37,22 @@ matrix:
         - php: 7.2
           env: DEPENDENCIES="symfony/lts:^3"
 
-          # Latest commit to master
+          #doc
+        - php: 7.2
+          env: TARGET=docs
+
         - php: 7.2
           env: STABILITY="dev"
 
-          #doc
-        - php: '7.2'
-          env: TARGET=docs
-
-        - php: '7.2'
+        - php: 7.2
           env: TARGET=phpstan LEVEL=0
 
-    allow_failures:
-          # Dev-master is allowed to fail.
-        - env: STABILITY="dev"
-
-        - php: '7.2'
+        - php: 7.2
           env: TARGET=phpstan LEVEL=8
+
+    allow_failures:
+        - env: STABILITY="dev"
+        - env: TARGET=phpstan LEVEL=8
 
 before_install:
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
