@@ -19,6 +19,7 @@ class FOSCKEditorExtensionTest extends AbstractExtensionTestCase
 {
     public function testHasServiceDefinitionForTemplatingAlias()
     {
+        $this->container->setParameter('kernel.bundles', []);
         $this->load();
 
         $taggedServices = $this->container->findTaggedServiceIds('templating.helper');
