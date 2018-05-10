@@ -1,3 +1,36 @@
+<?php
+
+/*
+ * This file is part of the FOSCKEditor Bundle.
+ *
+ * (c) 2018 - present  Friends of Symfony
+ * (c) 2009 - 2017     Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
+use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
+
+/**
+ * @var CKEditorRendererInterface[] $view
+ * @var string $id
+ * @var string $base_path
+ * @var string $js_path
+ * @var string $jquery_path
+ * @var bool $jquery
+ * @var bool $require_js
+ * @var string[][] $styles
+ * @var string[][] $plugins
+ * @var string[][] $templates
+ * @var string $auto_inline
+ * @var string $input_sync
+ * @var string $inline
+ * @var string $filebrowsers
+ * @var array $config
+ */
+
+?>
 <?php if ($autoload) : ?>
     <script type="text/javascript">
         var CKEDITOR_BASEPATH = "<?php echo $view['fos_ckeditor']->renderBasePath($base_path); ?>";

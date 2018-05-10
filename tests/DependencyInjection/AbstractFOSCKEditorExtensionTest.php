@@ -39,7 +39,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     private $container;
 
     /**
-     * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
      */
     private $packages;
 
