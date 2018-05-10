@@ -11,10 +11,9 @@
  */
 
 /**
- * @var bool $enable
+ * @var bool
  * @var bool $async
  */
-
 ?>
 <?php if ($enable && $async) : ?>
     <?php include __DIR__.'/_ckeditor_javascript.html.php'; ?>

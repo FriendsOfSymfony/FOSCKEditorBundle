@@ -11,13 +11,12 @@
  */
 
 /**
- * @var CKEditorRendererInterface|FormView[] $view
- * @var object $form
- * @var string $value
- * @var bool $enable
- * @var bool $async
+ * @var CKEditorRendererInterface|FormView[]
+ * @var object                               $form
+ * @var string                               $value
+ * @var bool                                 $enable
+ * @var bool                                 $async
  */
-
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Symfony\Component\Form\FormView;
 

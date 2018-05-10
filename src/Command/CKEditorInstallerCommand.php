@@ -15,7 +15,6 @@ namespace FOS\CKEditorBundle\Command;
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -357,8 +356,8 @@ EOF
     }
 
     /**
-     * @param ProgressBar $progress
-     * @param OutputInterface            $output
+     * @param ProgressBar     $progress
+     * @param OutputInterface $output
      */
     private function finishProgressBar($progress, OutputInterface $output)
     {

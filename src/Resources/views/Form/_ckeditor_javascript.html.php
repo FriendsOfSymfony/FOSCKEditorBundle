@@ -12,7 +12,7 @@
 
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 
-/**
+/*
  * @var CKEditorRendererInterface[] $view
  * @var string $id
  * @var string $base_path
