@@ -11,7 +11,7 @@ Update composer.json
 .. code-block:: bash
 
     composer remove egeloen/ckeditor-bundle
-    composer require friensofsymfony/ckeditor-bundle
+    composer require friendsofsymfony/ckeditor-bundle
 
 Update bundle definition
 ------------------------
