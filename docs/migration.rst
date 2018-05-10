@@ -32,7 +32,7 @@ And then install package:
 
 .. code-block:: bash
 
-    composer install
+    composer update
 
 Update bundle definition
 ------------------------
@@ -196,7 +196,7 @@ Instead of doing::
 
 You would do::
 
-    $this-get('fos_ck_editor.form.type');
+    $this->get('fos_ck_editor.form.type');
 
 
 Regenerate assets
