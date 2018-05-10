@@ -1,7 +1,5 @@
 parameters:
-    autoload_files:
-        - %currentWorkingDirectory%/tests/autoload.php
+    bootstrap: %currentWorkingDirectory%/tests/autoload.php
     excludes_analyse:
-        - %currentWorkingDirectory%/vendor/*excludes_analyse:
         - %currentWorkingDirectory%/src/Resources/views/Form/*html.php
         - %currentWorkingDirectory%/tests/autoload.php
