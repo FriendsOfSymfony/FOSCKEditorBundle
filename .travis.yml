@@ -52,7 +52,7 @@ matrix:
 
     allow_failures:
         - env: STABILITY="dev"
-        - env: TARGET=phpstan LEVEL=8
+        - env: TARGET=phpstan LEVEL=7
 
 before_install:
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
