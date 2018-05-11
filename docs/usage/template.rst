@@ -6,7 +6,7 @@ Enable the Templates Plugin
 
 The bundle offers you the ability to manage extra templates. To use this
 feature, you need to enable the ``templates`` plugins shipped with the bundle.
-You can define iy globally in your configuration:
+You can define it globally in your configuration:
 
 .. code-block:: yaml
 
