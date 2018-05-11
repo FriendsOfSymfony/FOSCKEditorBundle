@@ -8,31 +8,10 @@ TL;DR: Check how we migrated `SonataFormatterBundle`_
 Update composer.json
 --------------------
 
-Replace:
-
-.. code-block:: json
-
-    {
-        "require": {
-            "egeloen/ckeditor-bundle": "*"
-        }
-    }
-
-With:
-
-.. code-block:: json
-
-    {
-        "require": {
-            "friendsofsymfony/ckeditor-bundle": "^1.0"
-        }
-    }
-
-And then install package:
-
 .. code-block:: bash
 
-    composer install
+    composer remove egeloen/ckeditor-bundle
+    composer require friendsofsymfony/ckeditor-bundle
 
 Update bundle definition
 ------------------------

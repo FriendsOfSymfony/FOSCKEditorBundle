@@ -60,6 +60,3 @@ script:
     - if [ -x .travis/script_${TARGET}.sh ]; then .travis/script_${TARGET}.sh; fi;
 
 after_success: .travis/success.sh
-
-branches:
-    only: master

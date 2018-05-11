@@ -46,6 +46,15 @@ class FOSCKEditorExtension extends ConfigurableExtension
                 ->clearTag('form.type')
                 ->addTag('form.type', ['alias' => 'ckeditor']);
         }
+
+        $bundles = $container->getParameter('kernel.bundles');
+
+        if (isset($bundles['IvoryCKEditorBundle'])) {
+            @trigger_error(
+                "IvoryCKEditorBundle isn't maintained anymore and should be replaced with FOSCKEditorBundle.",
+                E_USER_DEPRECATED
+            );
+        }
     }
 
     /**
