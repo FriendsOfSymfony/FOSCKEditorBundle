@@ -83,7 +83,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->container->set('twig.form.renderer', $this->formRenderer);
         $this->container->set('request_stack', $this->requestStack);
         $this->container->set('templating', $this->templating);
-
+        $this->container->setParameter('kernel.bundles', []);
         $this->container->registerExtension($extension = new FOSCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());
 

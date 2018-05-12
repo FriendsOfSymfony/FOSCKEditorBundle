@@ -61,8 +61,14 @@ If you're using Symfony <= 2.8:
 
     $ php app/console assets:install web
 
-If you're using Symfony >= 3.0:
+If you're using Symfony >= 3.0 without Symfony Flex:
 
 .. code-block:: bash
 
     $ php bin/console assets:install web
+
+If you're using Symfony Flex:
+
+.. code-block:: bash
+
+    $ php bin/console assets:install public

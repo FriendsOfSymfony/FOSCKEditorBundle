@@ -7,7 +7,7 @@
     <services>
         <service id="fos_ck_editor.command.installer" class="FOS\CKEditorBundle\Command\CKEditorInstallerCommand">
             <argument type="service" id="fos_ck_editor.installer" />
-            <tag name="console.command" />
+            <tag name="console.command" command="ckeditor:install" />
         </service>
     </services>
 </container>
