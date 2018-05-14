@@ -42,7 +42,7 @@ class CKEditorInstallerTest extends AbstractTestCase
     {
         $this->installer = new CKEditorInstaller();
         $this->path = __DIR__.'/../../src/Resources/public';
-        $this->proxy = 'http://178.32.218.91:80';
+        $this->proxy = '178.32.218.91:80';
 
         $this->tearDown();
     }
