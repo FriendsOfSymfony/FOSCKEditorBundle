@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -60,12 +60,7 @@ class CKEditorRendererTest extends AbstractTestCase
     private $router;
 
     /**
-     * @var EngineInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $templating;
-
-    /**
-     * @var \Twig\Environment|\PHPUnit_Framework_MockObject_MockObject
+     * @var Environment|\PHPUnit_Framework_MockObject_MockObject
      */
     private $twig;
 
@@ -82,12 +77,11 @@ class CKEditorRendererTest extends AbstractTestCase
 
         $this->requestStack = $this->createMock(RequestStack::class);
         $this->requestStack->expects($this->any())->method('getCurrentRequest')->will($this->returnValue($this->request));
-        $this->templating = $this->createMock(EngineInterface::class);
-        $this->twig = $this->getMockBuilder(\Twig_Environment::class)
+        $this->twig = $this->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->templating);
+        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->twig);
     }
 
     public function testDefaultState()
@@ -109,14 +103,14 @@ class CKEditorRendererTest extends AbstractTestCase
                 ['router'],
                 ['assets.packages'],
                 ['request_stack'],
-                ['templating']
+                ['twig']
             )
             ->willReturnMap([
                 ['fos_ck_editor.renderer.json_builder', new JsonBuilder()],
                 ['router', $this->router],
                 ['assets.packages', $this->packages],
                 ['request_stack', $this->requestStack],
-                ['templating', $this->templating],
+                ['twig', $this->twig],
             ]);
 
         new CKEditorRenderer($container);
@@ -492,50 +486,6 @@ class CKEditorRendererTest extends AbstractTestCase
             ->will($this->returnValue($asset));
 
         $json = json_encode(['imagesPath' => $url, 'templates' => $templates]);
-
-        $this->assertSame(
-            'CKEDITOR.addTemplates("foo", '.$json.');',
-            $this->renderer->renderTemplate('foo', ['imagesPath' => $path, 'templates' => $templates])
-        );
-    }
-
-    /**
-     * @param string $path
-     * @param string $asset
-     * @param string $url
-     *
-     * @dataProvider directoryAssetProvider
-     */
-    public function testRenderTemplateWithEngineInteface($path, $asset, $url)
-    {
-        $templates = [
-            [
-                'title' => 'Template title',
-                'template' => $template = 'template_name',
-                'template_parameters' => $templateParameters = ['foo' => 'bar'],
-            ],
-        ];
-
-        $processedTemplates = [
-            [
-                'title' => 'Template title',
-                'html' => $html = '<p>Template content</p>',
-            ],
-        ];
-
-        $this->packages
-            ->expects($this->once())
-            ->method('getUrl')
-            ->with($this->equalTo($path))
-            ->will($this->returnValue($asset));
-
-        $this->templating
-            ->expects($this->once())
-            ->method('render')
-            ->with($this->identicalTo($template), $this->identicalTo($templateParameters))
-            ->will($this->returnValue($html));
-
-        $json = json_encode(['imagesPath' => $url, 'templates' => $processedTemplates]);
 
         $this->assertSame(
             'CKEDITOR.addTemplates("foo", '.$json.');',

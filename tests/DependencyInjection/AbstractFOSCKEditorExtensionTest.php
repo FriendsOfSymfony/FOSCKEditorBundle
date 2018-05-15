@@ -24,7 +24,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -58,9 +58,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     private $requestStack;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
-    private $templating;
+    private $twig;
 
     /**
      * {@inheritdoc}
@@ -74,14 +74,14 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
             ->getMock();
         $this->requestStack = $this->createMock(RequestStack::class);
         $this->container = new ContainerBuilder();
-        $this->templating = $this->createMock(EngineInterface::class);
+        $this->twig = $this->createMock(Environment::class);
 
         $this->container->set('assets.packages', $this->packages);
         $this->container->set('router', $this->router);
         $this->container->set('templating.form.renderer', $this->formRenderer);
         $this->container->set('twig.form.renderer', $this->formRenderer);
         $this->container->set('request_stack', $this->requestStack);
-        $this->container->set('templating', $this->templating);
+        $this->container->set('twig', $this->twig);
         $this->container->setParameter('kernel.bundles', []);
         $this->container->registerExtension($extension = new FOSCKEditorExtension());
         $this->container->loadFromExtension($extension->getAlias());

@@ -70,7 +70,6 @@ class FOSCKEditorExtension extends ConfigurableExtension
             'form',
             'installer',
             'renderer',
-            'templating',
             'twig',
         ];
 

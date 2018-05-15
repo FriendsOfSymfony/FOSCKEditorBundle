@@ -13,7 +13,6 @@
 namespace FOS\CKEditorBundle\Tests;
 
 use FOS\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
-use FOS\CKEditorBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -45,16 +44,11 @@ class FOSCKEditorBundleTest extends AbstractTestCase
     public function testCompilerPasses()
     {
         $containerBuilder = $this->createContainerBuilderMock();
+
         $containerBuilder
             ->expects($this->at(0))
             ->method('addCompilerPass')
             ->with($this->isInstanceOf(ResourceCompilerPass::class))
-            ->will($this->returnSelf());
-
-        $containerBuilder
-            ->expects($this->at(1))
-            ->method('addCompilerPass')
-            ->with($this->isInstanceOf(TemplatingCompilerPass::class))
             ->will($this->returnSelf());
 
         $this->bundle->build($containerBuilder);
