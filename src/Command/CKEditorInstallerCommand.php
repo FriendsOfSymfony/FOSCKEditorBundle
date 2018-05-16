@@ -348,7 +348,7 @@ EOF
         $result = $helper->ask(
             $input,
             $output,
-            new ChoiceQuestion($question, $choices, $choices[$default])
+            new ChoiceQuestion($question, $choices, $default)
         );
 
         $output->writeln('');
