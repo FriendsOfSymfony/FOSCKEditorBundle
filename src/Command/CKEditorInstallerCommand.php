@@ -15,7 +15,6 @@ namespace FOS\CKEditorBundle\Command;
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -160,9 +159,9 @@ EOF
      */
     private function createNotifier(InputInterface $input, OutputInterface $output)
     {
-        $clear = $this->createProgressBar($output);
-        $download = $this->createProgressBar($output);
-        $extract = $this->createProgressBar($output);
+        $clear = new ProgressBar($output);
+        $download = new ProgressBar($output);
+        $extract = new ProgressBar($output);
 
         return function ($type, $data) use ($input, $output, $clear, $download, $extract) {
             switch ($type) {
@@ -209,7 +208,7 @@ EOF
                     break;
 
                 case CKEditorInstaller::NOTIFY_CLEAR_SIZE:
-                    $this->startProgressBar($clear, $output, $data);
+                    $clear->start($data);
 
                     break;
 
@@ -224,12 +223,12 @@ EOF
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_PROGRESS:
-                    $this->advanceProgressBar($download, $data);
+                    $download->advance($data);
 
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_SIZE:
-                    $this->startProgressBar($download, $output, $data);
+                    $download->start($data);
 
                     break;
 
@@ -249,7 +248,7 @@ EOF
                     break;
 
                 case CKEditorInstaller::NOTIFY_EXTRACT_SIZE:
-                    $this->startProgressBar($extract, $output, $data);
+                    $extract->start($data);
 
                     break;
             }
@@ -348,7 +347,7 @@ EOF
         $result = $helper->ask(
             $input,
             $output,
-            new ChoiceQuestion($question, $choices, $choices[$default])
+            new ChoiceQuestion($question, $choices, $default)
         );
 
         $output->writeln('');
@@ -357,37 +356,8 @@ EOF
     }
 
     /**
+     * @param ProgressBar     $progress
      * @param OutputInterface $output
-     *
-     * @return ProgressBar|ProgressHelper
-     */
-    private function createProgressBar(OutputInterface $output)
-    {
-        return class_exists(ProgressBar::class) ? new ProgressBar($output) : new ProgressHelper();
-    }
-
-    /**
-     * @param ProgressBar|ProgressHelper $progress
-     * @param OutputInterface            $output
-     * @param int|null                   $max
-     */
-    private function startProgressBar($progress, OutputInterface $output, $max = null)
-    {
-        class_exists(ProgressBar::class) ? $progress->start($max) : $progress->start($output, $max);
-    }
-
-    /**
-     * @param ProgressBar|ProgressHelper $progress
-     * @param int                        $current
-     */
-    private function advanceProgressBar($progress, $current)
-    {
-        class_exists(ProgressBar::class) ? $progress->setProgress($current) : $progress->setCurrent($current);
-    }
-
-    /**
-     * @param ProgressBar|ProgressHelper $progress
-     * @param OutputInterface            $output
      */
     private function finishProgressBar($progress, OutputInterface $output)
     {
