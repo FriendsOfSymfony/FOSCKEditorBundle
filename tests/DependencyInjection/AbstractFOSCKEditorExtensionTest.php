@@ -25,7 +25,6 @@ use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Templating\Helper\CoreAssetsHelper;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -39,7 +38,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     private $container;
 
     /**
-     * @var Packages|CoreAssetsHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
      */
     private $packages;
 
