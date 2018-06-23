@@ -74,15 +74,7 @@ Silence Progress bars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 While downloading files necessary for the install, a progress bar will be shown
-by default, if you would prefer hiding it, use one of these methods:
-
-.. code-block:: json
-
-    {
-        "extra": {
-            "ckeditor-no-progress-bar": "true"
-        }
-    }
+by default, if you would prefer hiding it, use:
 
 .. code-block:: bash
 
