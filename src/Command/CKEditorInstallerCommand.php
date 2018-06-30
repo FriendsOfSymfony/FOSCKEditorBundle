@@ -223,7 +223,7 @@ EOF
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_PROGRESS:
-                    $download->advance($data);
+                    $download->setProgress($data);
 
                     break;
 
