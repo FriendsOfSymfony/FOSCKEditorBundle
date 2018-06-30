@@ -30,7 +30,7 @@ globally in your configuration:
                 extraPlugins: "wordcount"
         plugins:
             wordcount:
-                path:     "/bundles/mybundle/wordcount/"
+                path:     "/bundles/mybundle/wordcount/" # with trailing slash
                 filename: "plugin.js"
 
 Or you can do it in your widget:
@@ -43,7 +43,7 @@ Or you can do it in your widget:
         ),
         'plugins' => array(
             'wordcount' => array(
-                'path'     => '/bundles/mybundle/wordcount/',
+                'path'     => '/bundles/mybundle/wordcount/', // with trailing slash
                 'filename' => 'plugin.js',
             ),
         ),
