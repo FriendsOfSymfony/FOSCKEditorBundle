@@ -40,7 +40,7 @@ class PhpTemplateTest extends AbstractTemplateTest
     private $slotsHelper;
 
     /**
-     * {@inheritdoc}
+     * @group legacy
      */
     protected function setUp()
     {
@@ -63,6 +63,54 @@ class PhpTemplateTest extends AbstractTemplateTest
                 new CKEditorHelper($this->renderer),
             ]
         );
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testRenderWithSimpleWidget()
+    {
+        parent::testRenderWithSimpleWidget();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testRenderWithFullWidget()
+    {
+        parent::testRenderWithFullWidget();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testRenderWithJQuery()
+    {
+        parent::testRenderWithJQuery();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testRenderWithRequireJs()
+    {
+        parent::testRenderWithRequireJs();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testRenderWithNotAutoloadedWidget()
+    {
+        parent::testRenderWithNotAutoloadedWidget();
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testRenderWithDisableWidget()
+    {
+        parent::testRenderWithDisableWidget();
     }
 
     /**
