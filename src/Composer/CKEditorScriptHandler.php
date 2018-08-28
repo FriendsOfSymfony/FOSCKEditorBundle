@@ -16,7 +16,15 @@ use Composer\Script\CommandEvent;
 use Composer\Script\Event;
 use Sensio\Bundle\DistributionBundle\Composer\ScriptHandler;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'CKEditorScriptHandler is deprecated since 1.x '.
+    'and will be removed with the 2.0 release.',
+    E_USER_DEPRECATED
+);
+
 /**
+ * @deprecated since 1.x and will be removed with the 2.0 release.
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorScriptHandler extends ScriptHandler
