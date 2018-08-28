@@ -52,6 +52,9 @@ class CKEditorScriptHandlerTest extends AbstractTestCase
         }
     }
 
+    /**
+     * @group legacy
+     */
     public function testInstall()
     {
         CKEditorScriptHandler::install($this->createEventMock());
