@@ -65,6 +65,9 @@ class ResourceCompilerPassTest extends AbstractTestCase
         $this->compilerPass->process($containerBuilder);
     }
 
+    /**
+     * @group legacy
+     */
     public function testPhpResource()
     {
         $containerBuilder = $this->createContainerBuilderMock();

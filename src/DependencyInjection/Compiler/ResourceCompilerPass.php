@@ -26,6 +26,12 @@ class ResourceCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if ($container->hasParameter($parameter = 'templating.helper.form.resources')) {
+            @trigger_error(
+                'Using "symfony/templating" is deprecated since 1.x and will be removed with the 2.0 release. '.
+                'Use "twig/twig" Instead.',
+                E_USER_DEPRECATED
+            );
+
             $container->setParameter(
                 $parameter,
                 array_merge(

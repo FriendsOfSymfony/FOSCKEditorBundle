@@ -80,9 +80,18 @@ class CKEditorRenderer implements CKEditorRendererInterface
             $router = $containerOrJsonBuilder->get('router');
             $packages = $containerOrJsonBuilder->get('assets.packages');
             $requestStack = $containerOrJsonBuilder->get('request_stack');
-            $templating = $containerOrJsonBuilder->has('twig')
-                ? $containerOrJsonBuilder->get('twig')
-                : $containerOrJsonBuilder->get('templating');
+
+            if ($containerOrJsonBuilder->has('twig')) {
+                $templating = $containerOrJsonBuilder->get('twig');
+            } else {
+                @trigger_error(
+                    'Using "symfony/templating" is deprecated since 1.x and will be removed with the 2.0 release. '.
+                    'Use "twig/twig" Instead.',
+                    E_USER_DEPRECATED
+                );
+
+                $templating = $containerOrJsonBuilder->get('templating');
+            }
         } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
             $jsonBuilder = $containerOrJsonBuilder;
             if (null === $router) {
