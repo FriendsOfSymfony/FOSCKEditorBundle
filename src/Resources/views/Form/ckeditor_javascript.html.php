@@ -14,6 +14,12 @@
  * @var bool
  * @var bool $async
  */
+@trigger_error(
+    'The ckeditor_javascript.html.php is deprecated since 1.x '.
+    'and will be removed with the 2.0 release.',
+    E_USER_DEPRECATED
+);
+
 ?>
 <?php if ($enable && $async) : ?>
     <?php include __DIR__.'/_ckeditor_javascript.html.php'; ?>

@@ -15,7 +15,15 @@ namespace FOS\CKEditorBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'TemplatingCompilerPass is deprecated since 1.x '.
+    'and will be removed with the 2.0 release.',
+    E_USER_DEPRECATED
+);
+
 /**
+ * @deprecated since 1.x and will be removed with the 2.0 release.
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class TemplatingCompilerPass implements CompilerPassInterface

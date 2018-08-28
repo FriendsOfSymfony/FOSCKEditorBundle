@@ -15,7 +15,15 @@ namespace FOS\CKEditorBundle\Templating;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use Symfony\Component\Templating\Helper\Helper;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'CKEditorHelper is deprecated since 1.x '.
+    'and will be removed with the 2.0 release.',
+    E_USER_DEPRECATED
+);
+
 /**
+ * @deprecated since 1.x and will be removed with the 2.0 release.
+ *
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */

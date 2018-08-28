@@ -30,6 +30,12 @@ use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
  * @var array $config
  */
 
+@trigger_error(
+    'The _ckeditor_javascript.html.php is deprecated since 1.x '.
+    'and will be removed with the 2.0 release.',
+    E_USER_DEPRECATED
+);
+
 ?>
 <?php if ($autoload) : ?>
     <script type="text/javascript">
