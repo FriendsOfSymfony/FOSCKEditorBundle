@@ -38,7 +38,7 @@ class ResourceCompilerPassTest extends AbstractTestCase
     {
         $containerBuilder = $this->createContainerBuilderMock();
         $containerBuilder
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('hasParameter')
             ->will($this->returnValueMap([
                 ['templating.helper.form.resources', false],
@@ -60,34 +60,6 @@ class ResourceCompilerPassTest extends AbstractTestCase
                     '@FOSCKEditor/Form/ckeditor_widget.html.twig',
                     $template,
                 ])
-            );
-
-        $this->compilerPass->process($containerBuilder);
-    }
-
-    public function testPhpResource()
-    {
-        $containerBuilder = $this->createContainerBuilderMock();
-        $containerBuilder
-            ->expects($this->exactly(2))
-            ->method('hasParameter')
-            ->will($this->returnValueMap([
-                [$parameter = 'templating.helper.form.resources', true],
-                ['twig.form.resources', false],
-            ]));
-
-        $containerBuilder
-            ->expects($this->once())
-            ->method('getParameter')
-            ->with($this->identicalTo($parameter))
-            ->will($this->returnValue([$template = 'layout.html.php']));
-
-        $containerBuilder
-            ->expects($this->once())
-            ->method('setParameter')
-            ->with(
-                $this->identicalTo($parameter),
-                $this->identicalTo(['FOSCKEditorBundle:Form', $template])
             );
 
         $this->compilerPass->process($containerBuilder);

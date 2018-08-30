@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -40,7 +40,10 @@ class CKEditorRenderer implements CKEditorRendererInterface
      */
     private $assetsPackages;
 
-    private $templating;
+    /**
+     * @var Environment
+     */
+    private $twig;
 
     /**
      * @var RequestStack
@@ -57,7 +60,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
      * @param RouterInterface                $router
      * @param Packages                       $packages
      * @param RequestStack                   $requestStack
-     * @param EngineInterface                $templating
+     * @param Environment                    $twig
      * @param null|string                    $locale
      */
     public function __construct(
@@ -65,7 +68,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         RouterInterface $router = null,
         Packages $packages = null,
         RequestStack $requestStack = null,
-        $templating = null,
+        Environment $twig = null,
         $locale = null
     ) {
         if ($containerOrJsonBuilder instanceof ContainerInterface) {
@@ -80,9 +83,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
             $router = $containerOrJsonBuilder->get('router');
             $packages = $containerOrJsonBuilder->get('assets.packages');
             $requestStack = $containerOrJsonBuilder->get('request_stack');
-            $templating = $containerOrJsonBuilder->has('twig')
-                ? $containerOrJsonBuilder->get('twig')
-                : $containerOrJsonBuilder->get('templating');
+            $twig = $containerOrJsonBuilder->get('twig');
         } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
             $jsonBuilder = $containerOrJsonBuilder;
             if (null === $router) {
@@ -103,7 +104,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
                     __METHOD__,
                     JsonBuilder::class
                 ));
-            } elseif (null === $templating) {
+            } elseif (null === $twig) {
                 throw new \InvalidArgumentException(sprintf(
                     '%s 5th argument must not be null when using %s as first argument',
                     __METHOD__,
@@ -125,7 +126,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         $this->jsonBuilder = $jsonBuilder;
         $this->router = $router;
         $this->assetsPackages = $packages;
-        $this->templating = $templating;
+        $this->twig = $twig;
         $this->requestStack = $requestStack;
         $this->locale = $locale;
     }
@@ -235,7 +236,7 @@ class CKEditorRenderer implements CKEditorRendererInterface
         if (isset($template['templates'])) {
             foreach ($template['templates'] as &$rawTemplate) {
                 if (isset($rawTemplate['template'])) {
-                    $rawTemplate['html'] = $this->templating->render(
+                    $rawTemplate['html'] = $this->twig->render(
                         $rawTemplate['template'],
                         isset($rawTemplate['template_parameters']) ? $rawTemplate['template_parameters'] : []
                     );

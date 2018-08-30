@@ -22,7 +22,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -56,9 +56,9 @@ abstract class AbstractTemplateTest extends AbstractTestCase
     private $router;
 
     /**
-     * @var EngineInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var Environment|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $templating;
+    private $twig;
 
     /**
      * @var Request|\PHPUnit_Framework_MockObject_MockObject
@@ -79,9 +79,9 @@ abstract class AbstractTemplateTest extends AbstractTestCase
             ->expects($this->any())
             ->method('getUrl')
             ->will($this->returnArgument(0));
-        $this->templating = $this->createMock(EngineInterface::class);
+        $this->twig = $this->createMock(Environment::class);
 
-        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->templating);
+        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->twig);
     }
 
     public function testDefaultState()

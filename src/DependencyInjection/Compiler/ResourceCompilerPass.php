@@ -25,16 +25,6 @@ class ResourceCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if ($container->hasParameter($parameter = 'templating.helper.form.resources')) {
-            $container->setParameter(
-                $parameter,
-                array_merge(
-                    ['FOSCKEditorBundle:Form'],
-                    $container->getParameter($parameter)
-                )
-            );
-        }
-
         if ($container->hasParameter($parameter = 'twig.form.resources')) {
             $container->setParameter(
                 $parameter,
