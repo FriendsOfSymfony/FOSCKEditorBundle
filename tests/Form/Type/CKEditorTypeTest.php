@@ -12,6 +12,7 @@
 
 namespace FOS\CKEditorBundle\Tests\Form\Type;
 
+use FOS\CKEditorBundle\DependencyInjection\Configuration;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use FOS\CKEditorBundle\Model\ConfigManagerInterface;
 use FOS\CKEditorBundle\Model\PluginManagerInterface;
@@ -19,6 +20,7 @@ use FOS\CKEditorBundle\Model\StylesSetManagerInterface;
 use FOS\CKEditorBundle\Model\TemplateManagerInterface;
 use FOS\CKEditorBundle\Model\ToolbarManagerInterface;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
@@ -84,7 +86,8 @@ class CKEditorTypeTest extends AbstractTestCase
             $this->pluginManager,
             $this->stylesSetManager,
             $this->templateManager,
-            $this->toolbarManager
+            $this->toolbarManager,
+            (new Processor())->processConfiguration(new Configuration(), [])
         );
 
         $this->factory = Forms::createFormFactoryBuilder()
@@ -94,61 +97,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->formType = method_exists(AbstractType::class, 'getBlockPrefix') ? CKEditorType::class : 'ckeditor';
     }
 
-    public function testInitialState()
-    {
-        $this->assertTrue($this->ckEditorType->isEnable());
-        $this->assertFalse($this->ckEditorType->isAsync());
-        $this->assertTrue($this->ckEditorType->isAutoload());
-        $this->assertTrue($this->ckEditorType->isAutoInline());
-        $this->assertFalse($this->ckEditorType->isInline());
-        $this->assertFalse($this->ckEditorType->useJquery());
-        $this->assertFalse($this->ckEditorType->isInputSync());
-        $this->assertFalse($this->ckEditorType->useRequireJs());
-        $this->assertFalse($this->ckEditorType->hasFilebrowsers());
-        $this->assertSame('bundles/fosckeditor/', $this->ckEditorType->getBasePath());
-        $this->assertSame('bundles/fosckeditor/ckeditor.js', $this->ckEditorType->getJsPath());
-        $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $this->ckEditorType->getJqueryPath());
-        $this->assertSame($this->configManager, $this->ckEditorType->getConfigManager());
-        $this->assertSame($this->pluginManager, $this->ckEditorType->getPluginManager());
-        $this->assertSame($this->stylesSetManager, $this->ckEditorType->getStylesSetManager());
-        $this->assertSame($this->templateManager, $this->ckEditorType->getTemplateManager());
-        $this->assertSame($this->toolbarManager, $this->ckEditorType->getToolbarManager());
-    }
-
-    public function testSetFilebrowsers()
-    {
-        $this->ckEditorType->setFilebrowsers($filebrowsers = [
-            'VideoBrowse',
-            'VideoUpload',
-        ]);
-
-        $this->assertTrue($this->ckEditorType->hasFilebrowsers());
-        $this->assertSame($filebrowsers, $this->ckEditorType->getFilebrowsers());
-
-        foreach ($filebrowsers as $filebrowser) {
-            $this->assertTrue($this->ckEditorType->hasFilebrowser($filebrowser));
-        }
-    }
-
-    public function testAddFilebrowser()
-    {
-        $this->ckEditorType->addFilebrowser($filebrowser = 'VideoBrowse');
-
-        $this->assertTrue($this->ckEditorType->hasFilebrowsers());
-        $this->assertSame([$filebrowser], $this->ckEditorType->getFilebrowsers());
-        $this->assertTrue($this->ckEditorType->hasFilebrowser($filebrowser));
-    }
-
-    public function testRemoveFilebrowser()
-    {
-        $this->ckEditorType->addFilebrowser($filebrowser = 'VideoBrowse');
-        $this->ckEditorType->removeFilebrowser($filebrowser);
-
-        $this->assertFalse($this->ckEditorType->hasFilebrowsers());
-        $this->assertEmpty($this->ckEditorType->getFilebrowsers());
-        $this->assertFalse($this->ckEditorType->hasFilebrowser($filebrowser));
-    }
-
     public function testEnableWithDefaultValue()
     {
         $form = $this->factory->create($this->formType);
@@ -156,17 +104,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('enable', $view->vars);
         $this->assertTrue($view->vars['enable']);
-    }
-
-    public function testEnableWithConfiguredValue()
-    {
-        $this->ckEditorType->isEnable(false);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('enable', $view->vars);
-        $this->assertFalse($view->vars['enable']);
     }
 
     public function testEnableWithExplicitValue()
@@ -187,17 +124,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertFalse($view->vars['async']);
     }
 
-    public function testAsyncWithConfiguredValue()
-    {
-        $this->ckEditorType->isAsync(true);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('async', $view->vars);
-        $this->assertTrue($view->vars['async']);
-    }
-
     public function testAsyncWithExplicitValue()
     {
         $form = $this->factory->create($this->formType, null, ['async' => true]);
@@ -214,17 +140,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('autoload', $view->vars);
         $this->assertTrue($view->vars['autoload']);
-    }
-
-    public function testAutoloadWithConfiguredValue()
-    {
-        $this->ckEditorType->isAutoload(false);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('autoload', $view->vars);
-        $this->assertFalse($view->vars['autoload']);
     }
 
     public function testAutoloadWithExplicitValue()
@@ -245,17 +160,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertTrue($view->vars['auto_inline']);
     }
 
-    public function testAutoInlineWithConfiguredValue()
-    {
-        $this->ckEditorType->isAutoInline(false);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('auto_inline', $view->vars);
-        $this->assertFalse($view->vars['auto_inline']);
-    }
-
     public function testAutoInlineWithExplicitValue()
     {
         $form = $this->factory->create($this->formType, null, ['auto_inline' => false]);
@@ -272,17 +176,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('inline', $view->vars);
         $this->assertFalse($view->vars['inline']);
-    }
-
-    public function testInlineWithConfiguredValue()
-    {
-        $this->ckEditorType->isInline(true);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('inline', $view->vars);
-        $this->assertTrue($view->vars['inline']);
     }
 
     public function testInlineWithExplicitValue()
@@ -303,17 +196,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertFalse($view->vars['jquery']);
     }
 
-    public function testJqueryWithConfiguredValue()
-    {
-        $this->ckEditorType->useJquery(true);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('jquery', $view->vars);
-        $this->assertTrue($view->vars['jquery']);
-    }
-
     public function testJqueryWithExplicitValue()
     {
         $form = $this->factory->create($this->formType, null, ['jquery' => true]);
@@ -330,17 +212,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('input_sync', $view->vars);
         $this->assertFalse($view->vars['input_sync']);
-    }
-
-    public function testInputSyncWithConfiguredValue()
-    {
-        $this->ckEditorType->isInputSync(true);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('input_sync', $view->vars);
-        $this->assertTrue($view->vars['input_sync']);
     }
 
     public function testInputSyncWithExplicitValue()
@@ -361,17 +232,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertFalse($view->vars['require_js']);
     }
 
-    public function testRequireJsWithConfiguredValue()
-    {
-        $this->ckEditorType->useRequireJs(true);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('require_js', $view->vars);
-        $this->assertTrue($view->vars['require_js']);
-    }
-
     public function testRequireJsWithExplicitValue()
     {
         $form = $this->factory->create($this->formType, null, ['require_js' => true]);
@@ -388,20 +248,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('filebrowsers', $view->vars);
         $this->assertEmpty($view->vars['filebrowsers']);
-    }
-
-    public function testFilebrowsersWithConfiguredValue()
-    {
-        $this->ckEditorType->setFilebrowsers($filebrowsers = [
-            'VideoBrowser',
-            'VideoUpload',
-        ]);
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('filebrowsers', $view->vars);
-        $this->assertSame($filebrowsers, $view->vars['filebrowsers']);
     }
 
     public function testFilebrowsersWithExplicitValue()
@@ -427,20 +273,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('js_path', $view->vars);
         $this->assertSame('bundles/fosckeditor/ckeditor.js', $view->vars['js_path']);
-    }
-
-    public function testBaseAndJsPathWithConfiguredValues()
-    {
-        $this->ckEditorType->setBasePath('foo/base/');
-        $this->ckEditorType->setJsPath('foo/ckeditor.js');
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('base_path', $view->vars);
-        $this->assertSame('foo/base/', $view->vars['base_path']);
-
-        $this->assertArrayHasKey('js_path', $view->vars);
-        $this->assertSame('foo/ckeditor.js', $view->vars['js_path']);
     }
 
     public function testBaseAndJsPathWithExplicitValues()
@@ -470,16 +302,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('jquery_path', $view->vars);
         $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $view->vars['jquery_path']);
-    }
-
-    public function testJqueryPathWithConfiguredValue()
-    {
-        $this->ckEditorType->setJqueryPath('foo/jquery.js');
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('jquery_path', $view->vars);
-        $this->assertSame('foo/jquery.js', $view->vars['jquery_path']);
     }
 
     public function testJqueryPathWithExplicitValue()
@@ -903,36 +725,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $view = $form->createView();
 
         $this->assertSame(array_merge($explicitTemplates, $configuredTemplates), $view->vars['templates']);
-    }
-
-    public function testConfiguredDisable()
-    {
-        $this->ckEditorType->isEnable(false);
-
-        $options = [
-            'config' => [
-                'toolbar' => ['foo' => 'bar'],
-                'uiColor' => '#ffffff',
-            ],
-            'plugins' => [
-                'wordcount' => [
-                    'path' => '/my/path',
-                    'filename' => 'plugin.js',
-                ],
-            ],
-        ];
-
-        $form = $this->factory->create($this->formType, null, $options);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('enable', $view->vars);
-        $this->assertFalse($view->vars['enable']);
-
-        $this->assertArrayNotHasKey('autoload', $view->vars);
-        $this->assertArrayNotHasKey('config', $view->vars);
-        $this->assertArrayNotHasKey('plugins', $view->vars);
-        $this->assertArrayNotHasKey('stylesheets', $view->vars);
-        $this->assertArrayNotHasKey('templates', $view->vars);
     }
 
     public function testExplicitDisable()
