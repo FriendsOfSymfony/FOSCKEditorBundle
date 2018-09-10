@@ -46,47 +46,11 @@ class CKEditorTypeTest extends AbstractTestCase
     private $formType;
 
     /**
-     * @var ConfigManagerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $configManager;
-
-    /**
-     * @var PluginManagerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $pluginManager;
-
-    /**
-     * @var StylesSetManagerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $stylesSetManager;
-
-    /**
-     * @var TemplateManagerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $templateManager;
-
-    /**
-     * @var ToolbarManagerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $toolbarManager;
-
-    /**
      * {@inheritdooc}.
      */
     protected function setUp()
     {
-        $this->configManager = $this->createMock(ConfigManagerInterface::class);
-        $this->pluginManager = $this->createMock(PluginManagerInterface::class);
-        $this->stylesSetManager = $this->createMock(StylesSetManagerInterface::class);
-        $this->templateManager = $this->createMock(TemplateManagerInterface::class);
-        $this->toolbarManager = $this->createMock(ToolbarManagerInterface::class);
-
         $this->ckEditorType = new CKEditorType(
-            $this->configManager,
-            $this->pluginManager,
-            $this->stylesSetManager,
-            $this->templateManager,
-            $this->toolbarManager,
             (new Processor())->processConfiguration(new Configuration(), [])
         );
 
@@ -331,17 +295,6 @@ class CKEditorTypeTest extends AbstractTestCase
             ],
         ];
 
-        $this->configManager
-            ->expects($this->once())
-            ->method('setConfig')
-            ->with($this->anything(), $this->equalTo($options['config']));
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('getConfig')
-            ->with($this->anything())
-            ->will($this->returnValue($options['config']));
-
         $form = $this->factory->create($this->formType, null, $options);
         $view = $form->createView();
 
@@ -351,63 +304,26 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testConfigWithConfiguredConfig()
     {
-        $config = [
-            'toolbar' => 'default',
-            'uiColor' => '#ffffff',
-        ];
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('mergeConfig')
-            ->with($this->equalTo('default'), $this->equalTo([]));
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('getConfig')
-            ->with($this->identicalTo('default'))
-            ->will($this->returnValue($config));
-
-        $this->toolbarManager
-            ->expects($this->once())
-            ->method('resolveToolbar')
-            ->with($this->identicalTo('default'))
-            ->will($this->returnValue($config['toolbar'] = ['foo' => 'bar']));
-
         $form = $this->factory->create($this->formType, null, ['config_name' => 'default']);
         $view = $form->createView();
 
         $this->assertArrayHasKey('config', $view->vars);
-        $this->assertSame($config, $view->vars['config']);
+        $this->assertSame([
+            'toolbar' => 'default',
+            'uiColor' => '#ffffff',
+        ], $view->vars['config']);
     }
 
     public function testConfigWithDefaultConfiguredConfig()
     {
-        $options = [
-            'toolbar' => ['foo' => 'bar'],
-            'uiColor' => '#ffffff',
-        ];
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('getDefaultConfig')
-            ->will($this->returnValue('config'));
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('mergeConfig')
-            ->with($this->equalTo('config'), $this->equalTo([]));
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('getConfig')
-            ->with('config')
-            ->will($this->returnValue($options));
-
         $form = $this->factory->create($this->formType);
         $view = $form->createView();
 
         $this->assertArrayHasKey('config', $view->vars);
-        $this->assertSame($options, $view->vars['config']);
+        $this->assertSame([
+            'toolbar' => ['foo' => 'bar'],
+            'uiColor' => '#ffffff',
+        ], $view->vars['config']);
     }
 
     public function testConfigWithExplicitAndConfiguredConfig()
@@ -418,23 +334,6 @@ class CKEditorTypeTest extends AbstractTestCase
         ];
 
         $explicitConfig = ['uiColor' => '#000000'];
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('mergeConfig')
-            ->with($this->equalTo('default'), $this->equalTo($explicitConfig));
-
-        $this->configManager
-            ->expects($this->once())
-            ->method('getConfig')
-            ->with('default')
-            ->will($this->returnValue(array_merge($configuredConfig, $explicitConfig)));
-
-        $this->toolbarManager
-            ->expects($this->once())
-            ->method('resolveToolbar')
-            ->with($this->identicalTo('default'))
-            ->will($this->returnValue($configuredConfig['toolbar'] = ['foo' => 'bar']));
 
         $form = $this->factory->create(
             $this->formType,
@@ -466,16 +365,6 @@ class CKEditorTypeTest extends AbstractTestCase
             ],
         ];
 
-        $this->pluginManager
-            ->expects($this->once())
-            ->method('setPlugins')
-            ->with($this->equalTo($plugins));
-
-        $this->pluginManager
-            ->expects($this->once())
-            ->method('getPlugins')
-            ->will($this->returnValue($plugins));
-
         $form = $this->factory->create($this->formType, null, ['plugins' => $plugins]);
 
         $view = $form->createView();
@@ -486,23 +375,16 @@ class CKEditorTypeTest extends AbstractTestCase
 
     public function testPluginsWithConfiguredPlugins()
     {
-        $plugins = [
-            'wordcount' => [
-                'path' => '/my/path',
-                'filename' => 'plugin.js',
-            ],
-        ];
-
-        $this->pluginManager
-            ->expects($this->once())
-            ->method('getPlugins')
-            ->will($this->returnValue($plugins));
-
         $form = $this->factory->create($this->formType);
         $view = $form->createView();
 
         $this->assertArrayHasKey('plugins', $view->vars);
-        $this->assertSame($plugins, $view->vars['plugins']);
+        $this->assertSame([
+            'wordcount' => [
+                'path' => '/my/path',
+                'filename' => 'plugin.js',
+            ],
+        ], $view->vars['plugins']);
     }
 
     public function testPluginsWithConfiguredAndExplicitPlugins()
@@ -520,16 +402,6 @@ class CKEditorTypeTest extends AbstractTestCase
                 'filename' => 'plugin.js',
             ],
         ];
-
-        $this->pluginManager
-            ->expects($this->once())
-            ->method('setPlugins')
-            ->with($this->equalTo($explicitPlugins));
-
-        $this->pluginManager
-            ->expects($this->once())
-            ->method('getPlugins')
-            ->will($this->returnValue(array_merge($explicitPlugins, $configuredPlugins)));
 
         $form = $this->factory->create($this->formType, null, ['plugins' => $explicitPlugins]);
         $view = $form->createView();
@@ -555,16 +427,6 @@ class CKEditorTypeTest extends AbstractTestCase
             ],
         ];
 
-        $this->stylesSetManager
-            ->expects($this->once())
-            ->method('setStylesSets')
-            ->with($this->equalTo($stylesSets));
-
-        $this->stylesSetManager
-            ->expects($this->once())
-            ->method('getStylesSets')
-            ->will($this->returnValue($stylesSets));
-
         $form = $this->factory->create($this->formType, null, ['styles' => $stylesSets]);
 
         $view = $form->createView();
@@ -580,11 +442,6 @@ class CKEditorTypeTest extends AbstractTestCase
                 ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
             ],
         ];
-
-        $this->stylesSetManager
-            ->expects($this->once())
-            ->method('getStylesSets')
-            ->will($this->returnValue($stylesSets));
 
         $form = $this->factory->create($this->formType);
         $view = $form->createView();
@@ -605,16 +462,6 @@ class CKEditorTypeTest extends AbstractTestCase
                 ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
             ],
         ];
-
-        $this->stylesSetManager
-            ->expects($this->once())
-            ->method('setStylesSets')
-            ->with($this->equalTo($explicitStylesSets));
-
-        $this->stylesSetManager
-            ->expects($this->once())
-            ->method('getStylesSets')
-            ->will($this->returnValue(array_merge($explicitStylesSets, $configuredStylesSets)));
 
         $form = $this->factory->create($this->formType, null, ['styles' => $explicitStylesSets]);
         $view = $form->createView();
@@ -644,16 +491,6 @@ class CKEditorTypeTest extends AbstractTestCase
             ],
         ];
 
-        $this->templateManager
-            ->expects($this->once())
-            ->method('setTemplates')
-            ->with($this->equalTo($templates));
-
-        $this->templateManager
-            ->expects($this->once())
-            ->method('getTemplates')
-            ->will($this->returnValue($templates));
-
         $form = $this->factory->create($this->formType, null, ['templates' => $templates]);
 
         $view = $form->createView();
@@ -674,11 +511,6 @@ class CKEditorTypeTest extends AbstractTestCase
                 ],
             ],
         ];
-
-        $this->templateManager
-            ->expects($this->once())
-            ->method('getTemplates')
-            ->will($this->returnValue($templates));
 
         $form = $this->factory->create($this->formType);
         $view = $form->createView();
@@ -710,16 +542,6 @@ class CKEditorTypeTest extends AbstractTestCase
                 ],
             ],
         ];
-
-        $this->templateManager
-            ->expects($this->once())
-            ->method('setTemplates')
-            ->with($this->equalTo($explicitTemplates));
-
-        $this->templateManager
-            ->expects($this->once())
-            ->method('getTemplates')
-            ->will($this->returnValue(array_merge($explicitTemplates, $configuredTemplates)));
 
         $form = $this->factory->create($this->formType, null, ['templates' => $explicitTemplates]);
         $view = $form->createView();

@@ -12,11 +12,6 @@
 
 namespace FOS\CKEditorBundle\Form\Type;
 
-use FOS\CKEditorBundle\Model\ConfigManagerInterface;
-use FOS\CKEditorBundle\Model\PluginManagerInterface;
-use FOS\CKEditorBundle\Model\StylesSetManagerInterface;
-use FOS\CKEditorBundle\Model\TemplateManagerInterface;
-use FOS\CKEditorBundle\Model\ToolbarManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,48 +26,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CKEditorType extends AbstractType
 {
     /**
-     * @var ConfigManagerInterface
-     */
-    private $configManager;
-
-    /**
-     * @var PluginManagerInterface
-     */
-    private $pluginManager;
-
-    /**
-     * @var StylesSetManagerInterface
-     */
-    private $stylesSetManager;
-
-    /**
-     * @var TemplateManagerInterface
-     */
-    private $templateManager;
-
-    /**
-     * @var ToolbarManagerInterface
-     */
-    private $toolbarManager;
-
-    /**
      * @var array
      */
     private $config;
 
-    public function __construct(
-        ConfigManagerInterface $configManager,
-        PluginManagerInterface $pluginManager,
-        StylesSetManagerInterface $stylesSetManager,
-        TemplateManagerInterface $templateManager,
-        ToolbarManagerInterface $toolbarManager,
-        array $config
-    ) {
-        $this->configManager = $configManager;
-        $this->pluginManager = $pluginManager;
-        $this->stylesSetManager = $stylesSetManager;
-        $this->templateManager = $templateManager;
-        $this->toolbarManager = $toolbarManager;
+    public function __construct(array $config)
+    {
         $this->config = $config;
     }
 
@@ -98,35 +57,45 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('base_path', $options['base_path']);
         $builder->setAttribute('js_path', $options['js_path']);
         $builder->setAttribute('jquery_path', $options['jquery_path']);
+        $builder->setAttribute('config', $this->resolveConfig($options));
+        $builder->setAttribute('plugins', $this->merge('plugins', $options));
+        $builder->setAttribute('styles', $this->merge('styles', $options));
+        $builder->setAttribute('templates', $this->merge('templates', $options));
+    }
 
-        $configManager = clone $this->configManager;
-        $pluginManager = clone $this->pluginManager;
-        $stylesSetManager = clone $this->stylesSetManager;
-        $templateManager = clone $this->templateManager;
-
+    private function resolveConfig(array $options): array
+    {
         $config = $options['config'];
 
         if (null === $options['config_name']) {
             $options['config_name'] = uniqid('fos', true);
-            $configManager->setConfig($options['config_name'], $config);
         } else {
-            $configManager->mergeConfig($options['config_name'], $config);
+            $config = array_merge($this->config['configs'][$options['config_name']], $config);
         }
-
-        $pluginManager->setPlugins($options['plugins']);
-        $stylesSetManager->setStylesSets($options['styles']);
-        $templateManager->setTemplates($options['templates']);
-
-        $config = $configManager->getConfig($options['config_name']);
 
         if (isset($config['toolbar']) && is_string($config['toolbar'])) {
-            $config['toolbar'] = $this->toolbarManager->resolveToolbar($config['toolbar']);
+            $config['toolbar'] = $this->resolveToolbar($config['toolbar']);
         }
 
-        $builder->setAttribute('config', $config);
-        $builder->setAttribute('plugins', $pluginManager->getPlugins());
-        $builder->setAttribute('styles', $stylesSetManager->getStylesSets());
-        $builder->setAttribute('templates', $templateManager->getTemplates());
+        return $config;
+    }
+
+    private function resolveToolbar(string $name): array
+    {
+        $toolbars = [];
+
+        foreach ($this->config['toolbars']['configs'][$name] as $name => $item) {
+            $toolbars[] = is_string($item) && '@' === substr($item, 0, 1)
+                ? $this->config['toolbars']['items'][(substr($item, 1))]
+                : $item;
+        }
+
+        return $toolbars;
+    }
+
+    private function merge(string $name, array $options): array
+    {
+        return array_merge($this->config[$name], $options[$name]);
     }
 
     /**
@@ -177,7 +146,7 @@ class CKEditorType extends AbstractType
                 'base_path' => $this->config['base_path'],
                 'js_path' => $this->config['js_path'],
                 'jquery_path' => $this->config['jquery_path'],
-                'config_name' => $this->configManager->getDefaultConfig(),
+                'config_name' => $this->config['default_config'],
                 'config' => [],
                 'plugins' => [],
                 'styles' => [],

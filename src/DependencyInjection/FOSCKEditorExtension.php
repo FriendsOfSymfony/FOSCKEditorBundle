@@ -30,16 +30,14 @@ class FOSCKEditorExtension extends ConfigurableExtension
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
         $this->loadResources($container);
-        $container->getDefinition('fos_ck_editor.form.type')
-            ->setArgument(5, $config);
 
         if ($config['enable']) {
-            $this->registerConfigs($config, $container);
-            $this->registerPlugins($config, $container);
-            $this->registerStylesSet($config, $container);
-            $this->registerTemplates($config, $container);
-            $this->registerToolbars($config, $container);
+            $config = $this->resolveConfigs($config, $container);
+            $config = $this->resolveStylesSet($config, $container);
         }
+
+        $container->getDefinition('fos_ck_editor.form.type')
+            ->setArgument(0, $config);
 
         if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
             $container->getDefinition('fos_ck_editor.form.type')
@@ -57,9 +55,6 @@ class FOSCKEditorExtension extends ConfigurableExtension
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     private function loadResources(ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -79,55 +74,30 @@ class FOSCKEditorExtension extends ConfigurableExtension
     }
 
     /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     *
      * @throws DependencyInjectionException
      */
-    private function registerConfigs(array $config, ContainerBuilder $container)
+    private function resolveConfigs(array $config): array
     {
         if (empty($config['configs'])) {
-            return;
+            return $config;
         }
-
-        $definition = $container->getDefinition('fos_ck_editor.config_manager');
-        $definition->addMethodCall('setConfigs', [$config['configs']]);
 
         if (!isset($config['default_config']) && !empty($config['configs'])) {
             reset($config['configs']);
             $config['default_config'] = key($config['configs']);
         }
 
-        if (isset($config['default_config'])) {
-            if (!isset($config['configs'][$config['default_config']])) {
-                throw DependencyInjectionException::invalidDefaultConfig($config['default_config']);
-            }
-
-            $definition->addMethodCall('setDefaultConfig', [$config['default_config']]);
+        if (isset($config['default_config']) && !isset($config['configs'][$config['default_config']])) {
+            throw DependencyInjectionException::invalidDefaultConfig($config['default_config']);
         }
+
+        return $config;
     }
 
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
-    private function registerPlugins(array $config, ContainerBuilder $container)
-    {
-        if (!empty($config['plugins'])) {
-            $container
-                ->getDefinition('fos_ck_editor.plugin_manager')
-                ->addMethodCall('setPlugins', [$config['plugins']]);
-        }
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
-    private function registerStylesSet(array $config, ContainerBuilder $container)
+    private function resolveStylesSet(array $config)
     {
         if (empty($config['styles'])) {
-            return;
+            return $config;
         }
 
         $stylesSets = $config['styles'];
@@ -138,39 +108,7 @@ class FOSCKEditorExtension extends ConfigurableExtension
             }
         }
 
-        $container
-            ->getDefinition('fos_ck_editor.styles_set_manager')
-            ->addMethodCall('setStylesSets', [$stylesSets]);
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
-    private function registerTemplates(array $config, ContainerBuilder $container)
-    {
-        if (!empty($config['templates'])) {
-            $container
-                ->getDefinition('fos_ck_editor.template_manager')
-                ->addMethodCall('setTemplates', [$config['templates']]);
-        }
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
-    private function registerToolbars(array $config, ContainerBuilder $container)
-    {
-        $definition = $container->getDefinition('fos_ck_editor.toolbar_manager');
-
-        if (!empty($config['toolbars']['items'])) {
-            $definition->addMethodCall('setItems', [$config['toolbars']['items']]);
-        }
-
-        if (!empty($config['toolbars']['configs'])) {
-            $definition->addMethodCall('setToolbars', [$config['toolbars']['configs']]);
-        }
+        return $config;
     }
 
     public function getAlias()
