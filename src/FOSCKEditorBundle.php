@@ -12,9 +12,7 @@
 
 namespace FOS\CKEditorBundle;
 
-use FOS\CKEditorBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -22,15 +20,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class FOSCKEditorBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function build(ContainerBuilder $container)
-    {
-        $container
-            ->addCompilerPass(new ResourceCompilerPass());
-    }
-
     public function getContainerExtension()
     {
         return new FOSCKEditorExtension();
