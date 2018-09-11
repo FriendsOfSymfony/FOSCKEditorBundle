@@ -14,11 +14,6 @@ namespace FOS\CKEditorBundle\Tests\Form\Type;
 
 use FOS\CKEditorBundle\DependencyInjection\Configuration;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use FOS\CKEditorBundle\Model\ConfigManagerInterface;
-use FOS\CKEditorBundle\Model\PluginManagerInterface;
-use FOS\CKEditorBundle\Model\StylesSetManagerInterface;
-use FOS\CKEditorBundle\Model\TemplateManagerInterface;
-use FOS\CKEditorBundle\Model\ToolbarManagerInterface;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Form\AbstractType;
@@ -326,27 +321,6 @@ class CKEditorTypeTest extends AbstractTestCase
         ], $view->vars['config']);
     }
 
-    public function testConfigWithExplicitAndConfiguredConfig()
-    {
-        $configuredConfig = [
-            'toolbar' => 'default',
-            'uiColor' => '#ffffff',
-        ];
-
-        $explicitConfig = ['uiColor' => '#000000'];
-
-        $form = $this->factory->create(
-            $this->formType,
-            null,
-            ['config_name' => 'default', 'config' => $explicitConfig]
-        );
-
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('config', $view->vars);
-        $this->assertSame(array_merge($configuredConfig, $explicitConfig), $view->vars['config']);
-    }
-
     public function testDefaultPlugins()
     {
         $form = $this->factory->create($this->formType);
@@ -373,43 +347,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertSame($plugins, $view->vars['plugins']);
     }
 
-    public function testPluginsWithConfiguredPlugins()
-    {
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('plugins', $view->vars);
-        $this->assertSame([
-            'wordcount' => [
-                'path' => '/my/path',
-                'filename' => 'plugin.js',
-            ],
-        ], $view->vars['plugins']);
-    }
-
-    public function testPluginsWithConfiguredAndExplicitPlugins()
-    {
-        $configuredPlugins = [
-            'wordcount' => [
-                'path' => '/my/explicit/path',
-                'filename' => 'plugin.js',
-            ],
-        ];
-
-        $explicitPlugins = [
-            'autogrow' => [
-                'path' => '/my/configured/path',
-                'filename' => 'plugin.js',
-            ],
-        ];
-
-        $form = $this->factory->create($this->formType, null, ['plugins' => $explicitPlugins]);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('plugins', $view->vars);
-        $this->assertSame(array_merge($explicitPlugins, $configuredPlugins), $view->vars['plugins']);
-    }
-
     public function testDefaultStylesSet()
     {
         $form = $this->factory->create($this->formType);
@@ -432,41 +369,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $view = $form->createView();
 
         $this->assertSame($stylesSets, $view->vars['styles']);
-    }
-
-    public function testPluginsWithConfiguredStylesSets()
-    {
-        $stylesSets = [
-            'default' => [
-                ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
-                ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
-            ],
-        ];
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertSame($stylesSets, $view->vars['styles']);
-    }
-
-    public function testPluginsWithConfiguredAndExplicitStylesSets()
-    {
-        $configuredStylesSets = [
-            'foo' => [
-                ['name' => 'Blue Title', 'element' => 'h2', 'styles' => ['color' => 'Blue']],
-            ],
-        ];
-
-        $explicitStylesSets = [
-            'bar' => [
-                ['name' => 'CSS Style', 'element' => 'span', 'attributes' => ['class' => 'my_style']],
-            ],
-        ];
-
-        $form = $this->factory->create($this->formType, null, ['styles' => $explicitStylesSets]);
-        $view = $form->createView();
-
-        $this->assertSame(array_merge($explicitStylesSets, $configuredStylesSets), $view->vars['styles']);
     }
 
     public function testDefaultTemplates()
@@ -496,57 +398,6 @@ class CKEditorTypeTest extends AbstractTestCase
         $view = $form->createView();
 
         $this->assertSame($templates, $view->vars['templates']);
-    }
-
-    public function testTemplatesWithConfiguredTemplates()
-    {
-        $templates = [
-            'default' => [
-                'imagesPath' => '/my/path',
-                'templates' => [
-                    [
-                        'title' => 'My Template',
-                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
-                    ],
-                ],
-            ],
-        ];
-
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertSame($templates, $view->vars['templates']);
-    }
-
-    public function testTemplatesWithConfiguredAndExplicitTemplates()
-    {
-        $configuredTemplates = [
-            'default' => [
-                'imagesPath' => '/my/path',
-                'templates' => [
-                    [
-                        'title' => 'My Template',
-                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
-                    ],
-                ],
-            ],
-        ];
-
-        $explicitTemplates = [
-            'extra' => [
-                'templates' => [
-                    [
-                        'title' => 'My Extra Template',
-                        'html' => '<h2>Template</h2><p>Type your text here.</p>',
-                    ],
-                ],
-            ],
-        ];
-
-        $form = $this->factory->create($this->formType, null, ['templates' => $explicitTemplates]);
-        $view = $form->createView();
-
-        $this->assertSame(array_merge($explicitTemplates, $configuredTemplates), $view->vars['templates']);
     }
 
     public function testExplicitDisable()

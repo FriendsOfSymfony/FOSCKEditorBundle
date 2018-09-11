@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('base_path')->defaultValue('bundles/fosckeditor/')->end()
                 ->scalarNode('js_path')->defaultValue('bundles/fosckeditor/ckeditor.js')->end()
                 ->scalarNode('jquery_path')->defaultValue('bundles/fosckeditor/adapters/jquery.js')->end()
-                ->scalarNode('default_config')->end()
+                ->scalarNode('default_config')->defaultValue(null)->end()
                 ->append($this->createConfigsNode())
                 ->append($this->createPluginsNode())
                 ->append($this->createStylesNode())
