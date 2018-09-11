@@ -21,7 +21,9 @@ use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Form\FormRendererInterface;
+use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -63,6 +65,16 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     private $twig;
 
     /**
+     * @var FormFactoryBuilderInterface
+     */
+    private $factory;
+
+    /**
+     * @var string
+     */
+    private $formType;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
@@ -96,6 +108,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         ];
         $this->container->addCompilerPass(new TestContainerPass($toBePublic), PassConfig::TYPE_OPTIMIZE);
         (new FOSCKEditorBundle())->build($this->container);
+
+        $this->factory = Forms::createFormFactoryBuilder();
+        $this->formType = method_exists(AbstractType::class, 'getBlockPrefix') ? CKEditorType::class : 'ckeditor';
     }
 
     /**
@@ -108,24 +123,29 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     {
         $this->container->compile();
 
-        $type = $this->container->get('fos_ck_editor.form.type');
+        $vars = $this->getVars();
+        $this->assertTrue($vars['enable']);
+        $this->assertTrue($vars['autoload']);
+        $this->assertTrue($vars['auto_inline']);
+        $this->assertFalse($vars['inline']);
+        $this->assertFalse($vars['jquery']);
+        $this->assertFalse($vars['input_sync']);
+        $this->assertFalse($vars['require_js']);
+        $this->assertEmpty($vars['filebrowsers']);
+        $this->assertSame('bundles/fosckeditor/', $vars['base_path']);
+        $this->assertSame('bundles/fosckeditor/ckeditor.js', $vars['js_path']);
+        $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $vars['jquery_path']);
+    }
 
-        $this->assertInstanceOf(CKEditorType::class, $type);
-        $this->assertTrue($type->isEnable());
-        $this->assertTrue($type->isAutoload());
-        $this->assertTrue($type->isAutoInline());
-        $this->assertFalse($type->isInline());
-        $this->assertFalse($type->useJquery());
-        $this->assertFalse($type->isInputSync());
-        $this->assertFalse($type->useRequireJs());
-        $this->assertFalse($type->hasFilebrowsers());
-        $this->assertSame('bundles/fosckeditor/', $type->getBasePath());
-        $this->assertSame('bundles/fosckeditor/ckeditor.js', $type->getJsPath());
-        $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $type->getJqueryPath());
-        $this->assertSame($this->container->get('fos_ck_editor.config_manager'), $type->getConfigManager());
-        $this->assertSame($this->container->get('fos_ck_editor.plugin_manager'), $type->getPluginManager());
-        $this->assertSame($this->container->get('fos_ck_editor.styles_set_manager'), $type->getStylesSetManager());
-        $this->assertSame($this->container->get('fos_ck_editor.template_manager'), $type->getTemplateManager());
+    private function getVars()
+    {
+        $this->factory = $this->factory
+            ->addType($this->container->get('fos_ck_editor.form.type'))
+            ->getFormFactory();
+
+        $form = $this->factory->create($this->formType);
+
+        return $form->createView()->vars;
     }
 
     public function testFormTag()
@@ -146,7 +166,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'disable');
         $this->container->compile();
 
-        $this->assertFalse($this->container->get('fos_ck_editor.form.type')->isEnable());
+        $vars = $this->getVars();
+
+        $this->assertFalse($vars['enable']);
     }
 
     public function testAsync()
@@ -154,7 +176,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'async');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('fos_ck_editor.form.type')->isAsync());
+        $vars = $this->getVars();
+
+        $this->assertTrue($vars['async']);
     }
 
     public function testAutoload()
@@ -162,7 +186,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'autoload');
         $this->container->compile();
 
-        $this->assertFalse($this->container->get('fos_ck_editor.form.type')->isAutoload());
+        $vars = $this->getVars();
+
+        $this->assertFalse($vars['autoload']);
     }
 
     public function testAutoInline()
@@ -170,7 +196,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'auto_inline');
         $this->container->compile();
 
-        $this->assertFalse($this->container->get('fos_ck_editor.form.type')->isAutoInline());
+        $vars = $this->getVars();
+
+        $this->assertFalse($vars['auto_inline']);
     }
 
     public function testInline()
@@ -178,7 +206,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'inline');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('fos_ck_editor.form.type')->isInline());
+        $vars = $this->getVars();
+
+        $this->assertTrue($vars['inline']);
     }
 
     public function testInputSync()
@@ -186,7 +216,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'input_sync');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('fos_ck_editor.form.type')->isInputSync());
+        $vars = $this->getVars();
+
+        $this->assertTrue($vars['input_sync']);
     }
 
     public function testRequireJs()
@@ -194,7 +226,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'require_js');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('fos_ck_editor.form.type')->useRequireJs());
+        $vars = $this->getVars();
+
+        $this->assertTrue($vars['require_js']);
     }
 
     public function testJquery()
@@ -202,7 +236,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'jquery');
         $this->container->compile();
 
-        $this->assertTrue($this->container->get('fos_ck_editor.form.type')->useJquery());
+        $vars = $this->getVars();
+
+        $this->assertTrue($vars['jquery']);
     }
 
     public function testJqueryPath()
@@ -210,7 +246,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'jquery_path');
         $this->container->compile();
 
-        $this->assertSame('foo/jquery.js', $this->container->get('fos_ck_editor.form.type')->getJqueryPath());
+        $vars = $this->getVars();
+
+        $this->assertSame('foo/jquery.js', $vars['jquery_path']);
     }
 
     public function testCustomPaths()
@@ -218,10 +256,10 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'custom_paths');
         $this->container->compile();
 
-        $ckEditorType = $this->container->get('fos_ck_editor.form.type');
+        $vars = $this->getVars();
 
-        $this->assertSame('foo/', $ckEditorType->getBasePath());
-        $this->assertSame('foo/ckeditor.js', $ckEditorType->getJsPath());
+        $this->assertSame('foo/', $vars['base_path']);
+        $this->assertSame('foo/ckeditor.js', $vars['js_path']);
     }
 
     public function testFilebrowsers()
@@ -229,9 +267,11 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'filebrowsers');
         $this->container->compile();
 
+        $vars = $this->getVars();
+
         $this->assertSame(
             ['VideoBrowse', 'VideoUpload'],
-            $this->container->get('fos_ck_editor.form.type')->getFilebrowsers()
+            $vars['filebrowsers']
         );
     }
 

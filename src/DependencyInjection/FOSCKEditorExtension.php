@@ -30,15 +30,15 @@ class FOSCKEditorExtension extends ConfigurableExtension
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
         $this->loadResources($container);
-        $this->registerConfig($config, $container);
+        $container->getDefinition('fos_ck_editor.form.type')
+            ->setArgument(5, $config);
 
-        if (!isset($config['enable']) || $config['enable']) {
+        if ($config['enable']) {
             $this->registerConfigs($config, $container);
             $this->registerPlugins($config, $container);
             $this->registerStylesSet($config, $container);
             $this->registerTemplates($config, $container);
             $this->registerToolbars($config, $container);
-            $this->registerFilebrowsers($config, $container);
         }
 
         if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
@@ -75,59 +75,6 @@ class FOSCKEditorExtension extends ConfigurableExtension
 
         foreach ($resources as $resource) {
             $loader->load($resource.'.xml');
-        }
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
-    private function registerConfig(array $config, ContainerBuilder $container)
-    {
-        $formType = $container->getDefinition('fos_ck_editor.form.type');
-
-        if (isset($config['enable'])) {
-            $formType->addMethodCall('isEnable', [$config['enable']]);
-        }
-
-        if (isset($config['async'])) {
-            $formType->addMethodCall('isAsync', [$config['async']]);
-        }
-
-        if (isset($config['auto_inline'])) {
-            $formType->addMethodCall('isAutoInline', [$config['auto_inline']]);
-        }
-
-        if (isset($config['inline'])) {
-            $formType->addMethodCall('isInline', [$config['inline']]);
-        }
-
-        if (isset($config['autoload'])) {
-            $formType->addMethodCall('isAutoload', [$config['autoload']]);
-        }
-
-        if (isset($config['jquery'])) {
-            $formType->addMethodCall('useJquery', [$config['jquery']]);
-        }
-
-        if (isset($config['require_js'])) {
-            $formType->addMethodCall('useRequireJs', [$config['require_js']]);
-        }
-
-        if (isset($config['input_sync'])) {
-            $formType->addMethodCall('isInputSync', [$config['input_sync']]);
-        }
-
-        if (isset($config['base_path'])) {
-            $formType->addMethodCall('setBasePath', [$config['base_path']]);
-        }
-
-        if (isset($config['js_path'])) {
-            $formType->addMethodCall('setJsPath', [$config['js_path']]);
-        }
-
-        if (isset($config['jquery_path'])) {
-            $formType->addMethodCall('setJqueryPath', [$config['jquery_path']]);
         }
     }
 
@@ -223,19 +170,6 @@ class FOSCKEditorExtension extends ConfigurableExtension
 
         if (!empty($config['toolbars']['configs'])) {
             $definition->addMethodCall('setToolbars', [$config['toolbars']['configs']]);
-        }
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
-    private function registerFilebrowsers(array $config, ContainerBuilder $container)
-    {
-        if (!empty($config['filebrowsers'])) {
-            $container
-                ->getDefinition('fos_ck_editor.form.type')
-                ->addMethodCall('setFilebrowsers', [$config['filebrowsers']]);
         }
     }
 

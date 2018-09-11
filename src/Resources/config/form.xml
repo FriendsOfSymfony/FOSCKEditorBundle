@@ -11,6 +11,7 @@
             <argument type="service" id="fos_ck_editor.styles_set_manager" />
             <argument type="service" id="fos_ck_editor.template_manager" />
             <argument type="service" id="fos_ck_editor.toolbar_manager" />
+            <argument type="collection" />
             <tag name="form.type" />
         </service>
 

@@ -31,66 +31,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CKEditorType extends AbstractType
 {
     /**
-     * @var bool
-     */
-    private $enable = true;
-
-    /**
-     * @var bool
-     */
-    private $async = false;
-
-    /**
-     * @var bool
-     */
-    private $autoload = true;
-
-    /**
-     * @var bool
-     */
-    private $autoInline = true;
-
-    /**
-     * @var bool
-     */
-    private $inline = false;
-
-    /**
-     * @var bool
-     */
-    private $jquery = false;
-
-    /**
-     * @var bool
-     */
-    private $requireJs = false;
-
-    /**
-     * @var bool
-     */
-    private $inputSync = false;
-
-    /**
-     * @var array
-     */
-    private $filebrowsers = [];
-
-    /**
-     * @var string
-     */
-    private $basePath = 'bundles/fosckeditor/';
-
-    /**
-     * @var string
-     */
-    private $jsPath = 'bundles/fosckeditor/ckeditor.js';
-
-    /**
-     * @var string
-     */
-    private $jqueryPath = 'bundles/fosckeditor/adapters/jquery.js';
-
-    /**
      * @var ConfigManagerInterface
      */
     private $configManager;
@@ -116,318 +56,24 @@ class CKEditorType extends AbstractType
     private $toolbarManager;
 
     /**
-     * @param ConfigManagerInterface    $configManager
-     * @param PluginManagerInterface    $pluginManager
-     * @param StylesSetManagerInterface $stylesSetManager
-     * @param TemplateManagerInterface  $templateManager
-     * @param ToolbarManagerInterface   $toolbarManager
+     * @var array
      */
+    private $config;
+
     public function __construct(
         ConfigManagerInterface $configManager,
         PluginManagerInterface $pluginManager,
         StylesSetManagerInterface $stylesSetManager,
         TemplateManagerInterface $templateManager,
-        ToolbarManagerInterface $toolbarManager
+        ToolbarManagerInterface $toolbarManager,
+        array $config
     ) {
-        $this->setConfigManager($configManager);
-        $this->setPluginManager($pluginManager);
-        $this->setStylesSetManager($stylesSetManager);
-        $this->setTemplateManager($templateManager);
-        $this->setToolbarManager($toolbarManager);
-    }
-
-    /**
-     * @param bool|null $enable
-     *
-     * @return bool
-     */
-    public function isEnable($enable = null)
-    {
-        if (null !== $enable) {
-            $this->enable = (bool) $enable;
-        }
-
-        return $this->enable;
-    }
-
-    /**
-     * @param bool|null $async
-     *
-     * @return bool
-     */
-    public function isAsync($async = null)
-    {
-        if (null !== $async) {
-            $this->async = (bool) $async;
-        }
-
-        return $this->async;
-    }
-
-    /**
-     * @param bool $autoload
-     *
-     * @return bool
-     */
-    public function isAutoload($autoload = null)
-    {
-        if (null !== $autoload) {
-            $this->autoload = (bool) $autoload;
-        }
-
-        return $this->autoload;
-    }
-
-    /**
-     * @param bool $autoInline
-     *
-     * @return bool
-     */
-    public function isAutoInline($autoInline = null)
-    {
-        if (null !== $autoInline) {
-            $this->autoInline = (bool) $autoInline;
-        }
-
-        return $this->autoInline;
-    }
-
-    /**
-     * @param bool $inline
-     *
-     * @return bool
-     */
-    public function isInline($inline = null)
-    {
-        if (null !== $inline) {
-            $this->inline = (bool) $inline;
-        }
-
-        return $this->inline;
-    }
-
-    /**
-     * @param bool $jquery
-     *
-     * @return bool
-     */
-    public function useJquery($jquery = null)
-    {
-        if (null !== $jquery) {
-            $this->jquery = (bool) $jquery;
-        }
-
-        return $this->jquery;
-    }
-
-    /**
-     * @param bool $requireJs
-     *
-     * @return bool
-     */
-    public function useRequireJs($requireJs = null)
-    {
-        if (null !== $requireJs) {
-            $this->requireJs = (bool) $requireJs;
-        }
-
-        return $this->requireJs;
-    }
-
-    /**
-     * @param bool $inputSync
-     *
-     * @return bool
-     */
-    public function isInputSync($inputSync = null)
-    {
-        if (null !== $inputSync) {
-            $this->inputSync = (bool) $inputSync;
-        }
-
-        return $this->inputSync;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasFilebrowsers()
-    {
-        return !empty($this->filebrowsers);
-    }
-
-    /**
-     * @return array
-     */
-    public function getFilebrowsers()
-    {
-        return $this->filebrowsers;
-    }
-
-    /**
-     * @param array $filebrowsers
-     */
-    public function setFilebrowsers(array $filebrowsers)
-    {
-        foreach ($filebrowsers as $filebrowser) {
-            $this->addFilebrowser($filebrowser);
-        }
-    }
-
-    /**
-     * @param string $filebrowser
-     *
-     * @return bool
-     */
-    public function hasFilebrowser($filebrowser)
-    {
-        return in_array($filebrowser, $this->filebrowsers, true);
-    }
-
-    /**
-     * @param string $filebrowser
-     */
-    public function addFilebrowser($filebrowser)
-    {
-        if (!$this->hasFilebrowser($filebrowser)) {
-            $this->filebrowsers[] = $filebrowser;
-        }
-    }
-
-    /**
-     * @param string $filebrowser
-     */
-    public function removeFilebrowser($filebrowser)
-    {
-        unset($this->filebrowsers[array_search($filebrowser, $this->filebrowsers, true)]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getBasePath()
-    {
-        return $this->basePath;
-    }
-
-    /**
-     * @param string $basePath
-     */
-    public function setBasePath($basePath)
-    {
-        $this->basePath = $basePath;
-    }
-
-    /**
-     * @return string
-     */
-    public function getJsPath()
-    {
-        return $this->jsPath;
-    }
-
-    /**
-     * @param string $jsPath
-     */
-    public function setJsPath($jsPath)
-    {
-        $this->jsPath = $jsPath;
-    }
-
-    /**
-     * @return string
-     */
-    public function getJqueryPath()
-    {
-        return $this->jqueryPath;
-    }
-
-    /**
-     * @param string $jqueryPath
-     */
-    public function setJqueryPath($jqueryPath)
-    {
-        $this->jqueryPath = $jqueryPath;
-    }
-
-    /**
-     * @return ConfigManagerInterface
-     */
-    public function getConfigManager()
-    {
-        return $this->configManager;
-    }
-
-    /**
-     * @param ConfigManagerInterface $configManager
-     */
-    public function setConfigManager(ConfigManagerInterface $configManager)
-    {
         $this->configManager = $configManager;
-    }
-
-    /**
-     * @return PluginManagerInterface
-     */
-    public function getPluginManager()
-    {
-        return $this->pluginManager;
-    }
-
-    /**
-     * @param PluginManagerInterface $pluginManager
-     */
-    public function setPluginManager(PluginManagerInterface $pluginManager)
-    {
         $this->pluginManager = $pluginManager;
-    }
-
-    /**
-     * @return StylesSetManagerInterface
-     */
-    public function getStylesSetManager()
-    {
-        return $this->stylesSetManager;
-    }
-
-    /**
-     * @param StylesSetManagerInterface $stylesSetManager
-     */
-    public function setStylesSetManager(StylesSetManagerInterface $stylesSetManager)
-    {
         $this->stylesSetManager = $stylesSetManager;
-    }
-
-    /**
-     * @return TemplateManagerInterface
-     */
-    public function getTemplateManager()
-    {
-        return $this->templateManager;
-    }
-
-    /**
-     * @param TemplateManagerInterface $templateManager
-     */
-    public function setTemplateManager(TemplateManagerInterface $templateManager)
-    {
         $this->templateManager = $templateManager;
-    }
-
-    /**
-     * @return ToolbarManagerInterface
-     */
-    public function getToolbarManager()
-    {
-        return $this->toolbarManager;
-    }
-
-    /**
-     * @param ToolbarManagerInterface $toolbarManager
-     */
-    public function setToolbarManager(ToolbarManagerInterface $toolbarManager)
-    {
         $this->toolbarManager = $toolbarManager;
+        $this->config = $config;
     }
 
     /**
@@ -519,18 +165,18 @@ class CKEditorType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'enable' => $this->enable,
-                'async' => $this->async,
-                'autoload' => $this->autoload,
-                'auto_inline' => $this->autoInline,
-                'inline' => $this->inline,
-                'jquery' => $this->jquery,
-                'require_js' => $this->requireJs,
-                'input_sync' => $this->inputSync,
-                'filebrowsers' => $this->filebrowsers,
-                'base_path' => $this->basePath,
-                'js_path' => $this->jsPath,
-                'jquery_path' => $this->jqueryPath,
+                'enable' => $this->config['enable'],
+                'async' => $this->config['async'],
+                'autoload' => $this->config['autoload'],
+                'auto_inline' => $this->config['auto_inline'],
+                'inline' => $this->config['inline'],
+                'jquery' => $this->config['jquery'],
+                'require_js' => $this->config['require_js'],
+                'input_sync' => $this->config['input_sync'],
+                'filebrowsers' => $this->config['filebrowsers'],
+                'base_path' => $this->config['base_path'],
+                'js_path' => $this->config['js_path'],
+                'jquery_path' => $this->config['jquery_path'],
                 'config_name' => $this->configManager->getDefaultConfig(),
                 'config' => [],
                 'plugins' => [],
