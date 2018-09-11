@@ -12,6 +12,7 @@
 
 namespace FOS\CKEditorBundle\Form\Type;
 
+use FOS\CKEditorBundle\Exception\ConfigManagerException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -70,6 +71,10 @@ class CKEditorType extends AbstractType
         if (null === $options['config_name']) {
             $options['config_name'] = uniqid('fos', true);
         } else {
+            if (!isset($this->config['configs'][$options['config_name']])) {
+                throw ConfigManagerException::configDoesNotExist($options['config_name']);
+            }
+
             $config = array_merge($this->config['configs'][$options['config_name']], $config);
         }
 

@@ -3,6 +3,9 @@
 UPGRADE FROM 1.x to 2.0
 =======================
 
+All Model Managers have been removed.
+Not used exceptions have been removed.
+
 CKEditorType Form Type now has only 1 parameter in constructor that represents
 config taken from bundle configuration, and all getters and setters have been
 removed.
