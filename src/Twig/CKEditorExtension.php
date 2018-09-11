@@ -19,7 +19,7 @@ use Twig\TwigFunction;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorExtension extends AbstractExtension implements CKEditorRendererInterface
+final class CKEditorExtension extends AbstractExtension implements CKEditorRendererInterface
 {
     /**
      * @var CKEditorRendererInterface

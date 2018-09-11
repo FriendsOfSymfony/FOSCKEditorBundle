@@ -25,7 +25,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorInstallerCommand extends Command
+final class CKEditorInstallerCommand extends Command
 {
     /**
      * @var CKEditorInstaller

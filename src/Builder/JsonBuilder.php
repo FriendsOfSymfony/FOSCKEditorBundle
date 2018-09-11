@@ -18,7 +18,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class JsonBuilder
+final class JsonBuilder
 {
     /**
      * @var PropertyAccessorInterface
