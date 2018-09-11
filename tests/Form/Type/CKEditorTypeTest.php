@@ -69,7 +69,7 @@ class CKEditorTypeTest extends AbstractTestCase
     private $toolbarManager;
 
     /**
-     * {@inheritdooc}.
+     * @group legacy
      */
     protected function setUp()
     {
@@ -94,6 +94,9 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->formType = method_exists(AbstractType::class, 'getBlockPrefix') ? CKEditorType::class : 'ckeditor';
     }
 
+    /**
+     * @group legacy
+     */
     public function testInitialState()
     {
         $this->assertTrue($this->ckEditorType->isEnable());
