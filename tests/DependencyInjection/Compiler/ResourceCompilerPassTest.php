@@ -27,7 +27,7 @@ class ResourceCompilerPassTest extends AbstractTestCase
     private $compilerPass;
 
     /**
-     * {@inheritdoc}
+     * @group legacy
      */
     protected function setUp()
     {
