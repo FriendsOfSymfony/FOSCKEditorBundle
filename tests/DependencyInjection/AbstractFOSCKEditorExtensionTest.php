@@ -27,6 +27,8 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
+ * @group legacy
+ *
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
@@ -63,7 +65,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     private $templating;
 
     /**
-     * {@inheritdoc}
+     * @group legacy
      */
     protected function setUp()
     {

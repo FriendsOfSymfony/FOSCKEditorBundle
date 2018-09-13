@@ -24,6 +24,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
 
 /**
+ * @group legacy
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorTypeTest extends AbstractTestCase
