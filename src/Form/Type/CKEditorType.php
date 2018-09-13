@@ -12,7 +12,7 @@
 
 namespace FOS\CKEditorBundle\Form\Type;
 
-use FOS\CKEditorBundle\Exception\ConfigException;
+use FOS\CKEditorBundle\Config\CKEditorConfiguration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,13 +27,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CKEditorType extends AbstractType
 {
     /**
-     * @var array
+     * @var CKEditorConfiguration
      */
-    private $config;
+    private $configuration;
 
-    public function __construct(array $config)
+    public function __construct(CKEditorConfiguration $configuration)
     {
-        $this->config = $config;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -60,9 +60,9 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('jquery_path', $options['jquery_path']);
         $builder->setAttribute('config', $this->resolveConfig($options));
         $builder->setAttribute('config_name', $options['config_name']);
-        $builder->setAttribute('plugins', $this->merge('plugins', $options));
-        $builder->setAttribute('styles', $this->merge('styles', $options));
-        $builder->setAttribute('templates', $this->merge('templates', $options));
+        $builder->setAttribute('plugins', array_merge($this->configuration->getPlugins(), $options['plugins']));
+        $builder->setAttribute('styles', array_merge($this->configuration->getStyles(), $options['styles']));
+        $builder->setAttribute('templates', array_merge($this->configuration->getTemplates(), $options['templates']));
     }
 
     private function resolveConfig(array $options): array
@@ -72,36 +72,14 @@ class CKEditorType extends AbstractType
         if (null === $options['config_name']) {
             $options['config_name'] = uniqid('fos', true);
         } else {
-            if (!isset($this->config['configs'][$options['config_name']])) {
-                throw ConfigException::configDoesNotExist($options['config_name']);
-            }
-
-            $config = array_merge($this->config['configs'][$options['config_name']], $config);
+            $config = array_merge($this->configuration->getConfig($options['config_name']), $config);
         }
 
         if (isset($config['toolbar']) && is_string($config['toolbar'])) {
-            $config['toolbar'] = $this->resolveToolbar($config['toolbar']);
+            $config['toolbar'] = $this->configuration->getToolbar($config['toolbar']);
         }
 
         return $config;
-    }
-
-    private function resolveToolbar(string $name): array
-    {
-        $toolbars = [];
-
-        foreach ($this->config['toolbars']['configs'][$name] as $name => $item) {
-            $toolbars[] = is_string($item) && '@' === substr($item, 0, 1)
-                ? $this->config['toolbars']['items'][(substr($item, 1))]
-                : $item;
-        }
-
-        return $toolbars;
-    }
-
-    private function merge(string $name, array $options): array
-    {
-        return array_merge($this->config[$name], $options[$name]);
     }
 
     /**
@@ -141,19 +119,19 @@ class CKEditorType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'enable' => $this->config['enable'],
-                'async' => $this->config['async'],
-                'autoload' => $this->config['autoload'],
-                'auto_inline' => $this->config['auto_inline'],
-                'inline' => $this->config['inline'],
-                'jquery' => $this->config['jquery'],
-                'require_js' => $this->config['require_js'],
-                'input_sync' => $this->config['input_sync'],
-                'filebrowsers' => $this->config['filebrowsers'],
-                'base_path' => $this->config['base_path'],
-                'js_path' => $this->config['js_path'],
-                'jquery_path' => $this->config['jquery_path'],
-                'config_name' => $this->config['default_config'],
+                'enable' => $this->configuration->isEnable(),
+                'async' => $this->configuration->isAsync(),
+                'autoload' => $this->configuration->isAutoload(),
+                'auto_inline' => $this->configuration->isAutoInline(),
+                'inline' => $this->configuration->isInline(),
+                'jquery' => $this->configuration->isJquery(),
+                'require_js' => $this->configuration->isRequireJs(),
+                'input_sync' => $this->configuration->isInputSync(),
+                'filebrowsers' => $this->configuration->getFilebrowsers(),
+                'base_path' => $this->configuration->getBasePath(),
+                'js_path' => $this->configuration->getJsPath(),
+                'jquery_path' => $this->configuration->getJqueryPath(),
+                'config_name' => $this->configuration->getDefaultConfig(),
                 'config' => [],
                 'plugins' => [],
                 'styles' => [],

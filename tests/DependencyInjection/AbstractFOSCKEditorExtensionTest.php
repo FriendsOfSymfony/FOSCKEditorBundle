@@ -376,12 +376,13 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \FOS\CKEditorBundle\Exception\DependencyInjectionException
+     * @expectedException \FOS\CKEditorBundle\Exception\ConfigException
      * @expectedExceptionMessage The default config "bar" does not exist.
      */
     public function testInvalidDefaultConfig()
     {
         $this->loadConfiguration($this->container, 'invalid_default_config');
         $this->container->compile();
+        $this->getVars();
     }
 }

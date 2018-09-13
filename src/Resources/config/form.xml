@@ -6,7 +6,7 @@
 >
     <services>
         <service id="fos_ck_editor.form.type" class="FOS\CKEditorBundle\Form\Type\CKEditorType">
-            <argument type="collection" />
+            <argument type="service" id="fos_ck_editor.configuration" />
             <tag name="form.type" />
         </service>
     </services>

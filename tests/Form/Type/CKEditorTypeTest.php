@@ -12,6 +12,7 @@
 
 namespace FOS\CKEditorBundle\Tests\Form\Type;
 
+use FOS\CKEditorBundle\Config\CKEditorConfiguration;
 use FOS\CKEditorBundle\DependencyInjection\Configuration;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
@@ -45,9 +46,9 @@ class CKEditorTypeTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->ckEditorType = new CKEditorType(
+        $this->ckEditorType = new CKEditorType(new CKEditorConfiguration(
             (new Processor())->processConfiguration(new Configuration(), [])
-        );
+        ));
 
         $this->factory = Forms::createFormFactoryBuilder()
             ->addType($this->ckEditorType)

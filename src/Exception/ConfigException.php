@@ -21,4 +21,9 @@ class ConfigException extends Exception
     {
         return new static(sprintf('The CKEditor config "%s" does not exist.', $name));
     }
+
+    public static function invalidDefaultConfig(string $name): self
+    {
+        return new static(sprintf('The default config "%s" does not exist.', $name));
+    }
 }
