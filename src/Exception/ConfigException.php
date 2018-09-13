@@ -15,14 +15,9 @@ namespace FOS\CKEditorBundle\Exception;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ConfigManagerException extends Exception
+class ConfigException extends Exception
 {
-    /**
-     * @param string $name
-     *
-     * @return ConfigManagerException
-     */
-    public static function configDoesNotExist($name)
+    public static function configDoesNotExist(string $name): self
     {
         return new static(sprintf('The CKEditor config "%s" does not exist.', $name));
     }

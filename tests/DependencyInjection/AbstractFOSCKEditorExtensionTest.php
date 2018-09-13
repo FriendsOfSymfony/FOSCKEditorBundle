@@ -99,13 +99,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->container->loadFromExtension($extension->getAlias());
 
         $toBePublic = [
-            'fos_ck_editor.template_manager',
             'fos_ck_editor.form.type',
-            'fos_ck_editor.config_manager',
-            'fos_ck_editor.plugin_manager',
-            'fos_ck_editor.styles_set_manager',
-            'fos_ck_editor.toolbar_manager',
         ];
+
         $this->container->addCompilerPass(new TestContainerPass($toBePublic), PassConfig::TYPE_OPTIMIZE);
         (new FOSCKEditorBundle())->build($this->container);
 
@@ -275,75 +271,19 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         );
     }
 
-    public function testSingleConfiguration()
-    {
-        $this->loadConfiguration($this->container, 'single_configuration');
-        $this->container->compile();
-
-        $configManager = $this->container->get('fos_ck_editor.config_manager');
-
-        $expected = [
-            'default' => [
-                'toolbar' => 'default',
-                'uiColor' => '#000000',
-            ],
-        ];
-
-        $this->assertSame('default', $configManager->getDefaultConfig());
-        $this->assertSame($expected, $configManager->getConfigs());
-    }
-
-    public function testMultipleConfiguration()
-    {
-        $this->loadConfiguration($this->container, 'multiple_configuration');
-        $this->container->compile();
-
-        $configManager = $this->container->get('fos_ck_editor.config_manager');
-
-        $expected = [
-            'default' => [
-                'toolbar' => 'default',
-                'uiColor' => '#000000',
-            ],
-            'custom' => [
-                'toolbar' => 'custom',
-                'uiColor' => '#ffffff',
-            ],
-        ];
-
-        $this->assertSame('default', $configManager->getDefaultConfig());
-        $this->assertSame($expected, $configManager->getConfigs());
-    }
-
-    public function testDefaultConfiguration()
-    {
-        $this->loadConfiguration($this->container, 'default_configuration');
-        $this->container->compile();
-
-        $configManager = $this->container->get('fos_ck_editor.config_manager');
-
-        $expected = [
-            'default' => ['uiColor' => '#000000'],
-            'custom' => ['uiColor' => '#ffffff'],
-        ];
-
-        $this->assertSame('default', $configManager->getDefaultConfig());
-        $this->assertSame($expected, $configManager->getConfigs());
-    }
-
     public function testPlugins()
     {
         $this->loadConfiguration($this->container, 'plugins');
         $this->container->compile();
 
-        $expected = [
+        $vars = $this->getVars();
+
+        $this->assertSame([
             'plugin-name' => [
                 'path' => '/my/path',
                 'filename' => 'plugin.js',
             ],
-        ];
-
-        $this->assertSame($expected, $this->container->get('fos_ck_editor.plugin_manager')->getPlugins());
+        ], $vars['plugins']);
     }
 
     public function testStylesSets()
@@ -351,33 +291,37 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'styles_sets');
         $this->container->compile();
 
-        $expected = [
+        $vars = $this->getVars();
+
+        $this->assertSame([
             'styles-set-name' => [
                 [
                     'name' => 'Blue Title',
                     'element' => 'h2',
                     'styles' => ['text-decoration' => 'underline'],
+                    'attributes' => [],
                 ],
                 [
                     'name' => 'CSS Style',
                     'element' => 'span',
                     'attributes' => ['data-class' => 'my-style'],
+                    'styles' => [],
                 ],
                 [
                     'name' => 'Widget Style',
                     'type' => 'widget',
                     'widget' => 'my-widget',
                     'attributes' => ['data-class' => 'my-style'],
+                    'styles' => [],
                 ],
                 [
                     'name' => 'Multiple Elements Style',
                     'element' => ['span', 'p', 'h3'],
                     'attributes' => ['data-class' => 'my-style'],
+                    'styles' => [],
                 ],
             ],
-        ];
-
-        $this->assertSame($expected, $this->container->get('fos_ck_editor.styles_set_manager')->getStylesSets());
+        ], $vars['styles']);
     }
 
     public function testTemplates()
@@ -385,7 +329,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'templates');
         $this->container->compile();
 
-        $expected = [
+        $vars = $this->getVars();
+
+        $this->assertSame([
             'template-name' => [
                 'imagesPath' => '/my/path',
                 'templates' => [
@@ -399,9 +345,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
                     ],
                 ],
             ],
-        ];
-
-        $this->assertSame($expected, $this->container->get('fos_ck_editor.template_manager')->getTemplates());
+        ], $vars['templates']);
     }
 
     public function testToolbars()
@@ -409,32 +353,25 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->loadConfiguration($this->container, 'toolbars');
         $this->container->compile();
 
-        $toolbarManager = $this->container->get('fos_ck_editor.toolbar_manager');
+        $vars = $this->getVars();
 
         $this->assertSame(
             [
-                'document' => ['Source', '-', 'Save'],
-                'tools' => ['Maximize'],
-            ],
-            array_intersect_key($toolbarManager->getItems(), ['document' => true, 'tools' => true])
-        );
-
-        $this->assertSame(
-            [
-                'default' => [
-                    '@document',
-                    '/',
-                    ['Anchor'],
-                    '/',
-                    '@tools',
+                [
+                    'Source',
+                    '-',
+                    'Save',
                 ],
-                'custom' => [
-                    '@document',
-                    '/',
-                    ['Anchor'],
+                '/',
+                [
+                    'Anchor',
+                ],
+                '/',
+                [
+                    'Maximize',
                 ],
             ],
-            array_intersect_key($toolbarManager->getToolbars(), ['default' => true, 'custom' => true])
+            $vars['config']['toolbar']
         );
     }
 

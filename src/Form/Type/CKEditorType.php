@@ -12,7 +12,7 @@
 
 namespace FOS\CKEditorBundle\Form\Type;
 
-use FOS\CKEditorBundle\Exception\ConfigManagerException;
+use FOS\CKEditorBundle\Exception\ConfigException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -59,6 +59,7 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('js_path', $options['js_path']);
         $builder->setAttribute('jquery_path', $options['jquery_path']);
         $builder->setAttribute('config', $this->resolveConfig($options));
+        $builder->setAttribute('config_name', $options['config_name']);
         $builder->setAttribute('plugins', $this->merge('plugins', $options));
         $builder->setAttribute('styles', $this->merge('styles', $options));
         $builder->setAttribute('templates', $this->merge('templates', $options));
@@ -72,7 +73,7 @@ class CKEditorType extends AbstractType
             $options['config_name'] = uniqid('fos', true);
         } else {
             if (!isset($this->config['configs'][$options['config_name']])) {
-                throw ConfigManagerException::configDoesNotExist($options['config_name']);
+                throw ConfigException::configDoesNotExist($options['config_name']);
             }
 
             $config = array_merge($this->config['configs'][$options['config_name']], $config);
@@ -127,6 +128,7 @@ class CKEditorType extends AbstractType
         $view->vars['js_path'] = $config->getAttribute('js_path');
         $view->vars['jquery_path'] = $config->getAttribute('jquery_path');
         $view->vars['config'] = $config->getAttribute('config');
+        $view->vars['config_name'] = $config->getAttribute('config_name');
         $view->vars['plugins'] = $config->getAttribute('plugins');
         $view->vars['styles'] = $config->getAttribute('styles');
         $view->vars['templates'] = $config->getAttribute('templates');

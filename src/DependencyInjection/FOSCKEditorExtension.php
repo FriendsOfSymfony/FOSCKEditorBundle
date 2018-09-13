@@ -24,12 +24,112 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
  */
 class FOSCKEditorExtension extends ConfigurableExtension
 {
-    /**
-     * {@inheritdoc}
-     */
+    private const DEFAULT_TOOLBAR_ITEMS = [
+        'basic.about' => ['About'],
+        'basic.basic_styles' => ['Bold', 'Italic'],
+        'basic.links' => ['Link', 'Unlink'],
+        'basic.paragraph' => ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+        'standard.about' => ['Styles', 'Format', 'About'],
+        'standard.basic_styles' => ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'],
+        'standard.clipboard' => ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+        'standard.document' => ['Source'],
+        'standard.editing' => ['Scayt'],
+        'standard.links' => ['Link', 'Unlink', 'Anchor'],
+        'standard.insert' => ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+        'standard.paragraph' => ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'],
+        'standard.tools' => ['Maximize'],
+        'full.about' => ['About'],
+        'full.basic_styles' => [
+            'Bold',
+            'Italic',
+            'Underline',
+            'Strike',
+            'Subscript',
+            'Superscript',
+            '-',
+            'RemoveFormat',
+        ],
+        'full.clipboard' => ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+        'full.colors' => ['TextColor', 'BGColor'],
+        'full.document' => ['Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'],
+        'full.editing' => ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'],
+        'full.forms' => [
+            'Form',
+            'Checkbox',
+            'Radio',
+            'TextField',
+            'Textarea',
+            'SelectField',
+            'Button',
+            'ImageButton',
+            'HiddenField',
+        ],
+        'full.insert' => ['Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'],
+        'full.links' => ['Link', 'Unlink', 'Anchor'],
+        'full.paragraph' => [
+            'NumberedList',
+            'BulletedList',
+            '-',
+            'Outdent',
+            'Indent',
+            '-',
+            'Blockquote',
+            'CreateDiv',
+            '-',
+            'JustifyLeft',
+            'JustifyCenter',
+            'JustifyRight',
+            'JustifyBlock',
+            '-',
+            'BidiLtr',
+            'BidiRtl',
+        ],
+        'full.styles' => ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'],
+        'full.tools' => ['Maximize', 'ShowBlocks'],
+    ];
+
+    private const DEFAULT_TOOLBAR_CONFIGS = [
+        'basic' => [
+            '@basic.basic_styles',
+            '@basic.paragraph',
+            '@basic.links',
+            '@basic.about',
+        ],
+        'standard' => [
+            '@standard.clipboard',
+            '@standard.editing',
+            '@standard.links',
+            '@standard.insert',
+            '@standard.tools',
+            '@standard.document',
+            '/',
+            '@standard.basic_styles',
+            '@standard.paragraph',
+            '@standard.about',
+        ],
+        'full' => [
+            '@full.document',
+            '@full.clipboard',
+            '@full.editing',
+            '@full.forms',
+            '/',
+            '@full.basic_styles',
+            '@full.paragraph',
+            '@full.links',
+            '@full.insert',
+            '/',
+            '@full.styles',
+            '@full.colors',
+            '@full.tools',
+            '@full.about',
+        ],
+    ];
+
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
         $this->loadResources($container);
+
+        $config = $this->addDefaultToolbars($config);
 
         if ($config['enable']) {
             $config = $this->resolveConfigs($config, $container);
@@ -71,6 +171,14 @@ class FOSCKEditorExtension extends ConfigurableExtension
         foreach ($resources as $resource) {
             $loader->load($resource.'.xml');
         }
+    }
+
+    private function addDefaultToolbars(array $config)
+    {
+        $config['toolbars']['items'] = array_merge(self::DEFAULT_TOOLBAR_ITEMS, $config['toolbars']['items']);
+        $config['toolbars']['configs'] = array_merge(self::DEFAULT_TOOLBAR_CONFIGS, $config['toolbars']['configs']);
+
+        return $config;
     }
 
     /**

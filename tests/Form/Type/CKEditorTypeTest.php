@@ -278,7 +278,7 @@ class CKEditorTypeTest extends AbstractTestCase
         $view = $form->createView();
 
         $this->assertArrayHasKey('config', $view->vars);
-        $this->assertEmpty(json_decode($view->vars['config'], true));
+        $this->assertEmpty($view->vars['config']);
     }
 
     public function testConfigWithExplicitConfig()
@@ -295,30 +295,6 @@ class CKEditorTypeTest extends AbstractTestCase
 
         $this->assertArrayHasKey('config', $view->vars);
         $this->assertSame($options['config'], $view->vars['config']);
-    }
-
-    public function testConfigWithConfiguredConfig()
-    {
-        $form = $this->factory->create($this->formType, null, ['config_name' => 'default']);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('config', $view->vars);
-        $this->assertSame([
-            'toolbar' => 'default',
-            'uiColor' => '#ffffff',
-        ], $view->vars['config']);
-    }
-
-    public function testConfigWithDefaultConfiguredConfig()
-    {
-        $form = $this->factory->create($this->formType);
-        $view = $form->createView();
-
-        $this->assertArrayHasKey('config', $view->vars);
-        $this->assertSame([
-            'toolbar' => ['foo' => 'bar'],
-            'uiColor' => '#ffffff',
-        ], $view->vars['config']);
     }
 
     public function testDefaultPlugins()

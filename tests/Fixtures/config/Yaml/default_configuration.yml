@@ -1,6 +1,0 @@
-fos_ck_editor:
-    configs:
-        default:
-            uiColor: "#000000"
-        custom:
-            uiColor: "#ffffff"
