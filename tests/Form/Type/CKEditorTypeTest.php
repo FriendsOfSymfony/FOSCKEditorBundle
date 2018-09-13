@@ -405,4 +405,14 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->assertArrayNotHasKey('stylesheets', $view->vars);
         $this->assertArrayNotHasKey('templates', $view->vars);
     }
+
+    /**
+     * @expectedException \FOS\CKEditorBundle\Exception\ConfigException
+     * @expectedExceptionMessage The CKEditor config "nop" does not exist.
+     */
+    public function testBadConfig()
+    {
+        $form = $this->factory->create($this->formType, null, ['config_name' => 'nop']);
+        $form->createView();
+    }
 }

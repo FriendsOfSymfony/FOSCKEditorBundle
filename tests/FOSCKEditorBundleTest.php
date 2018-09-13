@@ -12,8 +12,8 @@
 
 namespace FOS\CKEditorBundle\Tests;
 
+use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -34,8 +34,8 @@ class FOSCKEditorBundleTest extends AbstractTestCase
         $this->bundle = new FOSCKEditorBundle();
     }
 
-    public function testBundle()
+    public function testExtension()
     {
-        $this->assertInstanceOf(Bundle::class, $this->bundle);
+        $this->assertInstanceOf(FOSCKEditorExtension::class, $this->bundle->getContainerExtension());
     }
 }
