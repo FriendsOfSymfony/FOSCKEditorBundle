@@ -132,8 +132,8 @@ class FOSCKEditorExtension extends ConfigurableExtension
         $config = $this->addDefaultToolbars($config);
 
         if ($config['enable']) {
-            $config = $this->resolveConfigs($config, $container);
-            $config = $this->resolveStylesSet($config, $container);
+            $config = $this->resolveConfigs($config);
+            $config = $this->resolveStylesSet($config);
         }
 
         $container->getDefinition('fos_ck_editor.form.type')
