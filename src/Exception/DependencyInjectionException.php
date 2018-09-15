@@ -12,6 +12,12 @@
 
 namespace FOS\CKEditorBundle\Exception;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'DependencyInjectionException is deprecated since 1.x '.
+    'and will be removed with the 2.0 release.',
+    E_USER_DEPRECATED
+);
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */

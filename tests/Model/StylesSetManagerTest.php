@@ -16,6 +16,8 @@ use FOS\CKEditorBundle\Model\StylesSetManager;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
+ * @group legacy
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class StylesSetManagerTest extends AbstractTestCase

@@ -16,6 +16,8 @@ use FOS\CKEditorBundle\Model\PluginManager;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
+ * @group legacy
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class PluginManagerTest extends AbstractTestCase
