@@ -75,7 +75,7 @@ class CKEditorInstallerCommand extends Command
                 'no-progress-bar',
                 'nobar',
                 InputOption::VALUE_NONE,
-                'Should I hide the progress bars while downloading?'
+                'Hide the progress bars?'
             )
             ->setHelp(
                 <<<'EOF'
