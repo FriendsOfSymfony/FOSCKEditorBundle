@@ -19,6 +19,7 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
@@ -69,6 +70,12 @@ class CKEditorInstallerCommand extends Command
                 null,
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
                 'Path to exclude when extracting CKEditor'
+            )
+            ->addOption(
+                'no-progress-bar',
+                'nobar',
+                InputOption::VALUE_NONE,
+                'Hide the progress bars?'
             )
             ->setHelp(
                 <<<'EOF'
@@ -159,11 +166,13 @@ EOF
      */
     private function createNotifier(InputInterface $input, OutputInterface $output)
     {
-        $clear = new ProgressBar($output);
-        $download = new ProgressBar($output);
-        $extract = new ProgressBar($output);
+        $barOutput = $input->getOption('no-progress-bar') ? new NullOutput() : $output;
 
-        return function ($type, $data) use ($input, $output, $clear, $download, $extract) {
+        $clear = new ProgressBar($barOutput);
+        $download = new ProgressBar($barOutput);
+        $extract = new ProgressBar($barOutput);
+
+        return function ($type, $data) use ($input, $output, $barOutput, $clear, $download, $extract) {
             switch ($type) {
                 case CKEditorInstaller::NOTIFY_CLEAR:
                     $result = $this->choice(
@@ -198,7 +207,7 @@ EOF
                     break;
 
                 case CKEditorInstaller::NOTIFY_CLEAR_COMPLETE:
-                    $this->finishProgressBar($clear, $output);
+                    $this->finishProgressBar($clear, $barOutput);
 
                     break;
 
@@ -218,12 +227,12 @@ EOF
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_COMPLETE:
-                    $this->finishProgressBar($download, $output);
+                    $this->finishProgressBar($download, $barOutput);
 
                     break;
 
                 case CKEditorInstaller::NOTIFY_DOWNLOAD_PROGRESS:
-                    $download->setProgress($data);
+                    $download->advance($data);
 
                     break;
 
@@ -238,7 +247,7 @@ EOF
                     break;
 
                 case CKEditorInstaller::NOTIFY_EXTRACT_COMPLETE:
-                    $this->finishProgressBar($extract, $output);
+                    $this->finishProgressBar($extract, $barOutput);
 
                     break;
 

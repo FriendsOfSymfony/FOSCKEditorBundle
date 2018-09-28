@@ -73,6 +73,12 @@ class CKEditorScriptHandler extends ScriptHandler
             }
         }
 
+        if (isset($extra['ckeditor-no-progress-bar'])
+            && 'false' !== $extra['ckeditor-no-progress-bar']
+        ) {
+            $command .= ' --no-progress-bar';
+        }
+
         return $command;
     }
 }
