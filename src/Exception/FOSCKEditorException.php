@@ -12,11 +12,11 @@
 
 namespace FOS\CKEditorBundle\Exception;
 
-use Exception as BaseException;
+use Throwable;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class Exception extends BaseException
+interface FOSCKEditorException extends Throwable
 {
 }
