@@ -143,11 +143,24 @@ class CKEditorType extends AbstractType
      */
     public function isEnable($enable = null)
     {
+        $this->triggerMethodDeprecation('isEnable');
+
         if (null !== $enable) {
             $this->enable = (bool) $enable;
         }
 
         return $this->enable;
+    }
+
+    private function triggerMethodDeprecation($name)
+    {
+        @trigger_error(
+            sprintf(
+                'Method "%s" is deprecated since 1.x and will be removed with the 2.0 release. ',
+                $name
+            ),
+            E_USER_DEPRECATED
+        );
     }
 
     /**
@@ -157,6 +170,8 @@ class CKEditorType extends AbstractType
      */
     public function isAsync($async = null)
     {
+        $this->triggerMethodDeprecation('isAsync');
+
         if (null !== $async) {
             $this->async = (bool) $async;
         }
@@ -171,6 +186,8 @@ class CKEditorType extends AbstractType
      */
     public function isAutoload($autoload = null)
     {
+        $this->triggerMethodDeprecation('isAutoload');
+
         if (null !== $autoload) {
             $this->autoload = (bool) $autoload;
         }
@@ -185,6 +202,8 @@ class CKEditorType extends AbstractType
      */
     public function isAutoInline($autoInline = null)
     {
+        $this->triggerMethodDeprecation('isAutoInline');
+
         if (null !== $autoInline) {
             $this->autoInline = (bool) $autoInline;
         }
@@ -199,6 +218,8 @@ class CKEditorType extends AbstractType
      */
     public function isInline($inline = null)
     {
+        $this->triggerMethodDeprecation('isInline');
+
         if (null !== $inline) {
             $this->inline = (bool) $inline;
         }
@@ -213,6 +234,8 @@ class CKEditorType extends AbstractType
      */
     public function useJquery($jquery = null)
     {
+        $this->triggerMethodDeprecation('useJquery');
+
         if (null !== $jquery) {
             $this->jquery = (bool) $jquery;
         }
@@ -227,6 +250,8 @@ class CKEditorType extends AbstractType
      */
     public function useRequireJs($requireJs = null)
     {
+        $this->triggerMethodDeprecation('useRequireJs');
+
         if (null !== $requireJs) {
             $this->requireJs = (bool) $requireJs;
         }
@@ -241,6 +266,8 @@ class CKEditorType extends AbstractType
      */
     public function isInputSync($inputSync = null)
     {
+        $this->triggerMethodDeprecation('isInputSync');
+
         if (null !== $inputSync) {
             $this->inputSync = (bool) $inputSync;
         }
@@ -253,6 +280,8 @@ class CKEditorType extends AbstractType
      */
     public function hasFilebrowsers()
     {
+        $this->triggerMethodDeprecation('hasFilebrowsers');
+
         return !empty($this->filebrowsers);
     }
 
@@ -261,6 +290,8 @@ class CKEditorType extends AbstractType
      */
     public function getFilebrowsers()
     {
+        $this->triggerMethodDeprecation('getFilebrowsers');
+
         return $this->filebrowsers;
     }
 
@@ -269,6 +300,8 @@ class CKEditorType extends AbstractType
      */
     public function setFilebrowsers(array $filebrowsers)
     {
+        $this->triggerMethodDeprecation('setFilebrowsers');
+
         foreach ($filebrowsers as $filebrowser) {
             $this->addFilebrowser($filebrowser);
         }
@@ -281,6 +314,8 @@ class CKEditorType extends AbstractType
      */
     public function hasFilebrowser($filebrowser)
     {
+        $this->triggerMethodDeprecation('hasFilebrowser');
+
         return in_array($filebrowser, $this->filebrowsers, true);
     }
 
@@ -289,6 +324,8 @@ class CKEditorType extends AbstractType
      */
     public function addFilebrowser($filebrowser)
     {
+        $this->triggerMethodDeprecation('addFilebrowser');
+
         if (!$this->hasFilebrowser($filebrowser)) {
             $this->filebrowsers[] = $filebrowser;
         }
@@ -299,6 +336,8 @@ class CKEditorType extends AbstractType
      */
     public function removeFilebrowser($filebrowser)
     {
+        $this->triggerMethodDeprecation('removeFilebrowser');
+
         unset($this->filebrowsers[array_search($filebrowser, $this->filebrowsers, true)]);
     }
 
@@ -307,6 +346,8 @@ class CKEditorType extends AbstractType
      */
     public function getBasePath()
     {
+        $this->triggerMethodDeprecation('getBasePath');
+
         return $this->basePath;
     }
 
@@ -315,6 +356,8 @@ class CKEditorType extends AbstractType
      */
     public function setBasePath($basePath)
     {
+        $this->triggerMethodDeprecation('setBasePath');
+
         $this->basePath = $basePath;
     }
 
@@ -323,6 +366,8 @@ class CKEditorType extends AbstractType
      */
     public function getJsPath()
     {
+        $this->triggerMethodDeprecation('getJsPath');
+
         return $this->jsPath;
     }
 
@@ -331,6 +376,8 @@ class CKEditorType extends AbstractType
      */
     public function setJsPath($jsPath)
     {
+        $this->triggerMethodDeprecation('setJsPath');
+
         $this->jsPath = $jsPath;
     }
 
@@ -339,6 +386,8 @@ class CKEditorType extends AbstractType
      */
     public function getJqueryPath()
     {
+        $this->triggerMethodDeprecation('getJqueryPath');
+
         return $this->jqueryPath;
     }
 
@@ -347,6 +396,8 @@ class CKEditorType extends AbstractType
      */
     public function setJqueryPath($jqueryPath)
     {
+        $this->triggerMethodDeprecation('setJqueryPath');
+
         $this->jqueryPath = $jqueryPath;
     }
 
@@ -355,6 +406,8 @@ class CKEditorType extends AbstractType
      */
     public function getConfigManager()
     {
+        $this->triggerMethodDeprecation('getConfigManager');
+
         return $this->configManager;
     }
 
@@ -363,6 +416,8 @@ class CKEditorType extends AbstractType
      */
     public function setConfigManager(ConfigManagerInterface $configManager)
     {
+        $this->triggerMethodDeprecation('setConfigManager');
+
         $this->configManager = $configManager;
     }
 
@@ -371,6 +426,8 @@ class CKEditorType extends AbstractType
      */
     public function getPluginManager()
     {
+        $this->triggerMethodDeprecation('getPluginManager');
+
         return $this->pluginManager;
     }
 
@@ -379,6 +436,8 @@ class CKEditorType extends AbstractType
      */
     public function setPluginManager(PluginManagerInterface $pluginManager)
     {
+        $this->triggerMethodDeprecation('setPluginManager');
+
         $this->pluginManager = $pluginManager;
     }
 
@@ -387,6 +446,8 @@ class CKEditorType extends AbstractType
      */
     public function getStylesSetManager()
     {
+        $this->triggerMethodDeprecation('getStylesSetManager');
+
         return $this->stylesSetManager;
     }
 
@@ -395,6 +456,8 @@ class CKEditorType extends AbstractType
      */
     public function setStylesSetManager(StylesSetManagerInterface $stylesSetManager)
     {
+        $this->triggerMethodDeprecation('setStylesSetManager');
+
         $this->stylesSetManager = $stylesSetManager;
     }
 
@@ -403,6 +466,8 @@ class CKEditorType extends AbstractType
      */
     public function getTemplateManager()
     {
+        $this->triggerMethodDeprecation('getTemplateManager');
+
         return $this->templateManager;
     }
 
@@ -411,6 +476,8 @@ class CKEditorType extends AbstractType
      */
     public function setTemplateManager(TemplateManagerInterface $templateManager)
     {
+        $this->triggerMethodDeprecation('setTemplateManager');
+
         $this->templateManager = $templateManager;
     }
 
@@ -419,6 +486,8 @@ class CKEditorType extends AbstractType
      */
     public function getToolbarManager()
     {
+        $this->triggerMethodDeprecation('getToolbarManager');
+
         return $this->toolbarManager;
     }
 
@@ -427,6 +496,8 @@ class CKEditorType extends AbstractType
      */
     public function setToolbarManager(ToolbarManagerInterface $toolbarManager)
     {
+        $this->triggerMethodDeprecation('setToolbarManager');
+
         $this->toolbarManager = $toolbarManager;
     }
 

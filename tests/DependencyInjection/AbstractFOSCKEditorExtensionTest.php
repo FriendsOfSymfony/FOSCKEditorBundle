@@ -65,7 +65,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     private $templating;
 
     /**
-     * {@inheritdoc}
+     * @group legacy
      */
     protected function setUp()
     {

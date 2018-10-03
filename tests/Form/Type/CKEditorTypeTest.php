@@ -24,6 +24,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
 
 /**
+ * @group legacy
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorTypeTest extends AbstractTestCase
@@ -69,7 +71,7 @@ class CKEditorTypeTest extends AbstractTestCase
     private $toolbarManager;
 
     /**
-     * {@inheritdooc}.
+     * @group legacy
      */
     protected function setUp()
     {
@@ -94,6 +96,9 @@ class CKEditorTypeTest extends AbstractTestCase
         $this->formType = method_exists(AbstractType::class, 'getBlockPrefix') ? CKEditorType::class : 'ckeditor';
     }
 
+    /**
+     * @group legacy
+     */
     public function testInitialState()
     {
         $this->assertTrue($this->ckEditorType->isEnable());
