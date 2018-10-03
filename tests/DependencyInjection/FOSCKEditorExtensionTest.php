@@ -27,6 +27,16 @@ class FOSCKEditorExtensionTest extends AbstractExtensionTestCase
         $this->assertArrayHasKey('fos_ck_editor.twig_extension', $taggedServices);
     }
 
+    /**
+     * @group legacy
+     * @expectedDeprecation IvoryCKEditorBundle isn't maintained anymore and should be replaced with FOSCKEditorBundle.
+     */
+    public function testIvoryDeprecation()
+    {
+        $this->container->setParameter('kernel.bundles', ['IvoryCKEditorBundle' => '']);
+        $this->load();
+    }
+
     protected function getContainerExtensions()
     {
         return [new FOSCKEditorExtension()];

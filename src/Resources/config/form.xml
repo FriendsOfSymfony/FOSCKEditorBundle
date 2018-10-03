@@ -6,19 +6,8 @@
 >
     <services>
         <service id="fos_ck_editor.form.type" class="FOS\CKEditorBundle\Form\Type\CKEditorType">
-            <argument type="service" id="fos_ck_editor.config_manager" />
-            <argument type="service" id="fos_ck_editor.plugin_manager" />
-            <argument type="service" id="fos_ck_editor.styles_set_manager" />
-            <argument type="service" id="fos_ck_editor.template_manager" />
-            <argument type="service" id="fos_ck_editor.toolbar_manager" />
-            <argument type="collection" />
+            <argument type="service" id="fos_ck_editor.configuration" />
             <tag name="form.type" />
         </service>
-
-        <service id="fos_ck_editor.config_manager" class="FOS\CKEditorBundle\Model\ConfigManager" />
-        <service id="fos_ck_editor.plugin_manager" class="FOS\CKEditorBundle\Model\PluginManager" />
-        <service id="fos_ck_editor.styles_set_manager" class="FOS\CKEditorBundle\Model\StylesSetManager" />
-        <service id="fos_ck_editor.template_manager" class="FOS\CKEditorBundle\Model\TemplateManager" />
-        <service id="fos_ck_editor.toolbar_manager" class="FOS\CKEditorBundle\Model\ToolbarManager" />
     </services>
 </container>

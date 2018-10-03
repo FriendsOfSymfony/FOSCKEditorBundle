@@ -3,9 +3,11 @@
 UPGRADE FROM 1.x to 2.0
 =======================
 
-CKEditorType Form Type now has a 6th parameter in constructor that represents
-config taken from bundle configuration, and all getters and setters have been
-removed.
+All Model Managers have been removed.
+Not used exceptions have been removed.
+
+CKEditorType Form Type now accepts only `FOS\CKEditorBundle\Config\CKEditorConfiguration`,
+and all getters and setters have been removed from the form type.
 
 Minimum Symfony version is 3.4 and minimum php version is 7.1.
 

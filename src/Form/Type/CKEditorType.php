@@ -12,11 +12,7 @@
 
 namespace FOS\CKEditorBundle\Form\Type;
 
-use FOS\CKEditorBundle\Model\ConfigManagerInterface;
-use FOS\CKEditorBundle\Model\PluginManagerInterface;
-use FOS\CKEditorBundle\Model\StylesSetManagerInterface;
-use FOS\CKEditorBundle\Model\TemplateManagerInterface;
-use FOS\CKEditorBundle\Model\ToolbarManagerInterface;
+use FOS\CKEditorBundle\Config\CKEditorConfiguration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,49 +27,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CKEditorType extends AbstractType
 {
     /**
-     * @var ConfigManagerInterface
+     * @var CKEditorConfiguration
      */
-    private $configManager;
+    private $configuration;
 
-    /**
-     * @var PluginManagerInterface
-     */
-    private $pluginManager;
-
-    /**
-     * @var StylesSetManagerInterface
-     */
-    private $stylesSetManager;
-
-    /**
-     * @var TemplateManagerInterface
-     */
-    private $templateManager;
-
-    /**
-     * @var ToolbarManagerInterface
-     */
-    private $toolbarManager;
-
-    /**
-     * @var array
-     */
-    private $config;
-
-    public function __construct(
-        ConfigManagerInterface $configManager,
-        PluginManagerInterface $pluginManager,
-        StylesSetManagerInterface $stylesSetManager,
-        TemplateManagerInterface $templateManager,
-        ToolbarManagerInterface $toolbarManager,
-        array $config
-    ) {
-        $this->configManager = $configManager;
-        $this->pluginManager = $pluginManager;
-        $this->stylesSetManager = $stylesSetManager;
-        $this->templateManager = $templateManager;
-        $this->toolbarManager = $toolbarManager;
-        $this->config = $config;
+    public function __construct(CKEditorConfiguration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     /**
@@ -98,35 +58,28 @@ class CKEditorType extends AbstractType
         $builder->setAttribute('base_path', $options['base_path']);
         $builder->setAttribute('js_path', $options['js_path']);
         $builder->setAttribute('jquery_path', $options['jquery_path']);
+        $builder->setAttribute('config', $this->resolveConfig($options));
+        $builder->setAttribute('config_name', $options['config_name']);
+        $builder->setAttribute('plugins', array_merge($this->configuration->getPlugins(), $options['plugins']));
+        $builder->setAttribute('styles', array_merge($this->configuration->getStyles(), $options['styles']));
+        $builder->setAttribute('templates', array_merge($this->configuration->getTemplates(), $options['templates']));
+    }
 
-        $configManager = clone $this->configManager;
-        $pluginManager = clone $this->pluginManager;
-        $stylesSetManager = clone $this->stylesSetManager;
-        $templateManager = clone $this->templateManager;
-
+    private function resolveConfig(array $options): array
+    {
         $config = $options['config'];
 
         if (null === $options['config_name']) {
             $options['config_name'] = uniqid('fos', true);
-            $configManager->setConfig($options['config_name'], $config);
         } else {
-            $configManager->mergeConfig($options['config_name'], $config);
+            $config = array_merge($this->configuration->getConfig($options['config_name']), $config);
         }
-
-        $pluginManager->setPlugins($options['plugins']);
-        $stylesSetManager->setStylesSets($options['styles']);
-        $templateManager->setTemplates($options['templates']);
-
-        $config = $configManager->getConfig($options['config_name']);
 
         if (isset($config['toolbar']) && is_string($config['toolbar'])) {
-            $config['toolbar'] = $this->toolbarManager->resolveToolbar($config['toolbar']);
+            $config['toolbar'] = $this->configuration->getToolbar($config['toolbar']);
         }
 
-        $builder->setAttribute('config', $config);
-        $builder->setAttribute('plugins', $pluginManager->getPlugins());
-        $builder->setAttribute('styles', $stylesSetManager->getStylesSets());
-        $builder->setAttribute('templates', $templateManager->getTemplates());
+        return $config;
     }
 
     /**
@@ -153,6 +106,7 @@ class CKEditorType extends AbstractType
         $view->vars['js_path'] = $config->getAttribute('js_path');
         $view->vars['jquery_path'] = $config->getAttribute('jquery_path');
         $view->vars['config'] = $config->getAttribute('config');
+        $view->vars['config_name'] = $config->getAttribute('config_name');
         $view->vars['plugins'] = $config->getAttribute('plugins');
         $view->vars['styles'] = $config->getAttribute('styles');
         $view->vars['templates'] = $config->getAttribute('templates');
@@ -165,19 +119,19 @@ class CKEditorType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'enable' => $this->config['enable'],
-                'async' => $this->config['async'],
-                'autoload' => $this->config['autoload'],
-                'auto_inline' => $this->config['auto_inline'],
-                'inline' => $this->config['inline'],
-                'jquery' => $this->config['jquery'],
-                'require_js' => $this->config['require_js'],
-                'input_sync' => $this->config['input_sync'],
-                'filebrowsers' => $this->config['filebrowsers'],
-                'base_path' => $this->config['base_path'],
-                'js_path' => $this->config['js_path'],
-                'jquery_path' => $this->config['jquery_path'],
-                'config_name' => $this->configManager->getDefaultConfig(),
+                'enable' => $this->configuration->isEnable(),
+                'async' => $this->configuration->isAsync(),
+                'autoload' => $this->configuration->isAutoload(),
+                'auto_inline' => $this->configuration->isAutoInline(),
+                'inline' => $this->configuration->isInline(),
+                'jquery' => $this->configuration->isJquery(),
+                'require_js' => $this->configuration->isRequireJs(),
+                'input_sync' => $this->configuration->isInputSync(),
+                'filebrowsers' => $this->configuration->getFilebrowsers(),
+                'base_path' => $this->configuration->getBasePath(),
+                'js_path' => $this->configuration->getJsPath(),
+                'jquery_path' => $this->configuration->getJqueryPath(),
+                'config_name' => $this->configuration->getDefaultConfig(),
                 'config' => [],
                 'plugins' => [],
                 'styles' => [],
