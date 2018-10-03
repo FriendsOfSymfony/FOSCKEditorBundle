@@ -23,7 +23,7 @@ use Twig\Environment;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorRenderer implements CKEditorRendererInterface
+final class CKEditorRenderer implements CKEditorRendererInterface
 {
     /**
      * @var JsonBuilder

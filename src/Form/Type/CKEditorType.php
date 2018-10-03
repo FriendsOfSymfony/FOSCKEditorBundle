@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorType extends AbstractType
+final class CKEditorType extends AbstractType
 {
     /**
      * @var CKEditorConfiguration

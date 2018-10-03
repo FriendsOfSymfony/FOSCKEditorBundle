@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorInstaller
+final class CKEditorInstaller
 {
     const RELEASE_BASIC = 'basic';
 

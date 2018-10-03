@@ -3,6 +3,8 @@
 UPGRADE FROM 1.x to 2.0
 =======================
 
+Classes are now final.
+
 Marker exception is now an interface that implements throwable.
 
 All Model Managers have been removed.

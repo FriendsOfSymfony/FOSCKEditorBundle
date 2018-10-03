@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class FOSCKEditorExtension extends ConfigurableExtension
+final class FOSCKEditorExtension extends ConfigurableExtension
 {
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
