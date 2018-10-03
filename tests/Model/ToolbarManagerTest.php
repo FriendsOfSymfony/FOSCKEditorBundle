@@ -16,6 +16,8 @@ use FOS\CKEditorBundle\Model\ToolbarManager;
 use FOS\CKEditorBundle\Tests\AbstractTestCase;
 
 /**
+ * @group legacy
+ *
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ToolbarManagerTest extends AbstractTestCase
