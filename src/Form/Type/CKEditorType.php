@@ -36,10 +36,7 @@ final class CKEditorType extends AbstractType
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setAttribute('enable', $options['enable']);
 
@@ -82,10 +79,7 @@ final class CKEditorType extends AbstractType
         return $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $config = $form->getConfig();
         $view->vars['enable'] = $config->getAttribute('enable');
@@ -112,10 +106,7 @@ final class CKEditorType extends AbstractType
         $view->vars['templates'] = $config->getAttribute('templates');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([
@@ -163,26 +154,12 @@ final class CKEditorType extends AbstractType
             });
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
-        return method_exists(AbstractType::class, 'getBlockPrefix') ? TextareaType::class : 'textarea';
+        return TextareaType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ckeditor';
     }

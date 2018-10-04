@@ -15,12 +15,13 @@ namespace FOS\CKEditorBundle\Tests\Template;
 use FOS\CKEditorBundle\Builder\JsonBuilder;
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -28,7 +29,7 @@ use Twig\Environment;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractTemplateTest extends AbstractTestCase
+abstract class AbstractTemplateTest extends TestCase
 {
     /**
      * @var CKEditorRenderer
@@ -81,7 +82,7 @@ abstract class AbstractTemplateTest extends AbstractTestCase
             ->will($this->returnArgument(0));
         $this->twig = $this->createMock(Environment::class);
 
-        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->twig);
+        $this->renderer = new CKEditorRenderer(new JsonBuilder(new PropertyAccessor()), $this->router, $this->packages, $this->requestStack, $this->twig);
     }
 
     public function testDefaultState()

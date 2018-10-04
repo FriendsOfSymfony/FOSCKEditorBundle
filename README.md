@@ -38,12 +38,6 @@ License
 This bundle is released under the MIT license. See the included
 [LICENSE](LICENSE) file for more information.
 
-## Testing
-----------
-
-The bundle is fully unit tested by [PHPUnit](https://www.phpunit.de/) with a code coverage close to **100%**. To
-execute the test suite, check the travis [configuration](/.travis.yml).
-
 ## Contribute
 -------------
 

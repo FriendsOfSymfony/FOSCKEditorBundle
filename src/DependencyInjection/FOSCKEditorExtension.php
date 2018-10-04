@@ -23,7 +23,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
  */
 final class FOSCKEditorExtension extends ConfigurableExtension
 {
-    protected function loadInternal(array $config, ContainerBuilder $container)
+    protected function loadInternal(array $config, ContainerBuilder $container): void
     {
         $this->loadResources($container);
 
@@ -46,7 +46,7 @@ final class FOSCKEditorExtension extends ConfigurableExtension
         }
     }
 
-    private function loadResources(ContainerBuilder $container)
+    private function loadResources(ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -65,7 +65,7 @@ final class FOSCKEditorExtension extends ConfigurableExtension
         }
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'fos_ck_editor';
     }

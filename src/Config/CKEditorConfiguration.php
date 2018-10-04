@@ -252,7 +252,7 @@ final class CKEditorConfiguration
         return $config;
     }
 
-    private function resolveStylesSet(array $config)
+    private function resolveStylesSet(array $config): array
     {
         if (empty($config['styles'])) {
             return $config;

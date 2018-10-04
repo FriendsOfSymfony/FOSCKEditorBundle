@@ -21,10 +21,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = $this->createTreeBuilder();
         $treeBuilder
@@ -53,10 +50,7 @@ final class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createConfigsNode()
+    private function createConfigsNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('configs')
             ->prototype('array')
@@ -66,10 +60,7 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createPluginsNode()
+    private function createPluginsNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('plugins')
             ->prototype('array')
@@ -80,10 +71,7 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createStylesNode()
+    private function createStylesNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('styles')
             ->prototype('array')
@@ -100,10 +88,7 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createTemplatesNode()
+    private function createTemplatesNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('templates')
             ->prototype('array')
@@ -125,10 +110,7 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createFilebrowsersNode()
+    private function createFilebrowsersNode(): ArrayNodeDefinition
     {
         return $this->createNode('filebrowsers')
             ->useAttributeAsKey('name')
@@ -136,10 +118,7 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @return ArrayNodeDefinition
-     */
-    private function createToolbarsNode()
+    private function createToolbarsNode(): ArrayNodeDefinition
     {
         return $this->createNode('toolbars')
             ->addDefaultsIfNotSet()
@@ -159,32 +138,19 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    /**
-     * @param string $name
-     *
-     * @return ArrayNodeDefinition
-     */
-    private function createPrototypeNode($name)
+    private function createPrototypeNode(string $name): ArrayNodeDefinition
     {
         return $this->createNode($name)
             ->normalizeKeys(false)
             ->useAttributeAsKey('name');
     }
 
-    /**
-     * @param string $name
-     *
-     * @return ArrayNodeDefinition
-     */
-    private function createNode($name)
+    private function createNode(string $name): ArrayNodeDefinition
     {
         return $this->createTreeBuilder()->root($name);
     }
 
-    /**
-     * @return TreeBuilder
-     */
-    private function createTreeBuilder()
+    private function createTreeBuilder(): TreeBuilder
     {
         return new TreeBuilder();
     }

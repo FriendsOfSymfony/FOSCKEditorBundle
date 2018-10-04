@@ -15,11 +15,12 @@ namespace FOS\CKEditorBundle\Tests\Renderer;
 use FOS\CKEditorBundle\Builder\JsonBuilder;
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -27,7 +28,7 @@ use Twig\Environment;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorRendererTest extends AbstractTestCase
+class CKEditorRendererTest extends TestCase
 {
     /**
      * @var CKEditorRenderer
@@ -81,39 +82,12 @@ class CKEditorRendererTest extends AbstractTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->twig);
+        $this->renderer = new CKEditorRenderer(new JsonBuilder(new PropertyAccessor()), $this->router, $this->packages, $this->requestStack, $this->twig);
     }
 
     public function testDefaultState()
     {
         $this->assertInstanceOf(CKEditorRendererInterface::class, $this->renderer);
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Passing a %s as %s first argument is deprecated since %s, and will be removed in %s. Use %s instead.
-     */
-    public function testLegacyContstructor()
-    {
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->exactly(5))
-            ->method('get')
-            ->withConsecutive(
-                ['fos_ck_editor.renderer.json_builder'],
-                ['router'],
-                ['assets.packages'],
-                ['request_stack'],
-                ['twig']
-            )
-            ->willReturnMap([
-                ['fos_ck_editor.renderer.json_builder', new JsonBuilder()],
-                ['router', $this->router],
-                ['assets.packages', $this->packages],
-                ['request_stack', $this->requestStack],
-                ['twig', $this->twig],
-            ]);
-
-        new CKEditorRenderer($container);
     }
 
     /**

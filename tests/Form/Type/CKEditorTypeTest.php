@@ -15,7 +15,7 @@ namespace FOS\CKEditorBundle\Tests\Form\Type;
 use FOS\CKEditorBundle\Config\CKEditorConfiguration;
 use FOS\CKEditorBundle\DependencyInjection\Configuration;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\Form\Forms;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorTypeTest extends AbstractTestCase
+class CKEditorTypeTest extends TestCase
 {
     /**
      * @var FormFactoryInterface

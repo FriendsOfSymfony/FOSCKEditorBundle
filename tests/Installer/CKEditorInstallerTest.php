@@ -13,12 +13,12 @@
 namespace FOS\CKEditorBundle\Tests\Installer;
 
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorInstallerTest extends AbstractTestCase
+class CKEditorInstallerTest extends TestCase
 {
     /**
      * @var CKEditorInstaller

@@ -13,12 +13,13 @@
 namespace FOS\CKEditorBundle\Tests\Builder;
 
 use FOS\CKEditorBundle\Builder\JsonBuilder;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class JsonBuilderTest extends AbstractTestCase
+class JsonBuilderTest extends TestCase
 {
     /**
      * @var JsonBuilder
@@ -30,7 +31,7 @@ class JsonBuilderTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->jsonBuilder = new JsonBuilder();
+        $this->jsonBuilder = new JsonBuilder(new PropertyAccessor());
     }
 
     public function testDefaultState()

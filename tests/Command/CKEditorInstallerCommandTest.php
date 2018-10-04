@@ -14,14 +14,14 @@ namespace FOS\CKEditorBundle\Tests\Command;
 
 use FOS\CKEditorBundle\Command\CKEditorInstallerCommand;
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorInstallerCommandTest extends AbstractTestCase
+class CKEditorInstallerCommandTest extends TestCase
 {
     /**
      * @var Application

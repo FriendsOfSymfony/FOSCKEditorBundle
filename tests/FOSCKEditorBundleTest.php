@@ -14,12 +14,13 @@ namespace FOS\CKEditorBundle\Tests;
 
 use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-class FOSCKEditorBundleTest extends AbstractTestCase
+class FOSCKEditorBundleTest extends TestCase
 {
     /**
      * @var FOSCKEditorBundle

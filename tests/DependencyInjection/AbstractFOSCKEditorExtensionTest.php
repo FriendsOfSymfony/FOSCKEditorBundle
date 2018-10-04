@@ -15,7 +15,7 @@ namespace FOS\CKEditorBundle\Tests\DependencyInjection;
 use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use FOS\CKEditorBundle\Tests\DependencyInjection\Compiler\TestContainerPass;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -25,6 +25,7 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -32,7 +33,7 @@ use Twig\Environment;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
+abstract class AbstractFOSCKEditorExtensionTest extends TestCase
 {
     /**
      * @var ContainerBuilder
@@ -53,6 +54,11 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
      * @var FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $formRenderer;
+
+    /**
+     * @var PropertyAccessorInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $propertyAccessor;
 
     /**
      * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
@@ -81,6 +87,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     {
         $this->router = $this->createMock(RouterInterface::class);
         $this->formRenderer = $this->createMock(FormRendererInterface::class);
+        $this->propertyAccessor = $this->createMock(PropertyAccessorInterface::class);
         $this->packages = $this->getMockBuilder(Packages::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -91,6 +98,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->container->set('assets.packages', $this->packages);
         $this->container->set('router', $this->router);
         $this->container->set('templating.form.renderer', $this->formRenderer);
+        $this->container->set('property_accessor', $this->propertyAccessor);
         $this->container->set('twig.form.renderer', $this->formRenderer);
         $this->container->set('request_stack', $this->requestStack);
         $this->container->set('twig', $this->twig);

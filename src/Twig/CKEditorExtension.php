@@ -34,10 +34,7 @@ final class CKEditorExtension extends AbstractExtension implements CKEditorRende
         $this->renderer = $renderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $options = ['is_safe' => ['html']];
 
@@ -52,66 +49,42 @@ final class CKEditorExtension extends AbstractExtension implements CKEditorRende
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderBasePath($basePath)
+    public function renderBasePath(string $basePath): string
     {
         return $this->renderer->renderBasePath($basePath);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderJsPath($jsPath)
+    public function renderJsPath(string $jsPath): string
     {
         return $this->renderer->renderJsPath($jsPath);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderWidget($id, array $config, array $options = [])
+    public function renderWidget(string $id, array $config, array $options = []): string
     {
         return $this->renderer->renderWidget($id, $config, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderDestroy($id)
+    public function renderDestroy(string $id): string
     {
         return $this->renderer->renderDestroy($id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderPlugin($name, array $plugin)
+    public function renderPlugin(string $name, array $plugin): string
     {
         return $this->renderer->renderPlugin($name, $plugin);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderStylesSet($name, array $stylesSet)
+    public function renderStylesSet(string $name, array $stylesSet): string
     {
         return $this->renderer->renderStylesSet($name, $stylesSet);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderTemplate($name, array $template)
+    public function renderTemplate(string $name, array $template): string
     {
         return $this->renderer->renderTemplate($name, $template);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'fos_ckeditor';
     }
