@@ -70,6 +70,16 @@ If your want a specific CKEditor version, you can use:
 
     $ php bin/console ckeditor:install --tag=4.6.0
 
+Silence Progress bars
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+While downloading files necessary for the install, a progress bar will be shown
+by default, if you would prefer hiding it, use:
+
+.. code-block:: bash
+
+    $ php bin/console ckeditor:install --no-progress-bar
+
 Clear Previous Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
