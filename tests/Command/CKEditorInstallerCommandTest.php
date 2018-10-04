@@ -31,7 +31,7 @@ class CKEditorInstallerCommandTest extends TestCase
     protected function setUp(): void
     {
         $this->application = new Application();
-        $this->application->addCommands([new CKEditorInstallerCommand()]);
+        $this->application->addCommands([new CKEditorInstallerCommand(new CKEditorInstaller())]);
 
         $this->tearDown();
     }
