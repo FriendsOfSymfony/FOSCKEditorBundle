@@ -3,6 +3,10 @@
 UPGRADE FROM 1.x to 2.0
 =======================
 
+Added typehints and return types.
+
+Removed nullable constructor arguments on most services.
+
 Classes are now final.
 
 Marker exception is now an interface that implements throwable.
