@@ -20,7 +20,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\Forms;
@@ -111,7 +110,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
         (new FOSCKEditorBundle())->build($this->container);
 
         $this->factory = Forms::createFormFactoryBuilder();
-        $this->formType = method_exists(AbstractType::class, 'getBlockPrefix') ? CKEditorType::class : 'ckeditor';
+        $this->formType = CKEditorType::class;
     }
 
     abstract protected function loadConfiguration(ContainerBuilder $container, string $configuration): void;
@@ -151,11 +150,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
 
         $tag = $this->container->getDefinition('fos_ck_editor.form.type')->getTag('form.type');
 
-        if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
-            $this->assertSame([['alias' => 'ckeditor']], $tag);
-        } else {
-            $this->assertSame([[]], $tag);
-        }
+        $this->assertSame([[]], $tag);
     }
 
     public function testDisable(): void

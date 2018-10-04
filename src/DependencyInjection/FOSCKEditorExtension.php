@@ -15,7 +15,6 @@ namespace FOS\CKEditorBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 /**
@@ -29,12 +28,6 @@ final class FOSCKEditorExtension extends ConfigurableExtension
 
         $container->getDefinition('fos_ck_editor.configuration')
             ->setArgument(0, $config);
-
-        if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
-            $container->getDefinition('fos_ck_editor.form.type')
-                ->clearTag('form.type')
-                ->addTag('form.type', ['alias' => 'ckeditor']);
-        }
 
         $bundles = $container->getParameter('kernel.bundles');
 

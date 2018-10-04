@@ -61,10 +61,6 @@ class CKEditorInstallerCommandTest extends TestCase
      */
     public function testReinstall(): void
     {
-        if (!method_exists(CommandTester::class, 'setInputs')) {
-            $this->markTestSkipped();
-        }
-
         $command = $this->application->find('ckeditor:install');
 
         $tester1 = new CommandTester($command);
