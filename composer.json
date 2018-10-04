@@ -37,6 +37,7 @@
         "sebastian/exporter": "<2.0.0"
     },
     "require-dev": {
+        "ext-json": "*",
         "composer/composer": "^1.0",
         "friendsofphp/php-cs-fixer": "^2.0",
         "matthiasnoback/symfony-dependency-injection-test": "^1.0 || ^2.0",

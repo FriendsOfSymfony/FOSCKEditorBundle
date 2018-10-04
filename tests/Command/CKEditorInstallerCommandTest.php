@@ -28,10 +28,7 @@ class CKEditorInstallerCommandTest extends TestCase
      */
     private $application;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->application = new Application();
         $this->application->addCommands([new CKEditorInstallerCommand()]);
@@ -39,10 +36,7 @@ class CKEditorInstallerCommandTest extends TestCase
         $this->tearDown();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($path = __DIR__.'/../../Resources/public')) {
             exec('rm -rf '.$path);
@@ -52,7 +46,7 @@ class CKEditorInstallerCommandTest extends TestCase
     /**
      * @group installation
      */
-    public function testInstall()
+    public function testInstall(): void
     {
         $command = $this->application->find('ckeditor:install');
 
@@ -65,7 +59,7 @@ class CKEditorInstallerCommandTest extends TestCase
     /**
      * @group installation
      */
-    public function testReinstall()
+    public function testReinstall(): void
     {
         if (!method_exists(CommandTester::class, 'setInputs')) {
             $this->markTestSkipped();
@@ -84,10 +78,7 @@ class CKEditorInstallerCommandTest extends TestCase
         $this->assertInstall($tester2);
     }
 
-    /**
-     * @param CommandTester $tester
-     */
-    private function assertInstall(CommandTester $tester)
+    private function assertInstall(CommandTester $tester): void
     {
         $this->assertContains('[OK] - CKEditor has been successfully installed...', $tester->getDisplay());
     }

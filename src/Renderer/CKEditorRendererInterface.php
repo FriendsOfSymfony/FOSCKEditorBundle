@@ -25,7 +25,7 @@ interface CKEditorRendererInterface
      * The available options are:
      *  - auto_inline: bool
      *  - inline: bool
-     *  - input_sync: bool
+     *  - input_sync: bool.
      */
     public function renderWidget(string $id, array $config, array $options = []): string;
 

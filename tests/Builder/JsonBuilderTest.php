@@ -26,34 +26,31 @@ class JsonBuilderTest extends TestCase
      */
     private $jsonBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->jsonBuilder = new JsonBuilder(new PropertyAccessor());
     }
 
-    public function testDefaultState()
+    public function testDefaultState(): void
     {
         $this->assertDefaultState();
     }
 
-    public function testValues()
+    public function testValues(): void
     {
         $this->jsonBuilder->setValues(['foo' => 'bar']);
         $this->assertTrue($this->jsonBuilder->hasValues());
         $this->assertSame(['[foo]' => 'bar'], $this->jsonBuilder->getValues());
     }
 
-    public function testValueWithEscape()
+    public function testValueWithEscape(): void
     {
         $this->jsonBuilder->setValue('[foo]', 'bar');
         $this->assertTrue($this->jsonBuilder->hasValues());
         $this->assertSame(['[foo]' => 'bar'], $this->jsonBuilder->getValues());
     }
 
-    public function testValueWithoutEscape()
+    public function testValueWithoutEscape(): void
     {
         $this->jsonBuilder->setValue('[foo]', 'bar', false);
         $values = $this->jsonBuilder->getValues();
@@ -62,7 +59,7 @@ class JsonBuilderTest extends TestCase
         $this->assertNotSame('bar', $values['[foo]']);
     }
 
-    public function testRemoveValue()
+    public function testRemoveValue(): void
     {
         $this->jsonBuilder
             ->setValue('[foo]', 'bar')
@@ -70,7 +67,7 @@ class JsonBuilderTest extends TestCase
         $this->assertFalse($this->jsonBuilder->hasValues());
     }
 
-    public function testReset()
+    public function testReset(): void
     {
         $this->jsonBuilder
             ->setValues(['foo' => 'bar'])
@@ -78,7 +75,7 @@ class JsonBuilderTest extends TestCase
         $this->assertDefaultState();
     }
 
-    public function testBuildWithoutValues()
+    public function testBuildWithoutValues(): void
     {
         $this->assertSame('[]', $this->jsonBuilder->build());
     }
@@ -91,23 +88,17 @@ class JsonBuilderTest extends TestCase
     }
 
     /**
-     * @param string $expected
-     * @param array  $values
-     *
      * @dataProvider valuesProvider
      */
-    public function testBuildWithValues($expected, array $values)
+    public function testBuildWithValues(string $expected, array $values): void
     {
         $this->assertSame($expected, $this->jsonBuilder->setValues($values)->build());
     }
 
     /**
-     * @param string $expected
-     * @param array  $values
-     *
      * @dataProvider valueProvider
      */
-    public function testBuildWithValue($expected, array $values)
+    public function testBuildWithValue(string $expected, array $values): void
     {
         foreach ($values as $path => $value) {
             $this->jsonBuilder->setValue($path, $value['value'], $value['escape']);
@@ -115,10 +106,7 @@ class JsonBuilderTest extends TestCase
         $this->assertSame($expected, $this->jsonBuilder->build());
     }
 
-    /**
-     * @return array
-     */
-    public function valuesProvider()
+    public function valuesProvider(): array
     {
         return [
             // Arrays
@@ -135,10 +123,7 @@ class JsonBuilderTest extends TestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function valueProvider()
+    public function valueProvider(): array
     {
         return [
             // Arrays
@@ -180,7 +165,7 @@ class JsonBuilderTest extends TestCase
         ];
     }
 
-    private function assertDefaultState()
+    private function assertDefaultState(): void
     {
         $this->assertSame(0, $this->jsonBuilder->getJsonEncodeOptions());
         $this->assertFalse($this->jsonBuilder->hasValues());

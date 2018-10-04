@@ -32,7 +32,7 @@ class TestContainerPass implements CompilerPassInterface
         $this->services = $services;
     }
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         foreach ($container->getDefinitions() as $id => $definition) {
             if (in_array($id, $this->services, true)) {

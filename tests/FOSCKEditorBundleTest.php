@@ -27,15 +27,12 @@ class FOSCKEditorBundleTest extends TestCase
      */
     private $bundle;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bundle = new FOSCKEditorBundle();
     }
 
-    public function testExtension()
+    public function testExtension(): void
     {
         $this->assertInstanceOf(FOSCKEditorExtension::class, $this->bundle->getContainerExtension());
     }

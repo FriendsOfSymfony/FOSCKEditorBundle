@@ -70,12 +70,12 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $this->locale = $locale;
     }
 
-    public function renderBasePath($basePath): string
+    public function renderBasePath(string $basePath): string
     {
         return $this->fixPath($basePath);
     }
 
-    public function renderJsPath($jsPath): string
+    public function renderJsPath(string $jsPath): string
     {
         return $this->fixPath($jsPath);
     }
@@ -273,6 +273,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
         return $url;
     }
+
     private function getLanguage(): ?string
     {
         $request = $this->requestStack->getCurrentRequest();

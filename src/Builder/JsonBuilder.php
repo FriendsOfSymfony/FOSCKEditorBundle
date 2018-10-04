@@ -12,7 +12,6 @@
 
 namespace FOS\CKEditorBundle\Builder;
 
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**

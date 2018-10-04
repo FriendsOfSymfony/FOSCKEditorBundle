@@ -23,8 +23,5 @@ return Config::create()
         'array_syntax'           => ['syntax' => 'short'],
         'ordered_imports'        => true,
         'yoda_style'             => false,
-        'strict_comparison'      => true,
-        'strict_param'           => true,
-        'php_unit_strict'        => true,
     ])
     ->setFinder($finder);
