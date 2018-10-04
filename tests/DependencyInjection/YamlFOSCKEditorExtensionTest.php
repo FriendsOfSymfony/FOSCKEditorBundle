@@ -21,10 +21,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class YamlFOSCKEditorExtensionTest extends AbstractFOSCKEditorExtensionTest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function loadConfiguration(ContainerBuilder $container, $configuration)
+    protected function loadConfiguration(ContainerBuilder $container, string $configuration): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Fixtures/config/Yaml/'));
         $loader->load($configuration.'.yml');

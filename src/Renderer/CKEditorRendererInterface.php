@@ -17,62 +17,23 @@ namespace FOS\CKEditorBundle\Renderer;
  */
 interface CKEditorRendererInterface
 {
-    /**
-     * @param string $basePath
-     *
-     * @return string
-     */
-    public function renderBasePath($basePath);
+    public function renderBasePath(string $basePath): string;
+
+    public function renderJsPath(string $jsPath): string;
 
     /**
-     * @param string $jsPath
-     *
-     * @return string
-     */
-    public function renderJsPath($jsPath);
-
-    /**
-     * @param string $id
-     * @param array  $config
-     * @param array  $options
-     *
      * The available options are:
      *  - auto_inline: bool
      *  - inline: bool
-     *  - input_sync: bool
-     *
-     * @return string
+     *  - input_sync: bool.
      */
-    public function renderWidget($id, array $config, array $options = []);
+    public function renderWidget(string $id, array $config, array $options = []): string;
 
-    /**
-     * @param string $id
-     *
-     * @return string
-     */
-    public function renderDestroy($id);
+    public function renderDestroy(string $id): string;
 
-    /**
-     * @param string $name
-     * @param array  $plugin
-     *
-     * @return string
-     */
-    public function renderPlugin($name, array $plugin);
+    public function renderPlugin(string $name, array $plugin): string;
 
-    /**
-     * @param string $name
-     * @param array  $stylesSet
-     *
-     * @return string
-     */
-    public function renderStylesSet($name, array $stylesSet);
+    public function renderStylesSet(string $name, array $stylesSet): string;
 
-    /**
-     * @param string $name
-     * @param array  $template
-     *
-     * @return string
-     */
-    public function renderTemplate($name, array $template);
+    public function renderTemplate(string $name, array $template): string;
 }

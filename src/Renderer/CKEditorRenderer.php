@@ -14,7 +14,6 @@ namespace FOS\CKEditorBundle\Renderer;
 
 use FOS\CKEditorBundle\Builder\JsonBuilder;
 use Symfony\Component\Asset\Packages;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -55,74 +54,14 @@ final class CKEditorRenderer implements CKEditorRendererInterface
      */
     private $locale;
 
-    /**
-     * @param JsonBuilder|ContainerInterface $containerOrJsonBuilder
-     * @param RouterInterface                $router
-     * @param Packages                       $packages
-     * @param RequestStack                   $requestStack
-     * @param Environment                    $twig
-     * @param null|string                    $locale
-     */
     public function __construct(
-        $containerOrJsonBuilder,
-        RouterInterface $router = null,
-        Packages $packages = null,
-        RequestStack $requestStack = null,
-        Environment $twig = null,
+        JsonBuilder $jsonBuilder,
+        RouterInterface $router,
+        Packages $packages,
+        RequestStack $requestStack,
+        Environment $twig,
         $locale = null
     ) {
-        if ($containerOrJsonBuilder instanceof ContainerInterface) {
-            @trigger_error(sprintf(
-                'Passing a %s as %s first argument is deprecated since FOSCKEditor 1.0, and will be removed in 2.0.'
-                .' Use %s instead.',
-                ContainerInterface::class,
-                __METHOD__,
-                JsonBuilder::class
-            ), E_USER_DEPRECATED);
-            $jsonBuilder = $containerOrJsonBuilder->get('fos_ck_editor.renderer.json_builder');
-            $router = $containerOrJsonBuilder->get('router');
-            $packages = $containerOrJsonBuilder->get('assets.packages');
-            $requestStack = $containerOrJsonBuilder->get('request_stack');
-            $twig = $containerOrJsonBuilder->get('twig');
-        } elseif ($containerOrJsonBuilder instanceof JsonBuilder) {
-            $jsonBuilder = $containerOrJsonBuilder;
-            if (null === $router) {
-                throw new \InvalidArgumentException(sprintf(
-                    '%s 2nd argument must not be null when using %s as first argument',
-                    __METHOD__,
-                    JsonBuilder::class
-                ));
-            } elseif (null === $packages) {
-                throw new \InvalidArgumentException(sprintf(
-                    '%s 3rd argument must not be null when using %s as first argument',
-                    __METHOD__,
-                    JsonBuilder::class
-                ));
-            } elseif (null === $requestStack) {
-                throw new \InvalidArgumentException(sprintf(
-                    '%s 4th argument must not be null when using %s as first argument',
-                    __METHOD__,
-                    JsonBuilder::class
-                ));
-            } elseif (null === $twig) {
-                throw new \InvalidArgumentException(sprintf(
-                    '%s 5th argument must not be null when using %s as first argument',
-                    __METHOD__,
-                    JsonBuilder::class
-                ));
-            }
-        } else {
-            throw new \InvalidArgumentException(sprintf(
-                '%s first argument must be an instance of %s or %s (%s given).',
-                __METHOD__,
-                ContainerInterface::class,
-                JsonBuilder::class,
-                is_object($containerOrJsonBuilder)
-                    ? get_class($containerOrJsonBuilder)
-                    : gettype($containerOrJsonBuilder)
-            ));
-        }
-
         $this->jsonBuilder = $jsonBuilder;
         $this->router = $router;
         $this->assetsPackages = $packages;
@@ -131,26 +70,17 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $this->locale = $locale;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderBasePath($basePath)
+    public function renderBasePath(string $basePath): string
     {
         return $this->fixPath($basePath);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderJsPath($jsPath)
+    public function renderJsPath(string $jsPath): string
     {
         return $this->fixPath($jsPath);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderWidget($id, array $config, array $options = [])
+    public function renderWidget(string $id, array $config, array $options = []): string
     {
         $config = $this->fixConfigLanguage($config);
         $config = $this->fixConfigContentsCss($config);
@@ -183,10 +113,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         return $autoInline.$widget;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderDestroy($id)
+    public function renderDestroy(string $id): string
     {
         return sprintf(
             'if (CKEDITOR.instances["%1$s"]) { '.
@@ -197,10 +124,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderPlugin($name, array $plugin)
+    public function renderPlugin(string $name, array $plugin): string
     {
         return sprintf(
             'CKEDITOR.plugins.addExternal("%s", "%s", "%s");',
@@ -210,10 +134,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderStylesSet($name, array $stylesSet)
+    public function renderStylesSet(string $name, array $stylesSet): string
     {
         return sprintf(
             'if (CKEDITOR.stylesSet.get("%1$s") === null) { '.
@@ -224,10 +145,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function renderTemplate($name, array $template)
+    public function renderTemplate(string $name, array $template): string
     {
         if (isset($template['imagesPath'])) {
             $template['imagesPath'] = $this->fixPath($template['imagesPath']);
@@ -253,12 +171,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         );
     }
 
-    /**
-     * @param array $config
-     *
-     * @return array
-     */
-    private function fixConfigLanguage(array $config)
+    private function fixConfigLanguage(array $config): array
     {
         if (!isset($config['language']) && null !== ($language = $this->getLanguage())) {
             $config['language'] = $language;
@@ -271,12 +184,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         return $config;
     }
 
-    /**
-     * @param array $config
-     *
-     * @return array
-     */
-    private function fixConfigContentsCss(array $config)
+    private function fixConfigContentsCss(array $config): array
     {
         if (isset($config['contentsCss'])) {
             $cssContents = (array) $config['contentsCss'];
@@ -290,13 +198,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         return $config;
     }
 
-    /**
-     * @param array $config
-     * @param array $filebrowsers
-     *
-     * @return array
-     */
-    private function fixConfigFilebrowsers(array $config, array $filebrowsers)
+    private function fixConfigFilebrowsers(array $config, array $filebrowsers): array
     {
         $filebrowsers = array_unique(array_merge([
             'Browse',
@@ -332,11 +234,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         return $config;
     }
 
-    /**
-     * @param JsonBuilder $builder
-     * @param array       $config
-     */
-    private function fixConfigEscapedValues(JsonBuilder $builder, array $config)
+    private function fixConfigEscapedValues(JsonBuilder $builder, array $config): void
     {
         if (isset($config['protectedSource'])) {
             foreach ($config['protectedSource'] as $key => $value) {
@@ -356,22 +254,12 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         }
     }
 
-    /**
-     * @param string $json
-     *
-     * @return string
-     */
-    private function fixConfigConstants($json)
+    private function fixConfigConstants(string $json): string
     {
         return preg_replace('/"(CKEDITOR\.[A-Z_]+)"/', '$1', $json);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    private function fixPath($path)
+    private function fixPath(string $path): string
     {
         if (null === $this->assetsPackages) {
             return $path;
@@ -386,12 +274,10 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         return $url;
     }
 
-    /**
-     * @return null|string
-     */
-    private function getLanguage()
+    private function getLanguage(): ?string
     {
         $request = $this->requestStack->getCurrentRequest();
+
         if (null !== $request) {
             return $request->getLocale();
         }

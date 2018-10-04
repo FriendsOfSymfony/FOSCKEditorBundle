@@ -17,7 +17,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 class FOSCKEditorExtensionTest extends AbstractExtensionTestCase
 {
-    public function testHasServiceDefinitionForTwigExtension()
+    public function testHasServiceDefinitionForTwigExtension(): void
     {
         $this->container->setParameter('kernel.bundles', []);
         $this->load();
@@ -31,13 +31,13 @@ class FOSCKEditorExtensionTest extends AbstractExtensionTestCase
      * @group legacy
      * @expectedDeprecation IvoryCKEditorBundle isn't maintained anymore and should be replaced with FOSCKEditorBundle.
      */
-    public function testIvoryDeprecation()
+    public function testIvoryDeprecation(): void
     {
         $this->container->setParameter('kernel.bundles', ['IvoryCKEditorBundle' => '']);
         $this->load();
     }
 
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new FOSCKEditorExtension()];
     }

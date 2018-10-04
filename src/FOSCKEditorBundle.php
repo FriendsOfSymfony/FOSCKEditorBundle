@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 final class FOSCKEditorBundle extends Bundle
 {
-    public function getContainerExtension()
+    public function getContainerExtension(): FOSCKEditorExtension
     {
         return new FOSCKEditorExtension();
     }

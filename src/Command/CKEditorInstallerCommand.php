@@ -32,20 +32,14 @@ final class CKEditorInstallerCommand extends Command
      */
     private $installer;
 
-    /**
-     * @param CKEditorInstaller|null $installer
-     */
-    public function __construct(CKEditorInstaller $installer = null)
+    public function __construct(CKEditorInstaller $installer)
     {
         parent::__construct();
 
-        $this->installer = $installer ?: new CKEditorInstaller();
+        $this->installer = $installer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('ckeditor:install')
@@ -102,10 +96,7 @@ EOF
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->title($output);
 
@@ -118,13 +109,7 @@ EOF
         }
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return mixed[]
-     */
-    private function createOptions(InputInterface $input, OutputInterface $output)
+    private function createOptions(InputInterface $input, OutputInterface $output): array
     {
         $options = ['notifier' => $this->createNotifier($input, $output)];
 
@@ -151,13 +136,7 @@ EOF
         return array_filter($options);
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return \Closure
-     */
-    private function createNotifier(InputInterface $input, OutputInterface $output)
+    private function createNotifier(InputInterface $input, OutputInterface $output): \Closure
     {
         $clear = new ProgressBar($output);
         $download = new ProgressBar($output);
@@ -255,10 +234,7 @@ EOF
         };
     }
 
-    /**
-     * @param OutputInterface $output
-     */
-    private function title(OutputInterface $output)
+    private function title(OutputInterface $output): void
     {
         $output->writeln(
             [
@@ -270,42 +246,28 @@ EOF
         );
     }
 
-    /**
-     * @param string|string[] $message
-     * @param OutputInterface $output
-     */
-    private function comment($message, OutputInterface $output)
+    private function comment(string $message, OutputInterface $output): void
     {
         $output->writeln(' // '.$message);
         $output->writeln('');
     }
 
-    /**
-     * @param string          $message
-     * @param OutputInterface $output
-     */
-    private function success($message, OutputInterface $output)
+    private function success(string $message, OutputInterface $output): void
     {
         $this->block('[OK] - '.$message, $output, 'green', 'black');
     }
 
-    /**
-     * @param string          $message
-     * @param OutputInterface $output
-     */
-    private function info($message, OutputInterface $output)
+    private function info(string $message, OutputInterface $output): void
     {
         $this->block('[INFO] - '.$message, $output, 'yellow', 'black');
     }
 
-    /**
-     * @param string          $message
-     * @param OutputInterface $output
-     * @param string          $background
-     * @param string          $font
-     */
-    private function block($message, OutputInterface $output, $background = null, $font = null)
-    {
+    private function block(
+        string $message,
+        OutputInterface $output,
+        string $background = null,
+        string $font = null
+    ): void {
         $options = [];
 
         if (null !== $background) {
@@ -328,16 +290,16 @@ EOF
     }
 
     /**
-     * @param string|string[] $question
-     * @param string[]        $choices
-     * @param string          $default
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return string|null
+     * @param string[] $question
+     * @param string[] $choices
      */
-    private function choice($question, array $choices, $default, InputInterface $input, OutputInterface $output)
-    {
+    private function choice(
+        array $question,
+        array $choices,
+        string $default,
+        InputInterface $input,
+        OutputInterface $output
+    ): ?string {
         $helper = new QuestionHelper();
 
         if (is_array($question)) {
@@ -355,11 +317,7 @@ EOF
         return $result;
     }
 
-    /**
-     * @param ProgressBar     $progress
-     * @param OutputInterface $output
-     */
-    private function finishProgressBar($progress, OutputInterface $output)
+    private function finishProgressBar(ProgressBar $progress, OutputInterface $output): void
     {
         $progress->finish();
         $output->writeln(['', '']);

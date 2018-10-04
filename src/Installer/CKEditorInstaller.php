@@ -72,9 +72,6 @@ final class CKEditorInstaller
      */
     private $resolver;
 
-    /**
-     * @param mixed[] $options
-     */
     public function __construct(array $options = [])
     {
         $this->resolver = (new OptionsResolver())
@@ -97,12 +94,7 @@ final class CKEditorInstaller
             });
     }
 
-    /**
-     * @param mixed[] $options
-     *
-     * @return bool
-     */
-    public function install(array $options = [])
+    public function install(array $options = []): bool
     {
         $options = $this->resolver->resolve($options);
 
@@ -115,12 +107,7 @@ final class CKEditorInstaller
         return true;
     }
 
-    /**
-     * @param mixed[] $options
-     *
-     * @return int
-     */
-    private function clear(array $options)
+    private function clear(array $options): string
     {
         if (!file_exists($options['path'].'/ckeditor.js')) {
             return self::CLEAR_DROP;
@@ -167,12 +154,7 @@ final class CKEditorInstaller
         return $options['clear'];
     }
 
-    /**
-     * @param mixed[] $options
-     *
-     * @return string
-     */
-    private function download(array $options)
+    private function download(array $options): string
     {
         $url = sprintf(self::$archive, $options['release'], $options['version']);
         $this->notify($options['notifier'], self::NOTIFY_DOWNLOAD, $url);
@@ -195,8 +177,6 @@ final class CKEditorInstaller
     }
 
     /**
-     * @param callable|null $notifier
-     *
      * @return resource
      */
     private function createStreamContext(callable $notifier = null)
@@ -238,11 +218,7 @@ final class CKEditorInstaller
         ]);
     }
 
-    /**
-     * @param string  $path
-     * @param mixed[] $options
-     */
-    private function extract($path, array $options)
+    private function extract(string $path, array $options): void
     {
         $this->notify($options['notifier'], self::NOTIFY_EXTRACT, $options['path']);
 
@@ -272,13 +248,7 @@ final class CKEditorInstaller
         }
     }
 
-    /**
-     * @param string  $file
-     * @param string  $rewrite
-     * @param string  $origin
-     * @param mixed[] $options
-     */
-    private function extractFile($file, $rewrite, $origin, array $options)
+    private function extractFile(string $file, string $rewrite, string $origin, array $options): void
     {
         $this->notify($options['notifier'], self::NOTIFY_EXTRACT_PROGRESS, $rewrite);
 
@@ -305,25 +275,18 @@ final class CKEditorInstaller
     }
 
     /**
-     * @param callable|null $notifier
-     * @param string        $type
-     * @param mixed         $data
+     * @param mixed $data
      *
      * @return mixed
      */
-    private function notify(callable $notifier = null, $type, $data = null)
+    private function notify(callable $notifier = null, string $type, $data = null)
     {
         if (null !== $notifier) {
             return $notifier($type, $data);
         }
     }
 
-    /**
-     * @param string $message
-     *
-     * @return \RuntimeException
-     */
-    private function createException($message)
+    private function createException(string $message): \RuntimeException
     {
         $error = error_get_last();
 

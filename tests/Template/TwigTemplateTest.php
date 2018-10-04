@@ -29,10 +29,7 @@ class TwigTemplateTest extends AbstractTemplateTest
      */
     private $template;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -47,10 +44,7 @@ class TwigTemplateTest extends AbstractTemplateTest
         $this->template = $this->twig->loadTemplate('ckeditor');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function renderTemplate(array $context = [])
+    protected function renderTemplate(array $context = []): string
     {
         return $this->template->renderBlock('ckeditor_widget', $context);
     }

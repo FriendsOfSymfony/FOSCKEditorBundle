@@ -15,12 +15,12 @@ namespace FOS\CKEditorBundle\Tests\Template;
 use FOS\CKEditorBundle\Builder\JsonBuilder;
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -28,17 +28,12 @@ use Twig\Environment;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractTemplateTest extends AbstractTestCase
+abstract class AbstractTemplateTest extends TestCase
 {
     /**
      * @var CKEditorRenderer
      */
     protected $renderer;
-
-    /**
-     * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $container;
 
     /**
      * @var Packages|\PHPUnit_Framework_MockObject_MockObject
@@ -65,10 +60,7 @@ abstract class AbstractTemplateTest extends AbstractTestCase
      */
     private $request;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requestStack = $this->createMock(RequestStack::class);
         $this->request = $this->createMock(Request::class);
@@ -81,15 +73,15 @@ abstract class AbstractTemplateTest extends AbstractTestCase
             ->will($this->returnArgument(0));
         $this->twig = $this->createMock(Environment::class);
 
-        $this->renderer = new CKEditorRenderer(new JsonBuilder(), $this->router, $this->packages, $this->requestStack, $this->twig);
+        $this->renderer = new CKEditorRenderer(new JsonBuilder(new PropertyAccessor()), $this->router, $this->packages, $this->requestStack, $this->twig);
     }
 
-    public function testDefaultState()
+    public function testDefaultState(): void
     {
         $this->assertInstanceOf(CKEditorRendererInterface::class, $this->renderer);
     }
 
-    public function testRenderWithSimpleWidget()
+    public function testRenderWithSimpleWidget(): void
     {
         $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
@@ -111,7 +103,7 @@ EOF;
         $this->assertTemplate($expected, $this->getContext());
     }
 
-    public function testRenderWithFullWidget()
+    public function testRenderWithFullWidget(): void
     {
         $context = [
             'auto_inline' => false,
@@ -184,7 +176,7 @@ EOF;
         $this->assertTemplate($expected, array_merge($this->getContext(), $context));
     }
 
-    public function testRenderWithJQuery()
+    public function testRenderWithJQuery(): void
     {
         $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
@@ -208,7 +200,7 @@ EOF;
         $this->assertTemplate($expected, array_merge($this->getContext(), ['jquery' => true]));
     }
 
-    public function testRenderWithRequireJs()
+    public function testRenderWithRequireJs(): void
     {
         $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
@@ -231,7 +223,7 @@ EOF;
         $this->assertTemplate($expected, array_merge($this->getContext(), ['require_js' => true]));
     }
 
-    public function testRenderWithNotAutoloadedWidget()
+    public function testRenderWithNotAutoloadedWidget(): void
     {
         $expected = <<<'EOF'
 <textarea >&lt;p&gt;value&lt;/p&gt;</textarea>
@@ -248,7 +240,7 @@ EOF;
         $this->assertTemplate($expected, array_merge($this->getContext(), ['autoload' => false]));
     }
 
-    public function testRenderWithDisableWidget()
+    public function testRenderWithDisableWidget(): void
     {
         $this->assertTemplate(
             '<textarea >&lt;p&gt;value&lt;/p&gt;</textarea>',
@@ -256,17 +248,9 @@ EOF;
         );
     }
 
-    /**
-     * @param array $context
-     *
-     * @return string
-     */
-    abstract protected function renderTemplate(array $context = []);
+    abstract protected function renderTemplate(array $context = []): string;
 
-    /**
-     * @return array
-     */
-    private function getContext()
+    private function getContext(): array
     {
         return [
             'form' => $this->createMock(FormView::class),
@@ -291,21 +275,12 @@ EOF;
         ];
     }
 
-    /**
-     * @param string $expected
-     * @param array  $context
-     */
-    private function assertTemplate($expected, array $context)
+    private function assertTemplate(string $expected, array $context): void
     {
         $this->assertSame($this->normalizeOutput($expected), $this->normalizeOutput($this->renderTemplate($context)));
     }
 
-    /**
-     * @param string $output
-     *
-     * @return string
-     */
-    private function normalizeOutput($output)
+    private function normalizeOutput(string $output): string
     {
         $mapping = [
             "\n" => '',

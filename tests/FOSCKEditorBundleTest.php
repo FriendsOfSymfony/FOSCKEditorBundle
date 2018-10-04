@@ -14,27 +14,25 @@ namespace FOS\CKEditorBundle\Tests;
 
 use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-class FOSCKEditorBundleTest extends AbstractTestCase
+class FOSCKEditorBundleTest extends TestCase
 {
     /**
      * @var FOSCKEditorBundle
      */
     private $bundle;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bundle = new FOSCKEditorBundle();
     }
 
-    public function testExtension()
+    public function testExtension(): void
     {
         $this->assertInstanceOf(FOSCKEditorExtension::class, $this->bundle->getContainerExtension());
     }

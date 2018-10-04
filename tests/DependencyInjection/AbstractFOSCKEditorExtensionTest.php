@@ -15,16 +15,16 @@ namespace FOS\CKEditorBundle\Tests\DependencyInjection;
 use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
 use FOS\CKEditorBundle\Tests\DependencyInjection\Compiler\TestContainerPass;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -32,7 +32,7 @@ use Twig\Environment;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
+abstract class AbstractFOSCKEditorExtensionTest extends TestCase
 {
     /**
      * @var ContainerBuilder
@@ -55,6 +55,11 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
     private $formRenderer;
 
     /**
+     * @var PropertyAccessorInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $propertyAccessor;
+
+    /**
      * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
      */
     private $requestStack;
@@ -74,13 +79,11 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
      */
     private $formType;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->router = $this->createMock(RouterInterface::class);
         $this->formRenderer = $this->createMock(FormRendererInterface::class);
+        $this->propertyAccessor = $this->createMock(PropertyAccessorInterface::class);
         $this->packages = $this->getMockBuilder(Packages::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -91,6 +94,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->container->set('assets.packages', $this->packages);
         $this->container->set('router', $this->router);
         $this->container->set('templating.form.renderer', $this->formRenderer);
+        $this->container->set('property_accessor', $this->propertyAccessor);
         $this->container->set('twig.form.renderer', $this->formRenderer);
         $this->container->set('request_stack', $this->requestStack);
         $this->container->set('twig', $this->twig);
@@ -106,16 +110,12 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         (new FOSCKEditorBundle())->build($this->container);
 
         $this->factory = Forms::createFormFactoryBuilder();
-        $this->formType = method_exists(AbstractType::class, 'getBlockPrefix') ? CKEditorType::class : 'ckeditor';
+        $this->formType = CKEditorType::class;
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param string           $configuration
-     */
-    abstract protected function loadConfiguration(ContainerBuilder $container, $configuration);
+    abstract protected function loadConfiguration(ContainerBuilder $container, string $configuration): void;
 
-    public function testFormType()
+    public function testFormType(): void
     {
         $this->container->compile();
 
@@ -133,7 +133,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $vars['jquery_path']);
     }
 
-    private function getVars()
+    private function getVars(): array
     {
         $this->factory = $this->factory
             ->addType($this->container->get('fos_ck_editor.form.type'))
@@ -144,20 +144,16 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         return $form->createView()->vars;
     }
 
-    public function testFormTag()
+    public function testFormTag(): void
     {
         $this->container->compile();
 
         $tag = $this->container->getDefinition('fos_ck_editor.form.type')->getTag('form.type');
 
-        if (!method_exists(AbstractType::class, 'getBlockPrefix')) {
-            $this->assertSame([['alias' => 'ckeditor']], $tag);
-        } else {
-            $this->assertSame([[]], $tag);
-        }
+        $this->assertSame([[]], $tag);
     }
 
-    public function testDisable()
+    public function testDisable(): void
     {
         $this->loadConfiguration($this->container, 'disable');
         $this->container->compile();
@@ -167,7 +163,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertFalse($vars['enable']);
     }
 
-    public function testAsync()
+    public function testAsync(): void
     {
         $this->loadConfiguration($this->container, 'async');
         $this->container->compile();
@@ -177,7 +173,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertTrue($vars['async']);
     }
 
-    public function testAutoload()
+    public function testAutoload(): void
     {
         $this->loadConfiguration($this->container, 'autoload');
         $this->container->compile();
@@ -187,7 +183,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertFalse($vars['autoload']);
     }
 
-    public function testAutoInline()
+    public function testAutoInline(): void
     {
         $this->loadConfiguration($this->container, 'auto_inline');
         $this->container->compile();
@@ -197,7 +193,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertFalse($vars['auto_inline']);
     }
 
-    public function testInline()
+    public function testInline(): void
     {
         $this->loadConfiguration($this->container, 'inline');
         $this->container->compile();
@@ -207,7 +203,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertTrue($vars['inline']);
     }
 
-    public function testInputSync()
+    public function testInputSync(): void
     {
         $this->loadConfiguration($this->container, 'input_sync');
         $this->container->compile();
@@ -217,7 +213,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertTrue($vars['input_sync']);
     }
 
-    public function testRequireJs()
+    public function testRequireJs(): void
     {
         $this->loadConfiguration($this->container, 'require_js');
         $this->container->compile();
@@ -227,7 +223,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertTrue($vars['require_js']);
     }
 
-    public function testJquery()
+    public function testJquery(): void
     {
         $this->loadConfiguration($this->container, 'jquery');
         $this->container->compile();
@@ -237,7 +233,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertTrue($vars['jquery']);
     }
 
-    public function testJqueryPath()
+    public function testJqueryPath(): void
     {
         $this->loadConfiguration($this->container, 'jquery_path');
         $this->container->compile();
@@ -247,7 +243,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame('foo/jquery.js', $vars['jquery_path']);
     }
 
-    public function testCustomPaths()
+    public function testCustomPaths(): void
     {
         $this->loadConfiguration($this->container, 'custom_paths');
         $this->container->compile();
@@ -258,7 +254,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         $this->assertSame('foo/ckeditor.js', $vars['js_path']);
     }
 
-    public function testFilebrowsers()
+    public function testFilebrowsers(): void
     {
         $this->loadConfiguration($this->container, 'filebrowsers');
         $this->container->compile();
@@ -271,7 +267,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         );
     }
 
-    public function testPlugins()
+    public function testPlugins(): void
     {
         $this->loadConfiguration($this->container, 'plugins');
         $this->container->compile();
@@ -286,7 +282,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         ], $vars['plugins']);
     }
 
-    public function testStylesSets()
+    public function testStylesSets(): void
     {
         $this->loadConfiguration($this->container, 'styles_sets');
         $this->container->compile();
@@ -324,7 +320,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         ], $vars['styles']);
     }
 
-    public function testTemplates()
+    public function testTemplates(): void
     {
         $this->loadConfiguration($this->container, 'templates');
         $this->container->compile();
@@ -348,7 +344,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
         ], $vars['templates']);
     }
 
-    public function testToolbars()
+    public function testToolbars(): void
     {
         $this->loadConfiguration($this->container, 'toolbars');
         $this->container->compile();
@@ -379,7 +375,7 @@ abstract class AbstractFOSCKEditorExtensionTest extends AbstractTestCase
      * @expectedException \FOS\CKEditorBundle\Exception\ConfigException
      * @expectedExceptionMessage The default config "bar" does not exist.
      */
-    public function testInvalidDefaultConfig()
+    public function testInvalidDefaultConfig(): void
     {
         $this->loadConfiguration($this->container, 'invalid_default_config');
         $this->container->compile();

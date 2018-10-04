@@ -14,35 +14,29 @@ namespace FOS\CKEditorBundle\Tests\Command;
 
 use FOS\CKEditorBundle\Command\CKEditorInstallerCommand;
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
-use FOS\CKEditorBundle\Tests\AbstractTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CKEditorInstallerCommandTest extends AbstractTestCase
+class CKEditorInstallerCommandTest extends TestCase
 {
     /**
      * @var Application
      */
     private $application;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->application = new Application();
-        $this->application->addCommands([new CKEditorInstallerCommand()]);
+        $this->application->addCommands([new CKEditorInstallerCommand(new CKEditorInstaller())]);
 
         $this->tearDown();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($path = __DIR__.'/../../Resources/public')) {
             exec('rm -rf '.$path);
@@ -52,7 +46,7 @@ class CKEditorInstallerCommandTest extends AbstractTestCase
     /**
      * @group installation
      */
-    public function testInstall()
+    public function testInstall(): void
     {
         $command = $this->application->find('ckeditor:install');
 
@@ -65,12 +59,8 @@ class CKEditorInstallerCommandTest extends AbstractTestCase
     /**
      * @group installation
      */
-    public function testReinstall()
+    public function testReinstall(): void
     {
-        if (!method_exists(CommandTester::class, 'setInputs')) {
-            $this->markTestSkipped();
-        }
-
         $command = $this->application->find('ckeditor:install');
 
         $tester1 = new CommandTester($command);
@@ -84,10 +74,7 @@ class CKEditorInstallerCommandTest extends AbstractTestCase
         $this->assertInstall($tester2);
     }
 
-    /**
-     * @param CommandTester $tester
-     */
-    private function assertInstall(CommandTester $tester)
+    private function assertInstall(CommandTester $tester): void
     {
         $this->assertContains('[OK] - CKEditor has been successfully installed...', $tester->getDisplay());
     }
