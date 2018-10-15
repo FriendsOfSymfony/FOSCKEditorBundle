@@ -12,7 +12,7 @@
 
 namespace FOS\CKEditorBundle\Form\Type;
 
-use FOS\CKEditorBundle\Config\CKEditorConfiguration;
+use FOS\CKEditorBundle\Config\CKEditorConfigurationInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,11 +27,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class CKEditorType extends AbstractType
 {
     /**
-     * @var CKEditorConfiguration
+     * @var CKEditorConfigurationInterface
      */
     private $configuration;
 
-    public function __construct(CKEditorConfiguration $configuration)
+    public function __construct(CKEditorConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }

@@ -14,7 +14,7 @@ namespace FOS\CKEditorBundle\Config;
 
 use FOS\CKEditorBundle\Exception\ConfigException;
 
-final class CKEditorConfiguration
+final class CKEditorConfiguration implements CKEditorConfigurationInterface
 {
     private $toolbarItems = [
         'basic.about' => ['About'],
