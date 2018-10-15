@@ -53,17 +53,17 @@ final class Configuration implements ConfigurationInterface
     private function createConfigsNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('configs')
-            ->prototype('array')
+            ->arrayPrototype()
                 ->normalizeKeys(false)
                 ->useAttributeAsKey('name')
-                ->prototype('variable')->end()
+                ->variablePrototype()->end()
             ->end();
     }
 
     private function createPluginsNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('plugins')
-            ->prototype('array')
+            ->arrayPrototype()
                 ->children()
                     ->scalarNode('path')->end()
                     ->scalarNode('filename')->end()
@@ -74,8 +74,8 @@ final class Configuration implements ConfigurationInterface
     private function createStylesNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('styles')
-            ->prototype('array')
-                ->prototype('array')
+            ->arrayPrototype()
+                ->arrayPrototype()
                     ->children()
                         ->scalarNode('name')->end()
                         ->scalarNode('type')->end()
@@ -91,11 +91,11 @@ final class Configuration implements ConfigurationInterface
     private function createTemplatesNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('templates')
-            ->prototype('array')
+            ->arrayPrototype()
                 ->children()
                     ->scalarNode('imagesPath')->end()
                     ->arrayNode('templates')
-                        ->prototype('array')
+                        ->arrayPrototype()
                             ->children()
                                 ->scalarNode('title')->end()
                                 ->scalarNode('image')->end()
@@ -112,10 +112,14 @@ final class Configuration implements ConfigurationInterface
 
     private function createFilebrowsersNode(): ArrayNodeDefinition
     {
-        return $this->createNode('filebrowsers')
+        $node = $this->createNode('filebrowsers')
             ->useAttributeAsKey('name')
-            ->prototype('scalar')
+            ->scalarPrototype()
             ->end();
+
+        \assert($node instanceof ArrayNodeDefinition);
+
+        return $node;
     }
 
     private function createToolbarsNode(): ArrayNodeDefinition
@@ -125,14 +129,14 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('configs')
                     ->useAttributeAsKey('name')
-                    ->prototype('array')
-                        ->prototype('variable')->end()
+                    ->arrayPrototype()
+                        ->variablePrototype()->end()
                     ->end()
                 ->end()
                 ->arrayNode('items')
                     ->useAttributeAsKey('name')
-                    ->prototype('array')
-                        ->prototype('variable')->end()
+                    ->arrayPrototype()
+                        ->variablePrototype()->end()
                     ->end()
                 ->end()
             ->end();
@@ -147,7 +151,11 @@ final class Configuration implements ConfigurationInterface
 
     private function createNode(string $name): ArrayNodeDefinition
     {
-        return $this->createTreeBuilder()->root($name);
+        $node = $this->createTreeBuilder()->root($name);
+
+        \assert($node instanceof ArrayNodeDefinition);
+
+        return $node;
     }
 
     private function createTreeBuilder(): TreeBuilder

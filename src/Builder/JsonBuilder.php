@@ -118,16 +118,20 @@ final class JsonBuilder
 
     public function build(): string
     {
-        $json = [];
+        $values = [];
 
         foreach ($this->values as $path => $value) {
-            $this->propertyAccessor->setValue($json, $path, $value);
+            $this->propertyAccessor->setValue($values, $path, $value);
         }
+
+        $json = json_encode($values, $this->jsonEncodeOptions);
+
+        \assert(\is_string($json));
 
         return str_replace(
             array_keys($this->escapes),
             array_values($this->escapes),
-            json_encode($json, $this->jsonEncodeOptions)
+            $json
         );
     }
 }

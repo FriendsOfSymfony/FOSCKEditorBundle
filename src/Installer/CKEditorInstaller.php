@@ -165,7 +165,7 @@ final class CKEditorInstaller
             throw $this->createException(sprintf('Unable to download CKEditor ZIP archive from "%s".', $url));
         }
 
-        $path = tempnam(sys_get_temp_dir(), 'ckeditor-'.$options['release'].'-'.$options['version'].'.zip');
+        $path = (string) tempnam(sys_get_temp_dir(), 'ckeditor-'.$options['release'].'-'.$options['version'].'.zip');
 
         if (!@file_put_contents($path, $zip)) {
             throw $this->createException(sprintf('Unable to write CKEditor ZIP archive to "%s".', $path));
