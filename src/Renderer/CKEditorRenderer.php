@@ -268,7 +268,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $url = $this->assetsPackages->getUrl($path);
 
         if ('/' === substr($path, -1) && false !== ($position = strpos($url, '?'))) {
-            $url = substr($url, 0, $position);
+            $url = substr($url, 0, (int) $position);
         }
 
         return $url;

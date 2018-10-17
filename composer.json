@@ -19,6 +19,7 @@
     "require": {
         "php": "^7.1",
         "ext-zip": "*",
+        "ext-json": "*",
         "symfony/asset": "^3.4 || ^4.0",
         "symfony/config": "^3.4 || ^4.0",
         "symfony/dependency-injection": "^3.4 || ^4.0",
@@ -38,7 +39,6 @@
         "sebastian/exporter": "<2.0.0"
     },
     "require-dev": {
-        "ext-json": "*",
         "friendsofphp/php-cs-fixer": "^2.0",
         "matthiasnoback/symfony-dependency-injection-test": "^1.0 || ^2.0",
         "phpunit/phpunit": "^6.0",
