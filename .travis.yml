@@ -43,7 +43,7 @@ matrix:
           env: TARGET=phpstan LEVEL=7
 
         - php: '7.2'
-        - env: PHPUNIT_FLAGS="--group=proxy"
+          env: PHPUNIT_FLAGS="--group=proxy"
 
     allow_failures:
         - env: PHPUNIT_FLAGS="--group=proxy"
