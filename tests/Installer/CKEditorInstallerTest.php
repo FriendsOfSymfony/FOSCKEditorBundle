@@ -39,7 +39,7 @@ class CKEditorInstallerTest extends TestCase
     {
         $this->installer = new CKEditorInstaller();
         $this->path = __DIR__.'/../../src/Resources/public';
-        $this->proxy = 'http://50.224.173.190:8080';
+        $this->proxy = 'http://184.105.143.66:3128';
 
         $this->tearDown();
     }
@@ -87,6 +87,9 @@ class CKEditorInstallerTest extends TestCase
         $this->assertInstall($options);
     }
 
+    /**
+     * @group proxy
+     */
     public function testInstallWithHttpProxy(): void
     {
         putenv('http_proxy='.$this->proxy);
@@ -96,6 +99,9 @@ class CKEditorInstallerTest extends TestCase
         $this->assertInstall();
     }
 
+    /**
+     * @group proxy
+     */
     public function testInstallWithHttpsProxy(): void
     {
         putenv('https_proxy='.$this->proxy);
@@ -105,6 +111,9 @@ class CKEditorInstallerTest extends TestCase
         $this->assertInstall();
     }
 
+    /**
+     * @group proxy
+     */
     public function testInstallWithHttpProxyRequestFullUri()
     {
         putenv('http_proxy='.$this->proxy);
@@ -118,6 +127,9 @@ class CKEditorInstallerTest extends TestCase
         $this->assertInstall();
     }
 
+    /**
+     * @group proxy
+     */
     public function testInstallWithHttpsProxyRequestFullUri(): void
     {
         putenv('https_proxy='.$this->proxy);
