@@ -43,7 +43,7 @@ matrix:
           env: TARGET=phpstan LEVEL=7
 
     allow_failures:
-    - env: COMPOSER_FLAGS="--group=proxy"
+    - env: PHPUNIT_FLAGS="--group=proxy"
 
 before_install:
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
