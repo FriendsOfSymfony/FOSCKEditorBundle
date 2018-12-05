@@ -72,3 +72,21 @@ If you're using Symfony Flex:
 .. code-block:: bash
 
     $ php bin/console assets:install public
+
+Configure Twig
+--------------
+
+.. note::
+
+    This step is not required if you installed the bundle using Symfony Flex and the recipe was installed.
+
+Finally, add some configuration under the `twig.form_themes` config key:
+
+.. code-block:: yaml
+
+    # Symfony 2/3: app/config/config.yml
+    # Symfony 4: config/packages/twig.yaml
+
+    twig:
+        form_themes:
+            - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
