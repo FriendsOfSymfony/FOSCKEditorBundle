@@ -24,8 +24,14 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = $this->createTreeBuilder();
-        $treeBuilder
-            ->root('fos_ck_editor')
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('fos_ck_editor');
+        }
+
+        $rootNode
             ->children()
                 ->booleanNode('enable')->defaultTrue()->end()
                 ->booleanNode('async')->defaultFalse()->end()
@@ -160,6 +166,6 @@ final class Configuration implements ConfigurationInterface
 
     private function createTreeBuilder(): TreeBuilder
     {
-        return new TreeBuilder();
+        return new TreeBuilder('fos_ck_editor');
     }
 }
