@@ -26,3 +26,14 @@ symfony/templating has been dropped along with php templates.
 Twig is now a required dependency and only templating engine this library supports.
 
 Composer Script has been removed.
+
+To make Twig render the editors, you must add some configuration under the `twig.form_themes` config key:
+
+```yaml
+# Symfony 2/3: app/config/config.yml
+# Symfony 4: config/packages/twig.yaml
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+```

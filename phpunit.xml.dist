@@ -15,6 +15,7 @@
     <groups>
         <exclude>
             <group>installation</group>
+            <group>proxy</group>
         </exclude>
     </groups>
 
