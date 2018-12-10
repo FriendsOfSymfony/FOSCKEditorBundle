@@ -41,6 +41,7 @@ matrix:
 
         - php: 7.1
           env:
+            - COMPOSER_MEMORY_LIMIT=-1
             - DEPENDENCIES="symfony/dependency-injection:^4.2"
             - TARGET=phpstan LEVEL=7
 
