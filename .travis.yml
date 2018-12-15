@@ -18,7 +18,10 @@ matrix:
     include:
           # Minimum supported dependencies with the oldest supported PHP version
         - php: 7.1
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
+          env:
+            - COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+            - SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
+            - SYMFONY_PHPUNIT_VERSION="5.7.26"
 
           # Coverage
         - php: 7.1
@@ -37,7 +40,9 @@ matrix:
           env: TARGET=docs
 
         - php: 7.2
-          env: STABILITY="dev"
+          env:
+            - STABILITY="dev"
+            - SYMFONY_PHPUNIT_VERSION="6.5"
 
         - php: 7.1
           env: TARGET=phpstan LEVEL=7
@@ -47,6 +52,7 @@ matrix:
 
     allow_failures:
         - env: PHPUNIT_FLAGS="--group=proxy"
+        - env: TARGET=phpstan LEVEL=7
 
 before_install:
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;

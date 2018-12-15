@@ -16,19 +16,8 @@ automatically registers a new type called ``ckeditor`` which can be fully
 configured. This type extends the `textarea`_ one, meaning all textarea options
 are available.
 
-Here, an example where we customize the `CKEditor config`_:
+Here, an example where we customize the `CKEditor config`_::
 
-.. code-block:: php
-
-    // Symfony 2.7 and previous versions
-    $builder->add('field', 'ckeditor', array(
-        'config' => array(
-            'uiColor' => '#ffffff',
-            //...
-        ),
-    ));
-
-    // Symfony 2.8 and newer versions
     use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
     $builder->add('field', CKEditorType::class, array(
@@ -37,12 +26,6 @@ Here, an example where we customize the `CKEditor config`_:
             //...
         ),
     ));
-
-.. note::
-
-    If you're using PHP < 5.5 and Symfony 2.8+, you must rely on
-    ``FOS\CKEditorBundle\Form\Type\CKEditorType`` instead of
-    ``CKEditorType::class`` as this constant does not exist.
 
 Installation
 ------------
