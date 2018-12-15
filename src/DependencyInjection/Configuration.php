@@ -23,11 +23,12 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = $this->createTreeBuilder();
-        if (method_exists($treeBuilder, 'getRootNode')) {
+        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
+            $treeBuilder = new TreeBuilder('fos_ck_editor');
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
+            $treeBuilder = new TreeBuilder();
             $rootNode = $treeBuilder->root('fos_ck_editor');
         }
 
@@ -157,15 +158,17 @@ final class Configuration implements ConfigurationInterface
 
     private function createNode(string $name): ArrayNodeDefinition
     {
-        $node = $this->createTreeBuilder()->root($name);
+        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
+            $treeBuilder = new TreeBuilder($name);
+            $node = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $treeBuilder = new TreeBuilder();
+            $node = $treeBuilder->root($name);
+        }
 
         \assert($node instanceof ArrayNodeDefinition);
 
         return $node;
-    }
-
-    private function createTreeBuilder(): TreeBuilder
-    {
-        return new TreeBuilder('fos_ck_editor');
     }
 }
