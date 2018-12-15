@@ -44,13 +44,15 @@ matrix:
             - STABILITY="dev"
             - SYMFONY_PHPUNIT_VERSION="6.5"
 
+        - php: 7.1
+          env: TARGET=phpstan LEVEL=7
+
         - php: '7.2'
           env: PHPUNIT_FLAGS="--group=proxy"
 
     allow_failures:
         - env: PHPUNIT_FLAGS="--group=proxy"
-        - php: 7.1
-          env: TARGET=phpstan LEVEL=7
+        - env: TARGET=phpstan LEVEL=7
 
 before_install:
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
