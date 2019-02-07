@@ -69,7 +69,7 @@ final class CKEditorType extends AbstractType
         if (null === $options['config_name']) {
             $options['config_name'] = uniqid('fos', true);
         } else {
-            $config = array_merge($this->configuration->getConfig($options['config_name']), $config);
+            $config = array_merge($config, $this->configuration->getConfig($options['config_name']));
         }
 
         if (isset($config['toolbar']) && is_string($config['toolbar'])) {
