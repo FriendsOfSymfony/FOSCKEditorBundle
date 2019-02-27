@@ -91,7 +91,7 @@ Then, override the bundle's configuration to point to the new CKEditor path:
         base_path: "build/ckeditor"
         js_path:   "build/ckeditor/ckeditor.js"
 
-Finally, run encore command.
+Finally, run encore command:
 
 .. code-block:: bash
 
