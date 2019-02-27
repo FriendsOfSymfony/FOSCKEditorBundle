@@ -32,6 +32,8 @@ Then, update your ``app/AppKernel.php``:
 
 Download CKEditor
 -----------------
+With bundle's command
+~~~~~~~~~~~~~~~~~~~~~
 
 Once, you have registered the bundle, you need to install CKEditor:
 
@@ -48,6 +50,45 @@ If you're using Symfony >= 3.0:
     $ php bin/console ckeditor:install
 
 If you want to learn more about this command, you can read :doc:`its documentation <usage/ckeditor>`.
+
+Using Webpack Encore
+~~~~~~~~~~~~~~~~~~~~
+
+If you have installed Webpack Encore, you may want to have it as a node_module dependence. 
+
+You can by running this command :
+
+.. code-block:: bash
+
+    # if you are using NPM as package manager
+    $ npm install --save ckeditor
+    # if you are using Yarn as package manager
+    $ yarn add ckeditor
+
+Once installed, add the following lines to your Webpack Encore configuration file (webpack.config.js):
+
+.. code-block:: javascript
+
+    var Encore = require('@symfony/webpack-encore');
+
+    Encore
+        // ...
+        .copyFiles([
+            {from: './node_modules/ckeditor/', to: 'ckeditor/[path][name].[ext]', pattern: '/\.js$/'},
+            {from: './node_modules/ckeditor/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+            {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'}
+        ])
+    ;
+
+Finally, override bundle's configuration to point on the new ckeditor path :
+
+.. code-block:: yaml
+
+    fos_ck_editor:
+        # ...
+        base_path: "build/ckeditor"
+        js_path:   "build/ckeditor/ckeditor.js"
+
 
 Install the Assets
 ------------------
