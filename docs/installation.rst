@@ -54,7 +54,7 @@ If you want to learn more about this command, you can read :doc:`its documentati
 Using Webpack Encore
 ~~~~~~~~~~~~~~~~~~~~
 
-If you have installed Webpack Encore, you may want to have it as a node_module dependence. 
+If you have installed Webpack Encore, you may want to have it as a `node_module` dependency. 
 
 You can by running this command:
 
