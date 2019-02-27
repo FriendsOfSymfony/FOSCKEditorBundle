@@ -56,7 +56,7 @@ Using Webpack Encore
 
 If you have installed Webpack Encore, you may want to have it as a node_module dependence. 
 
-You can by running this command :
+You can by running this command:
 
 .. code-block:: bash
 
@@ -65,10 +65,11 @@ You can by running this command :
     # if you are using Yarn as package manager
     $ yarn add ckeditor@^4.0.0
 
-Once installed, add the following lines to your Webpack Encore configuration file (webpack.config.js):
+Once installed, add the following lines to your Webpack Encore configuration file:
 
 .. code-block:: javascript
 
+    // webpack.config.js
     var Encore = require('@symfony/webpack-encore');
 
     Encore
@@ -80,7 +81,7 @@ Once installed, add the following lines to your Webpack Encore configuration fil
         ])
     ;
 
-Finally, override bundle's configuration to point on the new ckeditor path :
+Finally, override bundle's configuration to point on the new ckeditor path:
 
 .. code-block:: yaml
 
