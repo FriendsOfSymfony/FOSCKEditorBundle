@@ -82,7 +82,7 @@ Once installed, add the following lines to your Webpack Encore configuration fil
         ])
     ;
 
-Finally, override the bundle's configuration to point to the new CKEditor path:
+Then, override the bundle's configuration to point to the new CKEditor path:
 
 .. code-block:: yaml
 
@@ -91,9 +91,23 @@ Finally, override the bundle's configuration to point to the new CKEditor path:
         base_path: "build/ckeditor"
         js_path:   "build/ckeditor/ckeditor.js"
 
+Finally, run encore command.
+
+.. code-block:: bash
+
+    # if you are using NPM as package manager
+    $ npm run dev
+    
+    # if you are using Yarn as package manager
+    $ yarn run encore dev
+
 
 Install the Assets
 ------------------
+
+.. note::
+
+    This step is not required if you are using Webpack Encore.
 
 Once, you have downloaded CKEditor, you need to install it in the web
 directory.
