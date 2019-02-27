@@ -81,7 +81,7 @@ Once installed, add the following lines to your Webpack Encore configuration fil
         ])
     ;
 
-Finally, override bundle's configuration to point on the new ckeditor path:
+Finally, override the bundle's configuration to point to the new CKEditor path:
 
 .. code-block:: yaml
 
