@@ -62,6 +62,7 @@ You can by running this command:
 
     # if you are using NPM as package manager
     $ npm install --save ckeditor@^4.0.0
+    
     # if you are using Yarn as package manager
     $ yarn add ckeditor@^4.0.0
 
