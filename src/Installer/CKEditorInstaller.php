@@ -12,6 +12,7 @@
 
 namespace FOS\CKEditorBundle\Installer;
 
+use FOS\CKEditorBundle\Exception\BadProxyUrlException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -186,6 +187,11 @@ final class CKEditorInstaller
 
         if ($proxy) {
             $proxyUrl = parse_url($proxy);
+
+            if ($proxyUrl === false || !isset($proxyUrl['host']) || !isset($proxyUrl['port'])) {
+                throw BadProxyUrlException::fromEnvUrl($proxy);
+            }
+
             $context['http'] = [
                 'proxy' => 'tcp://'.$proxyUrl['host'].':'.$proxyUrl['port'],
                 'request_fulluri' => (bool) getenv('https_proxy_request_fulluri') ?:

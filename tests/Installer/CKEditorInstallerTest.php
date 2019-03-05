@@ -12,6 +12,7 @@
 
 namespace FOS\CKEditorBundle\Tests\Installer;
 
+use FOS\CKEditorBundle\Exception\BadProxyUrlException;
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
 use PHPUnit\Framework\TestCase;
 
@@ -141,6 +142,28 @@ class CKEditorInstallerTest extends TestCase
         putenv('https_proxy_request_fulluri');
 
         $this->assertInstall();
+    }
+
+    /**
+     * @group proxy
+     */
+    public function testInstallWithProxyUrlMissingHost(): void
+    {
+        putenv('http_proxy=notgonnahappen');
+
+        $this->expectException(BadProxyUrlException::class);
+        $this->installer->install();
+    }
+
+    /**
+     * @group proxy
+     */
+    public function testInstallWithProxyUrlMissingPort(): void
+    {
+        putenv('http_proxy=http://notgonnahappen.com');
+
+        $this->expectException(BadProxyUrlException::class);
+        $this->installer->install();
     }
 
     public function testReinstall(): void
