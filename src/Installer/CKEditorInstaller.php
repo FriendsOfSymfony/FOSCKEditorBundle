@@ -188,7 +188,7 @@ final class CKEditorInstaller
         if ($proxy) {
             $proxyUrl = parse_url($proxy);
 
-            if ($proxyUrl === false || !isset($proxyUrl['host']) || !isset($proxyUrl['port'])) {
+            if (false === $proxyUrl || !isset($proxyUrl['host']) || !isset($proxyUrl['port'])) {
                 throw BadProxyUrlException::fromEnvUrl($proxy);
             }
 
