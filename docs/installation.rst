@@ -71,6 +71,7 @@ Once installed, add the following lines to your Webpack Encore configuration fil
 .. code-block:: javascript
 
     // webpack.config.js
+    var path = require('path');
     var Encore = require('@symfony/webpack-encore');
 
     Encore
@@ -82,6 +83,7 @@ Once installed, add the following lines to your Webpack Encore configuration fil
             {from: './node_modules/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
             {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'}
         ])
+        .addLoader({test: /\.json$/i, include: [path.resolve(__dirname, 'node_modules/ckeditor')], loader: 'raw-loader', type: 'javascript/auto'})
     ;
 
 Then, override the bundle's configuration to point to the new CKEditor path:
