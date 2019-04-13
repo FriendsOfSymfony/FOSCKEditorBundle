@@ -27,6 +27,8 @@ final class CKEditorInstaller
 
     const RELEASE_STANDARD = 'standard';
 
+    const RELEASE_CUSTOM = 'custom';
+
     const VERSION_LATEST = 'latest';
 
     const CLEAR_DROP = 'drop';
@@ -69,6 +71,11 @@ final class CKEditorInstaller
     private static $archive = 'https://github.com/ckeditor/ckeditor-releases/archive/%s/%s.zip';
 
     /**
+     * @var string
+     */
+    private static $customBuildArchive = 'https://ckeditor.com/cke4/builder/download/%s';
+
+    /**
      * @var OptionsResolver
      */
     private $resolver;
@@ -82,14 +89,16 @@ final class CKEditorInstaller
                 'notifier' => null,
                 'path' => dirname(__DIR__).'/Resources/public',
                 'release' => self::RELEASE_FULL,
+                'custom_build_id' => null,
                 'version' => self::VERSION_LATEST,
             ], $options))
             ->setAllowedTypes('excludes', 'array')
             ->setAllowedTypes('notifier', ['null', 'callable'])
             ->setAllowedTypes('path', 'string')
+            ->setAllowedTypes('custom_build_id', ['null', 'string'])
             ->setAllowedTypes('version', 'string')
             ->setAllowedValues('clear', [self::CLEAR_DROP, self::CLEAR_KEEP, self::CLEAR_SKIP, null])
-            ->setAllowedValues('release', [self::RELEASE_BASIC, self::RELEASE_FULL, self::RELEASE_STANDARD])
+            ->setAllowedValues('release', [self::RELEASE_BASIC, self::RELEASE_FULL, self::RELEASE_STANDARD, self::RELEASE_CUSTOM])
             ->setNormalizer('path', function (Options $options, $path) {
                 return rtrim($path, '/');
             });
@@ -157,7 +166,7 @@ final class CKEditorInstaller
 
     private function download(array $options): string
     {
-        $url = sprintf(self::$archive, $options['release'], $options['version']);
+        $url = $this->getDownloadUrl($options);
         $this->notify($options['notifier'], self::NOTIFY_DOWNLOAD, $url);
 
         $zip = @file_get_contents($url, false, $this->createStreamContext($options['notifier']));
@@ -175,6 +184,23 @@ final class CKEditorInstaller
         $this->notify($options['notifier'], self::NOTIFY_DOWNLOAD_COMPLETE, $path);
 
         return $path;
+    }
+
+    private function getDownloadUrl(array $options): string
+    {
+        if (self::RELEASE_CUSTOM !== $options['release']) {
+            return sprintf(self::$archive, $options['release'], $options['version']);
+        }
+
+        if (null === $options['custom_build_id']) {
+            throw $this->createException('Unable to download CKEditor ZIP archive. Custom build ID is not specified.');
+        }
+
+        if (self::VERSION_LATEST !== $options['version']) {
+            throw $this->createException('Unable to download CKEditor ZIP archive. Specifying version for custom build is not supported.');
+        }
+
+        return sprintf(self::$customBuildArchive, $options['custom_build_id']);
     }
 
     /**
@@ -236,7 +262,11 @@ final class CKEditorInstaller
 
         $this->notify($options['notifier'], self::NOTIFY_EXTRACT_SIZE, $zip->numFiles);
 
-        $offset = 20 + strlen($options['release']) + strlen($options['version']);
+        if (self::RELEASE_CUSTOM === $options['release']) {
+            $offset = 9;
+        } else {
+            $offset = 20 + strlen($options['release']) + strlen($options['version']);
+        }
 
         for ($i = 0; $i < $zip->numFiles; ++$i) {
             $filename = $zip->getNameIndex($i);
