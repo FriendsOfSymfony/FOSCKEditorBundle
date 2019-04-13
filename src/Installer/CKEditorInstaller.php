@@ -239,12 +239,12 @@ final class CKEditorInstaller
         $offset = 20 + strlen($options['release']) + strlen($options['version']);
 
         for ($i = 0; $i < $zip->numFiles; ++$i) {
-            $this->extractFile(
-                $file = $zip->getNameIndex($i),
-                substr($file, $offset),
-                $path,
-                $options
-            );
+            $filename = $zip->getNameIndex($i);
+            $isDirectory = ('/' === substr($filename, -1, 1));
+
+            if (!$isDirectory) {
+                $this->extractFile($filename, substr($filename, $offset), $path, $options);
+            }
         }
 
         $zip->close();
@@ -270,12 +270,9 @@ final class CKEditorInstaller
             }
         }
 
-        if ('/' === substr($from, -1)) {
-            if (!is_dir($to) && !@mkdir($to)) {
-                throw $this->createException(sprintf('Unable to create the directory "%s".', $to));
-            }
-
-            return;
+        $targetDirectory = dirname($to);
+        if (!is_dir($targetDirectory) && !@mkdir($targetDirectory, 0777, true)) {
+            throw $this->createException(sprintf('Unable to create the directory "%s".', $targetDirectory));
         }
 
         if (!@copy($from, $to)) {
