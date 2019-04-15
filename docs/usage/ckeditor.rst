@@ -61,6 +61,17 @@ You can choose which CKEditor release (full, standard or basic) to download:
 
     $ php bin/console ckeditor:install --release=basic
 
+CKEditor Custom Build
+~~~~~~~~~~~~~~~~~~~~~
+
+It's also possible to use custom build generated using CKEditor online builder:
+https://ckeditor.com/cke4/builder. Download ZIP archive from CKEditor website
+and use your custom build ID from `build-config.js` file:
+
+.. code-block:: bash
+
+    $ php bin/console ckeditor:install --release=custom --custom-build-id=574a82a0d3e9226d94b0e91d10eaa372
+
 CKEditor Version
 ~~~~~~~~~~~~~~~~
 
