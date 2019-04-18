@@ -146,7 +146,7 @@ Finally, add some configuration under the `twig.form_themes` config key:
 .. code-block:: yaml
 
     # Symfony 2/3: app/config/config.yml
-    # Symfony 4: config/packages/twig.yaml
+    # Symfony 4: config/packages/fos_ckeditor.yaml
 
     twig:
         form_themes:
