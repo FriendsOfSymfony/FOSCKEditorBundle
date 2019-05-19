@@ -50,7 +50,13 @@ final class CKEditorInstallerCommand extends Command
                 'release',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'CKEditor release (basic, standard or full)'
+                'CKEditor release (basic, standard, full or custom)'
+            )
+            ->addOption(
+                'custom-build-id',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'CKEditor custom build ID'
             )
             ->addOption('tag', null, InputOption::VALUE_OPTIONAL, 'CKEditor tag (x.y.z or latest)')
             ->addOption(
@@ -89,6 +95,10 @@ You can install a specific version:
 
   <info>php %command.full_name% --tag=4.7.0</info>
 
+You can install custom build generated on https://ckeditor.com/cke4/builder:
+
+  <info>php %command.full_name% --release=custom --custom-build-id=574a82a0d3e9226d94b0e91d10eaa372</info>
+
 If there is a previous CKEditor installation detected, 
 you can control how it should be handled in non-interactive mode:
 
@@ -126,6 +136,10 @@ EOF
 
         if ($input->hasOption('release')) {
             $options['release'] = $input->getOption('release');
+        }
+
+        if ($input->hasOption('custom-build-id')) {
+            $options['custom_build_id'] = $input->getOption('custom-build-id');
         }
 
         if ($input->hasOption('tag')) {

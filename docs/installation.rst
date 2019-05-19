@@ -141,7 +141,7 @@ Configure Twig
 
     This step is not required if you installed the bundle using Symfony Flex and the recipe was installed.
 
-Finally, add some configuration under the `twig.form_themes` config key:
+Finally, add some configuration under the ``twig.form_themes`` config key:
 
 .. code-block:: yaml
 

@@ -74,6 +74,29 @@ class CKEditorInstallerTest extends TestCase
         $this->assertInstall($options);
     }
 
+    public function testInstallWithCustomBuild(): void
+    {
+        $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '574a82a0d3e9226d94b0e91d10eaa372']);
+
+        $this->assertInstall($options);
+    }
+
+    public function testInstallWithCustomBuildWithInvalidVersion(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageRegExp('/Specifying version for custom build is not supported/');
+
+        $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '574a82a0d3e9226d94b0e91d10eaa372', 'version' => '4.11.4']);
+    }
+
+    public function testInstallWithCustomBuildWithMissingId(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageRegExp('/Custom build ID is not specified/');
+
+        $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM]);
+    }
+
     public function testInstallWithVersion(): void
     {
         $this->installer->install($options = ['version' => '4.6.0']);
@@ -209,12 +232,17 @@ class CKEditorInstallerTest extends TestCase
     {
         $this->assertFileExists($this->path.'/ckeditor.js');
 
-        if (isset($options['release'])) {
-            $this->assertRelease($options['release']);
-        }
+        if (CKEditorInstaller::RELEASE_CUSTOM === ($options['release'] ?? '')) {
+            $this->assertFileExists($this->path.'/build-config.js');
+            $this->assertContains($options['custom_build_id'], file_get_contents($this->path.'/build-config.js'));
+        } else {
+            if (isset($options['release'])) {
+                $this->assertRelease($options['release']);
+            }
 
-        if (isset($options['version'])) {
-            $this->assertVersion($options['version']);
+            if (isset($options['version'])) {
+                $this->assertVersion($options['version']);
+            }
         }
 
         if (!isset($options['excludes'])) {
