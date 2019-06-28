@@ -11,7 +11,7 @@ easily switch the toolbar configuration by using the ``full``, ``standard`` or
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/packages/fos_ck_editor.yaml
     fos_ck_editor:
         configs:
             my_config:
@@ -37,7 +37,7 @@ only available in your configuration.
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/packages/fos_ck_editor.yaml
     fos_ck_editor:
         configs:
             my_config_1:
