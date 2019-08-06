@@ -13,7 +13,7 @@ This one has some blocks you can override according to your needs.
 
 .. code-block:: twig
 
-    {# app/Resources/Form/ckeditor_widget.html.twig #}
+    {# app/Resources/views/Form/ckeditor_widget.html.twig #}
     {% extends 'FOSCKEditorBundle:Form:ckeditor_widget.html.twig' %}
 
     {% block ckeditor_widget_extra %}
