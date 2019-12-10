@@ -11,7 +11,7 @@ env:
     global:
         - PHPUNIT_FLAGS="-v"
         - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
-        - SYMFONY_PHPUNIT_VERSION="7"
+        - SYMFONY_PHPUNIT_VERSION="6.5"
         - TARGET=test
 
 matrix:
@@ -25,10 +25,9 @@ matrix:
             - SYMFONY_PHPUNIT_VERSION="5.7.26"
 
           # Coverage
-        - php: 7.1
+        - php: 7.4
           env:
             - PHPUNIT_FLAGS="-v --coverage-clover build/logs/clover.xml"
-            - SYMFONY_PHPUNIT_VERSION="6.5"
             - COVERAGE=true
 
           # Test LTS version. This makes sure we do not use Symfony packages with version greater
@@ -40,10 +39,9 @@ matrix:
         - php: 7.2
           env: TARGET=docs
 
-        - php: 7.2
+        - php: 7.4
           env:
             - STABILITY="dev"
-            - SYMFONY_PHPUNIT_VERSION="6.5"
 
         - php: 7.1
           env: TARGET=phpstan LEVEL=7
