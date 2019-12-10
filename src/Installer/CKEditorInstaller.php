@@ -295,7 +295,7 @@ final class CKEditorInstaller
         $to = $options['path'].'/'.$rewrite;
 
         foreach ($options['excludes'] as $exclude) {
-            if (0 === strpos($rewrite, $exclude)) {
+            if (0 === strpos(ltrim($rewrite, '\\/'), $exclude)) {
                 return;
             }
         }
