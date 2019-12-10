@@ -150,11 +150,7 @@ final class CKEditorInstaller
                 }
 
                 if (!$success) {
-                    throw $this->createException(sprintf(
-                        'Unable to remove the %s "%s".',
-                        $dir ? 'directory' : 'file',
-                        $filePath
-                    ));
+                    throw $this->createException(sprintf('Unable to remove the %s "%s".', $dir ? 'directory' : 'file', $filePath));
                 }
             }
 
