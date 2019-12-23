@@ -9,9 +9,9 @@ Install your CKEditor
 ---------------------
 
 First of all, you need to download and extract your own CKEditor version in the
-web directory. For that, you have two possibilities:
+public directory. For that, you have two possibilities:
 
-#. Directly put it in the web directory (``/web/ckeditor/`` for example).
+#. Directly put it in the web directory (``/public/ckeditor/`` for example).
 #. Put it in the ``/Resources/public/`` directory of any of your bundles and
    install the assets.
 
@@ -37,4 +37,4 @@ in your configuration or in your widget:
 
 .. note::
 
-    Each path must be relative to the web directory.
+    Each path must be relative to the public directory.
