@@ -11,6 +11,7 @@
 # PHPUnit
 /build
 /phpunit.xml
+.phpunit.result.cache
 
 # Documentation
 /docs/_build/*

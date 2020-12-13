@@ -13,6 +13,7 @@
 namespace FOS\CKEditorBundle\Tests\DependencyInjection;
 
 use FOS\CKEditorBundle\DependencyInjection\FOSCKEditorExtension;
+use FOS\CKEditorBundle\Exception\ConfigException;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
 use FOS\CKEditorBundle\Tests\DependencyInjection\Compiler\TestContainerPass;
@@ -371,12 +372,11 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \FOS\CKEditorBundle\Exception\ConfigException
-     * @expectedExceptionMessage The default config "bar" does not exist.
-     */
     public function testInvalidDefaultConfig(): void
     {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('The default config "bar" does not exist.');
+
         $this->loadConfiguration($this->container, 'invalid_default_config');
         $this->container->compile();
         $this->getVars();
