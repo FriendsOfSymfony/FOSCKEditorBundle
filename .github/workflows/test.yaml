@@ -16,9 +16,11 @@ jobs:
                     - 7.4
                     - 8.0
                 phpunit: [8.5]
+                dependencies: [highest]
                 include:
                     - php-version: 7.1
                       phpunit: 7.5
+                      dependencies: [lowest]
 
         steps:
             - name: Checkout
@@ -34,6 +36,7 @@ jobs:
             - name: Install Composer dependencies
               uses: ramsey/composer-install@v1
               with:
+                  dependency-versions: ${{ matrix.dependencies }}
                   composer-options: --prefer-dist
 
             - name: Run Tests
