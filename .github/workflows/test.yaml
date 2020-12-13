@@ -11,11 +11,14 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - 7.1
                     - 7.2
                     - 7.3
                     - 7.4
                     - 8.0
+                phpunit: [8.5]
+                include:
+                    - php-version: 7.1
+                      phpunit: 7.5
 
         steps:
             - name: Checkout
@@ -34,4 +37,4 @@ jobs:
                   composer-options: --prefer-dist
 
             - name: Run Tests
-              run: vendor/bin/simple-phpunit
+              run: SYMFONY_PHPUNIT_VERSION=${{ matrix.phpunit }} vendor/bin/simple-phpunit ${{ matrix.dependencies }}
