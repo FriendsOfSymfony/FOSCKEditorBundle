@@ -31,7 +31,7 @@ jobs:
             - name: Install Composer dependencies
               uses: ramsey/composer-install@v1
               with:
-                  composer-options: --prefer-dist --prefer-stable
+                  composer-options: --prefer-dist
 
             - name: Run Tests
               run: vendor/bin/simple-phpunit
