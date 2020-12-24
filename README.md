@@ -1,7 +1,7 @@
 FOSCKEditorBundle
 ==================
-General: 
-[![Build Status](https://travis-ci.org/FriendsOfSymfony/FOSCKEditorBundle.svg?branch=master)](https://travis-ci.org/FriendsOfSymfony/FOSCKEditorBundle)
+General:
+[![Build Status](https://github.com/FriendsOfSymfony/FOSCKEditorBundle/workflows/Test/badge.svg?branch=2.x)](https://github.com/FriendsOfSymfony/FOSCKEditorBundle/actions?query=workflow%3ATest+branch%3A2.x)
 [![Latest Stable Version](https://poser.pugx.org/friendsofsymfony/ckeditor-bundle/v/stable.svg)](https://packagist.org/packages/friendsofsymfony/ckeditor-bundle)
 
 Quality: 
