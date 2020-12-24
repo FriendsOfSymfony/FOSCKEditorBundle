@@ -26,9 +26,6 @@ final class CKEditorExtension extends AbstractExtension implements CKEditorRende
      */
     private $renderer;
 
-    /**
-     * @param CKEditorRendererInterface $renderer
-     */
     public function __construct(CKEditorRendererInterface $renderer)
     {
         $this->renderer = $renderer;

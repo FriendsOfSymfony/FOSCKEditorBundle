@@ -50,7 +50,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
     private $requestStack;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $locale;
 
