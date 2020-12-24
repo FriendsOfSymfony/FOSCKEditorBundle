@@ -113,7 +113,7 @@ EOF
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->title($output);
 
@@ -124,6 +124,8 @@ EOF
         } else {
             $this->info('CKEditor installation has been skipped...', $output);
         }
+
+        return 0;
     }
 
     private function createOptions(InputInterface $input, OutputInterface $output): array

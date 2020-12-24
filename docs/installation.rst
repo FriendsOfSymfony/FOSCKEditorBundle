@@ -65,17 +65,17 @@ If you want to learn more about this command, you can read :doc:`its documentati
 Using Webpack Encore
 ~~~~~~~~~~~~~~~~~~~~
 
-If you have installed Webpack Encore, you may want to have it as a `node_module` dependency. 
+If you have installed Webpack Encore, you may want to have it as a `node_module` dependency.
 
 You can by running this command:
 
 .. code-block:: bash
 
     # if you are using NPM as package manager
-    $ npm install --save ckeditor4@^4.13.0
-    
+    $ npm install --save ckeditor@^4.13.0
+
     # if you are using Yarn as package manager
-    $ yarn add ckeditor4@^4.13.0
+    $ yarn add ckeditor@^4.13.0
 
 Once installed, add the following lines to your Webpack Encore configuration file (this excludes the samples directory from the ckeditor node module):
 
@@ -112,7 +112,7 @@ Finally, run encore command:
 
     # if you are using NPM as package manager
     $ npm run dev
-    
+
     # if you are using Yarn as package manager
     $ yarn run encore dev
 

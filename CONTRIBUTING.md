@@ -17,7 +17,7 @@ easily understood/implement it.
 ## Bug report
 
 If you think you have detected a bug or a doc issue, please report it or even better fix it :). If you report it,
-please be the more precise possible. Here a little list of required informations:
+please be the more precise possible. Here a little list of required information:
 
  * Symfony-standard fork which reproduces the bug.
  * Precise description of the bug.

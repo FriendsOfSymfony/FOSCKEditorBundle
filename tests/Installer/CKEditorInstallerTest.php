@@ -76,7 +76,7 @@ class CKEditorInstallerTest extends TestCase
 
     public function testInstallWithCustomBuild(): void
     {
-        $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '574a82a0d3e9226d94b0e91d10eaa372']);
+        $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '459c358ccf2e34f083e3c8847d3af23e']);
 
         $this->assertInstall($options);
     }
@@ -86,7 +86,7 @@ class CKEditorInstallerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessageRegExp('/Specifying version for custom build is not supported/');
 
-        $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '574a82a0d3e9226d94b0e91d10eaa372', 'version' => '4.11.4']);
+        $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '459c358ccf2e34f083e3c8847d3af23e', 'version' => '4.11.4']);
     }
 
     public function testInstallWithCustomBuildWithMissingId(): void
@@ -234,7 +234,7 @@ class CKEditorInstallerTest extends TestCase
 
         if (CKEditorInstaller::RELEASE_CUSTOM === ($options['release'] ?? '')) {
             $this->assertFileExists($this->path.'/build-config.js');
-            $this->assertContains($options['custom_build_id'], file_get_contents($this->path.'/build-config.js'));
+            $this->assertStringContainsString($options['custom_build_id'], file_get_contents($this->path.'/build-config.js'));
         } else {
             if (isset($options['release'])) {
                 $this->assertRelease($options['release']);
@@ -278,7 +278,7 @@ class CKEditorInstallerTest extends TestCase
     {
         $package = json_decode(file_get_contents($this->path.'/package.json'), true);
 
-        $this->assertInternalType('array', $package);
+        $this->assertIsArray($package);
         $this->assertArrayHasKey('version', $package);
         $this->assertSame($version, $package['version']);
     }

@@ -150,11 +150,7 @@ final class CKEditorInstaller
                 }
 
                 if (!$success) {
-                    throw $this->createException(sprintf(
-                        'Unable to remove the %s "%s".',
-                        $dir ? 'directory' : 'file',
-                        $filePath
-                    ));
+                    throw $this->createException(sprintf('Unable to remove the %s "%s".', $dir ? 'directory' : 'file', $filePath));
                 }
             }
 
@@ -295,7 +291,7 @@ final class CKEditorInstaller
         $to = $options['path'].'/'.$rewrite;
 
         foreach ($options['excludes'] as $exclude) {
-            if (0 === strpos($rewrite, $exclude)) {
+            if (0 === strpos(ltrim($rewrite, '\\/'), $exclude)) {
                 return;
             }
         }

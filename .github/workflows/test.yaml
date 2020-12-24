@@ -1,0 +1,44 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+    test:
+        name: PHP ${{ matrix.php-version }}
+
+        runs-on: ubuntu-20.04
+
+        strategy:
+            matrix:
+                php-version:
+                    - 7.2
+                    - 7.3
+                    - 7.4
+                    - 8.0
+                phpunit: [8.5]
+                dependencies: [highest]
+                include:
+                    - php-version: 7.1
+                      phpunit: 7.5
+                      dependencies: lowest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Install PHP with extensions
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-version }}
+                  coverage: pcov
+                  tools: composer:v2
+                  extensions: zip
+
+            - name: Install Composer dependencies
+              uses: ramsey/composer-install@v1
+              with:
+                  dependency-versions: ${{ matrix.dependencies }}
+                  composer-options: --prefer-dist
+
+            - name: Run Tests
+              run: SYMFONY_PHPUNIT_VERSION=${{ matrix.phpunit }} vendor/bin/simple-phpunit
