@@ -14,6 +14,7 @@ namespace FOS\CKEditorBundle\Tests\Form\Type;
 
 use FOS\CKEditorBundle\Config\CKEditorConfiguration;
 use FOS\CKEditorBundle\DependencyInjection\Configuration;
+use FOS\CKEditorBundle\Exception\ConfigException;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
@@ -402,12 +403,11 @@ class CKEditorTypeTest extends TestCase
         $this->assertArrayNotHasKey('templates', $view->vars);
     }
 
-    /**
-     * @expectedException \FOS\CKEditorBundle\Exception\ConfigException
-     * @expectedExceptionMessage The CKEditor config "nop" does not exist.
-     */
     public function testBadConfig(): void
     {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('The CKEditor config "nop" does not exist.');
+
         $form = $this->factory->create($this->formType, null, ['config_name' => 'nop']);
         $form->createView();
     }
