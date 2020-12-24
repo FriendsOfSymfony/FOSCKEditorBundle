@@ -13,7 +13,18 @@ Require the bundle in your ``composer.json`` file:
 Register the Bundle
 -------------------
 
-Then, update your ``app/AppKernel.php``:
+If you're using Symfony >= 4.0, skip this step, as it is automatically done by Flex's recipe.
+
+If you choose to not execute the recipe, and if you're using Symfony >= 4.0, update your ``config/bundles.php``:
+
+.. code-block:: php
+
+    return [
+        // ...
+        FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
+    ];
+
+If you're using Symfony < 4.0, update your ``app/AppKernel.php``:
 
 .. code-block:: php
 
