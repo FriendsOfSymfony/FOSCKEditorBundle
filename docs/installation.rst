@@ -72,10 +72,10 @@ You can by running this command:
 .. code-block:: bash
 
     # if you are using NPM as package manager
-    $ npm install --save ckeditor@^4.13.0
+    $ npm install --save ckeditor4@^4.13.0
 
     # if you are using Yarn as package manager
-    $ yarn add ckeditor@^4.13.0
+    $ yarn add ckeditor4@^4.13.0
 
 Once installed, add the following lines to your Webpack Encore configuration file (this excludes the samples directory from the ckeditor node module):
 
