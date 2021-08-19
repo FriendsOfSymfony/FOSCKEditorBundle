@@ -8,13 +8,13 @@ we will configure CKEditor to not remove empty span via the DTD.
 Twig Template
 -------------
 
-The default Twig template is ``FOSCKEditorBundle:Form:ckeditor_widget.html.twig``.
+The default Twig template is ``"@FOSCKEditor/Form/ckeditor_widget.html.twig"``.
 This one has some blocks you can override according to your needs.
 
 .. code-block:: twig
 
     {# app/Resources/views/Form/ckeditor_widget.html.twig #}
-    {% extends 'FOSCKEditorBundle:Form:ckeditor_widget.html.twig' %}
+    {% extends '@FOSCKEditor/Form/ckeditor_widget.html.twig' %}
 
     {% block ckeditor_widget_extra %}
         CKEDITOR.dtd.$removeEmpty['span'] = false;
