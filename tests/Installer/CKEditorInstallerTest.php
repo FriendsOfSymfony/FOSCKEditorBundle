@@ -84,7 +84,12 @@ class CKEditorInstallerTest extends TestCase
     public function testInstallWithCustomBuildWithInvalidVersion(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageRegExp('/Specifying version for custom build is not supported/');
+
+        if (method_exists($this, 'expectExceptionMessageMatches')) {
+            $this->expectExceptionMessageMatches('/Specifying version for custom build is not supported/');
+        } else {
+            $this->expectExceptionMessageRegExp('/Specifying version for custom build is not supported/');
+        }
 
         $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '459c358ccf2e34f083e3c8847d3af23e', 'version' => '4.11.4']);
     }
@@ -92,7 +97,12 @@ class CKEditorInstallerTest extends TestCase
     public function testInstallWithCustomBuildWithMissingId(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageRegExp('/Custom build ID is not specified/');
+
+        if (method_exists($this, 'expectExceptionMessageMatches')) {
+            $this->expectExceptionMessageMatches('/Custom build ID is not specified/');
+        } else {
+            $this->expectExceptionMessageRegExp('/Custom build ID is not specified/');
+        }
 
         $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM]);
     }
