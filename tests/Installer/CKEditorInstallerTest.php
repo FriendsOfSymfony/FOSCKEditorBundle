@@ -85,7 +85,7 @@ class CKEditorInstallerTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        if(method_exists($this, 'expectExceptionMessageMatches')) {
+        if (method_exists($this, 'expectExceptionMessageMatches')) {
             $this->expectExceptionMessageMatches('/Specifying version for custom build is not supported/');
         } else {
             $this->expectExceptionMessageRegExp('/Specifying version for custom build is not supported/');
@@ -98,7 +98,7 @@ class CKEditorInstallerTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        if(method_exists($this, 'expectExceptionMessageMatches')) {
+        if (method_exists($this, 'expectExceptionMessageMatches')) {
             $this->expectExceptionMessageMatches('/Custom build ID is not specified/');
         } else {
             $this->expectExceptionMessageRegExp('/Custom build ID is not specified/');
