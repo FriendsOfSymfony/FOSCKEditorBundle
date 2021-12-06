@@ -278,7 +278,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if (null !== $request && $request->getLocale() !== '') {
+        if (null !== $request && '' !== $request->getLocale()) {
             return $request->getLocale();
         }
 
