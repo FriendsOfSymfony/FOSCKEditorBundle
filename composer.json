@@ -20,18 +20,18 @@
         "php": "^7.1|^8.0",
         "ext-zip": "*",
         "ext-json": "*",
-        "symfony/asset": "^4.4 || ^5.0",
-        "symfony/config": "^4.4 || ^5.0",
-        "symfony/dependency-injection": "^4.4 || ^5.0",
-        "symfony/expression-language": "^4.4 || ^5.0",
-        "symfony/form": "^4.4 || ^5.0",
-        "symfony/framework-bundle": "^4.4 || ^5.0",
-        "symfony/http-foundation": "^4.4 || ^5.0",
-        "symfony/http-kernel": "^4.4 || ^5.0",
-        "symfony/options-resolver": "^4.4 || ^5.0",
-        "symfony/property-access": "^4.4 || ^5.0",
-        "symfony/routing": "^4.4 || ^5.0",
-        "symfony/twig-bundle": "^4.4 || ^5.0",
+        "symfony/asset": "^4.4 || ^5.0 || ^6.0",
+        "symfony/config": "^4.4 || ^5.0 || ^6.0",
+        "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
+        "symfony/expression-language": "^4.4 || ^5.0 || ^6.0",
+        "symfony/form": "^4.4 || ^5.0 || ^6.0",
+        "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0",
+        "symfony/http-foundation": "^4.4 || ^5.0 || ^6.0",
+        "symfony/http-kernel": "^4.4 || ^5.0 || ^6.0",
+        "symfony/options-resolver": "^4.4 || ^5.0 || ^6.0",
+        "symfony/property-access": "^4.4 || ^5.0 || ^6.0",
+        "symfony/routing": "^4.4 || ^5.0 || ^6.0",
+        "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
         "twig/twig": "^2.4 || ^3.0"
     },
     "conflict": {
@@ -41,9 +41,9 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
         "matthiasnoback/symfony-dependency-injection-test": "^3.0 || ^4.0",
-        "symfony/console": "^4.4 || ^5.0",
-        "symfony/phpunit-bridge": "^4.4 || ^5.0",
-        "symfony/yaml": "^4.4 || ^5.0"
+        "symfony/console": "^4.4 || ^5.0 || ^6.0",
+        "symfony/phpunit-bridge": "^4.4 || ^5.0 || ^6.0",
+        "symfony/yaml": "^4.4 || ^5.0 || ^6.0"
     },
     "suggest": {
         "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously"

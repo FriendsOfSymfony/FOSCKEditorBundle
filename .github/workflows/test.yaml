@@ -15,12 +15,8 @@ jobs:
                     - 7.3
                     - 7.4
                     - 8.0
-                phpunit: [8.5]
+                    - 8.1
                 dependencies: [highest]
-                include:
-                    - php-version: 7.1
-                      phpunit: 7.5
-                      dependencies: lowest
 
         steps:
             - name: Checkout
@@ -41,4 +37,4 @@ jobs:
                   composer-options: --prefer-dist
 
             - name: Run Tests
-              run: SYMFONY_PHPUNIT_VERSION=${{ matrix.phpunit }} vendor/bin/simple-phpunit
+              run: vendor/bin/simple-phpunit

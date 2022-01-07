@@ -118,7 +118,7 @@ class CKEditorRendererTest extends TestCase
     public function testRenderWidgetWithLocaleRequest(string $symfonyLocale, string $ckEditorLocale): void
     {
         $this->request
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getLocale')
             ->will($this->returnValue($symfonyLocale));
 
@@ -133,7 +133,7 @@ class CKEditorRendererTest extends TestCase
      */
     public function testRenderWidgetWithLocaleParameter(string $symfonyLocale, string $ckEditorLocale): void
     {
-        $this->request->expects($this->once())->method('getLocale')->will($this->returnValue($symfonyLocale));
+        $this->request->expects($this->exactly(2))->method('getLocale')->will($this->returnValue($symfonyLocale));
         $this->assertSame(
             'CKEDITOR.replace("foo", {"language":"'.$ckEditorLocale.'"});',
             $this->renderer->renderWidget('foo', [])
@@ -156,7 +156,7 @@ class CKEditorRendererTest extends TestCase
         $this->request
             ->expects($this->once())
             ->method('getLocale')
-            ->will($this->returnValue(null));
+            ->will($this->returnValue(''));
 
         $this->assertSame(
             'CKEDITOR.replace("foo", []);',
