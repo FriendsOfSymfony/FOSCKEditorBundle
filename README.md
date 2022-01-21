@@ -18,7 +18,7 @@ Numbers:
 Introduction
 ------------
 
-The bundle provides a [CKEditor](https://ckeditor.com/) integration for your Symfony Project. It automatically registers
+The bundle provides a [CKEditor 4](https://ckeditor.com/ckeditor-4/) integration for your Symfony Project. It automatically registers
 the new `ckeditor` form type which can be easily as well as highly configured.
 
 Migration from IvoryCKEditorBundle to FOSCKEditorBundle
@@ -30,7 +30,7 @@ you easily migrate [just follow our guide](/docs/migration.rst).
 Documentation
 -------------
 
-Please, read the [official documentation](https://symfony.com/doc/master/bundles/FOSCKEditorBundle/index.html).
+Please, read the [official documentation](https://symfony.com/bundles/FOSCKEditorBundle/current/index.html).
 
 License
 -------
