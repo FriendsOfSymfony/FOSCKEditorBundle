@@ -205,9 +205,11 @@ class CKEditorInstaller
         $proxy = getenv('https_proxy') ?: getenv('http_proxy');
 
         if ($proxy) {
-            $context['proxy'] = $proxy;
-            $context['request_fulluri'] = (bool) getenv('https_proxy_request_fulluri') ?:
-                getenv('http_proxy_request_fulluri');
+            $context['http'] = [
+                'proxy' => str_replace('/^http\:/, 'tcp:', $proxy),
+                'request_fulluri' => (bool) getenv('https_proxy_request_fulluri') ?:
+                    getenv('http_proxy_request_fulluri'),
+            ];
         }
 
         return stream_context_create($context, [
