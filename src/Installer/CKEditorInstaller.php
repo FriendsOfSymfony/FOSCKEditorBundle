@@ -220,7 +220,7 @@ final class CKEditorInstaller
                     getenv('http_proxy_request_fulluri'),
             ];
 
-            if(!empty($proxyUrl['user']) && !empty($proxyUrl['pass'])) {
+            if (!empty($proxyUrl['user']) && !empty($proxyUrl['pass'])) {
                 $proxyUser = urldecode($proxyUrl['user']).':'.urldecode($proxyUrl['pass']);
                 $auth = base64_encode($proxyUser);
 
