@@ -29,6 +29,7 @@ class FOSCKEditorExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @group legacy
+     *
      * @expectedDeprecation IvoryCKEditorBundle isn't maintained anymore and should be replaced with FOSCKEditorBundle.
      */
     public function testIvoryDeprecation(): void

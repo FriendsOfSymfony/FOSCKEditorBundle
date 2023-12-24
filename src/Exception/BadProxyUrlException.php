@@ -12,12 +12,10 @@
 
 namespace FOS\CKEditorBundle\Exception;
 
-use RuntimeException;
-
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-final class BadProxyUrlException extends RuntimeException implements FOSCKEditorException
+final class BadProxyUrlException extends \RuntimeException implements FOSCKEditorException
 {
     public static function fromEnvUrl(string $url): self
     {

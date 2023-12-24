@@ -21,49 +21,49 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CKEditorInstaller
 {
-    const RELEASE_BASIC = 'basic';
+    public const RELEASE_BASIC = 'basic';
 
-    const RELEASE_FULL = 'full';
+    public const RELEASE_FULL = 'full';
 
-    const RELEASE_STANDARD = 'standard';
+    public const RELEASE_STANDARD = 'standard';
 
-    const RELEASE_CUSTOM = 'custom';
+    public const RELEASE_CUSTOM = 'custom';
 
-    const VERSION_LATEST = 'latest';
+    public const VERSION_LATEST = 'latest';
 
-    const CLEAR_DROP = 'drop';
+    public const CLEAR_DROP = 'drop';
 
-    const CLEAR_KEEP = 'keep';
+    public const CLEAR_KEEP = 'keep';
 
-    const CLEAR_SKIP = 'skip';
+    public const CLEAR_SKIP = 'skip';
 
-    const NOTIFY_CLEAR = 'clear';
+    public const NOTIFY_CLEAR = 'clear';
 
-    const NOTIFY_CLEAR_ARCHIVE = 'clear-archive';
+    public const NOTIFY_CLEAR_ARCHIVE = 'clear-archive';
 
-    const NOTIFY_CLEAR_COMPLETE = 'clear-complete';
+    public const NOTIFY_CLEAR_COMPLETE = 'clear-complete';
 
-    const NOTIFY_CLEAR_PROGRESS = 'clear-progress';
+    public const NOTIFY_CLEAR_PROGRESS = 'clear-progress';
 
-    const NOTIFY_CLEAR_QUESTION = 'clear-question';
+    public const NOTIFY_CLEAR_QUESTION = 'clear-question';
 
-    const NOTIFY_CLEAR_SIZE = 'clear-size';
+    public const NOTIFY_CLEAR_SIZE = 'clear-size';
 
-    const NOTIFY_DOWNLOAD = 'download';
+    public const NOTIFY_DOWNLOAD = 'download';
 
-    const NOTIFY_DOWNLOAD_COMPLETE = 'download-complete';
+    public const NOTIFY_DOWNLOAD_COMPLETE = 'download-complete';
 
-    const NOTIFY_DOWNLOAD_PROGRESS = 'download-progress';
+    public const NOTIFY_DOWNLOAD_PROGRESS = 'download-progress';
 
-    const NOTIFY_DOWNLOAD_SIZE = 'download-size';
+    public const NOTIFY_DOWNLOAD_SIZE = 'download-size';
 
-    const NOTIFY_EXTRACT = 'extract';
+    public const NOTIFY_EXTRACT = 'extract';
 
-    const NOTIFY_EXTRACT_COMPLETE = 'extract-complete';
+    public const NOTIFY_EXTRACT_COMPLETE = 'extract-complete';
 
-    const NOTIFY_EXTRACT_PROGRESS = 'extract-progress';
+    public const NOTIFY_EXTRACT_PROGRESS = 'extract-progress';
 
-    const NOTIFY_EXTRACT_SIZE = 'extract-size';
+    public const NOTIFY_EXTRACT_SIZE = 'extract-size';
 
     /**
      * @var string
@@ -306,16 +306,13 @@ final class CKEditorInstaller
         }
     }
 
-    /**
-     * @param mixed $data
-     *
-     * @return mixed
-     */
-    private function notify(callable $notifier = null, string $type, $data = null)
+    private function notify(callable $notifier = null, string $type = null, mixed $data = null): mixed
     {
         if (null !== $notifier) {
             return $notifier($type, $data);
         }
+
+        return null;
     }
 
     private function createException(string $message): \RuntimeException
