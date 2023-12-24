@@ -262,13 +262,13 @@ class CKEditorInstallerTest extends TestCase
 
             case CKEditorInstaller::RELEASE_BASIC:
                 $this->assertFileExists($this->path.'/plugins/link');
-                $this->assertFileNotExists($this->path.'/plugins/image');
+                $this->assertFileDoesNotExist($this->path.'/plugins/image');
 
                 break;
 
             case CKEditorInstaller::RELEASE_STANDARD:
                 $this->assertFileExists($this->path.'/plugins/image');
-                $this->assertFileNotExists($this->path.'/plugins/copyformatting');
+                $this->assertFileDoesNotExist($this->path.'/plugins/copyformatting');
 
                 break;
         }
@@ -289,7 +289,7 @@ class CKEditorInstallerTest extends TestCase
     private function assertExcludes(array $excludes): void
     {
         foreach ($excludes as $exclude) {
-            $this->assertFileNotExists($this->path.'/'.$exclude);
+            $this->assertFileDoesNotExist($this->path.'/'.$exclude);
         }
     }
 }

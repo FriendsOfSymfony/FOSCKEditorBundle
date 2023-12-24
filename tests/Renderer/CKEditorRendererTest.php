@@ -190,13 +190,15 @@ class CKEditorRendererTest extends TestCase
      */
     public function testRenderWidgetWithArrayContentsCss(array $paths, array $assets, array $urls): void
     {
+        $callMap = [];
         foreach (array_keys($paths) as $key) {
-            $this->packages
-                ->expects($this->at($key))
-                ->method('getUrl')
-                ->with($this->equalTo($paths[$key]))
-                ->will($this->returnValue($assets[$key]));
+            $callMap[] = [$paths[$key], null, $assets[$key]];
         }
+
+        $this->packages
+            ->expects($this->exactly(count($paths)))
+            ->method('getUrl')
+            ->willReturnMap($callMap);
 
         $this->assertSame(
             'CKEDITOR.replace("foo", {"contentsCss":'.json_encode($urls).'});',
