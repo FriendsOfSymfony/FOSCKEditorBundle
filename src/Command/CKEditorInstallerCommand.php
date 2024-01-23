@@ -28,6 +28,9 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  */
 final class CKEditorInstallerCommand extends Command
 {
+    protected static $defaultName = 'ckeditor:install';
+    protected static $defaultDescription = 'Install CKEditor';
+
     /**
      * @var CKEditorInstaller
      */
