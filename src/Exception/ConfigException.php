@@ -12,12 +12,10 @@
 
 namespace FOS\CKEditorBundle\Exception;
 
-use RuntimeException;
-
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-final class ConfigException extends RuntimeException implements FOSCKEditorException
+final class ConfigException extends \RuntimeException implements FOSCKEditorException
 {
     public static function configDoesNotExist(string $name): self
     {

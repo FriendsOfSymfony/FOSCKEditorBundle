@@ -11,16 +11,15 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - 7.2
-                    - 7.3
-                    - 7.4
                     - 8.0
                     - 8.1
+                    - 8.2
+                    - 8.3
                 dependencies: [highest]
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Install PHP with extensions
               uses: shivammathur/setup-php@v2
@@ -31,7 +30,7 @@ jobs:
                   extensions: zip
 
             - name: Install Composer dependencies
-              uses: ramsey/composer-install@v1
+              uses: ramsey/composer-install@v2
               with:
                   dependency-versions: ${{ matrix.dependencies }}
                   composer-options: --prefer-dist

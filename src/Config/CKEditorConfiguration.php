@@ -275,7 +275,7 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
 
         foreach ($this->toolbarConfigs[$name] as $name => $item) {
             $items[] = is_string($item) && '@' === substr($item, 0, 1)
-                ? $this->toolbarItems[(substr($item, 1))]
+                ? $this->toolbarItems[substr($item, 1)]
                 : $item;
         }
 

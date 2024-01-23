@@ -83,10 +83,7 @@ final class JsonBuilder
         return $this;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setValue(string $path, $value, bool $escapeValue = true): self
+    public function setValue(string $path, mixed $value, bool $escapeValue = true): self
     {
         if (!$escapeValue) {
             $placeholder = uniqid('friendsofsymfony', true);
