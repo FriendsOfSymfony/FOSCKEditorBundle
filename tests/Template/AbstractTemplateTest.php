@@ -107,7 +107,7 @@ EOF;
     public function testRenderWithFullWidget(): void
     {
         $context = [
-            'auto_inline' => false,
+//            'auto_inline' => false,
             'inline' => true,
             'input_sync' => true,
             'config' => ['foo' => 'bar'],
@@ -260,7 +260,7 @@ EOF;
             'enable' => true,
             'async' => false,
             'autoload' => true,
-            'auto_inline' => true,
+//            'auto_inline' => true,
             'inline' => false,
             'jquery' => false,
             'input_sync' => false,

@@ -55,18 +55,18 @@ the bundle, you can use a custom path (absolute):
 CKEditor Release
 ~~~~~~~~~~~~~~~~
 
-You can choose which CKEditor release (full, standard or basic) to download:
+You can choose which CKEditor release (classic, ballon, ballon-block, inline, document) to download:
 
 .. code-block:: bash
 
-    $ php bin/console ckeditor:install --release=basic
+    $ php bin/console ckeditor:install --release=classic
 
 CKEditor Custom Build
 ~~~~~~~~~~~~~~~~~~~~~
 
 It's also possible to use custom build generated using CKEditor online builder:
-https://ckeditor.com/cke4/builder. Download ZIP archive from CKEditor website
-and use your custom build ID from `build-config.js` file:
+https://ckeditor.com/ckeditor-5/online-builder/. Download ZIP archive from CKEditor website
+and use your custom build ID from zip filename:
 
 .. code-block:: bash
 
@@ -79,7 +79,7 @@ If your want a specific CKEditor version, you can use:
 
 .. code-block:: bash
 
-    $ php bin/console ckeditor:install --tag=4.6.0
+    $ php bin/console ckeditor:install --tag=41.0.0
 
 Silence Progress bars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

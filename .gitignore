@@ -15,3 +15,7 @@
 
 # Documentation
 /docs/_build/*
+
+# IDE
+.idea
+src/Resources/public
