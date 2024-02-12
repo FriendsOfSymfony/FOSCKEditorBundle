@@ -79,7 +79,7 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
 
         $this->enable = $config['enable'];
         $this->autoload = $config['autoload'];
-        $this->poweredBy = $config['poweredBy'];
+        $this->poweredBy = $config['powered_by'];
         $this->resize = $config['resize'];
         $this->basePath = $config['base_path'];
         $this->jsPath = $config['js_path'];

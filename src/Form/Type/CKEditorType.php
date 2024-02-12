@@ -44,7 +44,7 @@ final class CKEditorType extends AbstractType
         }
 
         $builder->setAttribute('autoload', $options['autoload']);
-        $builder->setAttribute('poweredBy', $options['poweredBy']);
+        $builder->setAttribute('powered_by', $options['powered_by']);
         $builder->setAttribute('resize', $options['resize']);
         $builder->setAttribute('base_path', $options['base_path']);
         $builder->setAttribute('js_path', $options['js_path']);
@@ -82,7 +82,7 @@ final class CKEditorType extends AbstractType
         }
 
         $view->vars['autoload'] = $config->getAttribute('autoload');
-        $view->vars['poweredBy'] = $config->getAttribute('poweredBy');
+        $view->vars['powered_by'] = $config->getAttribute('powered_by');
         $view->vars['resize'] = $config->getAttribute('resize');
         $view->vars['base_path'] = $config->getAttribute('base_path');
         $view->vars['js_path'] = $config->getAttribute('js_path');
@@ -99,7 +99,7 @@ final class CKEditorType extends AbstractType
             ->setDefaults([
                 'enable' => $this->configuration->isEnable(),
                 'autoload' => $this->configuration->isAutoload(),
-                'poweredBy' => $this->configuration->isPoweredBy(),
+                'powered_by' => $this->configuration->isPoweredBy(),
                 'resize' => $this->configuration->isResize(),
                 'base_path' => $this->configuration->getBasePath(),
                 'js_path' => $this->configuration->getJsPath(),
@@ -111,7 +111,7 @@ final class CKEditorType extends AbstractType
             ])
             ->addAllowedTypes('enable', 'bool')
             ->addAllowedTypes('autoload', 'bool')
-            ->addAllowedTypes('poweredBy', 'bool')
+            ->addAllowedTypes('powered_by', 'bool')
             ->addAllowedTypes('resize', 'bool')
             ->addAllowedTypes('config_name', ['string', 'null'])
             ->addAllowedTypes('base_path', 'string')

@@ -36,7 +36,7 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('enable')->defaultTrue()->end()
                 ->booleanNode('autoload')->defaultTrue()->end()
-                ->booleanNode('poweredBy')->defaultTrue()->end()
+                ->booleanNode('powered_by')->defaultTrue()->end()
                 ->booleanNode('resize')->defaultTrue()->end()
                 ->scalarNode('base_path')->defaultValue('bundles/fosckeditor/')->end()
                 ->scalarNode('js_path')->defaultValue('bundles/fosckeditor/ckeditor.js')->end()
