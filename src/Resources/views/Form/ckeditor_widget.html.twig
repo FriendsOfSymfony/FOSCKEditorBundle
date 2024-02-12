@@ -14,8 +14,8 @@
 
 {% block _ckeditor_javascript %}
     {% if autoload %}
-        <script type="text/javascript" src="{{ ckeditor_translation_path(base_path) }}"></script>
-        <script type="text/javascript" src="{{ ckeditor_js_path(js_path) }}"></script>
+        <script type="text/javascript" src="{{ ckeditor_translation_path(base_path) }}" nonce="{{ csp_script_nonce() }}"></script>
+        <script type="text/javascript" src="{{ ckeditor_js_path(js_path) }}" nonce="{{ csp_script_nonce() }}"></script>
     {% endif %}
     <style>
         {% if not powered_by %}
@@ -41,10 +41,10 @@
     </style>
 
 {#    {% for plugin_name, plugin in plugins %}#}
-{#        <script type="module"  src="{{ plugin.path ~ plugin.filename }}"></script>#}
+{#        <script type="module" src="{{ plugin.path ~ plugin.filename }}" nonce="{{ csp_script_nonce() }}"></script>#}
 {#    {% endfor %}#}
 
-    <script type="text/javascript">
+    <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         {{ ckeditor_widget(id, config, {
             plugins: plugins
         }) }}
