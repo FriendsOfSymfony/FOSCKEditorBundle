@@ -76,6 +76,8 @@ class CKEditorInstallerTest extends TestCase
 
     public function testInstallWithCustomBuild(): void
     {
+        $this->markTestIncomplete('custom_build_id not available anymore');
+
         $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => 'ffbb0c61721cb8543bfa54315374592d']);
 
         $this->assertInstall($options);
