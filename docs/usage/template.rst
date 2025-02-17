@@ -21,11 +21,11 @@ Or you can define it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array(
+    $builder->add('field', 'ckeditor', [
+        'config' => [
             'extraPlugins' => 'templates',
-        ),
-    ));
+        ],
+    ]);
 
 Configure your templates
 ------------------------
@@ -53,26 +53,26 @@ Or you can define them in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array(
+    $builder->add('field', 'ckeditor', [
+        'config' => [
             'extraPlugins' => 'templates',
             'templates'    => 'my_template',
-        ),
-        'templates' => array(
-            'my_template' => array(
+        ],
+        'templates' => [
+            'my_template' => [
                 'imagesPath' => '/bundles/mybundle/templates/images',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title'       => 'My Template',
                         'image'       => 'images.jpg',
                         'description' => 'My awesome template',
                         'html'        => '<p>Crazy template :)</p>',
-                    ),
+                    ],
                     // ...
-                ),
-            ),
-        ),
-    ));
+                ],
+            ],
+        ],
+    ]);
 
 Use a dedicated template
 ------------------------
@@ -107,24 +107,24 @@ Or you can define them in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array(
+    $builder->add('field', 'ckeditor', [
+        'config' => [
             'extraPlugins' => 'templates',
             'templates'    => 'my_template',
-        ),
-        'templates' => array(
-            'my_template' => array(
+        ],
+        'templates' => [
+            'my_template' => [
                 'imagesPath' => '/bundles/mybundle/templates/images',
-                'templates'  => array(
-                    array(
+                'templates'  => [
+                    [
                         'title'               => 'My Template',
                         'image'               => 'images.jpg',
                         'description'         => 'My awesome template',
                         'template'            => 'AppBundle:CKEditor:template.html.twig',
-                        'template_parameters' => array('foo' => 'bar'),
-                    ),
+                        'template_parameters' => ['foo' => 'bar'],
+                    ],
                     // ...
-                ),
-            ),
-        ),
-    ));
+                ],
+            ],
+        ],
+    ]);

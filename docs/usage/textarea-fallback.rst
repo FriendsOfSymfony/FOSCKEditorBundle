@@ -16,4 +16,4 @@ Or you can disable it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('enable' => false));
+    $builder->add('field', 'ckeditor', ['enable' => false]);

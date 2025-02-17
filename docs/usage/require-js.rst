@@ -41,4 +41,4 @@ Or you can configure it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('require_js' => true));
+    $builder->add('field', 'ckeditor', ['require_js' => true]);

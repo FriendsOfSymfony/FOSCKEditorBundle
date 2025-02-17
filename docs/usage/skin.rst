@@ -29,9 +29,9 @@ Or you can do it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array('skin' => 'skin_name,/bundles/mybundle/skins/skin_name/'),
-    ));
+    $builder->add('field', 'ckeditor', [
+        'config' => ['skin' => 'skin_name,/bundles/mybundle/skins/skin_name/'],
+    ]);
 
 .. note::
 

@@ -23,7 +23,7 @@ Or you can disable it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('autoload' => false));
+    $builder->add('field', 'ckeditor', ['autoload' => false]);
 
 .. note::
 
@@ -54,10 +54,10 @@ Or you can configure it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
+    $builder->add('field', 'ckeditor', [
         'autoload' => false,
         'async'    => true,
-    ));
+    ]);
 
 Then, install the third party bundles as explained in its
 `documentation <https://github.com/egeloen/IvoryFormExtraBundle/blob/master/Resources/doc/installation.md>`_.

@@ -16,7 +16,7 @@ Or you can disable it for a specific widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('auto_inline' => false));
+    $builder->add('field', 'ckeditor', ['auto_inline' => false]);
 
 .. note::
 

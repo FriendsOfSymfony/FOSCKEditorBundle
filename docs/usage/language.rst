@@ -29,6 +29,6 @@ Or you can do it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('config' => array(
+    $builder->add('field', 'ckeditor', ['config' => [
         'language' => 'fr',
-    )));
+    ]]);

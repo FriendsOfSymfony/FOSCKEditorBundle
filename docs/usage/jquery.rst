@@ -23,7 +23,7 @@ Or you can do it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('jquery' => true));
+    $builder->add('field', 'ckeditor', ['jquery' => true]);
 
 Use your Adapter
 ----------------
@@ -42,7 +42,7 @@ Or you can configure it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('jquery_path' => 'your/own/jquery.js'));
+    $builder->add('field', 'ckeditor', ['jquery_path' => 'your/own/jquery.js']);
 
 .. note::
 
