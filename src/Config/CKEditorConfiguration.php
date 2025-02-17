@@ -225,7 +225,6 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
         $this->plugins = $config['plugins'];
         $this->styles = $config['styles'];
         $this->templates = $config['templates'];
-        $this->plugins = $config['plugins'];
         $this->configs = $config['configs'];
         $this->toolbarConfigs = array_merge($this->toolbarConfigs, $config['toolbars']['configs']);
         $this->toolbarItems = array_merge($this->toolbarItems, $config['toolbars']['items']);
