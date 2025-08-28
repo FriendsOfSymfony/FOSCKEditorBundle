@@ -194,7 +194,7 @@ final class CKEditorInstaller
     /**
      * @return resource
      */
-    private function createStreamContext(callable $notifier = null)
+    private function createStreamContext(?callable $notifier = null)
     {
         $context = [];
         $proxy = getenv('https_proxy') ?: getenv('http_proxy');
@@ -298,7 +298,7 @@ final class CKEditorInstaller
         }
     }
 
-    private function notify(callable $notifier = null, string $type = null, $data = null)
+    private function notify(?callable $notifier = null, ?string $type = null, mixed $data = null): mixed
     {
         if (null !== $notifier) {
             return $notifier($type, $data);

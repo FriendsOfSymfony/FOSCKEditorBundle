@@ -21,9 +21,9 @@ Or directly configure your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array('toolbar' => 'full'),
-    ));
+    $builder->add('field', 'ckeditor', [
+        'config' => ['toolbar' => 'full'],
+    ]);
 
 
 Custom Toolbar

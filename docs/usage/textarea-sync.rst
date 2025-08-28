@@ -17,4 +17,4 @@ Or you can do it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('input_sync' => true));
+    $builder->add('field', 'ckeditor', ['input_sync' => true]);

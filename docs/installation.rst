@@ -32,10 +32,10 @@ If you're using Symfony < 4.0, update your ``app/AppKernel.php``:
     {
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 new FOS\CKEditorBundle\FOSCKEditorBundle(),
                 // ...
-            );
+            ];
 
             // ...
         }

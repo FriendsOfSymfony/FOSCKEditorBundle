@@ -68,7 +68,7 @@ final class JsonBuilder
         return $this->values;
     }
 
-    public function setValues(array $values, string $pathPrefix = null): self
+    public function setValues(array $values, ?string $pathPrefix = null): self
     {
         foreach ($values as $key => $value) {
             $path = sprintf('%s[%s]', $pathPrefix, $key);

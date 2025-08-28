@@ -37,17 +37,17 @@ Or you can do it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array(
+    $builder->add('field', 'ckeditor', [
+        'config' => [
             'extraPlugins' => 'wordcount',
-        ),
-        'plugins' => array(
-            'wordcount' => array(
+        ],
+        'plugins' => [
+            'wordcount' => [
                 'path'     => '/bundles/mybundle/wordcount/', // with trailing slash
                 'filename' => 'plugin.js',
-            ),
-        ),
-    ));
+            ],
+        ],
+    ]);
 
 Plugin dependency
 -----------------

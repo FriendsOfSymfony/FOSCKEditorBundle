@@ -15,7 +15,7 @@ Or you can configure it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array('inline' => true));
+    $builder->add('field', 'ckeditor', ['inline' => true]);
 
 .. _`Classic Editing`: http://docs.ckeditor.com/#!/guide/dev_framed
 .. _`Inline Editing`: http://docs.ckeditor.com/#!/guide/dev_inline

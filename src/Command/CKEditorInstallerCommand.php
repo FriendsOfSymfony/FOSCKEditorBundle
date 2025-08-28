@@ -290,8 +290,8 @@ EOF
     private function block(
         string $message,
         OutputInterface $output,
-        string $background = null,
-        string $font = null
+        ?string $background = null,
+        ?string $font = null
     ): void {
         $options = [];
 

@@ -86,6 +86,7 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
         $this->defaultConfig = $config['default_config'];
         $this->plugins = $config['plugins'];
         $this->styles = $config['styles'];
+        // $this->templates = $config['templates'];
         $this->configs = $config['configs'];
     }
 

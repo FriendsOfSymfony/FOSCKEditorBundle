@@ -45,12 +45,12 @@ Or you can configure it in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'filebrowsers' => array(
+    $builder->add('field', 'ckeditor', [
+        'filebrowsers' => [
             'VideoUpload',
             'VideoBrowse',
-        ),
-    ));
+        ],
+    ]);
 
 Routing Options
 ---------------
@@ -88,13 +88,13 @@ Or you can configure it your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array(
+    $builder->add('field', 'ckeditor', [
+        'config' => [
             'filebrowserBrowseRoute'           => 'my_route',
-            'filebrowserBrowseRouteParameters' => array('slug' => 'my-slug'),
+            'filebrowserBrowseRouteParameters' => ['slug' => 'my-slug'],
             'filebrowserBrowseRouteType'       => UrlGeneratorInterface::ABSOLUTE_URL,
-        ),
-    ));
+        ],
+    ]);
 
 Dynamic Routing
 ~~~~~~~~~~~~~~~
@@ -108,17 +108,17 @@ but much more powerful closure and so make it aware of your dependencies:
     // A blog post...
     $post = $manager->find($id);
 
-    $builder->add('field', 'ckeditor', array(
-        'config' => array(
+    $builder->add('field', 'ckeditor', [
+        'config' => [
             'filebrowserBrowseHandler' => function (RouterInterface $router) use ($post) {
                 return $router->generate(
                     'my_route',
-                    array('slug' => $post->getSlug()),
+                    ['slug' => $post->getSlug()],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 );
             },
-        ),
-    ));
+        ],
+    ]);
 
 Integration with Other Projects
 -------------------------------

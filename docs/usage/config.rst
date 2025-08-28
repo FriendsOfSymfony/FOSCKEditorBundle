@@ -42,9 +42,9 @@ When you have defined a config, you can use it with the ``config_name`` option:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
+    $builder->add('field', 'ckeditor', [
         'config_name' => 'my_config',
-    ));
+    ]);
 
 Override a configuration
 ------------------------
@@ -54,10 +54,10 @@ If you want to override some parts of the defined config, you can still use the
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
+    $builder->add('field', 'ckeditor', [
         'config_name' => 'my_config',
-        'config'      => array('uiColor' => '#ffffff'),
-    ));
+        'config'      => ['uiColor' => '#ffffff'],
+    ]);
 
 Define default configuration
 ----------------------------

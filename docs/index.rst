@@ -20,12 +20,12 @@ Here, an example where we customize the `CKEditor config`_::
 
     use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
-    $builder->add('field', CKEditorType::class, array(
-        'config' => array(
+    $builder->add('field', CKEditorType::class, [
+        'config' => [
             'uiColor' => '#ffffff',
             //...
-        ),
-    ));
+        ],
+    ]);
 
 Installation
 ------------

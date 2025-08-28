@@ -34,13 +34,13 @@ pass your values as first argument:
 
 .. code-block:: php
 
-    $builder->setValues(array('foo' => array('bar')));
+    $builder->setValues(['foo' => ['bar']]);
 
 Additionally, this method takes as second argument a path prefix (`PropertyAccess Component`_)
 which allows you to append your values where you want in the builder graph.
 So, the next sample is basically the equivalent of the precedent::
 
-    $builder->setValues(array('bar'), '[foo]');
+    $builder->setValues(['bar'], '[foo]');
 
 Append one value
 ~~~~~~~~~~~~~~~~
@@ -94,14 +94,14 @@ Example
     // {"0":"foo","1":bar}
     echo $builder
         ->setJsonEncodeOptions(JSON_FORCE_OBJECT)
-        ->setValues(array('foo'))
+        ->setValues(['foo'])
         ->setValue('[1]', 'bar', false)
         ->build();
 
     // {"foo":["bar"],"baz":bat}
     echo $builder
         ->reset()
-        ->setValues(array('foo' => array('bar')))
+        ->setValues(['foo' => ['bar']])
         ->setValue('[baz]', 'bat', false)
         ->build();
 

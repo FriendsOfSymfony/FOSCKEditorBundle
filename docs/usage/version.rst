@@ -30,10 +30,10 @@ in your configuration or in your widget:
 
 .. code-block:: php
 
-    $builder->add('field', 'ckeditor', array(
+    $builder->add('field', 'ckeditor', [
         'base_path' => 'ckeditor',
         'js_path'   => 'ckeditor/ckeditor.js',
-    ));
+    ]);
 
 .. note::
 
