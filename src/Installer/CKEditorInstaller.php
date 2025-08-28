@@ -298,7 +298,7 @@ final class CKEditorInstaller
         }
     }
 
-    private function notify(?callable $notifier = null, ?string $type = null, mixed $data = null): mixed
+    private function notify(?callable $notifier = null, ?string $type = null, $data = null)
     {
         if (null !== $notifier) {
             return $notifier($type, $data);
