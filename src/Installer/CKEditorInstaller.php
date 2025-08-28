@@ -177,7 +177,7 @@ final class CKEditorInstaller
     private function getDownloadUrl(array $options): string
     {
         if (CKEditorPredefinedBuild::RELEASE_CUSTOM !== $options['release']) {
-            return sprintf(self::$archive, $options['version'], $options['release'], $options['version']);;
+            return sprintf(self::$archive, $options['version'], $options['release'], $options['version']);
         }
 
         if (null === $options['custom_build_id']) {

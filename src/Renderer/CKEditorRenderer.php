@@ -72,7 +72,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
     public function renderTranslationPath(string $basePath): string
     {
-        return $this->fixPath($basePath) . 'translations/' .  $this->getLanguage() . '.js';
+        return $this->fixPath($basePath).'translations/'. $this->getLanguage().'.js';
     }
 
     public function renderJsPath(string $jsPath): string
@@ -200,23 +200,23 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $minHeight = '';
         $minWidth = '';
         if (isset($config['height'])) {
-            $height = 'height: ' . $config['height'] . ';';
+            $height = 'height: '.$config['height'].';';
             unset($config['height']);
         }
         if (isset($config['width'])) {
-            $width = 'width: ' . $config['width'] . ';';
+            $width = 'width: '.$config['width'].';';
             unset($config['width']);
         }
         if (isset($config['minHeight'])) {
-            $minHeight = 'min-height: ' . $config['minHeight'] . ';';
+            $minHeight = 'min-height: '.$config['minHeight'].';';
             unset($config['minHeight']);
         }
         if (isset($config['minWidth'])) {
-            $minWidth = 'min-width: ' . $config['minWidth'] . ';';
+            $minWidth = 'min-width: '.$config['minWidth'].';';
             unset($config['minWidth']);
         }
 
-        return '.ck.ck-editor__editable { ' . $height . $width . $minHeight . $minWidth . ' }';
+        return '.ck.ck-editor__editable { '.$height.$width.$minHeight.$minWidth.' }';
     }
 
     private function fixConfigLanguage(array $config): array
@@ -257,7 +257,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $url = $this->assetsPackages->getUrl($path);
 
         if ('/' === substr($path, -1) && false !== ($position = strpos($url, '?'))) {
-            $url = substr($url, 0, (int)$position);
+            $url = substr($url, 0, (int) $position);
         }
 
         return $url;

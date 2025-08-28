@@ -121,7 +121,7 @@ final class CKEditorType extends AbstractType
             ->addAllowedTypes('plugins', 'array')
             ->addAllowedTypes('styles', 'array')
 //            ->addAllowedTypes('template', 'array')
-            ;
+        ;
     }
 
     public function getParent(): string
