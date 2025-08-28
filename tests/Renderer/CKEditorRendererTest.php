@@ -346,13 +346,13 @@ class CKEditorRendererTest extends TestCase
         );
     }
 
-    public function testRenderWidgetWithoutAutoInline(): void
-    {
-        $this->assertSame(
-            'CKEDITOR.disableAutoInline = true;'."\n".'CKEDITOR.replace("foo", []);',
-            $this->renderer->renderWidget('foo', [], ['auto_inline' => false])
-        );
-    }
+//    public function testRenderWidgetWithoutAutoInline(): void
+//    {
+//        $this->assertSame(
+//            'CKEDITOR.disableAutoInline = true;'."\n".'CKEDITOR.replace("foo", []);',
+//            $this->renderer->renderWidget('foo', [], ['auto_inline' => false])
+//        );
+//    }
 
     public function testRenderWidgetWithInline(): void
     {

@@ -17,23 +17,15 @@ namespace FOS\CKEditorBundle\Renderer;
  */
 interface CKEditorRendererInterface
 {
-    public function renderBasePath(string $basePath): string;
+    public function renderTranslationPath(string $basePath): string;
+
+    public function renderSize(array $config): string;
 
     public function renderJsPath(string $jsPath): string;
 
     /**
      * The available options are:
-     *  - auto_inline: bool
-     *  - inline: bool
-     *  - input_sync: bool.
+     *  - plugins: array.
      */
     public function renderWidget(string $id, array $config, array $options = []): string;
-
-    public function renderDestroy(string $id): string;
-
-    public function renderPlugin(string $name, array $plugin): string;
-
-    public function renderStylesSet(string $name, array $stylesSet): string;
-
-    public function renderTemplate(string $name, array $template): string;
 }
