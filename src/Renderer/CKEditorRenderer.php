@@ -72,7 +72,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
     public function renderTranslationPath(string $basePath): string
     {
-        return $this->fixPath($basePath).'translations/'. $this->getLanguage().'.js';
+        return $this->fixPath($basePath).'translations/'.$this->getLanguage().'.js';
     }
 
     public function renderJsPath(string $jsPath): string
@@ -156,7 +156,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
     private function renderPlugin(string $name, array $plugin, array $config): array
     {
-        if(!isset($config['extraPlugins'])) {
+        if (!isset($config['extraPlugins'])) {
             $config['extraPlugins'] = [
                 $name,
             ];
