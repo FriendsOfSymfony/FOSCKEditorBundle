@@ -13,8 +13,8 @@
 namespace FOS\CKEditorBundle\Tests\Installer;
 
 use FOS\CKEditorBundle\Exception\BadProxyUrlException;
-use FOS\CKEditorBundle\Installer\CKEditorPredefinedBuild;
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
+use FOS\CKEditorBundle\Installer\CKEditorPredefinedBuild;
 use PHPUnit\Framework\TestCase;
 
 /**
