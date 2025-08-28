@@ -72,7 +72,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
     public function renderTranslationPath(string $basePath): string
     {
-        return $this->fixPath($basePath).'translations/'. $this->getLanguage().'.js';
+        return $this->fixPath($basePath).'translations/'.$this->getLanguage().'.js';
     }
 
     public function renderJsPath(string $jsPath): string
