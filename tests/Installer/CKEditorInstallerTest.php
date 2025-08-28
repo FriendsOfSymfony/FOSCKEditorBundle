@@ -87,7 +87,7 @@ class CKEditorInstallerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessageMatches('/Specifying version for custom build is not supported/');
 
-        $this->installer->install(['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => 'ffbb0c61721cb8543bfa54315374592d', 'version' => '4.11.4']);
+        $this->installer->install(['release' => CKEditorPredefinedBuild::RELEASE_CUSTOM, 'custom_build_id' => 'ffbb0c61721cb8543bfa54315374592d', 'version' => '4.11.4']);
     }
 
     public function testInstallWithCustomBuildWithMissingId(): void
@@ -95,7 +95,7 @@ class CKEditorInstallerTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessageMatches('/Custom build ID is not specified/');
 
-        $this->installer->install(['release' => CKEditorInstaller::RELEASE_CUSTOM]);
+        $this->installer->install(['release' => CKEditorPredefinedBuild::RELEASE_CUSTOM]);
     }
 
     public function testInstallWithVersion(): void
@@ -203,7 +203,7 @@ class CKEditorInstallerTest extends TestCase
         $this->installer->install();
         $this->installer->install($options = [
             'release' => CKEditorPredefinedBuild::RELEASE_CLASSIC,
-            'clear' => CKEditorPredefinedBuild::CLEAR_DROP,
+            'clear' => CKEditorInstaller::CLEAR_DROP,
         ]);
 
         $this->assertInstall($options);
@@ -215,7 +215,7 @@ class CKEditorInstallerTest extends TestCase
         $this->installer->install($options = [
             'version' => '41.0.0',
             'release' => CKEditorPredefinedBuild::RELEASE_CLASSIC,
-            'clear' => CKEditorPredefinedBuild::CLEAR_KEEP,
+            'clear' => CKEditorInstaller::CLEAR_KEEP,
         ]);
 
         $this->assertInstall($options);
@@ -224,7 +224,7 @@ class CKEditorInstallerTest extends TestCase
     public function testReinstallWithClearSkip(): void
     {
         $this->installer->install($options = ['version' => '41.0.0']);
-        $this->installer->install(['clear' => CKEditorPredefinedBuild::CLEAR_SKIP]);
+        $this->installer->install(['clear' => CKEditorInstaller::CLEAR_SKIP]);
 
         $this->assertInstall($options);
     }
@@ -261,7 +261,7 @@ class CKEditorInstallerTest extends TestCase
 
                 break;
 
-            case CKEditorPredefinedBuild::RELEASE_BALLON:
+            case CKEditorPredefinedBuild::RELEASE_BALLOON:
                 $this->assertFileExists($this->path.'/plugins/link');
                 $this->assertFileDoesNotExist($this->path.'/plugins/image');
 
