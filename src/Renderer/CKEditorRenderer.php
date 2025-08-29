@@ -261,7 +261,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
     {
         if (isset($config['plugins']) && $config['plugins'] && count($config['plugins']) > 0) {
             $config['plugins'] = array_values(
-                array_map(fn($pluginName) => 'CKEDITOR.'.$pluginName, $config['plugins'])
+                array_map(static fn ($pluginName) => 'CKEDITOR.'.$pluginName, $config['plugins'])
             );
         }
 
