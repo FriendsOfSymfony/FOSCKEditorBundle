@@ -89,7 +89,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
     {
         $config = $this->setDefaultLicense($config, $options);
         $config = $this->fixConfigLanguage($config);
-        $config = $this->formatConfigPlugins($config, $options);
+        $config = $this->formatConfigPlugins($config);
 
         // add plugins
         // todo not possible to add plugins to builds
@@ -257,7 +257,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         return $this->locale;
     }
 
-    private function formatConfigPlugins(array $config, array $options): array
+    private function formatConfigPlugins(array $config): array
     {
         if (isset($config['plugins']) && $config['plugins'] && count($config['plugins']) > 0) {
             $config['plugins'] = array_values(

@@ -155,7 +155,7 @@ EOF
         return array_filter($options);
     }
 
-    private function createNotifier(InputInterface $input, OutputInterface $output): Closure
+    private function createNotifier(InputInterface $input, OutputInterface $output): \Closure
     {
         $barOutput = $input->getOption('no-progress-bar') ? new NullOutput() : $output;
 
