@@ -73,7 +73,7 @@ final class JsonBuilder
         foreach ($values as $key => $value) {
             $path = sprintf('%s[%s]', $pathPrefix, $key);
 
-            if (\is_array($value) && !empty($value)) {
+            if (is_array($value) && !empty($value)) {
                 $this->setValues($value, $path);
             } else {
                 $this->setValue($path, $value);
@@ -123,7 +123,10 @@ final class JsonBuilder
 
         $json = json_encode($values, $this->jsonEncodeOptions);
 
-        \assert(\is_string($json));
+        assert(is_string($json));
+
+        // Replace quoted CKEDITOR.* strings
+        $json = preg_replace('/"CKEDITOR\.([^"]+)"/', 'CKEDITOR.$1', $json);
 
         return str_replace(
             array_keys($this->escapes),

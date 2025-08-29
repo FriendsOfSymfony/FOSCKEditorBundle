@@ -38,6 +38,7 @@ final class CKEditorExtension extends AbstractExtension implements CKEditorRende
         return [
             new TwigFunction('ckeditor_translation_path', [$this, 'renderTranslationPath'], $options),
             new TwigFunction('ckeditor_js_path', [$this, 'renderJsPath'], $options),
+            new TwigFunction('ckeditor_css_path', [$this, 'renderCssPath'], $options),
             new TwigFunction('ckeditor_widget', [$this, 'renderWidget'], $options),
             new TwigFunction('ckeditor_size', [$this, 'renderSize'], $options),
         ];
@@ -51,6 +52,11 @@ final class CKEditorExtension extends AbstractExtension implements CKEditorRende
     public function renderJsPath(string $jsPath): string
     {
         return $this->renderer->renderJsPath($jsPath);
+    }
+
+    public function renderCssPath(mixed $cssPath): mixed
+    {
+        return $this->renderer->renderCssPath($cssPath);
     }
 
     public function renderSize(array $config): string

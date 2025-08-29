@@ -105,7 +105,7 @@ Then, override the bundle's configuration to point to the new CKEditor path:
     fos_ck_editor:
         # ...
         base_path: "build/ckeditor"
-        js_path:   "build/ckeditor/ckeditor.js"
+        js_path:   "build/ckeditor/ckeditor5.js"
 
 Finally, run encore command:
 

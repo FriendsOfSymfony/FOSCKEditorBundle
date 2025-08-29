@@ -36,10 +36,16 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('enable')->defaultTrue()->end()
                 ->booleanNode('autoload')->defaultTrue()->end()
+                ->scalarNode('license_key')->defaultValue('GPL')->end()
                 ->booleanNode('powered_by')->defaultTrue()->end()
                 ->booleanNode('resize')->defaultTrue()->end()
                 ->scalarNode('base_path')->defaultValue('bundles/fosckeditor/')->end()
-                ->scalarNode('js_path')->defaultValue('bundles/fosckeditor/ckeditor.js')->end()
+                ->scalarNode('js_path')->defaultValue('bundles/fosckeditor/ckeditor5.umd.js')->end()
+                ->scalarNode('css_path')->defaultValue([
+                    'bundles/fosckeditor/ckeditor5.css',
+                    'bundles/fosckeditor/ckeditor5-content.css',
+                    'bundles/fosckeditor/ckeditor5-editor.css'
+                ])->end()
                 ->scalarNode('default_config')->defaultValue(null)->end()
                 ->append($this->createConfigsNode())
                 ->append($this->createPluginsNode())
@@ -117,7 +123,7 @@ final class Configuration implements ConfigurationInterface
             $node = $treeBuilder->root($name);
         }
 
-        \assert($node instanceof ArrayNodeDefinition);
+        assert($node instanceof ArrayNodeDefinition);
 
         return $node;
     }

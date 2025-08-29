@@ -2,7 +2,26 @@
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 
     {% if enable %}
+        {{ block('_ckeditor_styles') }}
         {{ block('_ckeditor_javascript') }}
+    {% endif %}
+{% endblock %}
+
+{% block ckeditor_styles %}
+    {% if enable %}
+        {{ block('_ckeditor_styles') }}
+    {% endif %}
+{% endblock %}
+
+{% block _ckeditor_styles %}
+    {% set formattedCssPath = ckeditor_css_path(css_path) %}
+
+    {% if formattedCssPath is iterable %}
+        {% for path in formattedCssPath %}
+            <link rel="stylesheet" href="{{ path }}"/>
+        {% endfor %}
+    {% else %}
+        <link rel="stylesheet" href="{{ formattedCssPath }}"/>
     {% endif %}
 {% endblock %}
 
@@ -46,6 +65,7 @@
 
     <script type="text/javascript" nonce="{{ csp_script_nonce() }}">
         {{ ckeditor_widget(id, config, {
+            license_key: license_key,
             plugins: plugins
         }) }}
 

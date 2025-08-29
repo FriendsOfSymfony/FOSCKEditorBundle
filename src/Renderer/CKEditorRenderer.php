@@ -72,17 +72,24 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
     public function renderTranslationPath(string $basePath): string
     {
-        return $this->fixPath($basePath).'translations/'.$this->getLanguage().'.js';
+        return $this->fixPaths($basePath) . 'translations/' . $this->getLanguage() . '.umd.js';
     }
 
     public function renderJsPath(string $jsPath): string
     {
-        return $this->fixPath($jsPath);
+        return $this->fixPaths($jsPath);
+    }
+
+    public function renderCssPath(mixed $cssPath): mixed
+    {
+        return $this->fixPaths($cssPath);
     }
 
     public function renderWidget(string $id, array $config, array $options = []): string
     {
+        $config = $this->setDefaultLicense($config, $options);
         $config = $this->fixConfigLanguage($config);
+        $config = $this->formatConfigPlugins($config, $options);
 
         // add plugins
         // todo not possible to add plugins to builds
@@ -101,26 +108,24 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         if (isset($config['build']) && $config['build']) {
             $release = $config['build'];
         } else {
-            $release = CKEditorPredefinedBuild::RELEASE_CLASSIC;
+            $release = CKEditorPredefinedBuild::USER_INTERFACE_CLASSIC;
         }
 
         switch ($release) {
-            case CKEditorPredefinedBuild::RELEASE_CLASSIC:
+            case CKEditorPredefinedBuild::USER_INTERFACE_CLASSIC:
+            case CKEditorPredefinedBuild::USER_INTERFACE_BUTTON_GROUPING:
                 $name = 'ClassicEditor';
                 break;
-            case CKEditorPredefinedBuild::RELEASE_BALLOON:
-            case CKEditorPredefinedBuild::RELEASE_BALLOON_BLOCK:
+            case CKEditorPredefinedBuild::USER_INTERFACE_BALLOON:
+            case CKEditorPredefinedBuild::USER_INTERFACE_BALLOON_BLOCK:
                 $name = 'BalloonEditor';
                 break;
-            case CKEditorPredefinedBuild::RELEASE_INLINE:
+            case CKEditorPredefinedBuild::USER_INTERFACE_INLINE:
                 $name = 'InlineEditor';
                 break;
-            case CKEditorPredefinedBuild::RELEASE_DOCUMENT:
+            case CKEditorPredefinedBuild::USER_INTERFACE_DOCUMENT:
+            case CKEditorPredefinedBuild::USER_INTERFACE_BOTTOM_TOOLBAR:
                 $name = 'DecoupledEditor';
-                break;
-            case CKEditorPredefinedBuild::RELEASE_CUSTOM:
-                // todo
-                $name = 'todo';
                 break;
             default:
                 $name = null;
@@ -129,7 +134,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $builder = $this->jsonBuilder->reset()->setValues($config);
 
         return sprintf(
-            '%s.create(document.querySelector(\'#%s\'), %s)',
+            'CKEDITOR.%s.create(document.querySelector(\'#%s\'), %s)',
             $name,
             $selectorName,
             $builder->build()
@@ -170,7 +175,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 //    public function renderTemplate(string $name, array $template): string
 //    {
 //        if (isset($template['imagesPath'])) {
-//            $template['imagesPath'] = $this->fixPath($template['imagesPath']);
+//            $template['imagesPath'] = $this->fixPaths($template['imagesPath']);
 //        }
 //
 //        if (isset($template['templates'])) {
@@ -200,23 +205,32 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $minHeight = '';
         $minWidth = '';
         if (isset($config['height'])) {
-            $height = 'height: '.$config['height'].';';
+            $height = 'height: ' . $config['height'] . ';';
             unset($config['height']);
         }
         if (isset($config['width'])) {
-            $width = 'width: '.$config['width'].';';
+            $width = 'width: ' . $config['width'] . ';';
             unset($config['width']);
         }
         if (isset($config['minHeight'])) {
-            $minHeight = 'min-height: '.$config['minHeight'].';';
+            $minHeight = 'min-height: ' . $config['minHeight'] . ';';
             unset($config['minHeight']);
         }
         if (isset($config['minWidth'])) {
-            $minWidth = 'min-width: '.$config['minWidth'].';';
+            $minWidth = 'min-width: ' . $config['minWidth'] . ';';
             unset($config['minWidth']);
         }
 
-        return '.ck.ck-editor__editable { '.$height.$width.$minHeight.$minWidth.' }';
+        return '.ck.ck-editor__editable { ' . $height . $width . $minHeight . $minWidth . ' }';
+    }
+
+    private function setDefaultLicense(array $config, array $options): array
+    {
+        if (!isset($config['licenseKey'])) {
+            $config['licenseKey'] = $options['license_key'];
+        }
+
+        return $config;
     }
 
     private function fixConfigLanguage(array $config): array
@@ -243,12 +257,37 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         return $this->locale;
     }
 
+    private function formatConfigPlugins(array $config, array $options): array
+    {
+        if (isset($config['plugins']) && $config['plugins'] && count($config['plugins']) > 0) {
+            $config['plugins'] = array_values(
+                array_map(fn($pluginName) => 'CKEDITOR.' . $pluginName, $config['plugins'])
+            );
+        }
+
+        return $config;
+    }
+
 //    private function fixConfigConstants(string $json): string
 //    {
 //        return preg_replace('/"(CKEDITOR\.[A-Z_]+)"/', '$1', $json);
 //    }
 
-    private function fixPath(string $path): string
+    private function fixPaths(mixed $path): mixed
+    {
+        if (!is_array($path)) {
+            return $this->fixPath($path);
+        }
+
+        $fixedPaths = [];
+        foreach ($path as $value) {
+            $fixedPaths[] = $this->fixPath($value);
+        }
+
+        return $fixedPaths;
+    }
+
+    private function fixPath(mixed $path): string
     {
         if (null === $this->assetsPackages) {
             return $path;
@@ -257,7 +296,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $url = $this->assetsPackages->getUrl($path);
 
         if ('/' === substr($path, -1) && false !== ($position = strpos($url, '?'))) {
-            $url = substr($url, 0, (int) $position);
+            $url = substr($url, 0, (int)$position);
         }
 
         return $url;

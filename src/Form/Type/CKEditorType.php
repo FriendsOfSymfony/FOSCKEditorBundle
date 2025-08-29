@@ -44,10 +44,12 @@ final class CKEditorType extends AbstractType
         }
 
         $builder->setAttribute('autoload', $options['autoload']);
+        $builder->setAttribute('license_key', $options['license_key']);
         $builder->setAttribute('powered_by', $options['powered_by']);
         $builder->setAttribute('resize', $options['resize']);
         $builder->setAttribute('base_path', $options['base_path']);
         $builder->setAttribute('js_path', $options['js_path']);
+        $builder->setAttribute('css_path', $options['css_path']);
         $builder->setAttribute('config', $this->resolveConfig($options));
         $builder->setAttribute('config_name', $options['config_name']);
         $builder->setAttribute('plugins', array_merge($this->configuration->getPlugins(), $options['plugins']));
@@ -82,10 +84,12 @@ final class CKEditorType extends AbstractType
         }
 
         $view->vars['autoload'] = $config->getAttribute('autoload');
+        $view->vars['license_key'] = $config->getAttribute('license_key');
         $view->vars['powered_by'] = $config->getAttribute('powered_by');
         $view->vars['resize'] = $config->getAttribute('resize');
         $view->vars['base_path'] = $config->getAttribute('base_path');
         $view->vars['js_path'] = $config->getAttribute('js_path');
+        $view->vars['css_path'] = $config->getAttribute('css_path');
         $view->vars['config'] = $config->getAttribute('config');
         $view->vars['config_name'] = $config->getAttribute('config_name');
         $view->vars['plugins'] = $config->getAttribute('plugins');
@@ -99,10 +103,12 @@ final class CKEditorType extends AbstractType
             ->setDefaults([
                 'enable' => $this->configuration->isEnable(),
                 'autoload' => $this->configuration->isAutoload(),
+                'license_key' => $this->configuration->getLicenseKey(),
                 'powered_by' => $this->configuration->isPoweredBy(),
                 'resize' => $this->configuration->isResize(),
                 'base_path' => $this->configuration->getBasePath(),
                 'js_path' => $this->configuration->getJsPath(),
+                'css_path' => $this->configuration->getCssPath(),
                 'config_name' => $this->configuration->getDefaultConfig(),
                 'config' => [],
                 'plugins' => [],
@@ -111,11 +117,13 @@ final class CKEditorType extends AbstractType
             ])
             ->addAllowedTypes('enable', 'bool')
             ->addAllowedTypes('autoload', 'bool')
+            ->addAllowedTypes('license_key', 'string')
             ->addAllowedTypes('powered_by', 'bool')
             ->addAllowedTypes('resize', 'bool')
             ->addAllowedTypes('config_name', ['string', 'null'])
             ->addAllowedTypes('base_path', 'string')
             ->addAllowedTypes('js_path', 'string')
+            ->addAllowedTypes('css_path', ['string', 'string[]'])
             ->addAllowedTypes('config', 'array')
             ->addAllowedTypes('config_name', ['string', 'null'])
             ->addAllowedTypes('plugins', 'array')

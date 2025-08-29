@@ -27,6 +27,11 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
     private $autoload;
 
     /**
+     * @var string
+     */
+    private $licenseKey;
+
+    /**
      * @var bool
      */
     private $poweredBy;
@@ -45,6 +50,11 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
      * @var string
      */
     private $jsPath;
+
+    /**
+     * @var string
+     */
+    private $cssPath;
 
     /**
      * @var string|null
@@ -79,10 +89,12 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
 
         $this->enable = $config['enable'];
         $this->autoload = $config['autoload'];
+        $this->licenseKey = $config['license_key'];
         $this->poweredBy = $config['powered_by'];
         $this->resize = $config['resize'];
         $this->basePath = $config['base_path'];
         $this->jsPath = $config['js_path'];
+        $this->cssPath = $config['css_path'];
         $this->defaultConfig = $config['default_config'];
         $this->plugins = $config['plugins'];
         $this->styles = $config['styles'];
@@ -135,6 +147,11 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
         return $this->autoload;
     }
 
+    public function getLicenseKey(): string
+    {
+        return $this->licenseKey;
+    }
+
     public function isPoweredBy(): bool
     {
         return $this->poweredBy;
@@ -153,6 +170,14 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
     public function getJsPath(): string
     {
         return $this->jsPath;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getCssPath(): mixed
+    {
+        return $this->cssPath;
     }
 
     public function getDefaultConfig(): ?string

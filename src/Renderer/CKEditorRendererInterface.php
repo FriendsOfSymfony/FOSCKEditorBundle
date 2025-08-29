@@ -22,6 +22,8 @@ interface CKEditorRendererInterface
     public function renderSize(array $config): string;
 
     public function renderJsPath(string $jsPath): string;
+    
+    public function renderCssPath(mixed $cssPath): mixed;
 
     /**
      * The available options are:

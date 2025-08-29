@@ -20,6 +20,8 @@ interface CKEditorConfigurationInterface
 
     public function isAutoload(): bool;
 
+    public function getLicenseKey(): string;
+
     public function isPoweredBy(): bool;
 
     public function isResize(): bool;
@@ -27,6 +29,8 @@ interface CKEditorConfigurationInterface
     public function getBasePath(): string;
 
     public function getJsPath(): string;
+
+    public function getCssPath(): mixed;
 
     public function getDefaultConfig(): ?string;
 
