@@ -262,8 +262,8 @@ final class CKEditorInstaller
             $filename = $zip->getNameIndex($i);
 
             if (
-                strpos($filename, 'ckeditor5') === 0
-                || ($offsetPremium && strpos($filename, 'ckeditor5-premium-features') === 0)
+                0 === strpos($filename, 'ckeditor5')
+                || ($offsetPremium && 0 === strpos($filename, 'ckeditor5-premium-features'))
             ) {
                 $isDirectory = ('/' === $filename[strlen($filename) - 1]);
 

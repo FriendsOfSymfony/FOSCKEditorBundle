@@ -44,7 +44,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('css_path')->defaultValue([
                     'bundles/fosckeditor/ckeditor5.css',
                     'bundles/fosckeditor/ckeditor5-content.css',
-                    'bundles/fosckeditor/ckeditor5-editor.css'
+                    'bundles/fosckeditor/ckeditor5-editor.css',
                 ])->end()
                 ->scalarNode('default_config')->defaultValue(null)->end()
                 ->append($this->createConfigsNode())
