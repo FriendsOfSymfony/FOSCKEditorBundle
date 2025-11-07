@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -20,7 +21,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             service('assets.packages'),
             service('request_stack'),
             service('twig'),
-            #container.hasParameter('locale') ? parameter('locale') : null,
-            ])
-        ;
+            null,
+        ])
+    ;
 };

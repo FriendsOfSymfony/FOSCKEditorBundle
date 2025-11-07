@@ -15,7 +15,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set('fos_ck_editor.form.type', CKEditorType::class)
              ->args([
-                 service('fos_ck_editor.configuration')
+                 service('fos_ck_editor.configuration'),
              ])
              ->tag('form.type');
 };
