@@ -141,4 +141,4 @@ The `FMElfinderBundle`_ provides a `ELFinder`_ integration with this bundle.
 .. _`CoopTilleulsCKEditorSonataMediaBundle`: https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle
 .. _`SonataMedia`: http://sonata-project.org/bundles/media
 .. _`FMElfinderBundle`: https://github.com/helios-ag/FMElfinderBundle
-.. _`ELFinder`: http://elfinder.org
+.. _`ELFinder`: https://github.com/Studio-42/elFinder
