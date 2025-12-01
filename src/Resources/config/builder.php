@@ -10,12 +10,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->defaults()
-            ->public()
-            ->autowire();
+        ->public()
+        ->autowire();
 
     $services->set('fos_ck_editor.builder.json_builder', JsonBuilder::class)
-            ->args([
-                service('property_accessor'),
-            ])
+        ->args([
+            service('property_accessor'),
+        ])
     ;
 };
