@@ -14,7 +14,7 @@ namespace FOS\CKEditorBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 /**
@@ -41,7 +41,7 @@ final class FOSCKEditorExtension extends ConfigurableExtension
 
     private function loadResources(ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $resources = [
             'builder',
@@ -54,7 +54,7 @@ final class FOSCKEditorExtension extends ConfigurableExtension
         ];
 
         foreach ($resources as $resource) {
-            $loader->load($resource.'.xml');
+            $loader->load($resource.'.php');
         }
     }
 
