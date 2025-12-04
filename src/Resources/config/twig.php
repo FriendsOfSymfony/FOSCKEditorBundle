@@ -14,7 +14,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set('fos_ck_editor.twig_extension', CKEditorExtension::class)
         ->args([
-            'fos_ck_editor.renderer',
+            service('fos_ck_editor.renderer'),
         ])
         ->tag('twig.extension');
 };
