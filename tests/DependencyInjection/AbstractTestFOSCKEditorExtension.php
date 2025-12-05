@@ -33,7 +33,7 @@ use Twig\Environment;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractFOSCKEditorExtensionTest extends TestCase
+abstract class AbstractTestFOSCKEditorExtension extends TestCase
 {
     /**
      * @var ContainerBuilder

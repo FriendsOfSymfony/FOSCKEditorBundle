@@ -29,7 +29,7 @@ use Twig\Environment;
  * @author GeLo <geloen.eric@gmail.com>
  * @author Adam Misiorny <adam.misiorny@gmail.com>
  */
-abstract class AbstractTemplateTest extends TestCase
+abstract class AbstractTestTemplate extends TestCase
 {
     /**
      * @var CKEditorRenderer
