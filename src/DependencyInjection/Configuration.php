@@ -35,23 +35,22 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->booleanNode('enable')->defaultTrue()->end()
-                ->booleanNode('async')->defaultFalse()->end()
-                ->booleanNode('auto_inline')->defaultTrue()->end()
-                ->booleanNode('inline')->defaultFalse()->end()
                 ->booleanNode('autoload')->defaultTrue()->end()
-                ->booleanNode('jquery')->defaultFalse()->end()
-                ->booleanNode('require_js')->defaultFalse()->end()
-                ->booleanNode('input_sync')->defaultFalse()->end()
+                ->scalarNode('license_key')->defaultValue('GPL')->end()
+                ->booleanNode('powered_by')->defaultTrue()->end()
+                ->booleanNode('resize')->defaultTrue()->end()
                 ->scalarNode('base_path')->defaultValue('bundles/fosckeditor/')->end()
-                ->scalarNode('js_path')->defaultValue('bundles/fosckeditor/ckeditor.js')->end()
-                ->scalarNode('jquery_path')->defaultValue('bundles/fosckeditor/adapters/jquery.js')->end()
+                ->scalarNode('js_path')->defaultValue('bundles/fosckeditor/ckeditor5.umd.js')->end()
+                ->scalarNode('css_path')->defaultValue([
+                    'bundles/fosckeditor/ckeditor5.css',
+                    'bundles/fosckeditor/ckeditor5-content.css',
+                    'bundles/fosckeditor/ckeditor5-editor.css',
+                ])->end()
                 ->scalarNode('default_config')->defaultValue(null)->end()
                 ->append($this->createConfigsNode())
                 ->append($this->createPluginsNode())
+//                ->append($this->createTemplateNode())
                 ->append($this->createStylesNode())
-                ->append($this->createTemplatesNode())
-                ->append($this->createFilebrowsersNode())
-                ->append($this->createToolbarsNode())
             ->end();
 
         return $treeBuilder;
@@ -78,75 +77,32 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+//    private function createTemplateNode(): ArrayNodeDefinition
+//    {
+//        return $this->createPrototypeNode('template')
+//            ->arrayPrototype()
+//                ->children()
+//                    ->scalarNode('imagesPath')->end()
+//                    ->arrayNode('templates')
+//                        ->arrayPrototype()
+//                            ->children()
+//                                ->scalarNode('title')->end()
+//                                ->scalarNode('image')->end()
+//                                ->scalarNode('description')->end()
+//                                ->scalarNode('html')->end()
+//                                ->scalarNode('template')->end()
+//                                ->append($this->createPrototypeNode('template_parameters')->prototype('scalar')->end())
+//                            ->end()
+//                        ->end()
+//                    ->end()
+//                ->end()
+//            ->end();
+//    }
+
     private function createStylesNode(): ArrayNodeDefinition
     {
         return $this->createPrototypeNode('styles')
-            ->arrayPrototype()
-                ->arrayPrototype()
-                    ->children()
-                        ->scalarNode('name')->end()
-                        ->scalarNode('type')->end()
-                        ->scalarNode('widget')->end()
-                        ->variableNode('element')->end()
-                        ->append($this->createPrototypeNode('styles')->prototype('scalar')->end())
-                        ->append($this->createPrototypeNode('attributes')->prototype('scalar')->end())
-                    ->end()
-                ->end()
-            ->end();
-    }
-
-    private function createTemplatesNode(): ArrayNodeDefinition
-    {
-        return $this->createPrototypeNode('templates')
-            ->arrayPrototype()
-                ->children()
-                    ->scalarNode('imagesPath')->end()
-                    ->arrayNode('templates')
-                        ->arrayPrototype()
-                            ->children()
-                                ->scalarNode('title')->end()
-                                ->scalarNode('image')->end()
-                                ->scalarNode('description')->end()
-                                ->scalarNode('html')->end()
-                                ->scalarNode('template')->end()
-                                ->append($this->createPrototypeNode('template_parameters')->prototype('scalar')->end())
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
-    }
-
-    private function createFilebrowsersNode(): ArrayNodeDefinition
-    {
-        $node = $this->createNode('filebrowsers')
-            ->useAttributeAsKey('name')
-            ->scalarPrototype()
-            ->end();
-
-        \assert($node instanceof ArrayNodeDefinition);
-
-        return $node;
-    }
-
-    private function createToolbarsNode(): ArrayNodeDefinition
-    {
-        return $this->createNode('toolbars')
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('configs')
-                    ->useAttributeAsKey('name')
-                    ->arrayPrototype()
-                        ->variablePrototype()->end()
-                    ->end()
-                ->end()
-                ->arrayNode('items')
-                    ->useAttributeAsKey('name')
-                    ->arrayPrototype()
-                        ->variablePrototype()->end()
-                    ->end()
-                ->end()
-            ->end();
+            ->variablePrototype()->end();
     }
 
     private function createPrototypeNode(string $name): ArrayNodeDefinition
@@ -167,7 +123,7 @@ final class Configuration implements ConfigurationInterface
             $node = $treeBuilder->root($name);
         }
 
-        \assert($node instanceof ArrayNodeDefinition);
+        assert($node instanceof ArrayNodeDefinition);
 
         return $node;
     }

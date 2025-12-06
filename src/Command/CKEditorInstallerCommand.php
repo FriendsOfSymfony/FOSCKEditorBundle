@@ -50,13 +50,13 @@ final class CKEditorInstallerCommand extends Command
                 'release',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'CKEditor release (basic, standard, full or custom)'
+                'CKEditor release (regular, premium)'
             )
             ->addOption(
-                'custom-build-id',
+                'user-interface',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'CKEditor custom build ID'
+                'CKEditor user interface (classic, balloon, balloon-block, bottom-toolbar, inline, document, button-grouping)'
             )
             ->addOption('tag', null, InputOption::VALUE_OPTIONAL, 'CKEditor tag (x.y.z or latest)')
             ->addOption(
@@ -82,30 +82,26 @@ final class CKEditorInstallerCommand extends Command
 The <info>%command.name%</info> command install CKEditor in your application:
 
   <info>php %command.full_name%</info>
-  
+
 You can install it at a specific path (absolute):
 
   <info>php %command.full_name% path</info>
-  
-You can install a specific release (basic, standard or full):
 
-  <info>php %command.full_name% --release=full</info>
-  
+You can install a specific release (regular, premium):
+
+  <info>php %command.full_name% --release=regular</info>
+
 You can install a specific version:
 
-  <info>php %command.full_name% --tag=4.7.0</info>
+  <info>php %command.full_name% --tag=46.0.1</info>
 
-You can install custom build generated on https://ckeditor.com/cke4/builder:
-
-  <info>php %command.full_name% --release=custom --custom-build-id=574a82a0d3e9226d94b0e91d10eaa372</info>
-
-If there is a previous CKEditor installation detected, 
+If there is a previous CKEditor installation detected,
 you can control how it should be handled in non-interactive mode:
 
   <info>php %command.full_name% --clear=drop</info>
   <info>php %command.full_name% --clear=keep</info>
   <info>php %command.full_name% --clear=skip</info>
-  
+
 You can exclude path(s) when extracting CKEditor:
 
   <info>php %command.full_name% --exclude=samples --exclude=adapters</info>
@@ -140,8 +136,8 @@ EOF
             $options['release'] = $input->getOption('release');
         }
 
-        if ($input->hasOption('custom-build-id')) {
-            $options['custom_build_id'] = $input->getOption('custom-build-id');
+        if ($input->hasOption('user-interface')) {
+            $options['user_interface'] = $input->getOption('user-interface');
         }
 
         if ($input->hasOption('tag')) {

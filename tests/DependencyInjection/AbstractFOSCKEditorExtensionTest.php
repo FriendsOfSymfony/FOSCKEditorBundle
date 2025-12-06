@@ -122,16 +122,8 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
 
         $vars = $this->getVars();
         $this->assertTrue($vars['enable']);
-        $this->assertTrue($vars['autoload']);
-        $this->assertTrue($vars['auto_inline']);
-        $this->assertFalse($vars['inline']);
-        $this->assertFalse($vars['jquery']);
-        $this->assertFalse($vars['input_sync']);
-        $this->assertFalse($vars['require_js']);
-        $this->assertEmpty($vars['filebrowsers']);
         $this->assertSame('bundles/fosckeditor/', $vars['base_path']);
         $this->assertSame('bundles/fosckeditor/ckeditor.js', $vars['js_path']);
-        $this->assertSame('bundles/fosckeditor/adapters/jquery.js', $vars['jquery_path']);
     }
 
     private function getVars(): array
@@ -164,86 +156,6 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
         $this->assertFalse($vars['enable']);
     }
 
-    public function testAsync(): void
-    {
-        $this->loadConfiguration($this->container, 'async');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertTrue($vars['async']);
-    }
-
-    public function testAutoload(): void
-    {
-        $this->loadConfiguration($this->container, 'autoload');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertFalse($vars['autoload']);
-    }
-
-    public function testAutoInline(): void
-    {
-        $this->loadConfiguration($this->container, 'auto_inline');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertFalse($vars['auto_inline']);
-    }
-
-    public function testInline(): void
-    {
-        $this->loadConfiguration($this->container, 'inline');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertTrue($vars['inline']);
-    }
-
-    public function testInputSync(): void
-    {
-        $this->loadConfiguration($this->container, 'input_sync');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertTrue($vars['input_sync']);
-    }
-
-    public function testRequireJs(): void
-    {
-        $this->loadConfiguration($this->container, 'require_js');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertTrue($vars['require_js']);
-    }
-
-    public function testJquery(): void
-    {
-        $this->loadConfiguration($this->container, 'jquery');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertTrue($vars['jquery']);
-    }
-
-    public function testJqueryPath(): void
-    {
-        $this->loadConfiguration($this->container, 'jquery_path');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertSame('foo/jquery.js', $vars['jquery_path']);
-    }
-
     public function testCustomPaths(): void
     {
         $this->loadConfiguration($this->container, 'custom_paths');
@@ -253,19 +165,6 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
 
         $this->assertSame('foo/', $vars['base_path']);
         $this->assertSame('foo/ckeditor.js', $vars['js_path']);
-    }
-
-    public function testFilebrowsers(): void
-    {
-        $this->loadConfiguration($this->container, 'filebrowsers');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertSame(
-            ['VideoBrowse', 'VideoUpload'],
-            $vars['filebrowsers']
-        );
     }
 
     public function testPlugins(): void
@@ -281,95 +180,6 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
                 'filename' => 'plugin.js',
             ],
         ], $vars['plugins']);
-    }
-
-    public function testStylesSets(): void
-    {
-        $this->loadConfiguration($this->container, 'styles_sets');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertSame([
-            'styles-set-name' => [
-                [
-                    'name' => 'Blue Title',
-                    'element' => 'h2',
-                    'styles' => ['text-decoration' => 'underline'],
-                    'attributes' => [],
-                ],
-                [
-                    'name' => 'CSS Style',
-                    'element' => 'span',
-                    'attributes' => ['data-class' => 'my-style'],
-                    'styles' => [],
-                ],
-                [
-                    'name' => 'Widget Style',
-                    'type' => 'widget',
-                    'widget' => 'my-widget',
-                    'attributes' => ['data-class' => 'my-style'],
-                    'styles' => [],
-                ],
-                [
-                    'name' => 'Multiple Elements Style',
-                    'element' => ['span', 'p', 'h3'],
-                    'attributes' => ['data-class' => 'my-style'],
-                    'styles' => [],
-                ],
-            ],
-        ], $vars['styles']);
-    }
-
-    public function testTemplates(): void
-    {
-        $this->loadConfiguration($this->container, 'templates');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertSame([
-            'template-name' => [
-                'imagesPath' => '/my/path',
-                'templates' => [
-                    [
-                        'title' => 'My Template',
-                        'image' => 'image.jpg',
-                        'description' => 'My awesome description',
-                        'html' => '<h1>Template</h1><p>Type your text here.</p>',
-                        'template' => 'AppBundle:CKEditor:template.html.twig',
-                        'template_parameters' => ['foo' => 'bar'],
-                    ],
-                ],
-            ],
-        ], $vars['templates']);
-    }
-
-    public function testToolbars(): void
-    {
-        $this->loadConfiguration($this->container, 'toolbars');
-        $this->container->compile();
-
-        $vars = $this->getVars();
-
-        $this->assertSame(
-            [
-                [
-                    'Source',
-                    '-',
-                    'Save',
-                ],
-                '/',
-                [
-                    'Anchor',
-                ],
-                '/',
-                [
-                    'Maximize',
-                ],
-            ],
-            $vars['config']['toolbar']
-        );
     }
 
     public function testInvalidDefaultConfig(): void

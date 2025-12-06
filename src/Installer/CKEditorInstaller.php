@@ -21,15 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CKEditorInstaller
 {
-    public const RELEASE_BASIC = 'basic';
-
-    public const RELEASE_FULL = 'full';
-
-    public const RELEASE_STANDARD = 'standard';
-
-    public const RELEASE_CUSTOM = 'custom';
-
-    public const VERSION_LATEST = 'latest';
+    public const VERSION_LATEST = '46.0.1';
 
     public const CLEAR_DROP = 'drop';
 
@@ -68,12 +60,12 @@ final class CKEditorInstaller
     /**
      * @var string
      */
-    private static $archive = 'https://github.com/ckeditor/ckeditor4-releases/archive/%s/%s.zip';
+    private static $archive = 'https://cdn.ckeditor.com/ckeditor5/%s/zip/ckeditor5-%s.zip';
 
     /**
      * @var string
      */
-    private static $customBuildArchive = 'https://ckeditor.com/cke4/builder/download/%s';
+    private static $archivePremium = 'https://cdn.ckeditor.com/ckeditor5-premium-features/%s/zip/ckeditor5-premium-features-%s.zip';
 
     /**
      * @var OptionsResolver
@@ -85,20 +77,20 @@ final class CKEditorInstaller
         $this->resolver = (new OptionsResolver())
             ->setDefaults(array_merge([
                 'clear' => null,
-                'excludes' => ['samples'],
+                'excludes' => ['sample'],
                 'notifier' => null,
                 'path' => dirname(__DIR__).'/Resources/public',
-                'release' => self::RELEASE_FULL,
-                'custom_build_id' => null,
+                'release' => CKEditorPredefinedBuild::RELEASE_REGULAR,
+                'user_interface' => CKEditorPredefinedBuild::USER_INTERFACE_CLASSIC,
                 'version' => self::VERSION_LATEST,
             ], $options))
             ->setAllowedTypes('excludes', 'array')
             ->setAllowedTypes('notifier', ['null', 'callable'])
             ->setAllowedTypes('path', 'string')
-            ->setAllowedTypes('custom_build_id', ['null', 'string'])
             ->setAllowedTypes('version', 'string')
             ->setAllowedValues('clear', [self::CLEAR_DROP, self::CLEAR_KEEP, self::CLEAR_SKIP, null])
-            ->setAllowedValues('release', [self::RELEASE_BASIC, self::RELEASE_FULL, self::RELEASE_STANDARD, self::RELEASE_CUSTOM])
+            ->setAllowedValues('release', [CKEditorPredefinedBuild::RELEASE_REGULAR, CKEditorPredefinedBuild::RELEASE_PREMIUM])
+            ->setAllowedValues('user_interface', [CKEditorPredefinedBuild::USER_INTERFACE_CLASSIC, CKEditorPredefinedBuild::USER_INTERFACE_BALLOON, CKEditorPredefinedBuild::USER_INTERFACE_BALLOON_BLOCK, CKEditorPredefinedBuild::USER_INTERFACE_BOTTOM_TOOLBAR, CKEditorPredefinedBuild::USER_INTERFACE_INLINE, CKEditorPredefinedBuild::USER_INTERFACE_DOCUMENT, CKEditorPredefinedBuild::USER_INTERFACE_BUTTON_GROUPING])
             ->setNormalizer('path', function (Options $options, $path) {
                 return rtrim($path, '/');
             });
@@ -119,7 +111,7 @@ final class CKEditorInstaller
 
     private function clear(array $options): string
     {
-        if (!file_exists($options['path'].'/ckeditor.js')) {
+        if (!file_exists($options['path'].'/ckeditor5.js')) {
             return self::CLEAR_DROP;
         }
 
@@ -171,7 +163,7 @@ final class CKEditorInstaller
             throw $this->createException(sprintf('Unable to download CKEditor ZIP archive from "%s".', $url));
         }
 
-        $path = (string) tempnam(sys_get_temp_dir(), 'ckeditor-'.$options['release'].'-'.$options['version'].'.zip');
+        $path = (string) tempnam(sys_get_temp_dir(), 'ckeditor-build-'.$options['release'].'-'.$options['version'].'.zip');
 
         if (!@file_put_contents($path, $zip)) {
             throw $this->createException(sprintf('Unable to write CKEditor ZIP archive to "%s".', $path));
@@ -184,19 +176,13 @@ final class CKEditorInstaller
 
     private function getDownloadUrl(array $options): string
     {
-        if (self::RELEASE_CUSTOM !== $options['release']) {
-            return sprintf(self::$archive, $options['release'], $options['version']);
+        if (CKEditorPredefinedBuild::RELEASE_PREMIUM === $options['release']) {
+            $type = self::$archivePremium;
+        } else {
+            $type = self::$archive;
         }
 
-        if (null === $options['custom_build_id']) {
-            throw $this->createException('Unable to download CKEditor ZIP archive. Custom build ID is not specified.');
-        }
-
-        if (self::VERSION_LATEST !== $options['version']) {
-            throw $this->createException('Unable to download CKEditor ZIP archive. Specifying version for custom build is not supported.');
-        }
-
-        return sprintf(self::$customBuildArchive, $options['custom_build_id']);
+        return sprintf($type, $options['version'], $options['version']);
     }
 
     /**
@@ -258,18 +244,32 @@ final class CKEditorInstaller
 
         $this->notify($options['notifier'], self::NOTIFY_EXTRACT_SIZE, $zip->numFiles);
 
-        if (self::RELEASE_CUSTOM === $options['release']) {
+        if (CKEditorPredefinedBuild::RELEASE_PREMIUM === $options['release']) {
+            // folder name inside archive looks like ckeditor5
+            // so remove subdirectory name in path "ckeditor5"
             $offset = 9;
+            // folder name inside archive looks like ckeditor5-premium-features
+            // so remove subdirectory name in path "ckeditor5-premium-features"
+            $offsetPremium = 26;
         } else {
-            $offset = 20 + strlen($options['release']) + strlen($options['version']);
+            // folder name inside archive looks like ckeditor5
+            // so remove subdirectory name in path "ckeditor5
+            $offset = 9;
+            $offsetPremium = null;
         }
 
         for ($i = 0; $i < $zip->numFiles; ++$i) {
             $filename = $zip->getNameIndex($i);
-            $isDirectory = ('/' === substr($filename, -1, 1));
 
-            if (!$isDirectory) {
-                $this->extractFile($filename, substr($filename, $offset), $path, $options);
+            if (
+                0 === strpos($filename, 'ckeditor5')
+                || ($offsetPremium && 0 === strpos($filename, 'ckeditor5-premium-features'))
+            ) {
+                $isDirectory = ('/' === $filename[strlen($filename) - 1]);
+
+                if (!$isDirectory) {
+                    $this->extractFile($filename, substr($filename, $offset), $path, $options);
+                }
             }
         }
 
@@ -297,7 +297,7 @@ final class CKEditorInstaller
         }
 
         $targetDirectory = dirname($to);
-        if (!is_dir($targetDirectory) && !@mkdir($targetDirectory, 0777, true)) {
+        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, 0777, true) && !is_dir($targetDirectory)) {
             throw $this->createException(sprintf('Unable to create the directory "%s".', $targetDirectory));
         }
 

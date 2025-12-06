@@ -26,13 +26,13 @@ in your configuration or in your widget:
     # app/config/config.yml
     fos_ck_editor:
         base_path: "ckeditor"
-        js_path:   "ckeditor/ckeditor.js"
+        js_path:   "ckeditor/ckeditor5.js"
 
 .. code-block:: php
 
     $builder->add('field', 'ckeditor', [
         'base_path' => 'ckeditor',
-        'js_path'   => 'ckeditor/ckeditor.js',
+        'js_path'   => 'ckeditor/ckeditor5.js',
     ]);
 
 .. note::
