@@ -34,14 +34,18 @@ class FOSCKEditorExtensionTest extends AbstractExtensionTestCase
      */
     public function testIvoryDeprecation(): void
     {
-        set_error_handler(static function (int $errno, string $errstr): void {
+        $initialErrorHandler = set_error_handler(static function (int $errno, string $errstr): void {
             throw new \Exception($errstr, $errno);
         }, E_USER_DEPRECATED);
 
-        self::expectExceptionMessage('IvoryCKEditorBundle isn\'t maintained anymore and should be replaced with FOSCKEditorBundle.');
+        try {
+            self::expectExceptionMessage('IvoryCKEditorBundle isn\'t maintained anymore and should be replaced with FOSCKEditorBundle.');
 
-        $this->container->setParameter('kernel.bundles', ['IvoryCKEditorBundle' => '']);
-        $this->load();
+            $this->container->setParameter('kernel.bundles', ['IvoryCKEditorBundle' => '']);
+            $this->load();
+        } finally {
+            set_error_handler($initialErrorHandler);
+        }
     }
 
     protected function getContainerExtensions(): array
