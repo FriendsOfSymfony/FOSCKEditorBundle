@@ -36,19 +36,16 @@ final class CKEditorExtension extends AbstractExtension implements CKEditorRende
         $options = ['is_safe' => ['html']];
 
         return [
-            new TwigFunction('ckeditor_base_path', [$this, 'renderBasePath'], $options),
+            new TwigFunction('ckeditor_translation_path', [$this, 'renderTranslationPath'], $options),
             new TwigFunction('ckeditor_js_path', [$this, 'renderJsPath'], $options),
             new TwigFunction('ckeditor_widget', [$this, 'renderWidget'], $options),
-            new TwigFunction('ckeditor_destroy', [$this, 'renderDestroy'], $options),
-            new TwigFunction('ckeditor_plugin', [$this, 'renderPlugin'], $options),
-            new TwigFunction('ckeditor_styles_set', [$this, 'renderStylesSet'], $options),
-            new TwigFunction('ckeditor_template', [$this, 'renderTemplate'], $options),
+            new TwigFunction('ckeditor_size', [$this, 'renderSize'], $options),
         ];
     }
 
-    public function renderBasePath(string $basePath): string
+    public function renderTranslationPath(string $basePath): string
     {
-        return $this->renderer->renderBasePath($basePath);
+        return $this->renderer->renderTranslationPath($basePath);
     }
 
     public function renderJsPath(string $jsPath): string
@@ -56,29 +53,14 @@ final class CKEditorExtension extends AbstractExtension implements CKEditorRende
         return $this->renderer->renderJsPath($jsPath);
     }
 
+    public function renderSize(array $config): string
+    {
+        return $this->renderer->renderSize($config);
+    }
+
     public function renderWidget(string $id, array $config, array $options = []): string
     {
         return $this->renderer->renderWidget($id, $config, $options);
-    }
-
-    public function renderDestroy(string $id): string
-    {
-        return $this->renderer->renderDestroy($id);
-    }
-
-    public function renderPlugin(string $name, array $plugin): string
-    {
-        return $this->renderer->renderPlugin($name, $plugin);
-    }
-
-    public function renderStylesSet(string $name, array $stylesSet): string
-    {
-        return $this->renderer->renderStylesSet($name, $stylesSet);
-    }
-
-    public function renderTemplate(string $name, array $template): string
-    {
-        return $this->renderer->renderTemplate($name, $template);
     }
 
     public function getName(): string
