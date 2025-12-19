@@ -433,7 +433,7 @@ class CKEditorRendererTest extends TestCase
         );
     }
 
-    public function languageProvider(): array
+    public static function languageProvider(): array
     {
         return [
             ['en', 'en'],
@@ -441,7 +441,7 @@ class CKEditorRendererTest extends TestCase
         ];
     }
 
-    public function directoryAssetProvider(): array
+    public static function directoryAssetProvider(): array
     {
         return [
             ['directory/', 'url/', 'url/'],
@@ -449,7 +449,7 @@ class CKEditorRendererTest extends TestCase
         ];
     }
 
-    public function fileAssetProvider(): array
+    public static function fileAssetProvider(): array
     {
         return [
             ['file.js', 'url.js', 'url.js'],
@@ -457,7 +457,7 @@ class CKEditorRendererTest extends TestCase
         ];
     }
 
-    public function filesAssetProvider(): array
+    public static function filesAssetProvider(): array
     {
         return [
             [['file'], ['url'], ['url']],
@@ -469,7 +469,7 @@ class CKEditorRendererTest extends TestCase
         ];
     }
 
-    public function filebrowserProvider(): array
+    public static function filebrowserProvider(): array
     {
         return [
             ['Browse'],

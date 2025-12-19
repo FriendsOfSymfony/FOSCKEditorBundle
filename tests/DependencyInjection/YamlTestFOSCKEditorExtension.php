@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class YamlFOSCKEditorExtensionTest extends AbstractFOSCKEditorExtensionTest
+class YamlTestFOSCKEditorExtension extends AbstractTestFOSCKEditorExtension
 {
     protected function loadConfiguration(ContainerBuilder $container, string $configuration): void
     {

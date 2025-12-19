@@ -106,7 +106,7 @@ class JsonBuilderTest extends TestCase
         $this->assertSame($expected, $this->jsonBuilder->build());
     }
 
-    public function valuesProvider(): array
+    public static function valuesProvider(): array
     {
         return [
             // Arrays
@@ -123,7 +123,7 @@ class JsonBuilderTest extends TestCase
         ];
     }
 
-    public function valueProvider(): array
+    public static function valueProvider(): array
     {
         return [
             // Arrays

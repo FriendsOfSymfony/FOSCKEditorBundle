@@ -15,11 +15,12 @@ namespace FOS\CKEditorBundle\Tests\Template;
 use FOS\CKEditorBundle\Twig\CKEditorExtension;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
+use Twig\TemplateWrapper;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TwigTemplateTest extends AbstractTemplateTest
+class TwigTestTemplate extends AbstractTestTemplate
 {
     /**
      * @var Environment
@@ -27,7 +28,7 @@ class TwigTemplateTest extends AbstractTemplateTest
     private $twig;
 
     /**
-     * @var Template
+     * @var TemplateWrapper
      */
     private $template;
 
