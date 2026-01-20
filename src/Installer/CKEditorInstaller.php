@@ -219,6 +219,13 @@ final class CKEditorInstaller
                 'request_fulluri' => (bool) getenv('https_proxy_request_fulluri') ?:
                     getenv('http_proxy_request_fulluri'),
             ];
+
+            if (!empty($proxyUrl['user']) && !empty($proxyUrl['pass'])) {
+                $proxyUser = urldecode($proxyUrl['user']).':'.urldecode($proxyUrl['pass']);
+                $auth = base64_encode($proxyUser);
+
+                $context['http']['header'] = "Proxy-Authorization: Basic $auth";
+            }
         }
 
         return stream_context_create($context, [
